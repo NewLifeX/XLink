@@ -987,84 +987,6 @@
         <member name="F:NewLife.Common.SysConfig`1.SysAssembly">
             <summary>系统主程序集</summary>
         </member>
-        <member name="T:NewLife.Common.HardInfo">
-            <summary>硬件信息</summary>
-        </member>
-        <member name="T:NewLife.Common.HardInfo._">
-            <summary>内部获取</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.BaseBoard">
-            <summary>主板序列号</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.Processors">
-            <summary>处理器序列号</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.Memory">
-            <summary>内存总量</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.Disk">
-            <summary>磁盘名称</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.DiskSerial">
-            <summary>磁盘序列号</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.Volume">
-            <summary>驱动器序列号</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.Macs">
-            <summary>网卡地址序列号</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo._.IPs">
-            <summary>IP地址</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.MachineName">
-            <summary>机器名</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.BaseBoard">
-            <summary>主板</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.Processors">
-            <summary>处理器</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.Disk">
-            <summary>磁盘</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.DiskSerial">
-            <summary>磁盘序列号</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.Volume">
-            <summary>驱动器序列号</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.Macs">
-            <summary>网卡</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.IPs">
-            <summary>IP地址</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.OSVersion">
-            <summary>系统版本</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.Memory">
-            <summary>内存</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.ScreenWidth">
-            <summary>屏幕宽</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.ScreenHeight">
-            <summary>屏幕高</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.DiskSize">
-            <summary>磁盘大小</summary>
-        </member>
-        <member name="P:NewLife.Common.HardInfo.Current">
-            <summary>当前机器硬件信息</summary>
-        </member>
-        <member name="M:NewLife.Common.HardInfo.GetInfo(System.String,System.String)">
-            <summary>获取WMI信息</summary>
-            <param name="path"></param>
-            <param name="property"></param>
-            <returns></returns>
-        </member>
         <member name="T:NewLife.Common.IdentityCard">
             <summary>身份证</summary>
         </member>
@@ -1153,6 +1075,33 @@
         </member>
         <member name="F:NewLife.OSProductType.Server">
             <summary>服务器</summary>
+        </member>
+        <member name="T:NewLife.Compression.SevenZip">
+            <summary>7Zip</summary>
+        </member>
+        <member name="M:NewLife.Compression.SevenZip.#ctor">
+            <summary>实例化</summary>
+        </member>
+        <member name="M:NewLife.Compression.SevenZip.Compress(System.String,System.String)">
+            <summary>压缩文件</summary>
+            <param name="path"></param>
+            <param name="destFile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Compression.SevenZip.Extract(System.String,System.String,System.Boolean)">
+            <summary>解压缩文件</summary>
+            <param name="file"></param>
+            <param name="destDir"></param>
+            <param name="overwrite">是否覆盖目标同名文件</param>
+            <returns></returns>
+        </member>
+        <member name="P:NewLife.Compression.SevenZip.Log">
+            <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.Compression.SevenZip.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
         </member>
         <member name="T:NewLife.Configuration.CombConfig">
             <summary>CombGuid 配置</summary>
@@ -2178,8 +2127,17 @@
             标准网络封包协议：1 Flag + 1 Sequence + 2 Length + N Payload
             1个字节标识位，标识请求、响应、错误、加密、压缩等；
             1个字节序列号，用于请求响应包配对；
-            2个字节数据长度N，大端，指示后续负载数据长度（不包含头部4个字节），解决粘包问题；
+            2个字节数据长度N，小端，指示后续负载数据长度（不包含头部4个字节），解决粘包问题；
             N个字节负载数据，数据内容完全由业务决定，最大长度65535=64k。
+            如：
+            Open => OK
+            01-01-04-00-"Open" => 81-01-02-00-"OK"
+            
+            针对纯字符串场景，采用8字符HEX编码头部。
+            首字符0表示请求，8表示响应
+            如：
+            Open => OK
+            01010400 Open => 81010200 OK
             </remarks>
         </member>
         <member name="P:NewLife.Messaging.DefaultMessage.Flag">
@@ -2187,6 +2145,9 @@
         </member>
         <member name="P:NewLife.Messaging.DefaultMessage.Sequence">
             <summary>序列号，匹配请求和响应</summary>
+        </member>
+        <member name="F:NewLife.Messaging.DefaultMessage._IsChar">
+            <summary>对方使用纯字符串，不具备二进制编码能力</summary>
         </member>
         <member name="M:NewLife.Messaging.DefaultMessage.CreateReply">
             <summary>根据请求创建配对的响应消息</summary>
@@ -2812,9 +2773,6 @@
             <summary>从数据流中获取整帧数据长度</summary>
             <param name="stream"></param>
             <returns></returns>
-        </member>
-        <member name="M:NewLife.Net.PacketProvider.Test">
-            <summary>粘包测试</summary>
         </member>
         <member name="T:NewLife.Net.PacketFactory">
             <summary>头部长度粘包处理工厂</summary>
@@ -4890,9 +4848,6 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Reflection.DynamicXml.Test">
-            <summary>测试</summary>
-        </member>
         <member name="T:NewLife.Reflection.IReflect">
             <summary>反射接口</summary>
             <remarks>该接口仅用于扩展，不建议外部使用</remarks>
@@ -6571,12 +6526,6 @@
         <member name="P:NewLife.Remoting.ApiServer.Log">
             <summary>日志</summary>
         </member>
-        <member name="T:NewLife.Remoting.ApiTest">
-            <summary>Rpc测试</summary>
-        </member>
-        <member name="M:NewLife.Remoting.ApiTest.Main">
-            <summary>测试主函数</summary>
-        </member>
         <member name="T:NewLife.Remoting.IEncoder">
             <summary>编码器</summary>
         </member>
@@ -7709,12 +7658,6 @@
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="T:NewLife.Serialization.BinaryTest">
-            <summary>Binary测试</summary>
-        </member>
-        <member name="M:NewLife.Serialization.BinaryTest.Start">
-            <summary>开始测试</summary>
-        </member>
         <member name="T:NewLife.Serialization.IMemberAccessor">
             <summary>成员序列化访问器。接口实现者可以在这里完全自定义序列化行为</summary>
         </member>
@@ -8156,12 +8099,6 @@
         </member>
         <member name="T:NewLife.Serialization.JsonReader">
             <summary>Json读取器</summary>
-        </member>
-        <member name="T:NewLife.Serialization.JsonTest">
-            <summary>Json测试</summary>
-        </member>
-        <member name="M:NewLife.Serialization.JsonTest.Start">
-            <summary>开始测试</summary>
         </member>
         <member name="T:NewLife.Serialization.JsonWriter">
             <summary>Json写入器</summary>
