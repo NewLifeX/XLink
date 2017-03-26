@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NewLife.Remoting;
 
 namespace xLink
 {
-    /// <summary>物联服务器</summary>
-    public class LinkServer : ApiServer
+    /// <summary>物联会话</summary>
+    public class LinkSession
     {
     }
 }

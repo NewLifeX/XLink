@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="LinkClient.cs" />
     <Compile Include="LinkServer.cs" />
+    <Compile Include="LinkSession.cs" />
+    <Compile Include="Models\HelloModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

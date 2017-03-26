@@ -6317,6 +6317,12 @@
         <member name="P:NewLife.Remoting.ApiClient.Providers">
             <summary>协议到提供者类的映射</summary>
         </member>
+        <member name="P:NewLife.Remoting.ApiClient.Name">
+            <summary>名称</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.Active">
+            <summary>是否已打开</summary>
+        </member>
         <member name="P:NewLife.Remoting.ApiClient.Client">
             <summary>通信客户端</summary>
         </member>
@@ -6344,6 +6350,11 @@
         <member name="E:NewLife.Remoting.ApiClient.Opened">
             <summary>打开后触发。</summary>
         </member>
+        <member name="M:NewLife.Remoting.ApiClient.SetRemote(System.String)">
+            <summary>设置远程地址</summary>
+            <param name="uri"></param>
+            <returns></returns>
+        </member>
         <member name="M:NewLife.Remoting.ApiClient.InvokeAsync``1(System.String,System.Object)">
             <summary>调用</summary>
             <typeparam name="TResult"></typeparam>
@@ -6363,6 +6374,15 @@
         </member>
         <member name="P:NewLife.Remoting.ApiClient.Log">
             <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.ToString">
+            <summary>已重载。返回具有本类特征的字符串</summary>
+            <returns>String</returns>
         </member>
         <member name="P:NewLife.Remoting.ApiHttpServer.Provider">
             <summary>Api服务器主机</summary>
@@ -6482,6 +6502,9 @@
         <member name="P:NewLife.Remoting.ApiServer.Providers">
             <summary>协议到提供者类的映射</summary>
         </member>
+        <member name="P:NewLife.Remoting.ApiServer.Name">
+            <summary>名称</summary>
+        </member>
         <member name="P:NewLife.Remoting.ApiServer.Active">
             <summary>是否正在工作</summary>
         </member>
@@ -6525,6 +6548,15 @@
         </member>
         <member name="P:NewLife.Remoting.ApiServer.Log">
             <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiServer.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiServer.ToString">
+            <summary>已重载。返回具有本类特征的字符串</summary>
+            <returns>String</returns>
         </member>
         <member name="T:NewLife.Remoting.IEncoder">
             <summary>编码器</summary>
@@ -9620,6 +9652,17 @@
             <typeparam name="TValue"></typeparam>
             <param name="collection"></param>
             <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Collections.Generic.CollectionHelper.ToDictionary(System.Object)">
+            <summary>目标匿名参数对象转为字典</summary>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Collections.Generic.CollectionHelper.Merge(System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)">
+            <summary>合并字典参数</summary>
+            <param name="dic"></param>
+            <param name="target"></param>
             <returns></returns>
         </member>
         <member name="T:System.Utility">

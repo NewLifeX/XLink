@@ -123,7 +123,7 @@ namespace xLink.DeviceClient
             _Packet = new DefaultPacket();
             var cfg = DeviceConfig.Current;
 
-            var ac = new ApiClient(uri.ToString());
+            var ac = new LinkClient(uri.ToString());
             ac.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
             ac.Received += OnReceived;
 
@@ -142,8 +142,8 @@ namespace xLink.DeviceClient
 
             //if (uri.Port == 0) uri.Port = client.Port;
 
-            _Client = new LinkClient { Client = ac };
-            _Client.Open();
+            _Client = ac;
+            ac.Open();
 
             pnlSetting.Enabled = false;
             btnConnect.Text = "关闭";
