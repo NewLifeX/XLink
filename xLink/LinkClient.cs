@@ -7,6 +7,7 @@ using NewLife;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
+using NewLife.Threading;
 
 namespace xLink
 {
@@ -57,9 +58,24 @@ namespace xLink
 
             if (!base.Open()) return false;
 
-            //_timer = new TimerX(TimerCallback, this, 0, 5000);
+            _timer = new TimerX(TimerCallback, this, 1000, 5000);
 
             return Active;
+        }
+
+        /// <summary>关闭</summary>
+        /// <param name="reason"></param>
+        public override void Close(String reason)
+        {
+            _timer.TryDispose();
+
+            base.Close(reason);
+        }
+
+        private TimerX _timer;
+        private async void TimerCallback(Object state)
+        {
+            if (Logined) await PingAsync();
         }
         #endregion
 

@@ -143,11 +143,9 @@ namespace xLink.DeviceClient
             // 添加地址
             var addr = uri.ToString();
             var list = cfg.Address.Split(";").ToList();
-            if (!list.Contains(addr))
-            {
-                list.Insert(0, addr);
-                cfg.Address = list.Join(";");
-            }
+            list.Remove(addr);
+            list.Insert(0, addr);
+            cfg.Address = list.Join(";");
 
             cfg.Save();
 
