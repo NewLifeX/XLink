@@ -532,9 +532,10 @@
             <summary>置顶比较器实例化一个可空字典</summary>
             <param name="comparer"></param>
         </member>
-        <member name="M:NewLife.Collections.NullableDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+        <member name="M:NewLife.Collections.NullableDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1},System.Collections.Generic.IEqualityComparer{`0})">
             <summary>实例化一个可空字典</summary>
             <param name="dic"></param>
+            <param name="comparer"></param>
         </member>
         <member name="P:NewLife.Collections.NullableDictionary`2.Item(`0)">
             <summary>获取或设置与指定的属性是否有脏数据。</summary>
@@ -5864,6 +5865,9 @@
         <member name="T:NewLife.Remoting.ApiHost">
             <summary>Api主机</summary>
         </member>
+        <member name="P:NewLife.Remoting.ApiHost.Name">
+            <summary>名称</summary>
+        </member>
         <member name="P:NewLife.Remoting.ApiHost.Encoder">
             <summary>编码器</summary>
         </member>
@@ -5918,6 +5922,18 @@
             <summary>获取服务提供者</summary>
             <param name="serviceType"></param>
             <returns></returns>
+        </member>
+        <member name="P:NewLife.Remoting.ApiHost.Log">
+            <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiHost.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiHost.ToString">
+            <summary>已重载。返回具有本类特征的字符串</summary>
+            <returns>String</returns>
         </member>
         <member name="T:NewLife.Remoting.ApiController">
             <summary>API控制器</summary>
@@ -6179,6 +6195,14 @@
             <param name="msg"></param>
             <returns></returns>
         </member>
+        <member name="P:NewLife.Remoting.IApiHost.Log">
+            <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.Remoting.IApiHost.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
         <member name="T:NewLife.Remoting.ApiMessageEventArgs">
             <summary>消息事件参数</summary>
         </member>
@@ -6321,9 +6345,6 @@
         <member name="P:NewLife.Remoting.ApiClient.Providers">
             <summary>协议到提供者类的映射</summary>
         </member>
-        <member name="P:NewLife.Remoting.ApiClient.Name">
-            <summary>名称</summary>
-        </member>
         <member name="P:NewLife.Remoting.ApiClient.Active">
             <summary>是否已打开</summary>
         </member>
@@ -6375,18 +6396,6 @@
             <summary>获取服务提供者</summary>
             <param name="serviceType"></param>
             <returns></returns>
-        </member>
-        <member name="P:NewLife.Remoting.ApiClient.Log">
-            <summary>日志</summary>
-        </member>
-        <member name="M:NewLife.Remoting.ApiClient.WriteLog(System.String,System.Object[])">
-            <summary>写日志</summary>
-            <param name="format"></param>
-            <param name="args"></param>
-        </member>
-        <member name="M:NewLife.Remoting.ApiClient.ToString">
-            <summary>已重载。返回具有本类特征的字符串</summary>
-            <returns>String</returns>
         </member>
         <member name="P:NewLife.Remoting.ApiHttpServer.Provider">
             <summary>Api服务器主机</summary>
@@ -6506,9 +6515,6 @@
         <member name="P:NewLife.Remoting.ApiServer.Providers">
             <summary>协议到提供者类的映射</summary>
         </member>
-        <member name="P:NewLife.Remoting.ApiServer.Name">
-            <summary>名称</summary>
-        </member>
         <member name="P:NewLife.Remoting.ApiServer.Active">
             <summary>是否正在工作</summary>
         </member>
@@ -6549,18 +6555,6 @@
             <summary>获取服务提供者</summary>
             <param name="serviceType"></param>
             <returns></returns>
-        </member>
-        <member name="P:NewLife.Remoting.ApiServer.Log">
-            <summary>日志</summary>
-        </member>
-        <member name="M:NewLife.Remoting.ApiServer.WriteLog(System.String,System.Object[])">
-            <summary>写日志</summary>
-            <param name="format"></param>
-            <param name="args"></param>
-        </member>
-        <member name="M:NewLife.Remoting.ApiServer.ToString">
-            <summary>已重载。返回具有本类特征的字符串</summary>
-            <returns>String</returns>
         </member>
         <member name="T:NewLife.Remoting.IEncoder">
             <summary>编码器</summary>
@@ -9669,11 +9663,12 @@
             <param name="target"></param>
             <returns></returns>
         </member>
-        <member name="M:System.Collections.Generic.CollectionHelper.ToNullable``2(System.Collections.Generic.IDictionary{``0,``1})">
+        <member name="M:System.Collections.Generic.CollectionHelper.ToNullable``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IEqualityComparer{``0})">
             <summary>转为可空字典</summary>
             <typeparam name="TKey"></typeparam>
             <typeparam name="TValue"></typeparam>
             <param name="collection"></param>
+            <param name="comparer"></param>
             <returns></returns>
         </member>
         <member name="T:System.Utility">

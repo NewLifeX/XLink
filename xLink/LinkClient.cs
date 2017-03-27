@@ -68,6 +68,7 @@ namespace xLink
         /// <param name="reason"></param>
         public override void Close(String reason)
         {
+            Key = null;
             _timer.TryDispose();
 
             base.Close(reason);
