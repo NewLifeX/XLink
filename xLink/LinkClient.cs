@@ -165,7 +165,7 @@ namespace xLink
             var dic = args.ToDictionary();
             if (!dic.ContainsKey("Time")) dic["Time"] = DateTime.Now;
 
-            var rs = await InvokeAsync<IDictionary<String, Object>>("Ping", dic);
+            var rs = await InvokeAsync<Object>("Ping", dic) as IDictionary<String, Object>;
 
             // 获取服务器时间
             Object dt;
@@ -173,7 +173,7 @@ namespace xLink
             {
                 // 保存时间差，这样子以后只需要拿本地当前时间加上时间差，即可得到服务器时间
                 Span = dt.ToDateTime() - DateTime.Now;
-                WriteLog("时间差：{0}", Span);
+                WriteLog("时间差：{0}ms", (Int32)Span.TotalMilliseconds);
             }
 
             return rs;

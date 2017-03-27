@@ -383,8 +383,8 @@ namespace xLink.DeviceClient
 
         private async void btnTest_Click(Object sender, EventArgs e)
         {
-            var rs = await _Client.InvokeAsync<String>("Api/All");
-            XTrace.WriteLine(rs);
+            var rs = await _Client.InvokeAsync<String[]>("Api/All");
+            XTrace.WriteLine(rs.Join(Environment.NewLine));
         }
     }
 }

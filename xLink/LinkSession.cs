@@ -65,8 +65,7 @@ namespace xLink
             var ss = ctx?.Session;
             if (ss == null) return null;
 
-            var ts = ss["Controller"] as LinkSession;
-            return ts.Key;
+            return ss["Key"] as Byte[];
         }
 
         /// <summary>设置活跃时间</summary>
@@ -135,6 +134,7 @@ namespace xLink
 
             // 随机密钥
             Key = Rand.NextBytes(8);
+            Session["Key"] = Key;
 
             var rs = new
             {
