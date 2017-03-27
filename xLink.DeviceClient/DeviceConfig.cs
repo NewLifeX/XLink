@@ -14,6 +14,10 @@ namespace xLink.DeviceClient
         [Description("设备编码")]
         public String DeviceID { get; set; } = "";
 
+        /// <summary>设备密码</summary>
+        [Description("设备密码")]
+        public String Password { get; set; } = "";
+
         /// <summary>地址</summary>
         [Description("地址")]
         public String Address { get; set; } = "";

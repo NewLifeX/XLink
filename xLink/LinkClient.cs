@@ -1,8 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using NewLife;
+using NewLife.Net;
+using NewLife.Reflection;
 using NewLife.Remoting;
 
 namespace xLink
@@ -11,41 +14,53 @@ namespace xLink
     public class LinkClient : ApiClient
     {
         #region 属性
-        /// <summary>附带登录一起送出的参数</summary>
+        /// <summary>远程地址</summary>
+        public NetUri Remote { get; set; }
+
+        /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
+
+        /// <summary>加密通信指令中负载数据的密匙</summary>
+        public Byte[] Key { get; set; }
         #endregion
 
         #region 构造
-        public LinkClient(String uri) : base(uri) { }
+        public LinkClient(String uri) : base(uri)
+        {
+            Remote = uri;
+
+            // 初始数据
+            var dic = Parameters;
+            dic["OS"] = Runtime.OSName;
+            dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
+
+            var asmx = AssemblyX.Create(Assembly.GetCallingAssembly());
+            dic["Version"] = asmx.Version;
+        }
         #endregion
 
         #region 打开关闭
-        #endregion
+        /// <summary>开始处理数据</summary>
+        public override Boolean Open()
+        {
+            if (Active) return true;
 
-        #region 握手
-        //public async Task<IDictionary<String, Object>> HelloAsync(Object args = null)
-        //{
-        //    var dic = args.ToDictionary();
+            if (Remote == null) throw new ArgumentNullException(nameof(Remote));
 
-        //    if (!dic.ContainsKey("OS")) dic["OS"] = Runtime.OSName;
-        //    if (!dic.ContainsKey("Agent")) dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
+            SetRemote(Remote + "");
 
-        //    try
-        //    {
-        //        var rs = await InvokeAsync<IDictionary<String, Object>>("Hello", dic);
+            var rc4 = new RC4Filter();
+            rc4.GetKey = ctx => Key;
+            Filters.Add(rc4);
 
-        //        return rs;
-        //    }
-        //    catch (ApiException ex)
-        //    {
-        //        if (ex.Code == 404)
-        //        {
-        //            //OnRedirect(ex.Message);
-        //            return null;
-        //        }
-        //        throw;
-        //    }
-        //}
+            WriteLog("连接令牌服务器 {0}", Remote);
+
+            if (!base.Open()) return false;
+
+            //_timer = new TimerX(TimerCallback, this, 0, 5000);
+
+            return Active;
+        }
         #endregion
 
         #region 登录
@@ -58,17 +73,19 @@ namespace xLink
         public async Task<IDictionary<String, Object>> LoginAsync(String user, String pass)
         {
             if (user.IsNullOrEmpty()) throw new ArgumentNullException(nameof(user), "用户名不能为空！");
-            if (pass.IsNullOrEmpty()) throw new ArgumentNullException(nameof(pass), "密码不能为空！");
+            //if (pass.IsNullOrEmpty()) throw new ArgumentNullException(nameof(pass), "密码不能为空！");
 
-            // 加密随机数
-            var salt = ((Int64)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).GetBytes();
-            var p = salt.RC4(pass.GetBytes()).ToHex();
-            p = salt.ToHex() + p;
+            // 加密随机数，密码为空表示注册
+            var p = "";
+            if (!pass.IsNullOrEmpty())
+            {
+                var salt = ((Int64)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).GetBytes();
+                p = salt.RC4(pass.GetBytes()).ToHex();
+                p = salt.ToHex() + p;
+            }
 
             // 克隆一份，避免修改原始数据
             var dic = Parameters.ToDictionary(e => e.Key, e => e.Value);
-            dic["OS"] = Runtime.OSName;
-            dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
             dic.Merge(new { user, pass = p });
 
             // 声明响应
@@ -126,10 +143,30 @@ namespace xLink
         }
         #endregion
 
-        #region 注册
-        #endregion
-
         #region 心跳
+        /// <summary>时间差</summary>
+        public TimeSpan Span { get; private set; }
+
+        /// <summary>发送心跳</summary>
+        /// <param name="args"></param>
+        /// <returns>是否收到成功响应</returns>
+        public virtual async Task<IDictionary<String, Object>> PingAsync(Object args = null)
+        {
+            var dic = args.ToDictionary();
+            if (!dic.ContainsKey("Time")) dic["Time"] = DateTime.Now;
+
+            var rs = await InvokeAsync<IDictionary<String, Object>>("Ping", dic);
+
+            // 获取服务器时间
+            Object dt;
+            if (rs.TryGetValue("ServerTime", out dt))
+            {
+                // 保存时间差，这样子以后只需要拿本地当前时间加上时间差，即可得到服务器时间
+                Span = dt.ToDateTime() - DateTime.Now;
+            }
+
+            return rs;
+        }
         #endregion
 
         #region 业务
@@ -143,11 +180,7 @@ namespace xLink
         /// <returns></returns>
         public override async Task<TResult> InvokeAsync<TResult>(String action, Object args = null)
         {
-            //if (Info == null) return action == "Hello";
-            if (!Logined)
-            {
-                if (action != "Login" && action != "Register") throw new Exception("未登录，无权调用" + action);
-            }
+            if (!Logined && action != "Login") throw new Exception("未登录，无权调用" + action);
 
             return await base.InvokeAsync<TResult>(action, args);
         }

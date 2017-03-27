@@ -129,18 +129,10 @@ namespace xLink.DeviceClient
 
             var sc = ac.Client.GetService<ISocketClient>();
             sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
-            //sc.MessageReceived += OnReceived;
-
             sc.LogSend = cfg.ShowSend;
             sc.LogReceive = cfg.ShowReceive;
 
-            //client.Packet = _Packet;
-
-            //client.Open();
-
             "已连接服务器".SpeechTip();
-
-            //if (uri.Port == 0) uri.Port = client.Port;
 
             _Client = ac;
             ac.Open();
@@ -370,27 +362,39 @@ namespace xLink.DeviceClient
         #endregion
 
         #region 业务动作
-        private async void btnHello_Click(Object sender, EventArgs e)
+        private async void btnLogin_Click(Object sender, EventArgs e)
         {
-            var dic = new Dictionary<String, Object>();
-            if (!txtDeviceID.Text.IsNullOrEmpty()) dic["DeviceID"] = txtDeviceID.Text;
+            var cfg = DeviceConfig.Current;
+            var user = cfg.DeviceID;
+            var pass = cfg.Password;
 
-            var rs = await _Client.HelloAsync(dic);
+            // 如果没有编码或者密码，则使用MAC注册
+            if (user.IsNullOrEmpty() || pass.IsNullOrEmpty())
+            {
+                user = NetHelper.GetMacs().FirstOrDefault()?.ToHex();
+                pass = null;
+            }
+
+            var rs = await _Client.LoginAsync(user, pass);
+
+            // 注册成功，需要保存密码
+            if (rs.ContainsKey("User"))
+            {
+                cfg.DeviceID = rs["User"] + "";
+                cfg.Password = rs["Pass"] + "";
+                cfg.Save();
+
+                XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.DeviceID, cfg.Password);
+            }
+            else
+            {
+                XTrace.WriteLine("登录成功！");
+            }
         }
 
-        private void btnLogin_Click(Object sender, EventArgs e)
+        private async void btnPing_Click(Object sender, EventArgs e)
         {
-
-        }
-
-        private void btnRegister_Click(Object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnPing_Click(Object sender, EventArgs e)
-        {
-
+            await _Client.PingAsync();
         }
         #endregion
     }

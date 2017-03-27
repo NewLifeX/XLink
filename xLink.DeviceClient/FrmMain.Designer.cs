@@ -66,9 +66,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnPing = new System.Windows.Forms.Button();
-            this.btnRegister = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.btnHello = new System.Windows.Forms.Button();
             this.lbStatus = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.gbSend.SuspendLayout();
@@ -190,19 +188,19 @@
             this.miHexSend,
             this.mi清空2});
             this.menuSend.Name = "menuSend";
-            this.menuSend.Size = new System.Drawing.Size(153, 70);
+            this.menuSend.Size = new System.Drawing.Size(123, 48);
             // 
             // miHexSend
             // 
             this.miHexSend.Name = "miHexSend";
-            this.miHexSend.Size = new System.Drawing.Size(152, 22);
+            this.miHexSend.Size = new System.Drawing.Size(122, 22);
             this.miHexSend.Text = "Hex发送";
             this.miHexSend.Click += new System.EventHandler(this.miHex发送_Click);
             // 
             // mi清空2
             // 
             this.mi清空2.Name = "mi清空2";
-            this.mi清空2.Size = new System.Drawing.Size(152, 22);
+            this.mi清空2.Size = new System.Drawing.Size(122, 22);
             this.mi清空2.Text = "清空";
             this.mi清空2.Click += new System.EventHandler(this.mi清空2_Click);
             // 
@@ -416,9 +414,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnPing);
-            this.groupBox1.Controls.Add(this.btnRegister);
             this.groupBox1.Controls.Add(this.btnLogin);
-            this.groupBox1.Controls.Add(this.btnHello);
             this.groupBox1.Controls.Add(this.lbStatus);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(6, 47);
@@ -430,7 +426,7 @@
             // 
             // btnPing
             // 
-            this.btnPing.Location = new System.Drawing.Point(16, 149);
+            this.btnPing.Location = new System.Drawing.Point(16, 79);
             this.btnPing.Name = "btnPing";
             this.btnPing.Size = new System.Drawing.Size(99, 29);
             this.btnPing.TabIndex = 5;
@@ -438,35 +434,15 @@
             this.btnPing.UseVisualStyleBackColor = true;
             this.btnPing.Click += new System.EventHandler(this.btnPing_Click);
             // 
-            // btnRegister
-            // 
-            this.btnRegister.Location = new System.Drawing.Point(16, 114);
-            this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(99, 29);
-            this.btnRegister.TabIndex = 4;
-            this.btnRegister.Text = "注册";
-            this.btnRegister.UseVisualStyleBackColor = true;
-            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
-            // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(16, 79);
+            this.btnLogin.Location = new System.Drawing.Point(16, 44);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(99, 29);
             this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "登录";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
-            // btnHello
-            // 
-            this.btnHello.Location = new System.Drawing.Point(15, 44);
-            this.btnHello.Name = "btnHello";
-            this.btnHello.Size = new System.Drawing.Size(99, 29);
-            this.btnHello.TabIndex = 2;
-            this.btnHello.Text = "握手";
-            this.btnHello.UseVisualStyleBackColor = true;
-            this.btnHello.Click += new System.EventHandler(this.btnHello_Click);
             // 
             // lbStatus
             // 
@@ -560,9 +536,7 @@
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnPing;
-        private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Button btnHello;
     }
 }
 
