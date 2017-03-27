@@ -22,8 +22,6 @@ namespace xLink.DeviceClient
         public FrmMain()
         {
             InitializeComponent();
-
-            //Icon = IcoHelper.GetIcon("消息");
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)
@@ -48,20 +46,6 @@ namespace xLink.DeviceClient
             UIConfig.Apply(txtReceive);
 
             LoadConfig();
-
-            // 语音识别
-            Task.Factory.StartNew(() =>
-            {
-                var sp = SpeechRecognition.Current;
-                if (!sp.Enable) return;
-
-                sp.Register("打开", () => this.Invoke(Connect))
-                .Register("关闭", () => this.Invoke(Disconnect))
-                .Register("退出", () => Application.Exit())
-                .Register("发送", () => this.Invoke(() => btnSend_Click(null, null)));
-
-                XTrace.WriteLine("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
-            });
         }
         #endregion
 
@@ -82,9 +66,6 @@ namespace xLink.DeviceClient
             numSleep.Value = cfg.SendSleep;
             numThreads.Value = cfg.SendUsers;
             cbColor.Checked = cfg.ColorLog;
-
-            txtDeviceID.Text = cfg.DeviceID;
-            //cbAddr.Text = cfg.Address;
         }
 
         void SaveConfig()
@@ -103,8 +84,6 @@ namespace xLink.DeviceClient
             cfg.SendSleep = (Int32)numSleep.Value;
             cfg.SendUsers = (Int32)numThreads.Value;
             cfg.ColorLog = cbColor.Checked;
-
-            cfg.DeviceID = txtDeviceID.Text;
 
             var addrs = (cfg.Address + "").Split(";").ToList();
             if (!addrs.Contains(cbAddr.Text)) addrs.Add(cbAddr.Text);
@@ -126,6 +105,9 @@ namespace xLink.DeviceClient
             var ac = new LinkClient(uri.ToString());
             ac.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
             ac.Received += OnReceived;
+            ac.UserName = cfg.DeviceID;
+            ac.Password = cfg.Password;
+            ac.Open();
 
             var sc = ac.Client.GetService<ISocketClient>();
             sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
@@ -135,9 +117,9 @@ namespace xLink.DeviceClient
             "已连接服务器".SpeechTip();
 
             _Client = ac;
-            ac.Open();
 
             pnlSetting.Enabled = false;
+            pnlAction.Enabled = true;
             btnConnect.Text = "关闭";
 
             // 添加地址
@@ -151,7 +133,7 @@ namespace xLink.DeviceClient
 
             _timer = new TimerX(ShowStat, null, 5000, 5000);
 
-            BizLog = TextFileLog.Create("MessageLog");
+            BizLog = TextFileLog.Create("DeviceLog");
         }
 
         void Disconnect()
@@ -170,6 +152,7 @@ namespace xLink.DeviceClient
             }
 
             pnlSetting.Enabled = true;
+            pnlAction.Enabled = false;
             btnConnect.Text = "打开";
         }
 
@@ -373,13 +356,15 @@ namespace xLink.DeviceClient
                 pass = null;
             }
 
-            var rs = await _Client.LoginAsync(user, pass);
+            _Client.UserName = user;
+            _Client.Password = pass;
+            var rs = await _Client.LoginAsync();
 
             // 注册成功，需要保存密码
-            if (rs.ContainsKey("User"))
+            if (pass == null)
             {
-                cfg.DeviceID = rs["User"] + "";
-                cfg.Password = rs["Pass"] + "";
+                cfg.DeviceID = _Client.UserName;
+                cfg.Password = _Client.Password;
                 cfg.Save();
 
                 XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.DeviceID, cfg.Password);
@@ -395,5 +380,11 @@ namespace xLink.DeviceClient
             await _Client.PingAsync();
         }
         #endregion
+
+        private async void btnTest_Click(Object sender, EventArgs e)
+        {
+            var rs = await _Client.InvokeAsync<String>("Api/All");
+            XTrace.WriteLine(rs);
+        }
     }
 }

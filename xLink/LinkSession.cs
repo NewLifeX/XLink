@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NewLife;
@@ -64,16 +65,8 @@ namespace xLink
             var ss = ctx?.Session;
             if (ss == null) return null;
 
-            // var ts = ss["Controller"] as LinkSession;
-            return "123".ToHex();
-        }
-
-        /// <summary>随机生产新的密钥</summary>
-        /// <param name="len"></param>
-        protected virtual void NewKey(Int32 len = 8)
-        {
-            // 随机密钥
-            Key = Rand.NextBytes(len);
+            var ts = ss["Controller"] as LinkSession;
+            return ts.Key;
         }
 
         /// <summary>设置活跃时间</summary>
@@ -85,7 +78,7 @@ namespace xLink
         }
         #endregion
 
-        #region 消息分流处理
+        #region 异常处理
         /// <summary>抛出异常</summary>
         /// <param name="errCode"></param>
         /// <param name="msg"></param>
@@ -115,11 +108,14 @@ namespace xLink
             {
                 var old = user;
                 user = user.GetBytes().Crc().GetBytes().ToHex();
-                pass = Rand.NextString(8);
+                truepass = Rand.NextString(8);
 
                 Name = user;
-                WriteLog("注册 {0} => {1}/{2}", old, user, pass);
-                truepass = pass;
+                WriteLog("注册 {0} => {1}/{2}", old, user, truepass);
+
+                var f = "Pass\\{0}.key".F(user).GetFullPath();
+                f.EnsureDirectory();
+                File.WriteAllText(f, truepass);
             }
             else
             {
@@ -132,16 +128,18 @@ namespace xLink
                 WriteLog("登录 {0} => {1}/{2}", user, salt.ToHex(), pass);
 
                 // 验证密码
+                var f = "Pass\\{0}.key".F(user).GetFullPath();
+                truepass = File.ReadAllText(f);
                 if (salt.RC4(truepass.GetBytes()).ToHex() != pass) throw Error(4, "密码错误");
             }
 
             // 随机密钥
-            NewKey();
+            Key = Rand.NextBytes(8);
 
             var rs = new
             {
                 // 加密返回的密钥
-                Key = Key.RC4(truepass.GetBytes())
+                Key = Key.RC4(truepass.GetBytes()).ToHex()
             };
 
             var dic = rs.ToDictionary();

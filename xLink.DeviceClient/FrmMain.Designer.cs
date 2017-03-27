@@ -45,9 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cbColor = new System.Windows.Forms.CheckBox();
             this.pnlSetting = new System.Windows.Forms.Panel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.txtDeviceID = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.gbReceive = new System.Windows.Forms.GroupBox();
@@ -64,11 +61,10 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.btnConnect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnPing = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.lbStatus = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.pnlAction = new System.Windows.Forms.Panel();
+            this.btnTest = new System.Windows.Forms.Button();
             this.gbSend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThreads)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSleep)).BeginInit();
@@ -77,7 +73,7 @@
             this.pnlSetting.SuspendLayout();
             this.gbReceive.SuspendLayout();
             this.menuReceive.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.pnlAction.SuspendLayout();
             this.SuspendLayout();
             // 
             // label7
@@ -254,7 +250,7 @@
             this.cbColor.AutoSize = true;
             this.cbColor.Checked = true;
             this.cbColor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbColor.Location = new System.Drawing.Point(497, 19);
+            this.cbColor.Location = new System.Drawing.Point(224, 19);
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(72, 16);
             this.cbColor.TabIndex = 19;
@@ -263,45 +259,12 @@
             // 
             // pnlSetting
             // 
-            this.pnlSetting.Controls.Add(this.checkBox1);
-            this.pnlSetting.Controls.Add(this.txtDeviceID);
-            this.pnlSetting.Controls.Add(this.label1);
             this.pnlSetting.Controls.Add(this.cbAddr);
             this.pnlSetting.Controls.Add(this.lbAddr);
             this.pnlSetting.Location = new System.Drawing.Point(6, 12);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(471, 31);
+            this.pnlSetting.Size = new System.Drawing.Size(205, 31);
             this.pnlSetting.TabIndex = 18;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(349, 8);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 16);
-            this.checkBox1.TabIndex = 20;
-            this.checkBox1.Text = "自动发送";
-            this.toolTip1.SetToolTip(this.checkBox1, "默认只生成指令到发送区而不发送");
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // txtDeviceID
-            // 
-            this.txtDeviceID.Location = new System.Drawing.Point(245, 5);
-            this.txtDeviceID.Name = "txtDeviceID";
-            this.txtDeviceID.Size = new System.Drawing.Size(84, 21);
-            this.txtDeviceID.TabIndex = 12;
-            this.txtDeviceID.Text = "ABCD12345678";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(209, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "编码：";
             // 
             // gbReceive
             // 
@@ -309,9 +272,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbReceive.Controls.Add(this.txtReceive);
-            this.gbReceive.Location = new System.Drawing.Point(146, 47);
+            this.gbReceive.Location = new System.Drawing.Point(6, 47);
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.Size = new System.Drawing.Size(512, 293);
+            this.gbReceive.Size = new System.Drawing.Size(652, 293);
             this.gbReceive.TabIndex = 17;
             this.gbReceive.TabStop = false;
             this.gbReceive.Text = "接收区：已接收0字节";
@@ -323,7 +286,7 @@
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(3, 17);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(506, 273);
+            this.txtReceive.Size = new System.Drawing.Size(646, 273);
             this.txtReceive.TabIndex = 1;
             this.txtReceive.Text = "";
             // 
@@ -397,7 +360,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(584, 13);
+            this.btnConnect.Location = new System.Drawing.Point(311, 13);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(67, 29);
             this.btnConnect.TabIndex = 16;
@@ -411,24 +374,11 @@
             this.timer1.Interval = 300;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnPing);
-            this.groupBox1.Controls.Add(this.btnLogin);
-            this.groupBox1.Controls.Add(this.lbStatus);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(6, 47);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(134, 290);
-            this.groupBox1.TabIndex = 21;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "动作区";
-            // 
             // btnPing
             // 
-            this.btnPing.Location = new System.Drawing.Point(16, 79);
+            this.btnPing.Location = new System.Drawing.Point(71, 2);
             this.btnPing.Name = "btnPing";
-            this.btnPing.Size = new System.Drawing.Size(99, 29);
+            this.btnPing.Size = new System.Drawing.Size(62, 29);
             this.btnPing.TabIndex = 5;
             this.btnPing.Text = "心跳";
             this.btnPing.UseVisualStyleBackColor = true;
@@ -436,39 +386,41 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(16, 44);
+            this.btnLogin.Location = new System.Drawing.Point(3, 2);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(99, 29);
+            this.btnLogin.Size = new System.Drawing.Size(62, 29);
             this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "登录";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // lbStatus
+            // pnlAction
             // 
-            this.lbStatus.AutoSize = true;
-            this.lbStatus.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbStatus.Location = new System.Drawing.Point(56, 19);
-            this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(44, 12);
-            this.lbStatus.TabIndex = 1;
-            this.lbStatus.Text = "未连接";
+            this.pnlAction.Controls.Add(this.btnTest);
+            this.pnlAction.Controls.Add(this.btnPing);
+            this.pnlAction.Controls.Add(this.btnLogin);
+            this.pnlAction.Enabled = false;
+            this.pnlAction.Location = new System.Drawing.Point(391, 12);
+            this.pnlAction.Name = "pnlAction";
+            this.pnlAction.Size = new System.Drawing.Size(260, 31);
+            this.pnlAction.TabIndex = 22;
             // 
-            // label3
+            // btnTest
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 19);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "状态：";
+            this.btnTest.Location = new System.Drawing.Point(139, 2);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(62, 29);
+            this.btnTest.TabIndex = 6;
+            this.btnTest.Text = "测试";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 442);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.pnlAction);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.cbColor);
             this.Controls.Add(this.pnlSetting);
@@ -489,8 +441,7 @@
             this.pnlSetting.PerformLayout();
             this.gbReceive.ResumeLayout(false);
             this.menuReceive.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.pnlAction.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -529,14 +480,10 @@
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtDeviceID;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label lbStatus;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnPing;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Panel pnlAction;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 

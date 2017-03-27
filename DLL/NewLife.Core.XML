@@ -532,6 +532,10 @@
             <summary>置顶比较器实例化一个可空字典</summary>
             <param name="comparer"></param>
         </member>
+        <member name="M:NewLife.Collections.NullableDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>实例化一个可空字典</summary>
+            <param name="dic"></param>
+        </member>
         <member name="P:NewLife.Collections.NullableDictionary`2.Item(`0)">
             <summary>获取或设置与指定的属性是否有脏数据。</summary>
             <param name="item"></param>
@@ -9663,6 +9667,13 @@
             <summary>合并字典参数</summary>
             <param name="dic"></param>
             <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Collections.Generic.CollectionHelper.ToNullable``2(System.Collections.Generic.IDictionary{``0,``1})">
+            <summary>转为可空字典</summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="collection"></param>
             <returns></returns>
         </member>
         <member name="T:System.Utility">
