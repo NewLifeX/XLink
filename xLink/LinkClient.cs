@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NewLife;
@@ -10,6 +11,8 @@ namespace xLink
     public class LinkClient : ApiClient
     {
         #region 属性
+        /// <summary>附带登录一起送出的参数</summary>
+        public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
         #endregion
 
         #region 构造
@@ -20,29 +23,29 @@ namespace xLink
         #endregion
 
         #region 握手
-        public async Task<IDictionary<String, Object>> HelloAsync(Object args = null)
-        {
-            var dic = args.ToDictionary();
+        //public async Task<IDictionary<String, Object>> HelloAsync(Object args = null)
+        //{
+        //    var dic = args.ToDictionary();
 
-            if (!dic.ContainsKey("OS")) dic["OS"] = Runtime.OSName;
-            if (!dic.ContainsKey("Agent")) dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
+        //    if (!dic.ContainsKey("OS")) dic["OS"] = Runtime.OSName;
+        //    if (!dic.ContainsKey("Agent")) dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
 
-            try
-            {
-                var rs = await InvokeAsync<IDictionary<String, Object>>("Hello", dic);
+        //    try
+        //    {
+        //        var rs = await InvokeAsync<IDictionary<String, Object>>("Hello", dic);
 
-                return rs;
-            }
-            catch (ApiException ex)
-            {
-                if (ex.Code == 404)
-                {
-                    //OnRedirect(ex.Message);
-                    return null;
-                }
-                throw;
-            }
-        }
+        //        return rs;
+        //    }
+        //    catch (ApiException ex)
+        //    {
+        //        if (ex.Code == 404)
+        //        {
+        //            //OnRedirect(ex.Message);
+        //            return null;
+        //        }
+        //        throw;
+        //    }
+        //}
         #endregion
 
         #region 登录
@@ -52,19 +55,54 @@ namespace xLink
         /// <summary>异步登录</summary>
         /// <param name="user"></param>
         /// <param name="pass"></param>
-        public async Task<Boolean> LoginAsync(String user, String pass)
+        public async Task<IDictionary<String, Object>> LoginAsync(String user, String pass)
         {
             if (user.IsNullOrEmpty()) throw new ArgumentNullException(nameof(user), "用户名不能为空！");
             if (pass.IsNullOrEmpty()) throw new ArgumentNullException(nameof(pass), "密码不能为空！");
-
-            //await CheckHello();
 
             // 加密随机数
             var salt = ((Int64)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).GetBytes();
             var p = salt.RC4(pass.GetBytes()).ToHex();
             p = salt.ToHex() + p;
 
-            var rs = await InvokeAsync<Boolean>("Login", new { user, pass = p });
+            // 克隆一份，避免修改原始数据
+            var dic = Parameters.ToDictionary(e => e.Key, e => e.Value);
+            dic["OS"] = Runtime.OSName;
+            dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
+            dic.Merge(new { user, pass = p });
+
+            // 声明响应
+            IDictionary<String, Object> rs = null;
+            var enc = Encoder;
+            var code = 0;
+            Object result = null;
+            while (true)
+            {
+                //var rs = await InvokeAsync<IDictionary<String, Object>>("Login", new { user, pass = p });
+                rs = await InvokeAsync<IDictionary<String, Object>>("Login", dic);
+
+                enc.TryGet(rs, out code, out result);
+
+                // 检查重定向
+                if (code == 302)
+                {
+                    //OnRedirect(ex.Message);
+                    // 解析目标地址，合并参数，断开当前连接，建立新连接
+                    if (rs.TryGetValue("Location", out result) && result != null)
+                    {
+                        dic.Merge(rs);
+
+                        var uri = result + "";
+                        Client.TryDispose();
+                        SetRemote(uri);
+
+                        // 重新登录
+                        continue;
+                    }
+                }
+
+                break;
+            }
 
             //Token = rs.Token;
             //Key = rs.Key.RC4(pass.GetBytes());
