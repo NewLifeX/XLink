@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using NewLife;
-using NewLife.Collections;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
@@ -55,7 +54,7 @@ namespace xLink
             rc4.GetKey = ctx => Key;
             Filters.Add(rc4);
 
-            WriteLog("连接令牌服务器 {0}", Remote);
+            WriteLog("连接服务器 {0}", Remote);
 
             if (!base.Open()) return false;
 
