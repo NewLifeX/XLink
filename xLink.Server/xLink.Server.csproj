@@ -35,9 +35,6 @@
     <ApplicationIcon>link.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewLife.Core">
-      <HintPath>..\DLL\NewLife.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
@@ -57,17 +54,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\xLink.Device\xLink.Device.csproj">
-      <Project>{92f0ec15-0052-494b-b850-51848bb84968}</Project>
-      <Name>xLink.Device</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\xLink.Master\xLink.Master.csproj">
-      <Project>{6e040324-a476-47ba-8bbb-379b76cc02d6}</Project>
-      <Name>xLink.Master</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\xLink.User\xLink.User.csproj">
-      <Project>{680041bf-43e3-4059-911d-5a858a73f5b0}</Project>
-      <Name>xLink.User</Name>
+    <ProjectReference Include="..\..\Src\NewLife.Core\NewLife.Core.csproj">
+      <Project>{5813c22e-eeb3-4dee-a45c-bb218041193a}</Project>
+      <Name>NewLife.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\xLink\xLink.csproj">
       <Project>{8df06706-ad6e-4f75-99a8-3f610f0fbe7c}</Project>

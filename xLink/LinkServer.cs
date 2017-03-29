@@ -46,7 +46,7 @@ namespace xLink
             dic["Version"] = asmx.Version;
 
             // 注册
-            Manager.Register<LinkSession>(true);
+            //Manager.Register<LinkSession>(true);
         }
 
         /// <summary>销毁</summary>
@@ -79,11 +79,6 @@ namespace xLink
 
             // 默认6分钟超时
             // svr.SessionTimeout = 6 * 60;
-
-            // 加密
-            var rc4 = new RC4Filter();
-            rc4.GetKey = LinkSession.GetKey;
-            Filters.Add(rc4);
 
             // 默认打开数据库日志
             //var dbLog = new TokenLogProvider();

@@ -6,10 +6,8 @@ using System.Windows.Forms;
 using NewLife.Log;
 using NewLife.Messaging;
 using NewLife.Net;
-using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Threading;
-using NewLife.Windows;
 
 namespace xLink.DeviceClient
 {
@@ -107,6 +105,7 @@ namespace xLink.DeviceClient
             ac.Received += OnReceived;
             ac.UserName = cfg.DeviceID;
             ac.Password = cfg.Password;
+            ac.Controller = "Device";
             ac.Open();
 
             var sc = ac.Client.GetService<ISocketClient>();
@@ -356,15 +355,16 @@ namespace xLink.DeviceClient
                 pass = null;
             }
 
-            _Client.UserName = user;
-            _Client.Password = pass;
-            var rs = await _Client.LoginAsync();
+            var ct = _Client;
+            ct.UserName = user;
+            ct.Password = pass;
+            var rs = await ct.LoginAsync();
 
             // 注册成功，需要保存密码
             if (pass == null)
             {
-                cfg.DeviceID = _Client.UserName;
-                cfg.Password = _Client.Password;
+                cfg.DeviceID = ct.UserName;
+                cfg.Password = ct.Password;
                 cfg.Save();
 
                 XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.DeviceID, cfg.Password);

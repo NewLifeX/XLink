@@ -1,4 +1,5 @@
 ﻿using System;
+using NewLife.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,6 +70,12 @@ namespace xLink.Server
 #if DEBUG
             Svr.SetLog(set.Debug, set.SocketDebug, true, true);
 #endif
+
+            // 遍历注册各服务控制器
+            foreach (var item in typeof(LinkSession).GetAllSubclasses(true))
+            {
+                Svr.Manager.Register(item, null, true);
+            }
 
             Svr.Start();
 

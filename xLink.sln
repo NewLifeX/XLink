@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink", "xLink\xLink.csproj", "{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}"
 EndProject
@@ -20,36 +20,57 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{E9E982D4
 		Readme.MD = Readme.MD
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewLife.Core", "..\Src\NewLife.Core\NewLife.Core.csproj", "{5813C22E-EEB3-4DEE-A45C-BB218041193A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		NET4|Any CPU = NET4|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}.NET4|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}.NET4|Any CPU.Build.0 = Release|Any CPU
 		{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F51C838F-757F-415B-8968-94E3C9029D82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F51C838F-757F-415B-8968-94E3C9029D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F51C838F-757F-415B-8968-94E3C9029D82}.NET4|Any CPU.ActiveCfg = Release|Any CPU
+		{F51C838F-757F-415B-8968-94E3C9029D82}.NET4|Any CPU.Build.0 = Release|Any CPU
 		{F51C838F-757F-415B-8968-94E3C9029D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F51C838F-757F-415B-8968-94E3C9029D82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E040324-A476-47BA-8BBB-379B76CC02D6}.NET4|Any CPU.ActiveCfg = Release|Any CPU
+		{6E040324-A476-47BA-8BBB-379B76CC02D6}.NET4|Any CPU.Build.0 = Release|Any CPU
 		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92F0EC15-0052-494B-B850-51848BB84968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92F0EC15-0052-494B-B850-51848BB84968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92F0EC15-0052-494B-B850-51848BB84968}.NET4|Any CPU.ActiveCfg = Release|Any CPU
+		{92F0EC15-0052-494B-B850-51848BB84968}.NET4|Any CPU.Build.0 = Release|Any CPU
 		{92F0EC15-0052-494B-B850-51848BB84968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92F0EC15-0052-494B-B850-51848BB84968}.Release|Any CPU.Build.0 = Release|Any CPU
 		{680041BF-43E3-4059-911D-5A858A73F5B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{680041BF-43E3-4059-911D-5A858A73F5B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{680041BF-43E3-4059-911D-5A858A73F5B0}.NET4|Any CPU.ActiveCfg = Release|Any CPU
+		{680041BF-43E3-4059-911D-5A858A73F5B0}.NET4|Any CPU.Build.0 = Release|Any CPU
 		{680041BF-43E3-4059-911D-5A858A73F5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{680041BF-43E3-4059-911D-5A858A73F5B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.NET4|Any CPU.ActiveCfg = Release|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.NET4|Any CPU.Build.0 = Release|Any CPU
 		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.NET4|Any CPU.ActiveCfg = NET4|Any CPU
+		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.NET4|Any CPU.Build.0 = NET4|Any CPU
+		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
