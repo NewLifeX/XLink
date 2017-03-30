@@ -5897,8 +5897,26 @@
         </member>
         <member name="M:NewLife.Remoting.ApiHost.Register(System.Object,System.String)">
             <summary>注册服务</summary>
-            <param name="controller">控制器对象或类型</param>
+            <param name="controller">控制器对象</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiHost.Register(System.Type,System.String)">
+            <summary>注册服务</summary>
+            <param name="type">控制器类型</param>
+            <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
+        </member>
+        <member name="P:NewLife.Remoting.ApiHost.Encrypted">
+            <summary>是否加密，默认true</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiHost.Compressed">
+            <summary>是否压缩，默认true</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiHost.SetFilter">
+            <summary>设置过滤器</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiHost.GetKeyFunc">
+            <summary>获取通信密钥的委托</summary>
+            <returns></returns>
         </member>
         <member name="E:NewLife.Remoting.ApiHost.Received">
             <summary>收到请求</summary>
@@ -6186,6 +6204,12 @@
         <member name="P:NewLife.Remoting.IApiHost.IsReusable">
             <summary>是否在会话上复用控制器。复用控制器可确保同一个会话多次请求路由到同一个控制器对象实例</summary>
         </member>
+        <member name="P:NewLife.Remoting.IApiHost.Encrypted">
+            <summary>是否加密，默认true</summary>
+        </member>
+        <member name="P:NewLife.Remoting.IApiHost.Compressed">
+            <summary>是否压缩，默认true</summary>
+        </member>
         <member name="E:NewLife.Remoting.IApiHost.Received">
             <summary>收到请求</summary>
         </member>
@@ -6245,10 +6269,17 @@
             <param name="requireApi">是否要求Api特性</param>
             <typeparam name="TService"></typeparam>
         </member>
-        <member name="M:NewLife.Remoting.IApiManager.Register(System.Object,System.String)">
+        <member name="M:NewLife.Remoting.IApiManager.Register(System.Object,System.String,System.Boolean)">
             <summary>注册服务</summary>
-            <param name="controller">控制器对象或类型</param>
+            <param name="controller">控制器对象</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
+            <param name="requireApi">是否要求Api特性</param>
+        </member>
+        <member name="M:NewLife.Remoting.IApiManager.Register(System.Type,System.String,System.Boolean)">
+            <summary>注册服务</summary>
+            <param name="type">控制器类型</param>
+            <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
+            <param name="requireApi">是否要求Api特性</param>
         </member>
         <member name="M:NewLife.Remoting.IApiManager.Register(System.Reflection.MethodInfo)">
             <summary>注册服务</summary>
@@ -6267,10 +6298,17 @@
             <typeparam name="TService"></typeparam>
             <param name="requireApi">是否要求Api特性</param>
         </member>
-        <member name="M:NewLife.Remoting.ApiManager.Register(System.Object,System.String)">
+        <member name="M:NewLife.Remoting.ApiManager.Register(System.Object,System.String,System.Boolean)">
             <summary>注册服务</summary>
-            <param name="controller">控制器对象或类型</param>
+            <param name="controller">控制器对象</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
+            <param name="requireApi">是否要求Api特性</param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiManager.Register(System.Type,System.String,System.Boolean)">
+            <summary>注册服务</summary>
+            <param name="type">控制器类型</param>
+            <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
+            <param name="requireApi">是否要求Api特性</param>
         </member>
         <member name="M:NewLife.Remoting.ApiManager.Register(System.Reflection.MethodInfo)">
             <summary>注册服务</summary>
@@ -6390,6 +6428,58 @@
         <member name="M:NewLife.Remoting.ApiClient.NewLife#Remoting#IApiSession#CreateMessage(NewLife.Data.Packet)">
             <summary>创建消息</summary>
             <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.UserName">
+            <summary>用户名</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.Password">
+            <summary>密码</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.Logined">
+            <summary>是否已登录</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.LoginAction">
+            <summary>登录动作名</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.LoginAsync">
+            <summary>异步登录</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.OnPreLogin">
+            <summary>预登录，可继承修改登录参数构造方式</summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.OnLogin(System.Object)">
+            <summary>执行登录，可继承修改登录动作</summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.Delay">
+            <summary>调用响应延迟，毫秒</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.Span">
+            <summary>服务端与客户端的时间差</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.PingAction">
+            <summary>心跳动作名</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.PingAsync(System.Object)">
+            <summary>发送心跳</summary>
+            <param name="args"></param>
+            <returns>是否收到成功响应</returns>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.Timer">
+            <summary>定时器</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.OnTimer(System.Object)">
+            <summary>定时执行登录或心跳</summary>
+            <param name="state"></param>
+        </member>
+        <member name="P:NewLife.Remoting.ApiClient.Key">
+            <summary>加密通信指令中负载数据的密匙</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.GetKeyFunc">
+            <summary>获取通信密钥的委托</summary>
             <returns></returns>
         </member>
         <member name="M:NewLife.Remoting.ApiClient.GetService(System.Type)">
@@ -6550,6 +6640,10 @@
         <member name="M:NewLife.Remoting.ApiServer.Stop(System.String)">
             <summary>停止服务</summary>
             <param name="reason">关闭原因。便于日志分析</param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiServer.GetKeyFunc">
+            <summary>获取通信密钥的委托</summary>
+            <returns></returns>
         </member>
         <member name="M:NewLife.Remoting.ApiServer.GetService(System.Type)">
             <summary>获取服务提供者</summary>
@@ -9657,10 +9751,12 @@
             <param name="target"></param>
             <returns></returns>
         </member>
-        <member name="M:System.Collections.Generic.CollectionHelper.Merge(System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)">
+        <member name="M:System.Collections.Generic.CollectionHelper.Merge(System.Collections.Generic.IDictionary{System.String,System.Object},System.Object,System.Boolean,System.String[])">
             <summary>合并字典参数</summary>
-            <param name="dic"></param>
-            <param name="target"></param>
+            <param name="dic">字典</param>
+            <param name="target">目标对象</param>
+            <param name="overwrite">是否覆盖同名参数</param>
+            <param name="excludes">排除项</param>
             <returns></returns>
         </member>
         <member name="M:System.Collections.Generic.CollectionHelper.ToNullable``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IEqualityComparer{``0})">
