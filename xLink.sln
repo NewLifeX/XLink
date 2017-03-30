@@ -13,14 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.Device", "xLink.Devic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.User", "xLink.User\xLink.User.csproj", "{680041BF-43E3-4059-911D-5A858A73F5B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.DeviceClient", "xLink.DeviceClient\xLink.DeviceClient.csproj", "{9B82E70B-389D-4328-A5E2-BE2837072C38}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{E9E982D4-367F-4305-ABDF-3B590673DADD}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.MD = Readme.MD
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewLife.Core", "..\Src\NewLife.Core\NewLife.Core.csproj", "{5813C22E-EEB3-4DEE-A45C-BB218041193A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.Client", "xLink.Client\xLink.Client.csproj", "{9B82E70B-389D-4328-A5E2-BE2837072C38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,18 +59,18 @@ Global
 		{680041BF-43E3-4059-911D-5A858A73F5B0}.NET4|Any CPU.Build.0 = Release|Any CPU
 		{680041BF-43E3-4059-911D-5A858A73F5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{680041BF-43E3-4059-911D-5A858A73F5B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B82E70B-389D-4328-A5E2-BE2837072C38}.NET4|Any CPU.ActiveCfg = Release|Any CPU
-		{9B82E70B-389D-4328-A5E2-BE2837072C38}.NET4|Any CPU.Build.0 = Release|Any CPU
-		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.NET4|Any CPU.ActiveCfg = NET4|Any CPU
 		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.NET4|Any CPU.Build.0 = NET4|Any CPU
 		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5813C22E-EEB3-4DEE-A45C-BB218041193A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.NET4|Any CPU.ActiveCfg = Release|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.NET4|Any CPU.Build.0 = Release|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
