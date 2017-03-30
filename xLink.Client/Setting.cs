@@ -6,17 +6,21 @@ using NewLife.Xml;
 
 namespace xLink.Client
 {
-    /// <summary>设备配置</summary>
-    [XmlConfigFile("Config\\Device.config")]
-    public class DeviceConfig : XmlConfig<DeviceConfig>
+    /// <summary>配置</summary>
+    [XmlConfigFile("Config\\Client.config")]
+    public class Setting : XmlConfig<Setting>
     {
         /// <summary>设备编码</summary>
         [Description("设备编码")]
-        public String DeviceID { get; set; } = "";
+        public String UserName { get; set; } = "";
 
-        /// <summary>设备密码</summary>
-        [Description("设备密码")]
+        /// <summary>密码</summary>
+        [Description("密码")]
         public String Password { get; set; } = "";
+
+        /// <summary>模式</summary>
+        [Description("模式")]
+        public String Mode { get; set; } = "User";
 
         /// <summary>地址</summary>
         [Description("地址")]
@@ -86,7 +90,7 @@ namespace xLink.Client
         [Description("扩展数据")]
         public String Extend { get; set; } = "";
 
-        public DeviceConfig()
+        public Setting()
         {
         }
     }

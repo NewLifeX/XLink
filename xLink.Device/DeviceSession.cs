@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace xLink.Device
 {
     /// <summary>设备会话</summary>
     [Api("Device")]
+    [DisplayName("设备")]
     public class DeviceSession : LinkSession
     {
     }

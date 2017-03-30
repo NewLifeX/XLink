@@ -33,7 +33,9 @@ namespace xLink.Client
             gbReceive.Tag = gbReceive.Text;
             gbSend.Tag = gbSend.Text;
 
-            var cfg = DeviceConfig.Current;
+            var cfg = Setting.Current;
+            cbMode.SelectedItem = cfg.Mode;
+
             if (!cfg.Address.IsNullOrEmpty())
             {
                 //cbAddr.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -50,7 +52,7 @@ namespace xLink.Client
         #region 加载/保存 配置
         void LoadConfig()
         {
-            var cfg = DeviceConfig.Current;
+            var cfg = Setting.Current;
             mi显示应用日志.Checked = cfg.ShowLog;
             mi显示网络日志.Checked = cfg.ShowSocketLog;
             mi显示接收字符串.Checked = cfg.ShowReceiveString;
@@ -68,7 +70,7 @@ namespace xLink.Client
 
         void SaveConfig()
         {
-            var cfg = DeviceConfig.Current;
+            var cfg = Setting.Current;
             cfg.ShowLog = mi显示应用日志.Checked;
             cfg.ShowSocketLog = mi显示网络日志.Checked;
             cfg.ShowReceiveString = mi显示接收字符串.Checked;
@@ -82,6 +84,8 @@ namespace xLink.Client
             cfg.SendSleep = (Int32)numSleep.Value;
             cfg.SendUsers = (Int32)numThreads.Value;
             cfg.ColorLog = cbColor.Checked;
+
+            cfg.Mode = cbMode.Text;
 
             var addrs = (cfg.Address + "").Split(";").ToList();
             if (!addrs.Contains(cbAddr.Text)) addrs.Add(cbAddr.Text);
@@ -98,15 +102,17 @@ namespace xLink.Client
 
             var uri = new NetUri(cbAddr.Text);
             _Packet = new DefaultPacket();
-            var cfg = DeviceConfig.Current;
+            var cfg = Setting.Current;
+            var mode = cbMode.Text;
 
             var ac = new LinkClient(uri.ToString());
             ac.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
             ac.Received += OnReceived;
-            ac.UserName = cfg.DeviceID;
+            ac.UserName = cfg.UserName;
             ac.Password = cfg.Password;
-            ac.Controller = "Device";
-            ac.Open();
+            ac.LoginAction = mode + "/Login";
+            ac.PingAction = mode + "/Ping";
+            if (!ac.Open()) return;
 
             var sc = ac.Client.GetService<ISocketClient>();
             sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
@@ -159,7 +165,7 @@ namespace xLink.Client
         String _lastStat;
         void ShowStat(Object state)
         {
-            if (!DeviceConfig.Current.ShowStat) return;
+            if (!Setting.Current.ShowStat) return;
 
             var msg = "";
             if (_Client != null)
@@ -199,7 +205,7 @@ namespace xLink.Client
                 session = ns.Session;
             }
 
-            if (DeviceConfig.Current.ShowReceiveString)
+            if (Setting.Current.ShowReceiveString)
             {
                 var line = e.Message.Payload.ToStr();
                 XTrace.WriteLine(line);
@@ -254,7 +260,7 @@ namespace xLink.Client
 
             SaveConfig();
 
-            var cfg = DeviceConfig.Current;
+            var cfg = Setting.Current;
 
             // 处理换行
             str = str.Replace("\n", "\r\n");
@@ -325,27 +331,27 @@ namespace xLink.Client
         private void mi显示统计信息_Click(Object sender, EventArgs e)
         {
             var mi = sender as ToolStripMenuItem;
-            DeviceConfig.Current.ShowStat = mi.Checked = !mi.Checked;
+            Setting.Current.ShowStat = mi.Checked = !mi.Checked;
         }
 
         private void mi显示接收字符串_Click(Object sender, EventArgs e)
         {
             var mi = sender as ToolStripMenuItem;
-            DeviceConfig.Current.ShowReceiveString = mi.Checked = !mi.Checked;
+            Setting.Current.ShowReceiveString = mi.Checked = !mi.Checked;
         }
 
         private void miHex发送_Click(Object sender, EventArgs e)
         {
             var mi = sender as ToolStripMenuItem;
-            DeviceConfig.Current.HexSend = mi.Checked = !mi.Checked;
+            Setting.Current.HexSend = mi.Checked = !mi.Checked;
         }
         #endregion
 
         #region 业务动作
         private async void btnLogin_Click(Object sender, EventArgs e)
         {
-            var cfg = DeviceConfig.Current;
-            var user = cfg.DeviceID;
+            var cfg = Setting.Current;
+            var user = cfg.UserName;
             var pass = cfg.Password;
 
             // 如果没有编码或者密码，则使用MAC注册
@@ -363,11 +369,11 @@ namespace xLink.Client
             // 注册成功，需要保存密码
             if (pass == null)
             {
-                cfg.DeviceID = ct.UserName;
+                cfg.UserName = ct.UserName;
                 cfg.Password = ct.Password;
                 cfg.Save();
 
-                XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.DeviceID, cfg.Password);
+                XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.UserName, cfg.Password);
             }
             else
             {

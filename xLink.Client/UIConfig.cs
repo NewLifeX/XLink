@@ -37,7 +37,7 @@ namespace xLink.Client
 
         public static UIConfig Load()
         {
-            var cfg = DeviceConfig.Current;
+            var cfg = Setting.Current;
             if (cfg.Extend.IsNullOrWhiteSpace()) return null;
 
             Byte[] buf = null;
@@ -79,7 +79,7 @@ namespace xLink.Client
 
             binary.Write(this);
 
-            var cfg = DeviceConfig.Current;
+            var cfg = Setting.Current;
             cfg.Extend = binary.GetBytes().ToBase64(0, 0, true);
             cfg.Save();
         }

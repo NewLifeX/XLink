@@ -65,6 +65,7 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.pnlAction = new System.Windows.Forms.Panel();
             this.btnTest = new System.Windows.Forms.Button();
+            this.cbMode = new System.Windows.Forms.ComboBox();
             this.gbSend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThreads)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSleep)).BeginInit();
@@ -89,7 +90,7 @@
             // cbAddr
             // 
             this.cbAddr.FormattingEnabled = true;
-            this.cbAddr.Location = new System.Drawing.Point(45, 5);
+            this.cbAddr.Location = new System.Drawing.Point(117, 7);
             this.cbAddr.Name = "cbAddr";
             this.cbAddr.Size = new System.Drawing.Size(149, 20);
             this.cbAddr.TabIndex = 10;
@@ -97,7 +98,7 @@
             // lbAddr
             // 
             this.lbAddr.AutoSize = true;
-            this.lbAddr.Location = new System.Drawing.Point(8, 9);
+            this.lbAddr.Location = new System.Drawing.Point(80, 11);
             this.lbAddr.Name = "lbAddr";
             this.lbAddr.Size = new System.Drawing.Size(41, 12);
             this.lbAddr.TabIndex = 7;
@@ -250,7 +251,7 @@
             this.cbColor.AutoSize = true;
             this.cbColor.Checked = true;
             this.cbColor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbColor.Location = new System.Drawing.Point(224, 19);
+            this.cbColor.Location = new System.Drawing.Point(281, 19);
             this.cbColor.Name = "cbColor";
             this.cbColor.Size = new System.Drawing.Size(72, 16);
             this.cbColor.TabIndex = 19;
@@ -259,11 +260,12 @@
             // 
             // pnlSetting
             // 
+            this.pnlSetting.Controls.Add(this.cbMode);
             this.pnlSetting.Controls.Add(this.cbAddr);
             this.pnlSetting.Controls.Add(this.lbAddr);
             this.pnlSetting.Location = new System.Drawing.Point(6, 12);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(205, 31);
+            this.pnlSetting.Size = new System.Drawing.Size(269, 31);
             this.pnlSetting.TabIndex = 18;
             // 
             // gbReceive
@@ -360,7 +362,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(311, 13);
+            this.btnConnect.Location = new System.Drawing.Point(359, 13);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(67, 29);
             this.btnConnect.TabIndex = 16;
@@ -400,9 +402,9 @@
             this.pnlAction.Controls.Add(this.btnPing);
             this.pnlAction.Controls.Add(this.btnLogin);
             this.pnlAction.Enabled = false;
-            this.pnlAction.Location = new System.Drawing.Point(391, 12);
+            this.pnlAction.Location = new System.Drawing.Point(446, 12);
             this.pnlAction.Name = "pnlAction";
-            this.pnlAction.Size = new System.Drawing.Size(260, 31);
+            this.pnlAction.Size = new System.Drawing.Size(205, 31);
             this.pnlAction.TabIndex = 22;
             // 
             // btnTest
@@ -414,6 +416,19 @@
             this.btnTest.Text = "测试";
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // cbMode
+            // 
+            this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMode.FormattingEnabled = true;
+            this.cbMode.Items.AddRange(new object[] {
+            "User",
+            "Device",
+            "Master"});
+            this.cbMode.Location = new System.Drawing.Point(6, 7);
+            this.cbMode.Name = "cbMode";
+            this.cbMode.Size = new System.Drawing.Size(68, 20);
+            this.cbMode.TabIndex = 12;
             // 
             // FrmMain
             // 
@@ -484,6 +499,7 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Panel pnlAction;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.ComboBox cbMode;
     }
 }
 

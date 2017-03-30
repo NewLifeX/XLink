@@ -188,16 +188,21 @@ namespace xLink
         #endregion
 
         #region 辅助
-        ///// <summary>日志</summary>
-        //public ILog Log { get; set; } = Logger.Null;
+        private String _prefix;
 
         /// <summary>写日志</summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
         public void WriteLog(String format, params Object[] args)
         {
-            //Log?.Info(Name + " " + format, args);
             var ns = Session as NetSession;
+            if (_prefix == null)
+            {
+                var type = GetType();
+                _prefix = "{0}[{1}] ".F(type.GetDisplayName() ?? type.Name.TrimEnd("Session"), ns.ID);
+                ns.LogPrefix = _prefix;
+            }
+
             ns.WriteLog(Name + " " + format, args);
         }
         #endregion
