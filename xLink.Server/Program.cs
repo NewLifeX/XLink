@@ -74,6 +74,9 @@ namespace xLink.Server
             // 遍历注册各服务控制器
             foreach (var item in typeof(LinkSession).GetAllSubclasses(true))
             {
+                // 触发异步初始化
+                var obj = item.CreateInstance();
+
                 Svr.Manager.Register(item, null, true);
             }
 

@@ -4,17 +4,11 @@
  * 时间：2017-03-31 22:14:32
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using System.Xml.Serialization;
-using NewLife.Log;
-using NewLife.Web;
-﻿using NewLife.Data;
+using NewLife.Data;
 using XCode;
-using XCode.Configuration;
-using XCode.Membership;
 using XCode.Cache;
 
 namespace xLink.Device.Entity
@@ -46,12 +40,12 @@ namespace xLink.Device.Entity
         /// <param name="sessionid">会话</param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<DeviceOnline> FindAllBySessionID(Int32 sessionid)
+        public static DeviceOnline FindBySessionID(Int32 sessionid)
         {
             if (Meta.Count >= 1000)
-                return FindAll(__.SessionID, sessionid);
+                return Find(__.SessionID, sessionid);
             else // 实体缓存
-                return Meta.Cache.Entities.FindAll(__.SessionID, sessionid);
+                return Meta.Cache.Entities.Find(__.SessionID, sessionid);
         }
 
         /// <summary>根据编码查找</summary>

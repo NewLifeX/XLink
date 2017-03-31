@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="Areas\Device\Controllers\DeviceHistoryController.cs" />
     <Compile Include="Areas\Device\Controllers\DeviceOnlineController.cs" />
+    <Compile Include="Areas\Device\Controllers\DeviceController.cs" />
     <Compile Include="Areas\Device\DeviceAreaRegistration.cs" />
     <Compile Include="Areas\Device\Views\DeviceHistory\_List_Toolbar.generated.cs">
       <DependentUpon>_List_Toolbar.cshtml</DependentUpon>

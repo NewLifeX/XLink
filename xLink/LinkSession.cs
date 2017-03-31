@@ -81,10 +81,7 @@ namespace xLink
         /// <param name="errCode"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        protected ApiException Error(Int32 errCode, String msg)
-        {
-            return new ApiException(errCode, msg);
-        }
+        protected ApiException Error(Int32 errCode, String msg) { return new ApiException(errCode, msg); }
         #endregion
 
         #region 登录
@@ -157,7 +154,7 @@ namespace xLink
         /// <summary>心跳</summary>
         /// <returns></returns>
         [Api("Ping")]
-        internal protected virtual Object OnPing()
+        protected virtual Object OnPing()
         {
             WriteLog("心跳 ");
 

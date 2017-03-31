@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using NewLife;
 using NewLife.Log;
 using NewLife.Net;
@@ -44,9 +45,6 @@ namespace xLink
 
             var asmx = AssemblyX.Create(Assembly.GetCallingAssembly());
             dic["Version"] = asmx.Version;
-
-            // 注册
-            //Manager.Register<LinkSession>(true);
         }
 
         /// <summary>销毁</summary>
