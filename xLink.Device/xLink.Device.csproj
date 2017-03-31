@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceSession.cs" />
+    <Compile Include="Entity\设备.Biz.cs" />
+    <Compile Include="Entity\设备.cs" />
     <Compile Include="Entity\设备历史.Biz.cs" />
     <Compile Include="Entity\设备历史.cs" />
     <Compile Include="Entity\设备在线.Biz.cs" />

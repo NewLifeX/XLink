@@ -51,6 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\服务器.Biz.cs" />
+    <Compile Include="Entity\服务器.cs" />
     <Compile Include="Entity\服务器历史.Biz.cs" />
     <Compile Include="Entity\服务器历史.cs" />
     <Compile Include="Entity\服务器在线.Biz.cs" />
