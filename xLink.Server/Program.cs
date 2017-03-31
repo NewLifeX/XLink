@@ -67,9 +67,6 @@ namespace xLink.Server
             Svr.EnsureServer();
             Svr.Log = XTrace.Log;
             Svr.SetLog(set.Debug, set.SocketDebug);
-#if DEBUG
-            Svr.SetLog(set.Debug, set.SocketDebug, true, true);
-#endif
 
             // 遍历注册各服务控制器
             foreach (var item in typeof(LinkSession).GetAllSubclasses(true))
@@ -81,6 +78,8 @@ namespace xLink.Server
             }
 
             Svr.Start();
+
+            if (set.EncoderDebug) Svr.Encoder.Log = Svr.Log;
 
             // 如果是控制台调试，则在标题显示统计
             if (!Environment.CommandLine.EndsWith(" -s")) _Timer = new TimerX(ShowStat, null, 1000, 1000);

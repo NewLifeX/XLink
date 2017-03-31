@@ -69,7 +69,7 @@ namespace xLink.Device
             WriteLog("登录 {0} => {1}/{2}", user, salt.ToHex(), pass);
 
             // 验证密码
-            var tpass = dv.Password.ToHex();
+            var tpass = dv.Password.GetBytes();
             if (salt.RC4(tpass).ToHex() != pass) throw Error(4, "密码错误");
 
             var ns = Session as NetSession;
@@ -79,7 +79,7 @@ namespace xLink.Device
 
             dv.Save();
 
-            return OnLogin(dv, false);
+            return OnLogin(dv, true);
         }
 
         /// <summary>注册</summary>
@@ -92,7 +92,7 @@ namespace xLink.Device
             if (dv == null) dv = new DeviceX { Code = user };
 
             dv.Name = user.GetBytes().Crc().GetBytes().ToHex();
-            dv.Password = Rand.NextBytes(8).ToHex();
+            dv.Password = Rand.NextString(8);
             dv.Enable = true;
 
             Name = dv.Name;
@@ -108,7 +108,7 @@ namespace xLink.Device
 
             dv.Save();
 
-            return OnLogin(dv, true);
+            return OnLogin(dv, false);
         }
 
         private Object OnLogin(DeviceX dv, Boolean islogin)
@@ -133,7 +133,7 @@ namespace xLink.Device
             Online = olt;
 
             // 加密返回的密钥
-            var key = Key.RC4(dv.Password.ToHex()).ToHex();
+            var key = Key.RC4(dv.Password.GetBytes()).ToHex();
 
             if (islogin)
                 return new { Key = key };

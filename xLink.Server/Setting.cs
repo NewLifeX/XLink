@@ -28,6 +28,10 @@ namespace xLink.Server
         /// <summary>网络日志开关。默认false</summary>
         [Description("网络日志开关。默认false")]
         public Boolean SocketDebug { get; set; }
+
+        /// <summary>编码日志开关。默认false</summary>
+        [Description("编码日志开关。默认false")]
+        public Boolean EncoderDebug { get; set; }
         #endregion
 
         #region 构造

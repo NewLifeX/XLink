@@ -130,9 +130,8 @@ namespace xLink
         /// <summary>设置内部日志是否开启</summary>
         /// <param name="session">是否开启会话级日志</param>
         /// <param name="socket">是否开启Socket级日志</param>
-        /// <param name="send">是否显示发送数据</param>
-        /// <param name="recv">是否显示接收数据</param>
-        public void SetLog(Boolean session, Boolean socket, Boolean send = false, Boolean recv = false)
+        /// <param name="encoder">是否显示编码日志</param>
+        public void SetLog(Boolean session, Boolean socket, Boolean encoder = false)
         {
             var svr = Servers.FirstOrDefault() as NetServer;
             if (svr == null) return;
@@ -140,8 +139,8 @@ namespace xLink
             // 置空可以让其使用当前Log日志
             svr.SessionLog = session ? null : Logger.Null;
             svr.SocketLog = socket ? null : Logger.Null;
-            svr.LogSend = send;
-            svr.LogReceive = recv;
+
+            if (Encoder != null) Encoder.Log = Log;
         }
 
         private TimerX _timer { get; set; }
