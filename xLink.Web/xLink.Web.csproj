@@ -103,7 +103,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\User\Controllers\UserHistoryController.cs" />
+    <Compile Include="Areas\User\Controllers\UserOnlineController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
+    <Compile Include="Areas\User\Views\UserHistory\_List_Toolbar.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\User\Views\UserOnline\_List_Toolbar.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -124,6 +136,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\User\Views\Web.config" />
+    <Content Include="Areas\User\Views\UserHistory\_List_Toolbar.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\User\Views\UserOnline\_List_Toolbar.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Front.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +151,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\User\Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\xLink.Device\xLink.Device.csproj">
       <Project>{92f0ec15-0052-494b-b850-51848bb84968}</Project>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tables Version="9.4.6298.42192">
+  <Table Name="UserOnline" Description="用户在线" ConnName="UserOnline" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="UserID" DataType="Int32" Description="编码" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Ver" DataType="String" Description="版本" />
+      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="SessionID" DataType="Int32" Description="会话" />
+      <Column Name="InternalUri" DataType="String" Description="内网" />
+      <Column Name="ExternalUri" DataType="String" Description="外网" />
+      <Column Name="LoginCount" DataType="Int32" Description="登录" />
+      <Column Name="PingCount" DataType="Int32" Description="心跳" />
+      <Column Name="LoginTime" DataType="DateTime" Description="登录时间" />
+      <Column Name="LastActive" DataType="DateTime" Description="最后活跃" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="ErrorCount" DataType="Int32" Description="错误" />
+      <Column Name="LastError" DataType="String" Description="最后错误" />
+    </Columns>
+    <Indexes>
+      <Index Columns="SessionID" />
+      <Index Columns="UserID" />
+      <Index Columns="Name" />
+      <Index Columns="Type" />
+    </Indexes>
+  </Table>
+  <Table Name="UserHistory" Description="用户历史" ConnName="UserHistory" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="UserID" DataType="Int32" Description="编码" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Ver" DataType="String" Description="版本" />
+      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="Action" DataType="String" Description="操作" />
+      <Column Name="Success" DataType="Boolean" Description="成功" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="Remark" ColumnName="Content" DataType="String" Length="500" Description="内容" />
+    </Columns>
+    <Indexes>
+      <Index Columns="UserID" />
+      <Index Columns="Name" />
+      <Index Columns="Type" />
+    </Indexes>
+  </Table>
+</Tables>
