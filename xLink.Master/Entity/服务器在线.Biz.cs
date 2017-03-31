@@ -1,21 +1,26 @@
 ﻿/*
  * XCoder v6.9.6298.42194
  * 作者：nnhy/X3
- * 时间：2017-03-31 21:55:42
+ * 时间：2017-03-31 22:29:16
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using NewLife.Data;
+using System.Text;
+using System.Xml.Serialization;
+using NewLife.Log;
+using NewLife.Web;
+﻿using NewLife.Data;
 using XCode;
-using XCode.Cache;
+using XCode.Configuration;
 using XCode.Membership;
+using XCode.Cache;
 
-namespace xLink.User.Entity
+namespace xLink.Master.Entity
 {
-    /// <summary>用户在线</summary>
-    public partial class UserOnline : Entity<UserOnline>
+    /// <summary>服务器在线</summary>
+    public partial class ServerOnline : Entity<ServerOnline>
     {
         #region 对象操作
         ///// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -41,7 +46,7 @@ namespace xLink.User.Entity
         /// <param name="sessionid">会话</param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<UserOnline> FindAllBySessionID(Int32 sessionid)
+        public static EntityList<ServerOnline> FindAllBySessionID(Int32 sessionid)
         {
             if (Meta.Count >= 1000)
                 return FindAll(__.SessionID, sessionid);
@@ -53,19 +58,19 @@ namespace xLink.User.Entity
         /// <param name="userid">编码</param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<UserOnline> FindAllByUserID(Int32 userid)
+        public static EntityList<ServerOnline> FindAllByServerID(Int32 userid)
         {
             if (Meta.Count >= 1000)
-                return FindAll(__.UserID, userid);
+                return FindAll(__.ServerID, userid);
             else // 实体缓存
-                return Meta.Cache.Entities.FindAll(__.UserID, userid);
+                return Meta.Cache.Entities.FindAll(__.ServerID, userid);
         }
 
         /// <summary>根据名称查找</summary>
         /// <param name="name">名称</param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<UserOnline> FindAllByName(String name)
+        public static EntityList<ServerOnline> FindAllByName(String name)
         {
             if (Meta.Count >= 1000)
                 return FindAll(__.Name, name);
@@ -77,7 +82,7 @@ namespace xLink.User.Entity
         /// <param name="type">类型</param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<UserOnline> FindAllByType(String type)
+        public static EntityList<ServerOnline> FindAllByType(String type)
         {
             if (Meta.Count >= 1000)
                 return FindAll(__.Type, type);
@@ -94,23 +99,23 @@ namespace xLink.User.Entity
         /// <param name="key">关键字</param>
         /// <param name="param">分页排序参数，同时返回满足条件的总记录数</param>
         /// <returns>实体集</returns>
-        public static EntityList<UserOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param)
+        public static EntityList<ServerOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param)
         {
-            // 修改UserID排序为名称
+            // 修改ServerID排序为名称
             //param = new PageParameter(param);
-            if (param.Sort.EqualIgnoreCase(__.UserID)) param.Sort = __.Name;
+            if (param.Sort.EqualIgnoreCase(__.ServerID)) param.Sort = __.Name;
 
             var list = Search(type, start, end, key, param, false);
             // 如果结果为0，并且有key，则使用扩展查询，对内网外网地址进行模糊查询
             if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(type, start, end, key, param, true);
 
             // 换回来，避免影响生成升序降序
-            if (param.Sort.EqualIgnoreCase(__.Name)) param.Sort = __.UserID;
+            if (param.Sort.EqualIgnoreCase(__.Name)) param.Sort = __.ServerID;
 
             return list;
         }
 
-        private static EntityList<UserOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        private static EntityList<ServerOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
         {
             var exp = new WhereExpression();
 
@@ -132,7 +137,7 @@ namespace xLink.User.Entity
 
         #region 扩展操作
         /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<UserOnline> TypeCache = new FieldCache<UserOnline>(_.Type);
+        static FieldCache<ServerOnline> TypeCache = new FieldCache<ServerOnline>(_.Type);
 
         /// <summary>获取所有类别名称</summary>
         /// <returns></returns>
@@ -146,7 +151,7 @@ namespace xLink.User.Entity
         /// <summary>删除过期，指定过期时间</summary>
         /// <param name="secTimeout">超时时间，秒</param>
         /// <returns></returns>
-        public static EntityList<UserOnline> ClearExpire(Int32 secTimeout)
+        public static EntityList<ServerOnline> ClearExpire(Int32 secTimeout)
         {
             // 10分钟不活跃将会被删除
             var exp = _.LastActive < DateTime.Now.AddSeconds(-secTimeout) | _.LastActive.IsNull();

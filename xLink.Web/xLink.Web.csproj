@@ -103,6 +103,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Device\Controllers\DeviceHistoryController.cs" />
+    <Compile Include="Areas\Device\Controllers\DeviceOnlineController.cs" />
+    <Compile Include="Areas\Device\DeviceAreaRegistration.cs" />
+    <Compile Include="Areas\Device\Views\DeviceHistory\_List_Toolbar.generated.cs">
+      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\Device\Views\DeviceOnline\_List_Toolbar.generated.cs">
+      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\Master\Controllers\ServerHistoryController.cs" />
+    <Compile Include="Areas\Master\Controllers\ServerOnlineController.cs" />
+    <Compile Include="Areas\Master\MasterAreaRegistration.cs" />
+    <Compile Include="Areas\Master\Views\ServerHistory\_List_Toolbar.generated.cs">
+      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\Master\Views\ServerOnline\_List_Toolbar.generated.cs">
+      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Areas\User\Controllers\UserHistoryController.cs" />
     <Compile Include="Areas\User\Controllers\UserOnlineController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
@@ -144,6 +170,24 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Device\Views\DeviceOnline\_List_Toolbar.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Device\Views\Web.config" />
+    <Content Include="Areas\Master\Views\ServerHistory\_List_Toolbar.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Master\Views\ServerOnline\_List_Toolbar.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Master\Views\Web.config" />
     <None Include="Properties\PublishProfiles\Front.pubxml" />
   </ItemGroup>
   <ItemGroup>

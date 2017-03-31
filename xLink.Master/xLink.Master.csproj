@@ -51,6 +51,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\服务器历史.Biz.cs" />
+    <Compile Include="Entity\服务器历史.cs" />
+    <Compile Include="Entity\服务器在线.Biz.cs" />
+    <Compile Include="Entity\服务器在线.cs" />
     <Compile Include="MasterSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +63,23 @@
       <Project>{8df06706-ad6e-4f75-99a8-3f610f0fbe7c}</Project>
       <Name>xLink</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XCoder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XCoder.log</LastGenOutput>
+    </Content>
+    <Content Include="xLink.Master.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XCoder.log">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>XCoder.tt</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
