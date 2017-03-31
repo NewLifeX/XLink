@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Tables Version="9.4.6298.42192">
-  <Table Name="Device" Description="设备" ConnName="Device" DbType="SqlServer">
+  <Table Name="Device" Description="设备" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称。登录用户名" />
@@ -30,7 +30,7 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
-  <Table Name="DeviceOnline" Description="设备在线" ConnName="DeviceOnline" DbType="SqlServer">
+  <Table Name="DeviceOnline" Description="设备在线" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="DeviceID" DataType="Int32" Description="编码" />
@@ -55,7 +55,7 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
-  <Table Name="DeviceHistory" Description="设备历史" ConnName="DeviceHistory" DbType="SqlServer">
+  <Table Name="DeviceHistory" Description="设备历史" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="DeviceID" DataType="Int32" Description="编码" />

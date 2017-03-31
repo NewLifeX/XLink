@@ -365,9 +365,10 @@ namespace xLink.Client
             ct.UserName = user;
             ct.Password = pass;
             var rs = await ct.LoginAsync();
+            var dic = rs.ToDictionary().ToNullable();
 
             // 注册成功，需要保存密码
-            if (pass == null)
+            if (dic["User"] != null)
             {
                 cfg.UserName = ct.UserName;
                 cfg.Password = ct.Password;

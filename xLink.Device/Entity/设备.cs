@@ -79,24 +79,12 @@ namespace xLink.Device.Entity
             set { if (OnPropertyChanging(__.DisplayName, value)) { _DisplayName = value; OnPropertyChanged(__.DisplayName); } }
         }
 
-        private String _Location;
-        /// <summary>位置</summary>
-        [DisplayName("位置")]
-        [Description("位置")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn(6, "Location", "位置", null, "nvarchar(50)", 0, 0, true)]
-        public virtual String Location
-        {
-            get { return _Location; }
-            set { if (OnPropertyChanging(__.Location, value)) { _Location = value; OnPropertyChanged(__.Location); } }
-        }
-
         private Boolean _Enable;
         /// <summary>启用</summary>
         [DisplayName("启用")]
         [Description("启用")]
         [DataObjectField(false, false, true, 1)]
-        [BindColumn(7, "Enable", "启用", null, "bit", 0, 0, false)]
+        [BindColumn(6, "Enable", "启用", null, "bit", 0, 0, false)]
         public virtual Boolean Enable
         {
             get { return _Enable; }
@@ -108,7 +96,7 @@ namespace xLink.Device.Entity
         [DisplayName("类型")]
         [Description("类型")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn(8, "Type", "类型", null, "nvarchar(50)", 0, 0, true)]
+        [BindColumn(7, "Type", "类型", null, "nvarchar(50)", 0, 0, true)]
         public virtual String Type
         {
             get { return _Type; }
@@ -120,35 +108,11 @@ namespace xLink.Device.Entity
         [DisplayName("版本")]
         [Description("版本")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn(9, "Version", "版本", null, "nvarchar(50)", 0, 0, true)]
+        [BindColumn(8, "Version", "版本", null, "nvarchar(50)", 0, 0, true)]
         public virtual String Version
         {
             get { return _Version; }
             set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } }
-        }
-
-        private String _InternalUri;
-        /// <summary>内网</summary>
-        [DisplayName("内网")]
-        [Description("内网")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn(10, "InternalUri", "内网", null, "nvarchar(50)", 0, 0, true)]
-        public virtual String InternalUri
-        {
-            get { return _InternalUri; }
-            set { if (OnPropertyChanging(__.InternalUri, value)) { _InternalUri = value; OnPropertyChanged(__.InternalUri); } }
-        }
-
-        private String _ExternalUri;
-        /// <summary>外网</summary>
-        [DisplayName("外网")]
-        [Description("外网")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn(11, "ExternalUri", "外网", null, "nvarchar(50)", 0, 0, true)]
-        public virtual String ExternalUri
-        {
-            get { return _ExternalUri; }
-            set { if (OnPropertyChanging(__.ExternalUri, value)) { _ExternalUri = value; OnPropertyChanged(__.ExternalUri); } }
         }
 
         private Boolean _Online;
@@ -156,7 +120,7 @@ namespace xLink.Device.Entity
         [DisplayName("在线")]
         [Description("在线")]
         [DataObjectField(false, false, true, 1)]
-        [BindColumn(12, "Online", "在线", null, "bit", 0, 0, false)]
+        [BindColumn(9, "Online", "在线", null, "bit", 0, 0, false)]
         public virtual Boolean Online
         {
             get { return _Online; }
@@ -168,7 +132,7 @@ namespace xLink.Device.Entity
         [DisplayName("登录")]
         [Description("登录")]
         [DataObjectField(false, false, true, 10)]
-        [BindColumn(13, "Logins", "登录", null, "int", 10, 0, false)]
+        [BindColumn(10, "Logins", "登录", null, "int", 10, 0, false)]
         public virtual Int32 Logins
         {
             get { return _Logins; }
@@ -180,7 +144,7 @@ namespace xLink.Device.Entity
         [DisplayName("最后登录")]
         [Description("最后登录")]
         [DataObjectField(false, false, true, 3)]
-        [BindColumn(14, "LastLogin", "最后登录", null, "datetime", 3, 0, false)]
+        [BindColumn(11, "LastLogin", "最后登录", null, "datetime", 3, 0, false)]
         public virtual DateTime LastLogin
         {
             get { return _LastLogin; }
@@ -192,7 +156,7 @@ namespace xLink.Device.Entity
         [DisplayName("最后登录IP")]
         [Description("最后登录IP")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn(15, "LastLoginIP", "最后登录IP", null, "nvarchar(50)", 0, 0, true)]
+        [BindColumn(12, "LastLoginIP", "最后登录IP", null, "nvarchar(50)", 0, 0, true)]
         public virtual String LastLoginIP
         {
             get { return _LastLoginIP; }
@@ -204,7 +168,7 @@ namespace xLink.Device.Entity
         [DisplayName("注册次数")]
         [Description("注册次数")]
         [DataObjectField(false, false, true, 10)]
-        [BindColumn(16, "Registers", "注册次数", null, "int", 10, 0, false)]
+        [BindColumn(13, "Registers", "注册次数", null, "int", 10, 0, false)]
         public virtual Int32 Registers
         {
             get { return _Registers; }
@@ -216,7 +180,7 @@ namespace xLink.Device.Entity
         [DisplayName("注册时间")]
         [Description("注册时间")]
         [DataObjectField(false, false, true, 3)]
-        [BindColumn(17, "RegisterTime", "注册时间", null, "datetime", 3, 0, false)]
+        [BindColumn(14, "RegisterTime", "注册时间", null, "datetime", 3, 0, false)]
         public virtual DateTime RegisterTime
         {
             get { return _RegisterTime; }
@@ -228,7 +192,7 @@ namespace xLink.Device.Entity
         [DisplayName("注册IP")]
         [Description("注册IP")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn(18, "RegisterIP", "注册IP", null, "nvarchar(50)", 0, 0, true)]
+        [BindColumn(15, "RegisterIP", "注册IP", null, "nvarchar(50)", 0, 0, true)]
         public virtual String RegisterIP
         {
             get { return _RegisterIP; }
@@ -240,7 +204,7 @@ namespace xLink.Device.Entity
         [DisplayName("创建者")]
         [Description("创建者")]
         [DataObjectField(false, false, true, 10)]
-        [BindColumn(19, "CreateUserID", "创建者", null, "int", 10, 0, false)]
+        [BindColumn(16, "CreateUserID", "创建者", null, "int", 10, 0, false)]
         public virtual Int32 CreateUserID
         {
             get { return _CreateUserID; }
@@ -252,7 +216,7 @@ namespace xLink.Device.Entity
         [DisplayName("创建时间")]
         [Description("创建时间")]
         [DataObjectField(false, false, true, 3)]
-        [BindColumn(20, "CreateTime", "创建时间", null, "datetime", 3, 0, false)]
+        [BindColumn(17, "CreateTime", "创建时间", null, "datetime", 3, 0, false)]
         public virtual DateTime CreateTime
         {
             get { return _CreateTime; }
@@ -264,7 +228,7 @@ namespace xLink.Device.Entity
         [DisplayName("创建地址")]
         [Description("创建地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn(21, "CreateIP", "创建地址", null, "nvarchar(50)", 0, 0, true)]
+        [BindColumn(18, "CreateIP", "创建地址", null, "nvarchar(50)", 0, 0, true)]
         public virtual String CreateIP
         {
             get { return _CreateIP; }
@@ -276,7 +240,7 @@ namespace xLink.Device.Entity
         [DisplayName("更新者")]
         [Description("更新者")]
         [DataObjectField(false, false, true, 10)]
-        [BindColumn(22, "UpdateUserID", "更新者", null, "int", 10, 0, false)]
+        [BindColumn(19, "UpdateUserID", "更新者", null, "int", 10, 0, false)]
         public virtual Int32 UpdateUserID
         {
             get { return _UpdateUserID; }
@@ -288,7 +252,7 @@ namespace xLink.Device.Entity
         [DisplayName("更新时间")]
         [Description("更新时间")]
         [DataObjectField(false, false, true, 3)]
-        [BindColumn(23, "UpdateTime", "更新时间", null, "datetime", 3, 0, false)]
+        [BindColumn(20, "UpdateTime", "更新时间", null, "datetime", 3, 0, false)]
         public virtual DateTime UpdateTime
         {
             get { return _UpdateTime; }
@@ -300,7 +264,7 @@ namespace xLink.Device.Entity
         [DisplayName("更新地址")]
         [Description("更新地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn(24, "UpdateIP", "更新地址", null, "nvarchar(50)", 0, 0, true)]
+        [BindColumn(21, "UpdateIP", "更新地址", null, "nvarchar(50)", 0, 0, true)]
         public virtual String UpdateIP
         {
             get { return _UpdateIP; }
@@ -327,12 +291,9 @@ namespace xLink.Device.Entity
                     case __.Code : return _Code;
                     case __.Password : return _Password;
                     case __.DisplayName : return _DisplayName;
-                    case __.Location : return _Location;
                     case __.Enable : return _Enable;
                     case __.Type : return _Type;
                     case __.Version : return _Version;
-                    case __.InternalUri : return _InternalUri;
-                    case __.ExternalUri : return _ExternalUri;
                     case __.Online : return _Online;
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
@@ -358,12 +319,9 @@ namespace xLink.Device.Entity
                     case __.Code : _Code = Convert.ToString(value); break;
                     case __.Password : _Password = Convert.ToString(value); break;
                     case __.DisplayName : _DisplayName = Convert.ToString(value); break;
-                    case __.Location : _Location = Convert.ToString(value); break;
                     case __.Enable : _Enable = Convert.ToBoolean(value); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
-                    case __.InternalUri : _InternalUri = Convert.ToString(value); break;
-                    case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
                     case __.Online : _Online = Convert.ToBoolean(value); break;
                     case __.Logins : _Logins = Convert.ToInt32(value); break;
                     case __.LastLogin : _LastLogin = Convert.ToDateTime(value); break;
@@ -402,9 +360,6 @@ namespace xLink.Device.Entity
             ///<summary>显示名。昵称、中文名等</summary>
             public static readonly Field DisplayName = FindByName(__.DisplayName);
 
-            ///<summary>位置</summary>
-            public static readonly Field Location = FindByName(__.Location);
-
             ///<summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
@@ -413,12 +368,6 @@ namespace xLink.Device.Entity
 
             ///<summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
-
-            ///<summary>内网</summary>
-            public static readonly Field InternalUri = FindByName(__.InternalUri);
-
-            ///<summary>外网</summary>
-            public static readonly Field ExternalUri = FindByName(__.ExternalUri);
 
             ///<summary>在线</summary>
             public static readonly Field Online = FindByName(__.Online);
@@ -480,9 +429,6 @@ namespace xLink.Device.Entity
             ///<summary>显示名。昵称、中文名等</summary>
             public const String DisplayName = "DisplayName";
 
-            ///<summary>位置</summary>
-            public const String Location = "Location";
-
             ///<summary>启用</summary>
             public const String Enable = "Enable";
 
@@ -491,12 +437,6 @@ namespace xLink.Device.Entity
 
             ///<summary>版本</summary>
             public const String Version = "Version";
-
-            ///<summary>内网</summary>
-            public const String InternalUri = "InternalUri";
-
-            ///<summary>外网</summary>
-            public const String ExternalUri = "ExternalUri";
 
             ///<summary>在线</summary>
             public const String Online = "Online";
@@ -560,9 +500,6 @@ namespace xLink.Device.Entity
         /// <summary>显示名。昵称、中文名等</summary>
         String DisplayName { get; set; }
 
-        /// <summary>位置</summary>
-        String Location { get; set; }
-
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
 
@@ -571,12 +508,6 @@ namespace xLink.Device.Entity
 
         /// <summary>版本</summary>
         String Version { get; set; }
-
-        /// <summary>内网</summary>
-        String InternalUri { get; set; }
-
-        /// <summary>外网</summary>
-        String ExternalUri { get; set; }
 
         /// <summary>在线</summary>
         Boolean Online { get; set; }

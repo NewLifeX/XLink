@@ -38,6 +38,9 @@ namespace xLink.Server
         /// <summary>实例化</summary>
         public Setting()
         {
+#if DEBUG
+            EncoderDebug = true;
+#endif
         }
         #endregion
     }

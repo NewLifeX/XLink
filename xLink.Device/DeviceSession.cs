@@ -28,14 +28,13 @@ namespace xLink.Device
             // 异步初始化数据
             Task.Run(() =>
             {
-#if !DEBUG
                 var set = XCode.Setting.Current;
                 if (set.IsNew)
                 {
                     set.Debug = false;
+                    set.SQLiteDbPath = "../Data";
                     set.Save();
                 }
-#endif
 
                 var n = 0;
                 n = DeviceX.Meta.Count;
