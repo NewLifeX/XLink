@@ -5,7 +5,7 @@ using NewLife.Cube;
 using NewLife.Web;
 using xLink.Device.Entity;
 
-namespace xLink.Web.Controllers
+namespace xLink.Device.Web.Controllers
 {
     [Description("设备登录后产生在线记录，一般长期在线")]
     public class DeviceOnlineController : EntityController<DeviceOnline>

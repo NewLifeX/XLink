@@ -5,7 +5,7 @@ using NewLife.Cube;
 using NewLife.Web;
 using xLink.Master.Entity;
 
-namespace xLink.Web.Controllers
+namespace xLink.Master.Web.Controllers
 {
     [Description("服务器操作历史")]
     public class ServerHistoryController : EntityController<ServerHistory>

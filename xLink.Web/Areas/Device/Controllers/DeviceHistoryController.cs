@@ -5,7 +5,7 @@ using NewLife.Cube;
 using NewLife.Web;
 using xLink.Device.Entity;
 
-namespace xLink.Web.Controllers
+namespace xLink.Device.Web.Controllers
 {
     [Description("设备操作历史")]
     public class DeviceHistoryController : EntityController<DeviceHistory>

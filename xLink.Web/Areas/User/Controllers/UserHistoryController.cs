@@ -5,7 +5,7 @@ using NewLife.Cube;
 using NewLife.Web;
 using xLink.User.Entity;
 
-namespace xLink.Web.Controllers
+namespace xLink.User.Web.Controllers
 {
     [Description("用户操作历史")]
     public class UserHistoryController : EntityController<UserHistory>

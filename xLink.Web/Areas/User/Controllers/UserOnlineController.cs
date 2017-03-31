@@ -5,7 +5,7 @@ using NewLife.Cube;
 using NewLife.Web;
 using xLink.User.Entity;
 
-namespace xLink.Web.Controllers
+namespace xLink.User.Web.Controllers
 {
     [Description("用户登录后产生在线记录，一般长期在线")]
     public class UserOnlineController : EntityController<UserOnline>
