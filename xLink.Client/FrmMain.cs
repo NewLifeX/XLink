@@ -172,6 +172,8 @@ namespace xLink.Client
             {
                 var sc = _Client.Client.GetService<ISocketClient>();
                 msg = sc.GetStat();
+
+                msg += " 压力客户端 " + cs.Count;
             }
 
             if (!msg.IsNullOrEmpty() && msg != _lastStat)
@@ -241,53 +243,81 @@ namespace xLink.Client
             }
         }
 
+        private List<LinkClient> cs = new List<LinkClient>();
         private void btnSend_Click(Object sender, EventArgs e)
         {
-            var str = txtSend.Text;
-            if (String.IsNullOrEmpty(str))
+            if (_Client == null || !_Client.Active) return;
+
+            var count = (Int32)numThreads.Value;
+            if (count <= cs.Count) return;
+
+            var sc = _Client.Client.GetService<ISocketClient>();
+            if (sc == null) return;
+
+            var uri = new NetUri(cbAddr.Text);
+
+            Task.Run(() =>
             {
-                MessageBox.Show("发送内容不能为空！", Text);
-                txtSend.Focus();
-                return;
-            }
-
-            // 多次发送
-            var count = (Int32)numMutilSend.Value;
-            var sleep = (Int32)numSleep.Value;
-            var ths = (Int32)numThreads.Value;
-            if (count <= 0) count = 1;
-            if (sleep <= 0) sleep = 1;
-
-            SaveConfig();
-
-            var cfg = Setting.Current;
-
-            // 处理换行
-            str = str.Replace("\n", "\r\n");
-            var buf = cfg.HexSend ? str.ToHex() : str.GetBytes();
-
-            // 构造消息
-            var msg = _Packet.CreateMessage(buf);
-            buf = msg.ToArray();
-
-            if (_Client != null)
-            {
-                var sc = _Client.Client.GetService<ISocketClient>();
-                if (ths <= 1)
+                var cc = _Client;
+                for (int i = 0; i < count; i++)
                 {
-                    sc.SendMulti(buf, count, sleep);
+                    var ac = new LinkClient(uri.ToString());
+                    ac.Received += OnReceived;
+                    ac.UserName = cc.UserName;
+                    ac.Password = cc.Password;
+                    ac.LoginAction = cc.LoginAction;
+                    ac.PingAction = cc.PingAction;
+                    cs.Add(ac);
+
+                    Task.Run(() => ac.Open());
                 }
-                else
-                {
-                    Parallel.For(0, ths, n =>
-                    {
-                        var client = sc.Remote.CreateRemote();
-                        client.StatSend = sc.StatSend;
-                        client.StatReceive = sc.StatReceive;
-                        client.SendMulti(buf, count, sleep);
-                    });
-                }
-            }
+            });
+
+            //var str = txtSend.Text;
+            //if (String.IsNullOrEmpty(str))
+            //{
+            //    MessageBox.Show("发送内容不能为空！", Text);
+            //    txtSend.Focus();
+            //    return;
+            //}
+
+            //// 多次发送
+            //var count = (Int32)numMutilSend.Value;
+            //var sleep = (Int32)numSleep.Value;
+            //var ths = (Int32)numThreads.Value;
+            //if (count <= 0) count = 1;
+            //if (sleep <= 0) sleep = 1;
+
+            //SaveConfig();
+
+            //var cfg = Setting.Current;
+
+            //// 处理换行
+            //str = str.Replace("\n", "\r\n");
+            //var buf = cfg.HexSend ? str.ToHex() : str.GetBytes();
+
+            //// 构造消息
+            //var msg = _Packet.CreateMessage(buf);
+            //buf = msg.ToArray();
+
+            //if (_Client != null)
+            //{
+            //    var sc = _Client.Client.GetService<ISocketClient>();
+            //    if (ths <= 1)
+            //    {
+            //        sc.SendMulti(buf, count, sleep);
+            //    }
+            //    else
+            //    {
+            //        Parallel.For(0, ths, n =>
+            //        {
+            //            var client = sc.Remote.CreateRemote();
+            //            client.StatSend = sc.StatSend;
+            //            client.StatReceive = sc.StatReceive;
+            //            client.SendMulti(buf, count, sleep);
+            //        });
+            //    }
+            //}
         }
         #endregion
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using NewLife.Log;
 
@@ -13,6 +14,9 @@ namespace xLink.Client
         static void Main()
         {
             XTrace.UseWinForm();
+
+            // 降低进程优先级，避免卡死电脑
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

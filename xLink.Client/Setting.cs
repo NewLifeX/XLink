@@ -56,7 +56,7 @@ namespace xLink.Client
 
         /// <summary>发送用户数</summary>
         [Description("发送用户数")]
-        public Int32 SendUsers { get; set; } = 1;
+        public Int32 SendUsers { get; set; } = 10000;
 
         /// <summary>显示应用日志</summary>
         [Description("显示应用日志")]

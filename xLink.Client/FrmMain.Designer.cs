@@ -45,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cbColor = new System.Windows.Forms.CheckBox();
             this.pnlSetting = new System.Windows.Forms.Panel();
+            this.cbMode = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.gbReceive = new System.Windows.Forms.GroupBox();
@@ -65,7 +66,6 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.pnlAction = new System.Windows.Forms.Panel();
             this.btnTest = new System.Windows.Forms.Button();
-            this.cbMode = new System.Windows.Forms.ComboBox();
             this.gbSend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numThreads)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSleep)).BeginInit();
@@ -208,7 +208,8 @@
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(50, 30);
             this.btnSend.TabIndex = 1;
-            this.btnSend.Text = "发送";
+            this.btnSend.Text = "压力";
+            this.toolTip1.SetToolTip(this.btnSend, "上方连接数");
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
@@ -267,6 +268,19 @@
             this.pnlSetting.Name = "pnlSetting";
             this.pnlSetting.Size = new System.Drawing.Size(269, 31);
             this.pnlSetting.TabIndex = 18;
+            // 
+            // cbMode
+            // 
+            this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMode.FormattingEnabled = true;
+            this.cbMode.Items.AddRange(new object[] {
+            "User",
+            "Device",
+            "Master"});
+            this.cbMode.Location = new System.Drawing.Point(6, 7);
+            this.cbMode.Name = "cbMode";
+            this.cbMode.Size = new System.Drawing.Size(68, 20);
+            this.cbMode.TabIndex = 12;
             // 
             // gbReceive
             // 
@@ -416,19 +430,6 @@
             this.btnTest.Text = "测试";
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
-            // 
-            // cbMode
-            // 
-            this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMode.FormattingEnabled = true;
-            this.cbMode.Items.AddRange(new object[] {
-            "User",
-            "Device",
-            "Master"});
-            this.cbMode.Location = new System.Drawing.Point(6, 7);
-            this.cbMode.Name = "cbMode";
-            this.cbMode.Size = new System.Drawing.Size(68, 20);
-            this.cbMode.TabIndex = 12;
             // 
             // FrmMain
             // 
