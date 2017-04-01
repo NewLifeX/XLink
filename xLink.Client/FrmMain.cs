@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
@@ -269,7 +270,14 @@ namespace xLink.Client
                     ac.PingAction = cc.PingAction;
                     cs.Add(ac);
 
-                    Task.Run(() => ac.Open());
+                    Task.Run(() =>
+                    {
+                        for (int k = 0; k < 10; k++)
+                        {
+                            if (ac.Open()) break;
+                            Thread.Sleep(1000);
+                        }
+                    });
                 }
             });
 
@@ -394,21 +402,29 @@ namespace xLink.Client
             var ct = _Client;
             ct.UserName = user;
             ct.Password = pass;
-            var rs = await ct.LoginAsync();
-            var dic = rs.ToDictionary().ToNullable();
 
-            // 注册成功，需要保存密码
-            if (dic["User"] != null)
+            try
             {
-                cfg.UserName = ct.UserName;
-                cfg.Password = ct.Password;
-                cfg.Save();
+                var rs = await ct.LoginAsync();
+                var dic = rs.ToDictionary().ToNullable();
 
-                XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.UserName, cfg.Password);
+                // 注册成功，需要保存密码
+                if (dic["User"] != null)
+                {
+                    cfg.UserName = ct.UserName;
+                    cfg.Password = ct.Password;
+                    cfg.Save();
+
+                    XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.UserName, cfg.Password);
+                }
+                else
+                {
+                    XTrace.WriteLine("登录成功！");
+                }
             }
-            else
+            catch (ApiException ex)
             {
-                XTrace.WriteLine("登录成功！");
+                XTrace.WriteLine(ex.Message);
             }
         }
 

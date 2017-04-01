@@ -99,16 +99,17 @@ namespace xLink
             var truepass = user;
 
             // 注册与登录
-            if (pass.IsNullOrEmpty())
+            var f = "Pass\\{0}.key".F(user).GetFullPath();
+            if (pass.IsNullOrEmpty() || !File.Exists(f))
             {
                 var old = user;
-                user = user.GetBytes().Crc().GetBytes().ToHex();
+                if (user.Length != 8) user = user.GetBytes().Crc().GetBytes().ToHex();
                 truepass = Rand.NextString(8);
+                pass = null;
 
                 Name = user;
                 WriteLog("注册 {0} => {1}/{2}", old, user, truepass);
 
-                var f = "Pass\\{0}.key".F(user).GetFullPath();
                 f.EnsureDirectory();
                 File.WriteAllText(f, truepass);
             }
@@ -123,9 +124,12 @@ namespace xLink
                 WriteLog("登录 {0} => {1}/{2}", user, salt.ToHex(), pass);
 
                 // 验证密码
-                var f = "Pass\\{0}.key".F(user).GetFullPath();
                 truepass = File.ReadAllText(f);
-                if (salt.RC4(truepass.GetBytes()).ToHex() != pass) throw Error(4, "密码错误");
+                if (salt.RC4(truepass.GetBytes()).ToHex() != pass)
+                {
+                    File.Delete(f);
+                    throw Error(4, "密码错误");
+                }
             }
 
             // 随机密钥
