@@ -37,12 +37,6 @@ namespace xLink.Client
             var cfg = Setting.Current;
             cbMode.SelectedItem = cfg.Mode;
 
-            if (!cfg.Address.IsNullOrEmpty())
-            {
-                //cbAddr.DropDownStyle = ComboBoxStyle.DropDownList;
-                cbAddr.DataSource = cfg.Address.Split(";");
-            }
-
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
 
@@ -67,6 +61,8 @@ namespace xLink.Client
             numSleep.Value = cfg.SendSleep;
             numThreads.Value = cfg.SendUsers;
             cbColor.Checked = cfg.ColorLog;
+
+            if (!cfg.Address.IsNullOrEmpty()) cbAddr.DataSource = cfg.Address.Split(";").Distinct();
         }
 
         void SaveConfig()
@@ -88,8 +84,9 @@ namespace xLink.Client
 
             cfg.Mode = cbMode.Text;
 
-            var addrs = (cfg.Address + "").Split(";").ToList();
-            if (!addrs.Contains(cbAddr.Text)) addrs.Add(cbAddr.Text);
+            var addrs = (cfg.Address + "").Split(";").Distinct().ToList();
+            if (!addrs.Contains(cbAddr.Text)) addrs.Insert(0, cbAddr.Text);
+            while (addrs.Count > 10) addrs.RemoveAt(addrs.Count - 1);
             cfg.Address = addrs.Join(";");
 
             cfg.Save();
@@ -113,7 +110,13 @@ namespace xLink.Client
             ac.Password = cfg.Password;
             ac.LoginAction = mode + "/Login";
             ac.PingAction = mode + "/Ping";
+
+            ac.Encrypted = cfg.Encrypted;
+            ac.Compressed = cfg.Compressed;
+
             if (!ac.Open()) return;
+
+            if (cfg.EncoderDebug) ac.Encoder.Log = ac.Log;
 
             var sc = ac.Client.GetService<ISocketClient>();
             sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
@@ -264,10 +267,15 @@ namespace xLink.Client
                 {
                     var ac = new LinkClient(uri.ToString());
                     ac.Received += OnReceived;
+
                     ac.UserName = cc.UserName;
                     ac.Password = cc.Password;
                     ac.LoginAction = cc.LoginAction;
                     ac.PingAction = cc.PingAction;
+
+                    ac.Encrypted = cc.Encrypted;
+                    ac.Compressed = cc.Compressed;
+
                     cs.Add(ac);
 
                     Task.Run(() =>

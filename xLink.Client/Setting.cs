@@ -82,6 +82,18 @@ namespace xLink.Client
         [Description("显示统计信息")]
         public Boolean ShowStat { get; set; } = true;
 
+        /// <summary>是否加密，默认true</summary>
+        [Description("是否加密，默认true")]
+        public Boolean Encrypted { get; set; } = true;
+
+        /// <summary>是否压缩，默认true</summary>
+        [Description("是否压缩，默认true")]
+        public Boolean Compressed { get; set; } = true;
+
+        /// <summary>编码日志开关。默认false</summary>
+        [Description("编码日志开关。默认false")]
+        public Boolean EncoderDebug { get; set; }
+
         /// <summary>日志着色</summary>
         [Description("日志着色")]
         public Boolean ColorLog { get; set; } = true;

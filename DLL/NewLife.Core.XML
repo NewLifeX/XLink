@@ -6117,9 +6117,10 @@
         </member>
         <member name="T:NewLife.Remoting.DeflateFilter">
             <summary>压缩过滤器</summary>
+            <remarks>响应包是否压缩，取决于请求包</remarks>
         </member>
-        <member name="P:NewLife.Remoting.DeflateFilter.MinSize">
-            <summary>使用压缩的最小长度。默认64字节</summary>
+        <member name="P:NewLife.Remoting.DeflateFilter.Flag">
+            <summary>标识。默认0x10</summary>
         </member>
         <member name="M:NewLife.Remoting.DeflateFilter.OnExecute(NewLife.Data.FilterContext)">
             <summary>执行压缩或解压缩</summary>
@@ -6782,6 +6783,10 @@
         </member>
         <member name="T:NewLife.Remoting.RC4Filter">
             <summary>RC4加解密过滤器</summary>
+            <remarks>响应包是否加密，取决于请求包</remarks>
+        </member>
+        <member name="P:NewLife.Remoting.RC4Filter.Flag">
+            <summary>标识。默认0x20</summary>
         </member>
         <member name="P:NewLife.Remoting.RC4Filter.Key">
             <summary>密钥</summary>
