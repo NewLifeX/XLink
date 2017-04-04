@@ -3841,10 +3841,10 @@
             <summary>统计</summary>
         </member>
         <member name="P:NewLife.Net.Statistics.Enable">
-            <summary>是否启用统计</summary>
+            <summary>启用统计</summary>
         </member>
         <member name="P:NewLife.Net.Statistics.Period">
-            <summary>统计周期，单位秒</summary>
+            <summary>统计周期，默认30秒</summary>
         </member>
         <member name="P:NewLife.Net.Statistics.First">
             <summary>首次统计时间</summary>
@@ -4389,10 +4389,10 @@
             <summary>是否抛出异常，默认false不抛出。Send/Receive时可能发生异常，该设置决定是直接抛出异常还是通过<see cref="E:NewLife.Net.SessionBase.Error"/>事件</summary>
         </member>
         <member name="P:NewLife.Net.SessionBase.StatSend">
-            <summary>发送数据包统计信息，默认关闭，通过<see cref="P:NewLife.Net.IStatistics.Enable"/>打开。</summary>
+            <summary>发送数据包统计信息</summary>
         </member>
         <member name="P:NewLife.Net.SessionBase.StatReceive">
-            <summary>接收数据包统计信息，默认关闭，通过<see cref="P:NewLife.Net.IStatistics.Enable"/>打开。</summary>
+            <summary>接收数据包统计信息</summary>
         </member>
         <member name="P:NewLife.Net.SessionBase.StartTime">
             <summary>通信开始时间</summary>
