@@ -26,13 +26,13 @@ namespace xLink.Client
         [Description("地址")]
         public String Address { get; set; } = "Tcp://127.0.0.1:1234";
 
-        /// <summary>文本编码</summary>
-        [XmlIgnore]
-        public Encoding Encoding { get; set; } = Encoding.Default;
+        ///// <summary>文本编码</summary>
+        //[XmlIgnore]
+        //public Encoding Encoding { get; set; } = Encoding.Default;
 
-        /// <summary>编码</summary>
-        [Description("编码 gb2312/us-ascii/utf-8")]
-        public String WebEncoding { get { return Encoding?.WebName; } set { Encoding = Encoding.GetEncoding(value); } }
+        ///// <summary>编码</summary>
+        //[Description("编码 gb2312/us-ascii/utf-8")]
+        //public String WebEncoding { get { return Encoding?.WebName; } set { Encoding = Encoding.GetEncoding(value); } }
 
         /// <summary>十六进制显示</summary>
         [Description("十六进制显示")]

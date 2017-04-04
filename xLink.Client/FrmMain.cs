@@ -55,14 +55,14 @@ namespace xLink.Client
             mi显示接收数据.Checked = cfg.ShowReceive;
             mi显示统计信息.Checked = cfg.ShowStat;
             miHexSend.Checked = cfg.HexSend;
+            mi日志着色.Checked = cfg.ColorLog;
 
             txtSend.Text = cfg.SendContent;
             numMutilSend.Value = cfg.SendTimes;
             numSleep.Value = cfg.SendSleep;
             numThreads.Value = cfg.SendUsers;
-            cbColor.Checked = cfg.ColorLog;
 
-            if (!cfg.Address.IsNullOrEmpty()) cbAddr.DataSource = cfg.Address.Split(";").Distinct();
+            if (!cfg.Address.IsNullOrEmpty()) cbAddr.DataSource = cfg.Address.Split(";").Distinct().ToList();
         }
 
         void SaveConfig()
@@ -80,7 +80,7 @@ namespace xLink.Client
             cfg.SendTimes = (Int32)numMutilSend.Value;
             cfg.SendSleep = (Int32)numSleep.Value;
             cfg.SendUsers = (Int32)numThreads.Value;
-            cfg.ColorLog = cbColor.Checked;
+            cfg.ColorLog = mi日志着色.Checked;
 
             cfg.Mode = cbMode.Text;
 
@@ -242,7 +242,8 @@ namespace xLink.Client
                     lastSend = tcount;
                 }
 
-                if (cbColor.Checked) txtReceive.ColourDefault(_pColor);
+                var cfg = Setting.Current;
+                if (cfg.ColorLog) txtReceive.ColourDefault(_pColor);
                 _pColor = txtReceive.TextLength;
             }
         }
@@ -284,6 +285,14 @@ namespace xLink.Client
                         {
                             if (ac.Open()) break;
                             Thread.Sleep(1000);
+                        }
+
+                        // 共用统计对象
+                        if (ac.Active)
+                        {
+                            var sc2 = ac.Client.GetService<ISocketClient>();
+                            sc2.StatSend = sc.StatSend;
+                            sc2.StatReceive = sc.StatReceive;
                         }
                     });
                 }
@@ -350,46 +359,12 @@ namespace xLink.Client
             BytesOfSent = 0;
         }
 
-        private void mi显示应用日志_Click(Object sender, EventArgs e)
+        private void Menu_Click(Object sender, EventArgs e)
         {
             var mi = sender as ToolStripMenuItem;
             mi.Checked = !mi.Checked;
-        }
 
-        private void mi显示网络日志_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示发送数据_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示接收数据_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示统计信息_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            Setting.Current.ShowStat = mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示接收字符串_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            Setting.Current.ShowReceiveString = mi.Checked = !mi.Checked;
-        }
-
-        private void miHex发送_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            Setting.Current.HexSend = mi.Checked = !mi.Checked;
+            SaveConfig();
         }
         #endregion
 

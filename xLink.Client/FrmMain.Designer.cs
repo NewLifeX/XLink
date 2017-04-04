@@ -43,7 +43,6 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.numMutilSend = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbColor = new System.Windows.Forms.CheckBox();
             this.pnlSetting = new System.Windows.Forms.Panel();
             this.cbMode = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -52,6 +51,7 @@
             this.txtReceive = new System.Windows.Forms.RichTextBox();
             this.menuReceive = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi日志着色 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mi显示应用日志 = new System.Windows.Forms.ToolStripMenuItem();
             this.mi显示网络日志 = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,10 +89,12 @@
             // 
             // cbAddr
             // 
+            this.cbAddr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbAddr.FormattingEnabled = true;
             this.cbAddr.Location = new System.Drawing.Point(117, 7);
             this.cbAddr.Name = "cbAddr";
-            this.cbAddr.Size = new System.Drawing.Size(149, 20);
+            this.cbAddr.Size = new System.Drawing.Size(227, 20);
             this.cbAddr.TabIndex = 10;
             // 
             // lbAddr
@@ -185,19 +187,19 @@
             this.miHexSend,
             this.mi清空2});
             this.menuSend.Name = "menuSend";
-            this.menuSend.Size = new System.Drawing.Size(123, 48);
+            this.menuSend.Size = new System.Drawing.Size(153, 70);
             // 
             // miHexSend
             // 
             this.miHexSend.Name = "miHexSend";
-            this.miHexSend.Size = new System.Drawing.Size(122, 22);
+            this.miHexSend.Size = new System.Drawing.Size(152, 22);
             this.miHexSend.Text = "Hex发送";
-            this.miHexSend.Click += new System.EventHandler(this.miHex发送_Click);
+            this.miHexSend.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi清空2
             // 
             this.mi清空2.Name = "mi清空2";
-            this.mi清空2.Size = new System.Drawing.Size(122, 22);
+            this.mi清空2.Size = new System.Drawing.Size(152, 22);
             this.mi清空2.Text = "清空";
             this.mi清空2.Click += new System.EventHandler(this.mi清空2_Click);
             // 
@@ -247,26 +249,16 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "间隔：";
             // 
-            // cbColor
-            // 
-            this.cbColor.AutoSize = true;
-            this.cbColor.Checked = true;
-            this.cbColor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbColor.Location = new System.Drawing.Point(281, 19);
-            this.cbColor.Name = "cbColor";
-            this.cbColor.Size = new System.Drawing.Size(72, 16);
-            this.cbColor.TabIndex = 19;
-            this.cbColor.Text = "日志着色";
-            this.cbColor.UseVisualStyleBackColor = true;
-            // 
             // pnlSetting
             // 
+            this.pnlSetting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlSetting.Controls.Add(this.cbMode);
             this.pnlSetting.Controls.Add(this.cbAddr);
             this.pnlSetting.Controls.Add(this.lbAddr);
             this.pnlSetting.Location = new System.Drawing.Point(6, 12);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(269, 31);
+            this.pnlSetting.Size = new System.Drawing.Size(347, 31);
             this.pnlSetting.TabIndex = 18;
             // 
             // cbMode
@@ -310,6 +302,7 @@
             // 
             this.menuReceive.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
+            this.mi日志着色,
             this.toolStripMenuItem3,
             this.mi显示应用日志,
             this.mi显示网络日志,
@@ -318,7 +311,7 @@
             this.mi显示接收数据,
             this.mi显示统计信息});
             this.menuReceive.Name = "menuSend";
-            this.menuReceive.Size = new System.Drawing.Size(161, 164);
+            this.menuReceive.Size = new System.Drawing.Size(161, 186);
             // 
             // toolStripMenuItem1
             // 
@@ -326,6 +319,13 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
             this.toolStripMenuItem1.Text = "清空";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.mi清空_Click);
+            // 
+            // mi日志着色
+            // 
+            this.mi日志着色.Name = "mi日志着色";
+            this.mi日志着色.Size = new System.Drawing.Size(160, 22);
+            this.mi日志着色.Text = "日志着色";
+            this.mi日志着色.Click += new System.EventHandler(this.Menu_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -337,42 +337,42 @@
             this.mi显示应用日志.Name = "mi显示应用日志";
             this.mi显示应用日志.Size = new System.Drawing.Size(160, 22);
             this.mi显示应用日志.Text = "显示应用日志";
-            this.mi显示应用日志.Click += new System.EventHandler(this.mi显示应用日志_Click);
+            this.mi显示应用日志.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi显示网络日志
             // 
             this.mi显示网络日志.Name = "mi显示网络日志";
             this.mi显示网络日志.Size = new System.Drawing.Size(160, 22);
             this.mi显示网络日志.Text = "显示网络日志";
-            this.mi显示网络日志.Click += new System.EventHandler(this.mi显示网络日志_Click);
+            this.mi显示网络日志.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi显示接收字符串
             // 
             this.mi显示接收字符串.Name = "mi显示接收字符串";
             this.mi显示接收字符串.Size = new System.Drawing.Size(160, 22);
             this.mi显示接收字符串.Text = "显示接收字符串";
-            this.mi显示接收字符串.Click += new System.EventHandler(this.mi显示接收字符串_Click);
+            this.mi显示接收字符串.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi显示发送数据
             // 
             this.mi显示发送数据.Name = "mi显示发送数据";
             this.mi显示发送数据.Size = new System.Drawing.Size(160, 22);
             this.mi显示发送数据.Text = "显示发送数据";
-            this.mi显示发送数据.Click += new System.EventHandler(this.mi显示发送数据_Click);
+            this.mi显示发送数据.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi显示接收数据
             // 
             this.mi显示接收数据.Name = "mi显示接收数据";
             this.mi显示接收数据.Size = new System.Drawing.Size(160, 22);
             this.mi显示接收数据.Text = "显示接收数据";
-            this.mi显示接收数据.Click += new System.EventHandler(this.mi显示接收数据_Click);
+            this.mi显示接收数据.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi显示统计信息
             // 
             this.mi显示统计信息.Name = "mi显示统计信息";
             this.mi显示统计信息.Size = new System.Drawing.Size(160, 22);
             this.mi显示统计信息.Text = "显示统计信息";
-            this.mi显示统计信息.Click += new System.EventHandler(this.mi显示统计信息_Click);
+            this.mi显示统计信息.Click += new System.EventHandler(this.Menu_Click);
             // 
             // btnConnect
             // 
@@ -438,7 +438,6 @@
             this.ClientSize = new System.Drawing.Size(667, 442);
             this.Controls.Add(this.pnlAction);
             this.Controls.Add(this.gbSend);
-            this.Controls.Add(this.cbColor);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.gbReceive);
             this.Controls.Add(this.btnConnect);
@@ -459,7 +458,6 @@
             this.menuReceive.ResumeLayout(false);
             this.pnlAction.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -479,7 +477,6 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.NumericUpDown numMutilSend;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox cbColor;
         private System.Windows.Forms.Panel pnlSetting;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.GroupBox gbReceive;
@@ -501,6 +498,7 @@
         private System.Windows.Forms.Panel pnlAction;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.ComboBox cbMode;
+        private System.Windows.Forms.ToolStripMenuItem mi日志着色;
     }
 }
 
