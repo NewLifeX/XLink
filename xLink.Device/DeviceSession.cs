@@ -45,11 +45,11 @@ namespace xLink.Device
         #endregion
 
         #region 登录注册
-        /// <summary>登录或注册</summary>
+        /// <summary>检查登录，默认检查密码MD5散列，可继承修改</summary>
         /// <param name="user">用户名</param>
         /// <param name="pass">密码</param>
-        /// <returns></returns>
-        protected override Object OnLogin(String user, String pass)
+        /// <returns>返回要发给客户端的对象</returns>
+        protected override Object CheckLogin(String user, String pass)
         {
             if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
 
@@ -112,9 +112,7 @@ namespace xLink.Device
 
         private Object OnLogin(DeviceX dv, Boolean islogin)
         {
-            // 随机密钥
-            Key = Rand.NextBytes(8);
-            Session["Key"] = Key;
+            Session["_TruePass"] = dv.Password;
 
             // 当前设备
             Device = dv;
@@ -135,9 +133,9 @@ namespace xLink.Device
             var key = Key.RC4(dv.Password.GetBytes()).ToHex();
 
             if (islogin)
-                return new { Key = key };
+                return new { Name = dv.Name };
             else
-                return new { Key = key, User = dv.Name, Pass = dv.Password };
+                return new { user = dv.Name, pass = dv.Password };
         }
         #endregion
     }

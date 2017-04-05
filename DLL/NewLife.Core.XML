@@ -3757,6 +3757,21 @@
             <summary>已重载</summary>
             <returns></returns>
         </member>
+        <member name="T:NewLife.Net.Setting">
+            <summary>网络设置</summary>
+        </member>
+        <member name="P:NewLife.Net.Setting.Debug">
+            <summary>网络调试</summary>
+        </member>
+        <member name="P:NewLife.Net.Setting.SessionTimeout">
+            <summary>会话超时时间。默认30秒</summary>
+        </member>
+        <member name="P:NewLife.Net.Setting.BufferSize">
+            <summary>缓冲区大小。默认8k</summary>
+        </member>
+        <member name="M:NewLife.Net.Setting.#ctor">
+            <summary>实例化</summary>
+        </member>
         <member name="T:NewLife.Net.SocketHelper">
             <summary>Socket扩展</summary>
         </member>
@@ -5963,6 +5978,65 @@
             <summary>获取所有接口</summary>
             <returns></returns>
         </member>
+        <member name="T:NewLife.Remoting.ApiSession">
+            <summary>Api会话</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ApiSession.Session">
+            <summary>会话</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.OnDispose(System.Boolean)">
+            <summary>销毁时，从集合里面删除令牌</summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.GetKey(NewLife.Data.FilterContext)">
+            <summary>为加解密过滤器提供会话密钥</summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.Error(System.Int32,System.String)">
+            <summary>抛出异常</summary>
+            <param name="errCode"></param>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.OnLogin(System.String,System.String)">
+            <summary>收到登录请求</summary>
+            <param name="user">用户名</param>
+            <param name="pass">密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.CheckLogin(System.String,System.String)">
+            <summary>检查登录，默认检查密码MD5散列，可继承修改</summary>
+            <param name="user">用户名</param>
+            <param name="pass">密码</param>
+            <returns>返回要发给客户端的对象</returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.GenerateKey">
+            <summary>生成密钥，默认密码加密密钥，可继承修改</summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.OnPing">
+            <summary>心跳</summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.InvokeAsync``1(System.String,System.Object)">
+            <summary>远程调用</summary>
+            <example>
+            <code>
+            client.InvokeAsync("GetDeviceCount");
+            var rs = client.InvokeAsync("GetDeviceInfo", 2, 5, 9);
+            var di = rs.Result[0].Value;
+            </code>
+            </example>
+            <param name="action"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiSession.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
         <member name="T:NewLife.Remoting.ActionFilterAttribute">
             <summary>表示筛选器特性的基类。</summary>
         </member>
@@ -6447,7 +6521,7 @@
             <summary>异步登录</summary>
         </member>
         <member name="M:NewLife.Remoting.ApiClient.OnPreLogin">
-            <summary>预登录，可继承修改登录参数构造方式</summary>
+            <summary>预登录，默认MD5哈希密码，可继承修改登录参数构造方式</summary>
             <returns></returns>
         </member>
         <member name="M:NewLife.Remoting.ApiClient.OnLogin(System.Object)">
@@ -8397,9 +8471,6 @@
         </member>
         <member name="P:NewLife.Setting.PluginCache">
             <summary>插件缓存目录。默认位于系统盘的X\Cache</summary>
-        </member>
-        <member name="P:NewLife.Setting.NetDebug">
-            <summary>网络调试</summary>
         </member>
         <member name="P:NewLife.Setting.SpeechTip">
             <summary>语音提示。默认true</summary>

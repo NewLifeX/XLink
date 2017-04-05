@@ -13,12 +13,9 @@ namespace xLink
 {
     /// <summary>物联会话</summary>
     [Api(null)]
-    public class LinkSession : DisposeBase, IApi
+    public class LinkSession : ApiSession
     {
         #region 属性
-        /// <summary>Api会话</summary>
-        public IApiSession Session { get; set; }
-
         /// <summary>名称</summary>
         public String Name { get; set; }
 
@@ -40,33 +37,10 @@ namespace xLink
 
         #region 构造
         /// <summary>构造令牌会话，指定输出日志</summary>
-        public LinkSession()
-        {
-        }
-
-        /// <summary>销毁时，从集合里面删除令牌</summary>
-        /// <param name="disposing"></param>
-        protected override void OnDispose(Boolean disposing)
-        {
-            base.OnDispose(disposing);
-
-            Session.TryDispose();
-        }
+        public LinkSession() { }
         #endregion
 
         #region 主要方法
-        /// <summary>为加解密过滤器提供会话密钥</summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        internal static Byte[] GetKey(FilterContext context)
-        {
-            var ctx = context as ApiFilterContext;
-            var ss = ctx?.Session;
-            if (ss == null) return null;
-
-            return ss["Key"] as Byte[];
-        }
-
         /// <summary>设置活跃时间</summary>
         public virtual Boolean SetActive(Byte seq)
         {
@@ -76,25 +50,13 @@ namespace xLink
         }
         #endregion
 
-        #region 异常处理
-        /// <summary>抛出异常</summary>
-        /// <param name="errCode"></param>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        protected ApiException Error(Int32 errCode, String msg) { return new ApiException(errCode, msg); }
-        #endregion
-
         #region 登录
-        /// <summary>收到登录请求</summary>
+        /// <summary>检查登录，默认检查密码MD5散列，可继承修改</summary>
         /// <param name="user">用户名</param>
         /// <param name="pass">密码</param>
-        /// <returns></returns>
-        [Api("Login")]
-        protected virtual Object OnLogin(String user, String pass)
+        /// <returns>返回要发给客户端的对象</returns>
+        protected override Object CheckLogin(String user, String pass)
         {
-            //if (user.IsNullOrEmpty() || pass.IsNullOrEmpty()) throw Error(3, "用户名或密码不能为空");
-            if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
-
             // 账号真实密码
             var truepass = user;
 
@@ -132,79 +94,12 @@ namespace xLink
                 }
             }
 
-            // 随机密钥
-            Key = Rand.NextBytes(8);
-            Session["Key"] = Key;
+            Session["_TruePass"] = truepass;
 
-            var rs = new
-            {
-                // 加密返回的密钥
-                Key = Key.RC4(truepass.GetBytes()).ToHex()
-            };
-
-            var dic = rs.ToDictionary();
             // 注册需要返回用户名密码
-            if (pass.IsNullOrEmpty())
-            {
-                dic["User"] = user;
-                dic["Pass"] = truepass;
-            }
+            if (pass.IsNullOrEmpty()) return new { user, pass = truepass };
 
-            return dic;
-        }
-        #endregion
-
-        #region 心跳
-        /// <summary>心跳</summary>
-        /// <returns></returns>
-        [Api("Ping")]
-        protected virtual Object OnPing()
-        {
-            WriteLog("心跳 ");
-
-            var dic = ControllerContext.Current.Parameters;
-            // 返回服务器时间
-            dic["ServerTime"] = DateTime.Now;
-
-            return dic;
-        }
-        #endregion
-
-        #region 远程调用
-        /// <summary>远程调用</summary>
-        /// <example>
-        /// <code>
-        /// client.InvokeAsync("GetDeviceCount");
-        /// var rs = client.InvokeAsync("GetDeviceInfo", 2, 5, 9);
-        /// var di = rs.Result[0].Value;
-        /// </code>
-        /// </example>
-        /// <param name="action"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public virtual async Task<TResult> InvokeAsync<TResult>(String action, Object args = null)
-        {
-            return await Session.InvokeAsync<TResult>(action, args);
-        }
-        #endregion
-
-        #region 辅助
-        private String _prefix;
-
-        /// <summary>写日志</summary>
-        /// <param name="format"></param>
-        /// <param name="args"></param>
-        public void WriteLog(String format, params Object[] args)
-        {
-            var ns = Session as NetSession;
-            if (_prefix == null)
-            {
-                var type = GetType();
-                _prefix = "{0}[{1}] ".F(type.GetDisplayName() ?? type.Name.TrimEnd("Session"), ns.ID);
-                ns.LogPrefix = _prefix;
-            }
-
-            ns.WriteLog(Name + " " + format, args);
+            return new { user };
         }
         #endregion
     }
