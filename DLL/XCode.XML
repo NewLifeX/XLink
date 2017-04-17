@@ -5415,11 +5415,11 @@
         <member name="P:XCode.Membership.User`1.DisplayName">
             <summary>显示名。昵称、中文名等</summary>
         </member>
-        <member name="P:XCode.Membership.User`1.Sex">
-            <summary>性别。未知、男、女</summary>
-        </member>
         <member name="P:XCode.Membership.User`1.Mail">
             <summary>邮件</summary>
+        </member>
+        <member name="P:XCode.Membership.User`1.Sex">
+            <summary>性别。未知、男、女</summary>
         </member>
         <member name="P:XCode.Membership.User`1.Phone">
             <summary>电话</summary>

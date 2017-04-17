@@ -34,8 +34,6 @@ namespace xLink
         /// <summary>实例化令牌服务器</summary>
         public LinkServer()
         {
-            IsReusable = true;
-
             ShowSessionCount = 60;
 
             // 初始数据

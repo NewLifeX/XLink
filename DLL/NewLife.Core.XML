@@ -1269,6 +1269,12 @@
         <member name="P:NewLife.Data.Packet.Count">
             <summary>长度</summary>
         </member>
+        <member name="P:NewLife.Data.Packet.Next">
+            <summary>下一个链式包</summary>
+        </member>
+        <member name="P:NewLife.Data.Packet.Total">
+            <summary>总长度</summary>
+        </member>
         <member name="M:NewLife.Data.Packet.#ctor(System.Byte[],System.Int32,System.Int32)">
             <summary>根据数据区实例化</summary>
             <param name="data"></param>
@@ -1289,6 +1295,12 @@
         <member name="M:NewLife.Data.Packet.ToArray">
             <summary>返回字节数组。如果是完整数组直接返回，否则截取</summary>
             <remarks>不一定是全新数据，如果需要全新数据请克隆</remarks>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Data.Packet.ReadBytes(System.Int32,System.Int32)">
+            <summary>从封包中读取指定数据</summary>
+            <param name="offset"></param>
+            <param name="count"></param>
             <returns></returns>
         </member>
         <member name="M:NewLife.Data.Packet.GetStream">
@@ -1362,6 +1374,187 @@
         </member>
         <member name="M:NewLife.Extension.SpeakProvider.CheckVoice">
             <summary>检查是否安装了语音库</summary>
+        </member>
+        <member name="T:NewLife.Http.HttpBase">
+            <summary>Http请求响应基类</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpBase.IsWebSocket">
+            <summary>是否WebSocket</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpBase.ContentLength">
+            <summary>内容长度</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpBase.Headers">
+            <summary>头部集合</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpBase.Item(System.String)">
+            <summary>获取/设置 头部</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="P:NewLife.Http.HttpBase.Expire">
+            <summary>过期时间</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpBase.IsCompleted">
+            <summary>是否已完整</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpBase.BodyLength">
+            <summary>主体长度</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpBase.OnParse(System.String)">
+            <summary>分析第一行</summary>
+            <param name="firstLine"></param>
+        </member>
+        <member name="M:NewLife.Http.HttpBase.Build(NewLife.Data.Packet)">
+            <summary>创建请求响应包</summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Http.HttpBase.BuildHeader(System.Int32)">
+            <summary>创建头部</summary>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NewLife.Http.HttpClient">
+            <summary>Http客户端</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpClient.Request">
+            <summary>请求</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpClient.Response">
+            <summary>响应</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpClient.#ctor">
+            <summary>实例化增强TCP</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpClient.OnOpen">
+            <summary>打开</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpClient.ProcessReceive(NewLife.Data.Packet,System.Net.IPEndPoint)">
+            <summary>处理收到的数据</summary>
+            <param name="pk"></param>
+            <param name="remote"></param>
+        </member>
+        <member name="T:NewLife.Http.HttpRequest">
+            <summary>Http请求</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.Method">
+            <summary>Http方法</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.Url">
+            <summary>资源路径</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.IsSSL">
+            <summary>是否启用SSL</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.UserAgent">
+            <summary>用户代理</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.Compressed">
+            <summary>是否压缩</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.KeepAlive">
+            <summary>保持连接</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.Accept">
+            <summary>可接受内容</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.AcceptLanguage">
+            <summary>接受语言</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpRequest.Referer">
+            <summary>引用路径</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpRequest.OnParse(System.String)">
+            <summary>分析第一行</summary>
+            <param name="firstLine"></param>
+        </member>
+        <member name="M:NewLife.Http.HttpRequest.BuildHeader(System.Int32)">
+            <summary>创建头部</summary>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NewLife.Http.HttpResponse">
+            <summary>Http响应</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpResponse.IsSSL">
+            <summary>是否启用SSL</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpResponse.StatusCode">
+            <summary>状态码</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpResponse.OnParse(System.String)">
+            <summary>分析第一行</summary>
+            <param name="firstLine"></param>
+        </member>
+        <member name="M:NewLife.Http.HttpResponse.BuildHeader(System.Int32)">
+            <summary>创建头部</summary>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NewLife.Http.HttpServer">
+            <summary>Http服务器</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpServer.#ctor">
+            <summary>实例化</summary>
+        </member>
+        <member name="T:NewLife.Http.HttpHelper">
+            <summary>Http帮助类</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpHelper.MakeRequest(System.String,System.Uri,System.Collections.Generic.IDictionary{System.String,System.Object},NewLife.Data.Packet)">
+            <summary>创建请求包</summary>
+            <param name="method"></param>
+            <param name="uri"></param>
+            <param name="headers"></param>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Http.HttpHelper.MakeResponse(System.Net.HttpStatusCode,System.Collections.Generic.IDictionary{System.String,System.Object},NewLife.Data.Packet)">
+            <summary>创建响应包</summary>
+            <param name="code"></param>
+            <param name="headers"></param>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Http.HttpHelper.ParseHeader(NewLife.Data.Packet)">
+            <summary>分析头部</summary>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Http.HttpHelper.HandeShake(System.String,NewLife.Http.HttpResponse)">
+            <summary>握手</summary>
+            <param name="key"></param>
+            <param name="response"></param>
+        </member>
+        <member name="M:NewLife.Http.HttpHelper.ParseWS(NewLife.Data.Packet)">
+            <summary>分析WS数据包</summary>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Http.HttpHelper.MakeWS(NewLife.Data.Packet)">
+            <summary>创建WS请求包</summary>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NewLife.Http.HttpSession">
+            <summary>Http会话</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpSession.Request">
+            <summary>请求</summary>
+        </member>
+        <member name="P:NewLife.Http.HttpSession.Response">
+            <summary>响应</summary>
+        </member>
+        <member name="M:NewLife.Http.HttpSession.OnReceive(NewLife.Data.Packet,System.Net.IPEndPoint)">
+            <summary>处理收到的数据</summary>
+            <param name="pk"></param>
+            <param name="remote"></param>
+        </member>
+        <member name="M:NewLife.Http.HttpSession.CheckWebSocket(NewLife.Data.Packet@,System.Net.IPEndPoint)">
+            <summary>检查WebSocket</summary>
+            <param name="pk"></param>
+            <param name="remote"></param>
+            <returns></returns>
         </member>
         <member name="T:NewLife.IO.EncodingHelper">
             <summary>编码助手</summary>
@@ -2137,12 +2330,6 @@
             如：
             Open => OK
             01-01-04-00-"Open" => 81-01-02-00-"OK"
-            
-            针对纯字符串场景，采用8字符HEX编码头部。
-            首字符0表示请求，8表示响应
-            如：
-            Open => OK
-            01010400 Open => 81010200 OK
             </remarks>
         </member>
         <member name="P:NewLife.Messaging.DefaultMessage.Flag">
@@ -2150,9 +2337,6 @@
         </member>
         <member name="P:NewLife.Messaging.DefaultMessage.Sequence">
             <summary>序列号，匹配请求和响应</summary>
-        </member>
-        <member name="F:NewLife.Messaging.DefaultMessage._IsChar">
-            <summary>对方使用纯字符串，不具备二进制编码能力</summary>
         </member>
         <member name="M:NewLife.Messaging.DefaultMessage.CreateReply">
             <summary>根据请求创建配对的响应消息</summary>
@@ -2163,9 +2347,9 @@
             <param name="pk"></param>
             <returns>是否成功</returns>
         </member>
-        <member name="M:NewLife.Messaging.DefaultMessage.Write(System.IO.Stream)">
-            <summary>把消息写入到数据流中</summary>
-            <param name="stream"></param>
+        <member name="M:NewLife.Messaging.DefaultMessage.ToPacket">
+            <summary>把消息转为封包</summary>
+            <returns></returns>
         </member>
         <member name="T:NewLife.Messaging.IMessage">
             <summary>消息命令</summary>
@@ -2185,9 +2369,9 @@
             <param name="pk"></param>
             <returns>是否成功</returns>
         </member>
-        <member name="M:NewLife.Messaging.IMessage.Write(System.IO.Stream)">
-            <summary>把消息写入到数据流中</summary>
-            <param name="stream"></param>
+        <member name="M:NewLife.Messaging.IMessage.ToPacket">
+            <summary>把消息转为封包</summary>
+            <returns></returns>
         </member>
         <member name="T:NewLife.Messaging.Message">
             <summary>消息命令基类</summary>
@@ -2207,21 +2391,8 @@
             <param name="pk"></param>
             <returns>是否成功</returns>
         </member>
-        <member name="M:NewLife.Messaging.Message.Write(System.IO.Stream)">
-            <summary>把消息写入到数据流中</summary>
-            <param name="stream"></param>
-        </member>
-        <member name="T:NewLife.Messaging.MessageHelper">
-            <summary>消息助手</summary>
-        </member>
-        <member name="M:NewLife.Messaging.MessageHelper.GetStream(NewLife.Messaging.IMessage)">
-            <summary>获取消息的数据流表示。指针位置为0</summary>
-            <param name="msg"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NewLife.Messaging.MessageHelper.ToArray(NewLife.Messaging.IMessage)">
-            <summary>获取消息的字节数组表示。</summary>
-            <param name="msg"></param>
+        <member name="M:NewLife.Messaging.Message.ToPacket">
+            <summary>把消息转为封包</summary>
             <returns></returns>
         </member>
         <member name="T:NewLife.Messaging.MessageBase">
@@ -2539,9 +2710,6 @@
             <param name="from">接口类型</param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Model.ObjectContainer.LoadConfig">
-            <summary>加载配置</summary>
-        </member>
         <member name="M:NewLife.Model.ObjectContainer.ToString">
             <summary>已重载。</summary>
             <returns></returns>
@@ -2590,50 +2758,6 @@
             <param name="request">请求的数据</param>
             <param name="response">响应的数据</param>
             <returns></returns>
-        </member>
-        <member name="T:NewLife.Net.HttpSession">
-            <summary>Http会话</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.IsWebSocket">
-            <summary>是否WebSocket</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.IsSSL">
-            <summary>是否启用SSL</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.Method">
-            <summary>Http方法</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.Uri">
-            <summary>资源路径</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.UserAgent">
-            <summary>用户代理</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.Compressed">
-            <summary>是否压缩</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.KeepAlive">
-            <summary>保持连接</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.Headers">
-            <summary>头部集合</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.StatusCode">
-            <summary>状态码</summary>
-        </member>
-        <member name="P:NewLife.Net.HttpSession.ResponseHeaders">
-            <summary>响应头</summary>
-        </member>
-        <member name="M:NewLife.Net.HttpSession.#ctor">
-            <summary>实例化增强TCP</summary>
-        </member>
-        <member name="M:NewLife.Net.HttpSession.OnOpen">
-            <summary>打开</summary>
-        </member>
-        <member name="M:NewLife.Net.HttpSession.OnReceive(NewLife.Data.Packet,System.Net.IPEndPoint)">
-            <summary>处理收到的数据</summary>
-            <param name="pk"></param>
-            <param name="remote"></param>
         </member>
         <member name="T:NewLife.Net.INetSession">
             <summary>网络服务会话接口</summary>
@@ -2777,7 +2901,10 @@
         <member name="M:NewLife.Net.PacketProvider.GetLength(System.IO.Stream)">
             <summary>从数据流中获取整帧数据长度</summary>
             <param name="stream"></param>
-            <returns></returns>
+            <returns>数据帧长度（包含头部长度位）</returns>
+        </member>
+        <member name="M:NewLife.Net.PacketProvider.Test">
+            <summary>粘包测试</summary>
         </member>
         <member name="T:NewLife.Net.PacketFactory">
             <summary>头部长度粘包处理工厂</summary>
@@ -2962,10 +3089,10 @@
             <param name="encoding">文本编码，默认null表示UTF-8编码</param>
             <returns>返回自身，用于链式写法</returns>
         </member>
-        <member name="M:NewLife.Net.SocketRemoteHelper.SendMulti(NewLife.Net.ISocketRemote,System.Byte[],System.Int32,System.Int32)">
+        <member name="M:NewLife.Net.SocketRemoteHelper.SendMulti(NewLife.Net.ISocketRemote,NewLife.Data.Packet,System.Int32,System.Int32)">
             <summary>异步多次发送数据</summary>
             <param name="session">会话</param>
-            <param name="buffer"></param>
+            <param name="pk"></param>
             <param name="times"></param>
             <param name="msInterval"></param>
             <returns></returns>
@@ -3990,6 +4117,9 @@
         <member name="P:NewLife.Net.TcpServer.MaxAsync">
             <summary>最大并行数。默认CPU*1.6</summary>
         </member>
+        <member name="P:NewLife.Net.TcpServer.EnableHttp">
+            <summary>启用Http，数据处理时截去请求响应头，默认false</summary>
+        </member>
         <member name="P:NewLife.Net.TcpServer.SessionPacket">
             <summary>粘包处理接口</summary>
         </member>
@@ -4498,6 +4628,11 @@
             <summary>开始监听</summary>
             <returns>是否成功</returns>
         </member>
+        <member name="M:NewLife.Net.SessionBase.ProcessReceive(NewLife.Data.Packet,System.Net.IPEndPoint)">
+            <summary>接收预处理，粘包拆包</summary>
+            <param name="pk"></param>
+            <param name="remote"></param>
+        </member>
         <member name="M:NewLife.Net.SessionBase.OnReceiveError(System.Net.Sockets.SocketAsyncEventArgs)">
             <summary>收到异常时如何处理。默认关闭会话</summary>
             <param name="se"></param>
@@ -4583,21 +4718,6 @@
         </member>
         <member name="P:NewLife.Net.SessionEventArgs.Session">
             <summary>会话</summary>
-        </member>
-        <member name="T:NewLife.Net.WebSocketSession">
-            <summary>WebSocket会话</summary>
-        </member>
-        <member name="F:NewLife.Net.WebSocketSession._HandeShake">
-            <summary>是否已经握手</summary>
-        </member>
-        <member name="M:NewLife.Net.WebSocketSession.OnReceive(NewLife.Net.ReceivedEventArgs)">
-            <summary>收到数据</summary>
-            <param name="e"></param>
-        </member>
-        <member name="M:NewLife.Net.WebSocketSession.Send(NewLife.Data.Packet)">
-            <summary>发送数据前需要处理</summary>
-            <param name="pk">数据包</param>
-            <returns></returns>
         </member>
         <member name="T:NewLife.Net.SerialPortConfig">
             <summary>串口配置</summary>
@@ -4867,6 +4987,9 @@
             <param name="binder"></param>
             <param name="result"></param>
             <returns></returns>
+        </member>
+        <member name="M:NewLife.Reflection.DynamicXml.Test">
+            <summary>测试</summary>
         </member>
         <member name="T:NewLife.Reflection.IReflect">
             <summary>反射接口</summary>
@@ -5822,6 +5945,9 @@
             <param name="name">名称</param>
             <returns></returns>
         </member>
+        <member name="T:NewLife.Remoting.AllowAnonymousAttribute">
+            <summary>Api是否可以匿名使用</summary>
+        </member>
         <member name="T:NewLife.Remoting.ApiAction">
             <summary>Api动作</summary>
         </member>
@@ -5857,9 +5983,17 @@
         <member name="P:NewLife.Remoting.ApiAttribute.Name">
             <summary>名称</summary>
         </member>
+        <member name="P:NewLife.Remoting.ApiAttribute.IsReusable">
+            <summary>是否在会话上复用控制器。复用控制器可确保同一个会话多次请求路由到同一个控制器对象实例</summary>
+        </member>
         <member name="M:NewLife.Remoting.ApiAttribute.#ctor(System.String)">
             <summary>实例化</summary>
             <param name="name"></param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiAttribute.#ctor(System.String,System.Boolean)">
+            <summary>实例化</summary>
+            <param name="name"></param>
+            <param name="reusable"></param>
         </member>
         <member name="T:NewLife.Remoting.ApiException">
             <summary>远程调用异常</summary>
@@ -5900,9 +6034,6 @@
             <param name="key"></param>
             <returns></returns>
         </member>
-        <member name="P:NewLife.Remoting.ApiHost.IsReusable">
-            <summary>是否在会话上复用控制器。复用控制器可确保同一个会话多次请求路由到同一个控制器对象实例</summary>
-        </member>
         <member name="P:NewLife.Remoting.ApiHost.Manager">
             <summary>接口动作管理器</summary>
         </member>
@@ -5921,10 +6052,10 @@
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
         </member>
         <member name="P:NewLife.Remoting.ApiHost.Encrypted">
-            <summary>是否加密，默认true</summary>
+            <summary>是否加密，默认false</summary>
         </member>
         <member name="P:NewLife.Remoting.ApiHost.Compressed">
-            <summary>是否压缩，默认true</summary>
+            <summary>是否压缩，默认false</summary>
         </member>
         <member name="M:NewLife.Remoting.ApiHost.SetFilter">
             <summary>设置过滤器</summary>
@@ -6276,14 +6407,11 @@
         <member name="P:NewLife.Remoting.IApiHost.Manager">
             <summary>接口动作管理器</summary>
         </member>
-        <member name="P:NewLife.Remoting.IApiHost.IsReusable">
-            <summary>是否在会话上复用控制器。复用控制器可确保同一个会话多次请求路由到同一个控制器对象实例</summary>
-        </member>
         <member name="P:NewLife.Remoting.IApiHost.Encrypted">
-            <summary>是否加密，默认true</summary>
+            <summary>是否加密</summary>
         </member>
         <member name="P:NewLife.Remoting.IApiHost.Compressed">
-            <summary>是否压缩，默认true</summary>
+            <summary>是否压缩</summary>
         </member>
         <member name="E:NewLife.Remoting.IApiHost.Received">
             <summary>收到请求</summary>
@@ -6332,6 +6460,13 @@
             <param name="session"></param>
             <param name="msg"></param>
             <param name="issend"></param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiHostHelper.CreateController(NewLife.Remoting.IApiHost,NewLife.Remoting.IApiSession,NewLife.Remoting.ApiAction)">
+            <summary>创建控制器实例</summary>
+            <param name="host"></param>
+            <param name="session"></param>
+            <param name="api"></param>
+            <returns></returns>
         </member>
         <member name="T:NewLife.Remoting.IApiManager">
             <summary>接口管理器</summary>
@@ -6435,6 +6570,16 @@
             <param name="key"></param>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Remoting.IApiSession.FindAction(System.String)">
+            <summary>查找Api动作</summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.IApiSession.CreateController(NewLife.Remoting.ApiAction)">
+            <summary>创建控制器实例</summary>
+            <param name="api"></param>
+            <returns></returns>
+        </member>
         <member name="M:NewLife.Remoting.IApiSession.CreateMessage(NewLife.Data.Packet)">
             <summary>创建消息。低级接口，由框架使用</summary>
             <param name="pk"></param>
@@ -6493,6 +6638,16 @@
             <param name="uri"></param>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Remoting.ApiClient.FindAction(System.String)">
+            <summary>查找Api动作</summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiClient.CreateController(NewLife.Remoting.ApiAction)">
+            <summary>创建控制器实例</summary>
+            <param name="api"></param>
+            <returns></returns>
+        </member>
         <member name="M:NewLife.Remoting.ApiClient.InvokeAsync``1(System.String,System.Object)">
             <summary>调用</summary>
             <typeparam name="TResult"></typeparam>
@@ -6516,6 +6671,9 @@
         </member>
         <member name="P:NewLife.Remoting.ApiClient.LoginAction">
             <summary>登录动作名</summary>
+        </member>
+        <member name="F:NewLife.Remoting.ApiClient.OnLogined">
+            <summary>登录完成事件</summary>
         </member>
         <member name="M:NewLife.Remoting.ApiClient.LoginAsync">
             <summary>异步登录</summary>
@@ -6562,37 +6720,18 @@
             <param name="serviceType"></param>
             <returns></returns>
         </member>
-        <member name="P:NewLife.Remoting.ApiHttpServer.Provider">
-            <summary>Api服务器主机</summary>
-        </member>
-        <member name="P:NewLife.Remoting.ApiHttpServer.Encoder">
-            <summary>编码器</summary>
-        </member>
-        <member name="P:NewLife.Remoting.ApiHttpServer.Handler">
-            <summary>处理器</summary>
-        </member>
-        <member name="P:NewLife.Remoting.ApiHttpServer.AllSessions">
-            <summary>当前服务器所有会话</summary>
-        </member>
-        <member name="P:NewLife.Remoting.ApiHttpServer.Listener">
-            <summary>监听器</summary>
-        </member>
         <member name="M:NewLife.Remoting.ApiHttpServer.Init(System.String)">
             <summary>初始化</summary>
             <param name="config"></param>
             <returns></returns>
-        </member>
-        <member name="M:NewLife.Remoting.ApiHttpServer.Stop(System.String)">
-            <summary>关闭</summary>
-            <param name="reason">关闭原因。便于日志分析</param>
         </member>
         <member name="M:NewLife.Remoting.ApiHttpServer.GetService(System.Type)">
             <summary>获取服务提供者</summary>
             <param name="serviceType"></param>
             <returns></returns>
         </member>
-        <member name="P:NewLife.Remoting.ApiHttpServer.Log">
-            <summary>日志</summary>
+        <member name="P:NewLife.Remoting.ApiNetClient.Active">
+            <summary>是否已打开</summary>
         </member>
         <member name="P:NewLife.Remoting.ApiNetClient.Provider">
             <summary>服务提供者</summary>
@@ -6656,6 +6795,16 @@
         </member>
         <member name="M:NewLife.Remoting.ApiNetSession.Start">
             <summary>开始会话处理</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiNetSession.FindAction(System.String)">
+            <summary>查找Api动作</summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Remoting.ApiNetSession.CreateController(NewLife.Remoting.ApiAction)">
+            <summary>创建控制器实例</summary>
+            <param name="api"></param>
+            <returns></returns>
         </member>
         <member name="M:NewLife.Remoting.ApiNetSession.CreateMessage(NewLife.Data.Packet)">
             <summary>创建消息</summary>
@@ -6724,6 +6873,12 @@
             <summary>获取服务提供者</summary>
             <param name="serviceType"></param>
             <returns></returns>
+        </member>
+        <member name="T:NewLife.Remoting.ApiTest">
+            <summary>Rpc测试</summary>
+        </member>
+        <member name="M:NewLife.Remoting.ApiTest.Main">
+            <summary>测试主函数</summary>
         </member>
         <member name="T:NewLife.Remoting.IEncoder">
             <summary>编码器</summary>
@@ -7861,6 +8016,12 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="T:NewLife.Serialization.BinaryTest">
+            <summary>Binary测试</summary>
+        </member>
+        <member name="M:NewLife.Serialization.BinaryTest.Start">
+            <summary>开始测试</summary>
+        </member>
         <member name="T:NewLife.Serialization.IMemberAccessor">
             <summary>成员序列化访问器。接口实现者可以在这里完全自定义序列化行为</summary>
         </member>
@@ -8303,6 +8464,12 @@
         <member name="T:NewLife.Serialization.JsonReader">
             <summary>Json读取器</summary>
         </member>
+        <member name="T:NewLife.Serialization.JsonTest">
+            <summary>Json测试</summary>
+        </member>
+        <member name="M:NewLife.Serialization.JsonTest.Start">
+            <summary>开始测试</summary>
+        </member>
         <member name="T:NewLife.Serialization.JsonWriter">
             <summary>Json写入器</summary>
         </member>
@@ -8488,6 +8655,10 @@
             <summary>获取插件目录</summary>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Setting.GetPluginCache">
+            <summary>获取插件缓存目录</summary>
+            <returns></returns>
+        </member>
         <member name="T:NewLife.EventArgs`1">
             <summary>泛型事件参数</summary>
             <typeparam name="TArg"></typeparam>
@@ -8647,6 +8818,10 @@
         </member>
         <member name="M:NewLife.Threading.TimerX.Dispose">
             <summary>销毁定时器</summary>
+        </member>
+        <member name="M:NewLife.Threading.TimerX.SetNext(System.Int32)">
+            <summary>设置下一次运行时间</summary>
+            <param name="ms"></param>
         </member>
         <member name="M:NewLife.Threading.TimerX.Delay(System.Threading.WaitCallback,System.Int32)">
             <summary>延迟执行一个委托</summary>
