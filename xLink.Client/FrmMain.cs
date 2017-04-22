@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
-using NewLife.Messaging;
 using NewLife.Net;
+using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Threading;
 
@@ -26,6 +27,9 @@ namespace xLink.Client
         private void FrmMain_Load(Object sender, EventArgs e)
         {
             txtReceive.UseWinFormControl();
+
+            var asmx = AssemblyX.Entry;
+            Text += " " + asmx.Compile.ToFullString();
 
             txtReceive.SetDefaultStyle(12);
             txtSend.SetDefaultStyle(12);
