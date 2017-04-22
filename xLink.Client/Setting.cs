@@ -26,14 +26,6 @@ namespace xLink.Client
         [Description("地址")]
         public String Address { get; set; } = "Tcp://feifan.link:1234";
 
-        ///// <summary>文本编码</summary>
-        //[XmlIgnore]
-        //public Encoding Encoding { get; set; } = Encoding.Default;
-
-        ///// <summary>编码</summary>
-        //[Description("编码 gb2312/us-ascii/utf-8")]
-        //public String WebEncoding { get { return Encoding?.WebName; } set { Encoding = Encoding.GetEncoding(value); } }
-
         /// <summary>十六进制显示</summary>
         [Description("十六进制显示")]
         public Boolean HexShow { get; set; }
@@ -62,9 +54,9 @@ namespace xLink.Client
         [Description("显示应用日志")]
         public Boolean ShowLog { get; set; } = true;
 
-        /// <summary>显示网络日志</summary>
-        [Description("显示网络日志")]
-        public Boolean ShowSocketLog { get; set; } = true;
+        /// <summary>显示编码日志</summary>
+        [Description("显示编码日志")]
+        public Boolean ShowEncoderLog { get; set; } = true;
 
         /// <summary>显示接收字符串</summary>
         [Description("显示接收字符串")]
@@ -89,10 +81,6 @@ namespace xLink.Client
         /// <summary>是否压缩，默认false</summary>
         [Description("是否压缩，默认false")]
         public Boolean Compressed { get; set; }
-
-        /// <summary>编码日志开关。默认false</summary>
-        [Description("编码日志开关。默认false")]
-        public Boolean EncoderDebug { get; set; }
 
         /// <summary>日志着色</summary>
         [Description("日志着色")]

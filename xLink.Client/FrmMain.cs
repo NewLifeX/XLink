@@ -49,7 +49,7 @@ namespace xLink.Client
         {
             var cfg = Setting.Current;
             mi显示应用日志.Checked = cfg.ShowLog;
-            mi显示网络日志.Checked = cfg.ShowSocketLog;
+            mi显示编码日志.Checked = cfg.ShowEncoderLog;
             mi显示接收字符串.Checked = cfg.ShowReceiveString;
             mi显示发送数据.Checked = cfg.ShowSend;
             mi显示接收数据.Checked = cfg.ShowReceive;
@@ -69,7 +69,7 @@ namespace xLink.Client
         {
             var cfg = Setting.Current;
             cfg.ShowLog = mi显示应用日志.Checked;
-            cfg.ShowSocketLog = mi显示网络日志.Checked;
+            cfg.ShowEncoderLog = mi显示编码日志.Checked;
             cfg.ShowReceiveString = mi显示接收字符串.Checked;
             cfg.ShowSend = mi显示发送数据.Checked;
             cfg.ShowReceive = mi显示接收数据.Checked;
@@ -105,6 +105,7 @@ namespace xLink.Client
 
             var ac = new LinkClient(uri.ToString());
             ac.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
+            ac.EncoderLog = cfg.ShowEncoderLog ? XTrace.Log : Logger.Null;
             ac.Received += OnReceived;
             ac.UserName = cfg.UserName;
             ac.Password = cfg.Password;
@@ -115,8 +116,6 @@ namespace xLink.Client
             ac.Compressed = cfg.Compressed;
 
             if (!ac.Open()) return;
-
-            if (cfg.EncoderDebug) ac.Encoder.Log = ac.Log;
 
             var sc = ac.Client.GetService<ISocketClient>();
             sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;

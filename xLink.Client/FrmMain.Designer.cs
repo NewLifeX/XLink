@@ -54,7 +54,7 @@
             this.mi日志着色 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mi显示应用日志 = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi显示网络日志 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi显示编码日志 = new System.Windows.Forms.ToolStripMenuItem();
             this.mi显示接收字符串 = new System.Windows.Forms.ToolStripMenuItem();
             this.mi显示发送数据 = new System.Windows.Forms.ToolStripMenuItem();
             this.mi显示接收数据 = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +81,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(503, 26);
+            this.label7.Location = new System.Drawing.Point(519, 26);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 15;
@@ -94,7 +94,7 @@
             this.cbAddr.FormattingEnabled = true;
             this.cbAddr.Location = new System.Drawing.Point(117, 7);
             this.cbAddr.Name = "cbAddr";
-            this.cbAddr.Size = new System.Drawing.Size(227, 20);
+            this.cbAddr.Size = new System.Drawing.Size(413, 20);
             this.cbAddr.TabIndex = 10;
             // 
             // lbAddr
@@ -117,9 +117,9 @@
             this.gbSend.Controls.Add(this.numMutilSend);
             this.gbSend.Controls.Add(this.label2);
             this.gbSend.Controls.Add(this.label7);
-            this.gbSend.Location = new System.Drawing.Point(6, 346);
+            this.gbSend.Location = new System.Drawing.Point(6, 412);
             this.gbSend.Name = "gbSend";
-            this.gbSend.Size = new System.Drawing.Size(652, 84);
+            this.gbSend.Size = new System.Drawing.Size(838, 84);
             this.gbSend.TabIndex = 20;
             this.gbSend.TabStop = false;
             this.gbSend.Text = "发送区：已发送0字节";
@@ -127,7 +127,7 @@
             // numThreads
             // 
             this.numThreads.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numThreads.Location = new System.Drawing.Point(593, 22);
+            this.numThreads.Location = new System.Drawing.Point(609, 22);
             this.numThreads.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -152,7 +152,7 @@
             // numSleep
             // 
             this.numSleep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numSleep.Location = new System.Drawing.Point(538, 54);
+            this.numSleep.Location = new System.Drawing.Point(554, 54);
             this.numSleep.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -177,7 +177,7 @@
             this.txtSend.HideSelection = false;
             this.txtSend.Location = new System.Drawing.Point(0, 19);
             this.txtSend.Name = "txtSend";
-            this.txtSend.Size = new System.Drawing.Size(497, 59);
+            this.txtSend.Size = new System.Drawing.Size(513, 59);
             this.txtSend.TabIndex = 2;
             this.txtSend.Text = "";
             // 
@@ -187,26 +187,26 @@
             this.miHexSend,
             this.mi清空2});
             this.menuSend.Name = "menuSend";
-            this.menuSend.Size = new System.Drawing.Size(153, 70);
+            this.menuSend.Size = new System.Drawing.Size(123, 48);
             // 
             // miHexSend
             // 
             this.miHexSend.Name = "miHexSend";
-            this.miHexSend.Size = new System.Drawing.Size(152, 22);
+            this.miHexSend.Size = new System.Drawing.Size(122, 22);
             this.miHexSend.Text = "Hex发送";
             this.miHexSend.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi清空2
             // 
             this.mi清空2.Name = "mi清空2";
-            this.mi清空2.Size = new System.Drawing.Size(152, 22);
+            this.mi清空2.Size = new System.Drawing.Size(122, 22);
             this.mi清空2.Text = "清空";
             this.mi清空2.Click += new System.EventHandler(this.mi清空2_Click);
             // 
             // btnSend
             // 
             this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Location = new System.Drawing.Point(596, 49);
+            this.btnSend.Location = new System.Drawing.Point(612, 49);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(50, 30);
             this.btnSend.TabIndex = 1;
@@ -218,7 +218,7 @@
             // numMutilSend
             // 
             this.numMutilSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numMutilSend.Location = new System.Drawing.Point(538, 22);
+            this.numMutilSend.Location = new System.Drawing.Point(554, 22);
             this.numMutilSend.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -243,7 +243,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(503, 58);
+            this.label2.Location = new System.Drawing.Point(519, 58);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 17;
@@ -258,7 +258,7 @@
             this.pnlSetting.Controls.Add(this.lbAddr);
             this.pnlSetting.Location = new System.Drawing.Point(6, 12);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(347, 31);
+            this.pnlSetting.Size = new System.Drawing.Size(533, 31);
             this.pnlSetting.TabIndex = 18;
             // 
             // cbMode
@@ -282,7 +282,7 @@
             this.gbReceive.Controls.Add(this.txtReceive);
             this.gbReceive.Location = new System.Drawing.Point(6, 47);
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.Size = new System.Drawing.Size(652, 293);
+            this.gbReceive.Size = new System.Drawing.Size(838, 359);
             this.gbReceive.TabIndex = 17;
             this.gbReceive.TabStop = false;
             this.gbReceive.Text = "接收区：已接收0字节";
@@ -294,7 +294,7 @@
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(3, 17);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(646, 273);
+            this.txtReceive.Size = new System.Drawing.Size(832, 339);
             this.txtReceive.TabIndex = 1;
             this.txtReceive.Text = "";
             // 
@@ -305,7 +305,7 @@
             this.mi日志着色,
             this.toolStripMenuItem3,
             this.mi显示应用日志,
-            this.mi显示网络日志,
+            this.mi显示编码日志,
             this.mi显示接收字符串,
             this.mi显示发送数据,
             this.mi显示接收数据,
@@ -339,12 +339,12 @@
             this.mi显示应用日志.Text = "显示应用日志";
             this.mi显示应用日志.Click += new System.EventHandler(this.Menu_Click);
             // 
-            // mi显示网络日志
+            // mi显示编码日志
             // 
-            this.mi显示网络日志.Name = "mi显示网络日志";
-            this.mi显示网络日志.Size = new System.Drawing.Size(160, 22);
-            this.mi显示网络日志.Text = "显示网络日志";
-            this.mi显示网络日志.Click += new System.EventHandler(this.Menu_Click);
+            this.mi显示编码日志.Name = "mi显示编码日志";
+            this.mi显示编码日志.Size = new System.Drawing.Size(160, 22);
+            this.mi显示编码日志.Text = "显示网络日志";
+            this.mi显示编码日志.Click += new System.EventHandler(this.Menu_Click);
             // 
             // mi显示接收字符串
             // 
@@ -376,7 +376,8 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(359, 13);
+            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConnect.Location = new System.Drawing.Point(545, 13);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(67, 29);
             this.btnConnect.TabIndex = 16;
@@ -412,11 +413,12 @@
             // 
             // pnlAction
             // 
+            this.pnlAction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlAction.Controls.Add(this.btnTest);
             this.pnlAction.Controls.Add(this.btnPing);
             this.pnlAction.Controls.Add(this.btnLogin);
             this.pnlAction.Enabled = false;
-            this.pnlAction.Location = new System.Drawing.Point(446, 12);
+            this.pnlAction.Location = new System.Drawing.Point(632, 12);
             this.pnlAction.Name = "pnlAction";
             this.pnlAction.Size = new System.Drawing.Size(205, 31);
             this.pnlAction.TabIndex = 22;
@@ -435,7 +437,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 442);
+            this.ClientSize = new System.Drawing.Size(853, 508);
             this.Controls.Add(this.pnlAction);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.pnlSetting);
@@ -485,7 +487,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem mi显示应用日志;
-        private System.Windows.Forms.ToolStripMenuItem mi显示网络日志;
+        private System.Windows.Forms.ToolStripMenuItem mi显示编码日志;
         private System.Windows.Forms.ToolStripMenuItem mi显示接收字符串;
         private System.Windows.Forms.ToolStripMenuItem mi显示发送数据;
         private System.Windows.Forms.ToolStripMenuItem mi显示接收数据;
