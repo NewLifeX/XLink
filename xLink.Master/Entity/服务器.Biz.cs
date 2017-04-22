@@ -158,25 +158,25 @@ namespace xLink.Master.Entity
         #endregion
 
         #region 高级查询
-        // 以下为自定义高级查询的例子
-
-        /// <summary>查询满足条件的记录集，分页、排序</summary>
-        /// <param name="userid">用户编号</param>
-        /// <param name="start">开始时间</param>
-        /// <param name="end">结束时间</param>
-        /// <param name="key">关键字</param>
-        /// <param name="param">分页排序参数，同时返回满足条件的总记录数</param>
-        /// <returns>实体集</returns>
-        public static EntityList<Server> Search(Int32 userid, DateTime start, DateTime end, String key, PageParameter param)
+        /// <summary>高级查询</summary>
+        /// <param name="type"></param>
+        /// <param name="enable"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="key"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static EntityList<Server> Search(String type, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
         {
             // WhereExpression重载&和|运算符，作为And和Or的替代
             // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段
             var exp = SearchWhereByKeys(key, null, null);
 
-            // 以下仅为演示，Field（继承自FieldItem）重载了==、!=、>、<、>=、<=等运算符
-            //if (userid > 0) exp &= _.OperatorID == userid;
-            //if (isSign != null) exp &= _.IsSign == isSign.Value;
-            //exp &= _.OccurTime.Between(start, end); // 大于等于start，小于end，当start/end大于MinValue时有效
+            if (!type.IsNullOrEmpty()) exp &= _.Type == type;
+            if (enable != null) exp &= _.Enable == enable.Value;
+
+            //exp &= _.CreateTime.Between(start, end);
+            exp &= _.LastLogin.Between(start, end);
 
             return FindAll(exp, param);
         }

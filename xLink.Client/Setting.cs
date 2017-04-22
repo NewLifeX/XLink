@@ -24,7 +24,7 @@ namespace xLink.Client
 
         /// <summary>地址</summary>
         [Description("地址")]
-        public String Address { get; set; } = "Tcp://127.0.0.1:1234";
+        public String Address { get; set; } = "Tcp://feifan.link:1234";
 
         ///// <summary>文本编码</summary>
         //[XmlIgnore]

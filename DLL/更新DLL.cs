@@ -3,15 +3,15 @@ var srcs = new String[] { @"..\Bin", @"C:\X\DLL", @"C:\X\Bin", @"D:\X\Bin", @"E:
 var cur = ".".GetFullPath();
 foreach (var item in srcs)
 {
-    // 跳过当前目录
-    if (item.EqualIgnoreCase(cur)) continue;
+	// 跳过当前目录
+	if (item.EqualIgnoreCase(cur)) continue;
 
-    Console.WriteLine("复制 {0} => {1}", item, cur);
+	Console.WriteLine("复制 {0} => {1}", item, cur);
 
-    try
-    {
-        item.AsDirectory().CopyToIfNewer(cur, "*.dll;*.exe;*.xml;*.pdb;*.cs", false,
+	try
+	{
+		item.AsDirectory().CopyToIfNewer(cur, "*.dll;*.exe;*.xml;*.pdb;*.cs;*.xs", false,
             name => Console.WriteLine("\t{1}\t{0}", name, item.CombinePath(name).AsFile().LastWriteTime.ToFullString()));
-    }
-    catch (Exception ex) { Console.WriteLine(" " + ex.Message); }
+	}
+	catch (Exception ex) { Console.WriteLine(" " + ex.Message); }
 }

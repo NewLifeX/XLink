@@ -117,6 +117,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Areas\Master\Controllers\ServerController.cs" />
     <Compile Include="Areas\Master\Controllers\ServerHistoryController.cs" />
     <Compile Include="Areas\Master\Controllers\ServerOnlineController.cs" />
     <Compile Include="Areas\Master\MasterAreaRegistration.cs" />
@@ -130,6 +131,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Areas\User\Controllers\UserController.cs" />
     <Compile Include="Areas\User\Controllers\UserHistoryController.cs" />
     <Compile Include="Areas\User\Controllers\UserOnlineController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />

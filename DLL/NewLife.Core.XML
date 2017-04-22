@@ -2741,6 +2741,12 @@
             <param name="pk"></param>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Net.DefaultPacket.Add(NewLife.Data.Packet,System.Net.IPEndPoint,System.Int32)">
+            <summary>加入请求队列</summary>
+            <param name="request">请求的数据</param>
+            <param name="remote">远程</param>
+            <param name="msTimeout">超时取消时间</param>
+        </member>
         <member name="T:NewLife.Net.DefaultPacketFactory">
             <summary>标准封包工厂</summary>
         </member>
@@ -2751,7 +2757,7 @@
             <summary>创建粘包处理实例，内含缓冲区，不同会话不能共用</summary>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Net.DefaultPacketFactory.MyQueue.IsMatch(System.Object,System.Net.IPEndPoint,NewLife.Data.Packet,NewLife.Data.Packet)">
+        <member name="M:NewLife.Net.MyQueue.IsMatch(System.Object,System.Net.IPEndPoint,NewLife.Data.Packet,NewLife.Data.Packet)">
             <summary>请求和响应是否匹配</summary>
             <param name="owner">拥有者</param>
             <param name="remote">远程</param>
@@ -2902,9 +2908,6 @@
             <summary>从数据流中获取整帧数据长度</summary>
             <param name="stream"></param>
             <returns>数据帧长度（包含头部长度位）</returns>
-        </member>
-        <member name="M:NewLife.Net.PacketProvider.Test">
-            <summary>粘包测试</summary>
         </member>
         <member name="T:NewLife.Net.PacketFactory">
             <summary>头部长度粘包处理工厂</summary>
@@ -4988,9 +4991,6 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Reflection.DynamicXml.Test">
-            <summary>测试</summary>
-        </member>
         <member name="T:NewLife.Reflection.IReflect">
             <summary>反射接口</summary>
             <remarks>该接口仅用于扩展，不建议外部使用</remarks>
@@ -6090,6 +6090,9 @@
         <member name="P:NewLife.Remoting.ApiHost.Log">
             <summary>日志</summary>
         </member>
+        <member name="P:NewLife.Remoting.ApiHost.EncoderLog">
+            <summary>编码器日志</summary>
+        </member>
         <member name="M:NewLife.Remoting.ApiHost.WriteLog(System.String,System.Object[])">
             <summary>写日志</summary>
             <param name="format"></param>
@@ -6832,6 +6835,9 @@
         <member name="P:NewLife.Remoting.ApiServer.Active">
             <summary>是否正在工作</summary>
         </member>
+        <member name="P:NewLife.Remoting.ApiServer.Anonymous">
+            <summary>是否默认匿名访问</summary>
+        </member>
         <member name="P:NewLife.Remoting.ApiServer.Servers">
             <summary>服务器集合</summary>
         </member>
@@ -6849,6 +6855,10 @@
         <member name="M:NewLife.Remoting.ApiServer.OnDispose(System.Boolean)">
             <summary>销毁时停止服务</summary>
             <param name="disposing"></param>
+        </member>
+        <member name="M:NewLife.Remoting.ApiServer.Add(System.Int32)">
+            <summary>添加服务器</summary>
+            <param name="port"></param>
         </member>
         <member name="M:NewLife.Remoting.ApiServer.Add(NewLife.Net.NetUri)">
             <summary>添加服务器</summary>
@@ -6873,12 +6883,6 @@
             <summary>获取服务提供者</summary>
             <param name="serviceType"></param>
             <returns></returns>
-        </member>
-        <member name="T:NewLife.Remoting.ApiTest">
-            <summary>Rpc测试</summary>
-        </member>
-        <member name="M:NewLife.Remoting.ApiTest.Main">
-            <summary>测试主函数</summary>
         </member>
         <member name="T:NewLife.Remoting.IEncoder">
             <summary>编码器</summary>
@@ -8016,12 +8020,6 @@
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="T:NewLife.Serialization.BinaryTest">
-            <summary>Binary测试</summary>
-        </member>
-        <member name="M:NewLife.Serialization.BinaryTest.Start">
-            <summary>开始测试</summary>
-        </member>
         <member name="T:NewLife.Serialization.IMemberAccessor">
             <summary>成员序列化访问器。接口实现者可以在这里完全自定义序列化行为</summary>
         </member>
@@ -8463,12 +8461,6 @@
         </member>
         <member name="T:NewLife.Serialization.JsonReader">
             <summary>Json读取器</summary>
-        </member>
-        <member name="T:NewLife.Serialization.JsonTest">
-            <summary>Json测试</summary>
-        </member>
-        <member name="M:NewLife.Serialization.JsonTest.Start">
-            <summary>开始测试</summary>
         </member>
         <member name="T:NewLife.Serialization.JsonWriter">
             <summary>Json写入器</summary>
