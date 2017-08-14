@@ -123,7 +123,7 @@ WriteLiteral("                    ");
 
             
             #line 15 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-               Write(Html.ForDropDownList("Type", UserOnline.FindAllTypeName(), Request["Type"], "全部", true));
+               Write(Html.ForDropDownList("Type", xLink.User.Entity.UserOnline.FindAllTypeName(), Request["Type"], "全部", true));
 
             
             #line default
@@ -156,14 +156,14 @@ WriteLiteral(" name=\"dtStart\"");
 
 WriteLiteral(" id=\"dtStart\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1008), Tuple.Create("\"", 1035)
+WriteAttribute("value", Tuple.Create(" value=\"", 1026), Tuple.Create("\"", 1053)
             
             #line 21 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1016), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
+, Tuple.Create(Tuple.Create("", 1034), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
             
             #line default
             #line hidden
-, 1016), false)
+, 1034), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -198,14 +198,14 @@ WriteLiteral(" name=\"dtEnd\"");
 
 WriteLiteral(" id=\"dtEnd\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1462), Tuple.Create("\"", 1487)
+WriteAttribute("value", Tuple.Create(" value=\"", 1480), Tuple.Create("\"", 1505)
             
             #line 28 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1470), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
+, Tuple.Create(Tuple.Create("", 1488), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
             
             #line default
             #line hidden
-, 1470), false)
+, 1488), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -232,14 +232,14 @@ WriteLiteral(" type=\"search\"");
 
 WriteLiteral(" id=\"q\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1848), Tuple.Create("\"", 1869)
+WriteAttribute("value", Tuple.Create(" value=\"", 1866), Tuple.Create("\"", 1887)
             
             #line 35 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1856), Tuple.Create<System.Object, System.Int32>(Request["q"]
+, Tuple.Create(Tuple.Create("", 1874), Tuple.Create<System.Object, System.Int32>(Request["q"]
             
             #line default
             #line hidden
-, 1856), false)
+, 1874), false)
 );
 
 WriteLiteral(" class=\"form-control\"");

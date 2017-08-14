@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NewLife.MQ</name>
+    </assembly>
+    <members>
+        <member name="T:NewLife.MessageQueue.Consumer">
+            <summary>消费者。相同标识的多个订阅者，构成消费者集群</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Consumer.Host">
+            <summary>主机</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Consumer.User">
+            <summary>用户</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Consumer.Subscribers">
+            <summary>订阅者</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.Consumer.#ctor(System.String)">
+            <summary>实例化</summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:NewLife.MessageQueue.Consumer.Add(System.Object,System.String,System.Func{NewLife.MessageQueue.Subscriber,NewLife.MessageQueue.Message,System.Threading.Tasks.Task})">
+            <summary>添加订阅者</summary>
+            <param name="user">订阅者</param>
+            <param name="tag">标签。消费者用于在主题队列内部过滤消息</param>
+            <param name="onMessage">消费消息的回调函数</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.MessageQueue.Consumer.Remove(System.Object)">
+            <summary>移除订阅者</summary>
+            <param name="user">订阅者</param>
+            <returns></returns>
+        </member>
+        <member name="P:NewLife.MessageQueue.Consumer.Log">
+            <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.Consumer.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:NewLife.MessageQueue.Message">
+            <summary>消息</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Message.Topic">
+            <summary>主题</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Message.Sender">
+            <summary>发送者</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Message.StartTime">
+            <summary>开始时间</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Message.EndTime">
+            <summary>过期时间</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Message.Tag">
+            <summary>标签</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Message.Content">
+            <summary>主体</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.Message.ToString">
+            <summary>已重载</summary>
+            <returns></returns>
+        </member>
+        <member name="T:NewLife.MessageQueue.MQHost">
+            <summary>消息队列主机</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.MQHost.Instance">
+            <summary>默认实例</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.MQHost.Name">
+            <summary>名称</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.MQHost.Tip">
+            <summary>上线下线提示</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.MQHost.#ctor">
+            <summary>实例化一个消息队列主机</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.MQHost.Topics">
+            <summary>主题集合</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.MQHost.Get(System.String,System.Boolean)">
+            <summary>获取或添加主题</summary>
+            <param name="topic">主题</param>
+            <param name="create">是否创建</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.MessageQueue.MQHost.Subscribe(System.String,System.String,System.String,System.Func{NewLife.MessageQueue.Subscriber,NewLife.MessageQueue.Message,System.Threading.Tasks.Task},System.Object)">
+            <summary>订阅主题</summary>
+            <param name="user">消费者</param>
+            <param name="topic">主题。沟通生产者消费者之间的桥梁</param>
+            <param name="tag">标签。消费者用于在主题队列内部过滤消息</param>
+            <param name="onMessage">消费消息的回调函数</param>
+            <param name="userState">订阅者</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.MessageQueue.MQHost.Unsubscribe(System.String,System.String,System.Object)">
+            <summary>取消订阅</summary>
+            <param name="user">订阅者</param>
+            <param name="topic">主题。沟通生产者消费者之间的桥梁</param>
+            <param name="userState">订阅者</param>
+        </member>
+        <member name="M:NewLife.MessageQueue.MQHost.Send(NewLife.MessageQueue.Message)">
+            <summary>单向发送。不需要反馈</summary>
+            <param name="msg">消息</param>
+        </member>
+        <member name="M:NewLife.MessageQueue.MQHost.Send(System.String,System.String,System.String,System.Object)">
+            <summary>单向发送。不需要反馈</summary>
+            <param name="user">生产者</param>
+            <param name="topic">主题</param>
+            <param name="tag">标签</param>
+            <param name="content">内容</param>
+        </member>
+        <member name="P:NewLife.MessageQueue.MQHost.Log">
+            <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.MQHost.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:NewLife.MessageQueue.Subscriber">
+            <summary>订阅者</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Subscriber.Host">
+            <summary>主机</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Subscriber.User">
+            <summary>用户</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Subscriber.Tags">
+            <summary>标签</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Subscriber.OnMessage">
+            <summary>消费委托。需要考虑订阅者销毁了而没有取消注册</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.Subscriber.#ctor(System.Object,System.String,System.Func{NewLife.MessageQueue.Subscriber,NewLife.MessageQueue.Message,System.Threading.Tasks.Task})">
+            <summary>实例化</summary>
+            <param name="user"></param>
+            <param name="tag"></param>
+            <param name="onMessage"></param>
+        </member>
+        <member name="M:NewLife.MessageQueue.Subscriber.AddTag(System.String)">
+            <summary>增加标签</summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:NewLife.MessageQueue.Subscriber.IsMatch(NewLife.MessageQueue.Message)">
+            <summary>是否匹配该订阅者</summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.MessageQueue.Subscriber.NoitfyAsync(NewLife.MessageQueue.Message)">
+            <summary>发送消息给订阅者</summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NewLife.MessageQueue.Topic">
+            <summary>主题</summary>
+            <remarks>
+            每一个主题可选广播消费或集群消费，默认集群消费。
+            </remarks>
+        </member>
+        <member name="P:NewLife.MessageQueue.Topic.Name">
+            <summary>名称</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Topic.Host">
+            <summary>主机</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Topic.Broadcast">
+            <summary>广播消费模式，消息推送给集群（相同User）内所有客户端</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Topic.Consumers">
+            <summary>消费者集群</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Topic.Queue">
+            <summary>消息队列</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.Topic.#ctor(NewLife.MessageQueue.MQHost,System.String)">
+            <summary>实例化</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.Topic.Add(System.String,System.String,System.Func{NewLife.MessageQueue.Subscriber,NewLife.MessageQueue.Message,System.Threading.Tasks.Task},System.Object)">
+            <summary>订阅主题</summary>
+            <param name="user">消费者</param>
+            <param name="tag">标签。消费者用于在主题队列内部过滤消息</param>
+            <param name="onMessage">消费消息的回调函数</param>
+            <param name="userState">订阅者</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.MessageQueue.Topic.Remove(System.String,System.Object)">
+            <summary>取消订阅</summary>
+            <param name="user">订阅者</param>
+            <param name="userState">订阅者</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.MessageQueue.Topic.Send(NewLife.MessageQueue.Message)">
+            <summary>进入队列</summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.MessageQueue.Topic.Notify">
+            <summary>推送通知</summary>
+        </member>
+        <member name="P:NewLife.MessageQueue.Topic.Log">
+            <summary>日志</summary>
+        </member>
+        <member name="M:NewLife.MessageQueue.Topic.WriteLog(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+    </members>
+</doc>
