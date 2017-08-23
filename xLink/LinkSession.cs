@@ -19,8 +19,8 @@ namespace xLink
         /// <summary>名称</summary>
         public String Name { get; set; }
 
-        /// <summary>加密通信指令中负载数据的密匙</summary>
-        public Byte[] Key { get; set; }
+        ///// <summary>加密通信指令中负载数据的密匙</summary>
+        //public Byte[] Key { get; set; }
 
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();

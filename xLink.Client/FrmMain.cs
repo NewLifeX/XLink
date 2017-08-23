@@ -267,7 +267,7 @@ namespace xLink.Client
             Task.Run(() =>
             {
                 var cc = _Client;
-                for (int i = 0; i < count; i++)
+                for (Int32 i = 0; i < count; i++)
                 {
                     var ac = new LinkClient(uri.ToString());
                     ac.Received += OnReceived;
@@ -284,7 +284,7 @@ namespace xLink.Client
 
                     Task.Run(() =>
                     {
-                        for (int k = 0; k < 10; k++)
+                        for (Int32 k = 0; k < 10; k++)
                         {
                             if (ac.Open()) break;
                             Thread.Sleep(1000);

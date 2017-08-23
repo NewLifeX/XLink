@@ -4,17 +4,13 @@
  * 时间：2017-03-31 23:16:06
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
-using System.Xml.Serialization;
-using NewLife.Log;
+using System.Linq;
+using NewLife.Data;
 using NewLife.Web;
-﻿using NewLife.Data;
 using XCode;
-using XCode.Configuration;
-using XCode.Membership;
 
 namespace xLink.Master.Entity
 {
@@ -109,24 +105,32 @@ namespace xLink.Master.Entity
         #endregion
 
         #region 扩展属性
-            ﻿
+
 
         #endregion
 
         #region 扩展查询
-            ﻿
+        /// <summary>根据编号查找</summary>
+        /// <param name="id">编号</param>
+        /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public static Server FindByID(Int32 id)
+        {
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.ID == id);
+
+            // 单对象缓存
+            return Meta.SingleCache[id];
+        }
+
         /// <summary>根据名称。登录用户名查找</summary>
         /// <param name="name">名称。登录用户名</param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static Server FindByName(String name)
         {
-            if (Meta.Count >= 1000)
-                return Find(__.Name, name);
-            else // 实体缓存
-                return Meta.Cache.Entities.Find(__.Name, name);
-            // 单对象缓存
-            //return Meta.SingleCache[name];
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Name == name);
+
+            return Find(__.Name, name);
         }
 
         /// <summary>根据唯一编码查找</summary>
@@ -135,26 +139,10 @@ namespace xLink.Master.Entity
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static Server FindByCode(String code)
         {
-            if (Meta.Count >= 1000)
-                return Find(__.Code, code);
-            else // 实体缓存
-                return Meta.Cache.Entities.Find(__.Code, code);
-            // 单对象缓存
-            //return Meta.SingleCache[code];
-        }
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
 
-        /// <summary>根据类型查找</summary>
-        /// <param name="type">类型</param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<Server> FindAllByType(String type)
-        {
-            if (Meta.Count >= 1000)
-                return FindAll(__.Type, type);
-            else // 实体缓存
-                return Meta.Cache.Entities.FindAll(__.Type, type);
+            return Find(__.Code, code);
         }
-
         #endregion
 
         #region 高级查询
@@ -166,7 +154,7 @@ namespace xLink.Master.Entity
         /// <param name="key"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static EntityList<Server> Search(String type, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<Server> Search(String type, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
         {
             // WhereExpression重载&和|运算符，作为And和Or的替代
             // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段

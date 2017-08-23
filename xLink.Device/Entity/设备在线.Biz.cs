@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using NewLife.Data;
 using XCode;
 using XCode.Cache;
@@ -45,43 +46,7 @@ namespace xLink.Device.Entity
             if (Meta.Count >= 1000)
                 return Find(__.SessionID, sessionid);
             else // 实体缓存
-                return Meta.Cache.Entities.Find(__.SessionID, sessionid);
-        }
-
-        /// <summary>根据编码查找</summary>
-        /// <param name="userid">编码</param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<DeviceOnline> FindAllByDeviceID(Int32 userid)
-        {
-            if (Meta.Count >= 1000)
-                return FindAll(__.DeviceID, userid);
-            else // 实体缓存
-                return Meta.Cache.Entities.FindAll(__.DeviceID, userid);
-        }
-
-        /// <summary>根据名称查找</summary>
-        /// <param name="name">名称</param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<DeviceOnline> FindAllByName(String name)
-        {
-            if (Meta.Count >= 1000)
-                return FindAll(__.Name, name);
-            else // 实体缓存
-                return Meta.Cache.Entities.FindAll(__.Name, name);
-        }
-
-        /// <summary>根据类型查找</summary>
-        /// <param name="type">类型</param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<DeviceOnline> FindAllByType(String type)
-        {
-            if (Meta.Count >= 1000)
-                return FindAll(__.Type, type);
-            else // 实体缓存
-                return Meta.Cache.Entities.FindAll(__.Type, type);
+                return Meta.Cache.Entities.FirstOrDefault(e => e.SessionID == sessionid);
         }
         #endregion
 
@@ -93,7 +58,7 @@ namespace xLink.Device.Entity
         /// <param name="key">关键字</param>
         /// <param name="param">分页排序参数，同时返回满足条件的总记录数</param>
         /// <returns>实体集</returns>
-        public static EntityList<DeviceOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<DeviceOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param)
         {
             // 修改DeviceID排序为名称
             //param = new PageParameter(param);
@@ -109,7 +74,7 @@ namespace xLink.Device.Entity
             return list;
         }
 
-        private static EntityList<DeviceOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        private static IList<DeviceOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
         {
             var exp = new WhereExpression();
 
@@ -145,7 +110,7 @@ namespace xLink.Device.Entity
         /// <summary>删除过期，指定过期时间</summary>
         /// <param name="secTimeout">超时时间，秒</param>
         /// <returns></returns>
-        public static EntityList<DeviceOnline> ClearExpire(Int32 secTimeout)
+        public static IList<DeviceOnline> ClearExpire(Int32 secTimeout)
         {
             // 10分钟不活跃将会被删除
             var exp = _.LastActive < DateTime.Now.AddSeconds(-secTimeout) | _.LastActive.IsNull();

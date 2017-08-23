@@ -180,32 +180,6 @@
             <param name="dbType"></param>
             <param name="isView"></param>
         </member>
-        <member name="T:XCode.BindRelationAttribute">
-            <summary>用于指定数据类所绑定到的关系</summary>
-        </member>
-        <member name="P:XCode.BindRelationAttribute.Column">
-            <summary>数据列</summary>
-        </member>
-        <member name="P:XCode.BindRelationAttribute.RelationTable">
-            <summary>引用表</summary>
-        </member>
-        <member name="P:XCode.BindRelationAttribute.RelationColumn">
-            <summary>引用列</summary>
-        </member>
-        <member name="P:XCode.BindRelationAttribute.Unique">
-            <summary>是否唯一</summary>
-        </member>
-        <member name="M:XCode.BindRelationAttribute.#ctor(System.String,System.Boolean,System.String,System.String)">
-            <summary>指定一个关系</summary>
-            <param name="column"></param>
-            <param name="unique"></param>
-            <param name="relationtable"></param>
-            <param name="relationcolumn"></param>
-        </member>
-        <member name="M:XCode.BindRelationAttribute.#ctor(System.String)">
-            <summary>指定一个表内关联关系</summary>
-            <param name="relationcolumn"></param>
-        </member>
         <member name="T:XCode.Code.ClassBuilder">
             <summary>类代码生成器</summary>
         </member>
@@ -286,7 +260,15 @@
             <summary>输出目录</summary>
         </member>
         <member name="M:XCode.Code.ClassBuilder.Save(System.String,System.Boolean)">
-            <summary>保存文件</summary>
+            <summary>保存文件，返回文件路径</summary>
+        </member>
+        <member name="P:XCode.Code.ClassBuilder.CSharp">
+            <summary>C#版本</summary>
+        </member>
+        <member name="M:XCode.Code.ClassBuilder.NameOf(System.String)">
+            <summary>nameof</summary>
+            <param name="name"></param>
+            <returns></returns>
         </member>
         <member name="P:XCode.Code.ClassBuilder.Debug">
             <summary>是否调试</summary>
@@ -427,20 +409,11 @@
         <member name="P:XCode.Code.EntityAssembly.Tables">
             <summary>表集合</summary>
         </member>
-        <member name="P:XCode.Code.EntityAssembly.Classes">
-            <summary>实体类集合</summary>
-        </member>
         <member name="P:XCode.Code.EntityAssembly.Assembly">
             <summary>程序集</summary>
         </member>
         <member name="P:XCode.Code.EntityAssembly.TypeMaps">
             <summary>类型映射。数据表映射到哪个类上</summary>
-        </member>
-        <member name="P:XCode.Code.EntityAssembly.Unit">
-            <summary>代码编译单元</summary>
-        </member>
-        <member name="P:XCode.Code.EntityAssembly.NameSpace">
-            <summary>命名空间</summary>
         </member>
         <member name="M:XCode.Code.EntityAssembly.CreateWithCache(System.String,System.Collections.Generic.List{XCode.DataAccessLayer.IDataTable})">
             <summary>为数据模型创建实体程序集，带缓存，依赖于表和字段名称，不依赖名称以外的信息。</summary>
@@ -453,21 +426,12 @@
             <param name="table"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Code.EntityAssembly.Create(System.String)">
-            <summary>根据名称创建</summary>
-            <param name="name">名称</param>
-            <returns></returns>
-        </member>
         <member name="M:XCode.Code.EntityAssembly.CreateAll">
             <summary>创建所有表的实体类</summary>
         </member>
         <member name="M:XCode.Code.EntityAssembly.GetType(System.String)">
             <summary>获取类型</summary>
             <param name="name">名称</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Code.EntityAssembly.GenerateCSharpCode">
-            <summary>生成C#代码</summary>
             <returns></returns>
         </member>
         <member name="M:XCode.Code.EntityAssembly.Compile(System.CodeDom.Compiler.CompilerParameters)">
@@ -479,71 +443,12 @@
             <summary>编译并返回程序集</summary>
             <returns></returns>
         </member>
-        <member name="E:XCode.Code.EntityAssembly.OnClassCreating">
-            <summary>创建实体类开始前触发，用户可以在此修改实体类的创建行为</summary>
-        </member>
-        <member name="E:XCode.Code.EntityAssembly.OnClassCreated">
-            <summary>创建实体类完成后触发，用户可以在此修改实体类的创建行为</summary>
-        </member>
         <member name="P:XCode.Code.EntityAssembly.Debug">
             <summary>是否启用动态代码调试，把动态生成的实体类代码和程序集输出到临时目录，默认不启用</summary>
         </member>
         <member name="M:XCode.Code.EntityAssembly.ToString">
             <summary>已重载。</summary>
             <returns></returns>
-        </member>
-        <member name="T:XCode.Code.EntityClassEventArgs">
-            <summary>实体类事件参数</summary>
-        </member>
-        <member name="P:XCode.Code.EntityClassEventArgs.Class">
-            <summary>实体类</summary>
-        </member>
-        <member name="T:XCode.Code.EntityClass">
-            <summary>实体类</summary>
-            <remarks>提供由IDataTable生成实体类的支持</remarks>
-        </member>
-        <member name="P:XCode.Code.EntityClass.Name">
-            <summary>类名</summary>
-        </member>
-        <member name="P:XCode.Code.EntityClass.ConnName">
-            <summary>连接名</summary>
-        </member>
-        <member name="P:XCode.Code.EntityClass.Table">
-            <summary>表</summary>
-        </member>
-        <member name="P:XCode.Code.EntityClass.BaseType">
-            <summary>基类</summary>
-        </member>
-        <member name="P:XCode.Code.EntityClass.Class">
-            <summary>实体类</summary>
-        </member>
-        <member name="M:XCode.Code.EntityClass.Create">
-            <summary>创建实体类</summary>
-        </member>
-        <member name="M:XCode.Code.EntityClass.AddProperties">
-            <summary>添加属性集合</summary>
-        </member>
-        <member name="M:XCode.Code.EntityClass.AddField(XCode.DataAccessLayer.IDataColumn)">
-            <summary>添加私有字段</summary>
-            <param name="field">字段</param>
-        </member>
-        <member name="M:XCode.Code.EntityClass.AddProperty(XCode.DataAccessLayer.IDataColumn)">
-            <summary>添加单个属性</summary>
-            <param name="field">字段</param>
-        </member>
-        <member name="M:XCode.Code.EntityClass.AddIndexs">
-            <summary>添加索引器</summary>
-        </member>
-        <member name="M:XCode.Code.EntityClass.GenerateCSharpCode">
-            <summary>生成C#代码</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Code.EntityClass.ToString">
-            <summary>已重载。</summary>
-            <returns></returns>
-        </member>
-        <member name="T:XCode.Code.EntityClassBiz">
-            <summary>实体类，业务部分</summary>
         </member>
         <member name="T:XCode.Common.DataSimulation`1">
             <summary>数据模拟</summary>
@@ -594,12 +499,6 @@
         <member name="M:XCode.Common.Helper.IsEntityNullKey(XCode.IEntity)">
             <summary>是否空主键的实体</summary>
             <param name="entity"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Common.Helper.EqualTo(System.Object,System.Object)">
-            <summary>判断两个对象是否相当，特别处理整型</summary>
-            <param name="left"></param>
-            <param name="right"></param>
             <returns></returns>
         </member>
         <member name="T:XCode.FieldExtension">
@@ -1711,11 +1610,13 @@
             <summary>修正表</summary>
             <param name="table"></param>
             <param name="dr"></param>
+            <param name="data"></param>
         </member>
         <member name="M:XCode.DataAccessLayer.DbMetaData.GetFields(XCode.DataAccessLayer.IDataTable,System.Data.DataTable,System.Collections.Generic.IDictionary{System.String,System.Data.DataTable})">
             <summary>取得指定表的所有列构架</summary>
             <param name="table"></param>
             <param name="columns">列</param>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:XCode.DataAccessLayer.DbMetaData.GetFields(XCode.DataAccessLayer.IDataTable,System.Data.DataRow[])">
@@ -2645,12 +2546,14 @@
             <summary>序列</summary>
             <summary>检查序列是否存在</summary>
             <param name="name">名称</param>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:XCode.DataAccessLayer.OracleMeta.GetFields(XCode.DataAccessLayer.IDataTable,System.Data.DataTable,System.Collections.Generic.IDictionary{System.String,System.Data.DataTable})">
             <summary>取得指定表的所有列构架</summary>
             <param name="table"></param>
             <param name="columns">列</param>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="F:XCode.DataAccessLayer.OracleMeta._DataTypes">
@@ -2857,7 +2760,7 @@
         <member name="F:XCode.DataAccessLayer.SQLiteMetaData._DataTypes">
             <summary>数据类型映射</summary>
         </member>
-        <member name="M:XCode.DataAccessLayer.SQLiteMetaData.Backup(System.String)">
+        <member name="M:XCode.DataAccessLayer.SQLiteMetaData.Backup(System.String,System.String)">
             <summary>备份文件到目标文件</summary>
             <param name="bakfile"></param>
         </member>
@@ -3225,6 +3128,92 @@
             <summary>设置扩展属性项</summary>
             <param name="key"></param>
             <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XCode.EntityExtension">
+            <summary>实体扩展方法</summary>
+        </member>
+        <member name="M:XCode.EntityExtension.Find``1(System.Collections.Generic.IList{``0},System.String,System.Object)">
+            <summary>根据指定项查找</summary>
+            <param name="list">实体列表</param>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.FindIgnoreCase``1(System.Collections.Generic.IList{``0},System.String,System.String)">
+            <summary>根据指定项查找</summary>
+            <param name="list">实体列表</param>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.Find``1(System.Collections.Generic.IList{``0},System.Predicate{``0})">
+            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
+            <param name="list">实体列表</param>
+            <param name="match">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.FindAll``1(System.Collections.Generic.IList{``0},System.String,System.Object)">
+            <summary>根据指定项查找</summary>
+            <param name="list">实体列表</param>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.FindAllIgnoreCase``1(System.Collections.Generic.IList{``0},System.String,System.String)">
+            <summary>根据指定项查找</summary>
+            <param name="list">实体列表</param>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.FindAll``1(System.Collections.Generic.IList{``0},System.Predicate{``0})">
+            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
+            <param name="list">实体列表</param>
+            <param name="match">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.Exists``1(System.Collections.Generic.IList{``0},System.String,System.Object)">
+            <summary>集合是否包含指定项</summary>
+            <param name="list">实体列表</param>
+            <param name="name">名称</param>
+            <param name="value">数值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.ToDictionary``1(System.Collections.Generic.IList{``0},System.String)">
+            <summary>实体列表转为字典。主键为Key</summary>
+            <param name="list">实体列表</param>
+            <param name="valueField">作为Value部分的字段，默认为空表示整个实体对象为值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.Insert``1(System.Collections.Generic.IList{``0},System.Boolean)">
+            <summary>把整个集合插入到数据库</summary>
+            <param name="list">实体列表</param>
+            <param name="useTransition">是否使用事务保护</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.Update``1(System.Collections.Generic.IList{``0},System.Boolean)">
+            <summary>把整个集合更新到数据库</summary>
+            <param name="list">实体列表</param>
+            <param name="useTransition">是否使用事务保护</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.Save``1(System.Collections.Generic.IList{``0},System.Boolean)">
+            <summary>把整个保存更新到数据库</summary>
+            <param name="list">实体列表</param>
+            <param name="useTransition">是否使用事务保护</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.SaveWithoutValid``1(System.Collections.Generic.IList{``0},System.Boolean)">
+            <summary>把整个保存更新到数据库，保存时不需要验证</summary>
+            <param name="list">实体列表</param>
+            <param name="useTransition">是否使用事务保护</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtension.Delete``1(System.Collections.Generic.IList{``0},System.Boolean)">
+            <summary>把整个集合从数据库中删除</summary>
+            <param name="list">实体列表</param>
+            <param name="useTransition">是否使用事务保护</param>
             <returns></returns>
         </member>
         <member name="T:XCode.EntityQueue">
@@ -3783,24 +3772,6 @@
             <summary>输出名称</summary>
             <returns></returns>
         </member>
-        <member name="T:XCode.Cache.EntityDependency`1">
-            <summary>实体依赖。用于HttpRuntime.Cache，一旦指定的实体类数据改变，马上让缓存过期。</summary>
-            <typeparam name="TEntity"></typeparam>
-        </member>
-        <member name="M:XCode.Cache.EntityDependency`1.#ctor">
-            <summary>实例化一个实体依赖。</summary>
-        </member>
-        <member name="M:XCode.Cache.EntityDependency`1.#ctor(System.Int32)">
-            <summary>
-            通过指定一个检查周期实例化一个实体依赖。
-            利用线程池定期去检查该实体类的总记录数，一旦改变则让缓存过期。
-            这样子就避免了其它方式修改数据而没能及时更新缓存问题
-            </summary>
-            <param name="period">检查周期，单位毫秒。必须大于1000（1秒），以免误用。</param>
-        </member>
-        <member name="M:XCode.Cache.EntityDependency`1.DependencyDispose">
-            <summary>释放资源</summary>
-        </member>
         <member name="T:XCode.Cache.IEntityCacheBase">
             <summary>缓存基接口</summary>
         </member>
@@ -3815,23 +3786,6 @@
         </member>
         <member name="P:XCode.Cache.IEntityCache.Entities">
             <summary>实体集合。因为涉及一个转换，数据量大时很耗性能，建议不要使用。</summary>
-        </member>
-        <member name="M:XCode.Cache.IEntityCache.Find(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.IEntityCache.FindAll(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.IEntityCache.FindAll(System.Predicate{XCode.IEntity})">
-            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
-            <param name="match">条件</param>
-            <returns></returns>
         </member>
         <member name="M:XCode.Cache.IEntityCache.Clear(System.String)">
             <summary>清除缓存</summary>
@@ -3906,40 +3860,6 @@
         <member name="P:XCode.Cache.ISingleEntityCache`2.GetSlaveKeyMethod">
             <summary>获取缓存从键的方法，默认为空</summary>
         </member>
-        <member name="F:XCode.Cache.CacheItem._TableNames">
-            <summary>所依赖的表的表名</summary>
-        </member>
-        <member name="F:XCode.Cache.CacheItem.ExpireTime">
-            <summary>到期时间</summary>
-        </member>
-        <member name="M:XCode.Cache.CacheItem.#ctor(System.String[])">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-        </member>
-        <member name="M:XCode.Cache.CacheItem.#ctor(System.String[],System.Int32)">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-            <param name="time">缓存时间，单位秒</param>
-        </member>
-        <member name="M:XCode.Cache.CacheItem.IsDependOn(System.String)">
-            <summary>是否依赖于某个表</summary>
-            <param name="tableName">表名</param>
-            <returns></returns>
-        </member>
-        <member name="P:XCode.Cache.CacheItem`1.Value">
-            <summary>缓存的数据</summary>
-        </member>
-        <member name="M:XCode.Cache.CacheItem`1.#ctor(System.String[],`0)">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-            <param name="value">数值</param>
-        </member>
-        <member name="M:XCode.Cache.CacheItem`1.#ctor(System.String[],`0,System.Int32)">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-            <param name="value">数值</param>
-            <param name="time">缓存时间，单位秒</param>
-        </member>
         <member name="T:XCode.Cache.CacheBase`1">
             <summary>缓存基类</summary>
         </member>
@@ -4009,23 +3929,6 @@
         </member>
         <member name="M:XCode.Cache.EntityCache`1.ShowStatics">
             <summary>显示统计信息</summary>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.Find(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.FindAll(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.FindAll(System.Predicate{XCode.IEntity})">
-            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
-            <param name="match">条件</param>
-            <returns></returns>
         </member>
         <member name="M:XCode.Cache.EntityCache`1.ToString">
             <summary>输出名称</summary>
@@ -5368,23 +5271,6 @@
             <param name="action">操作</param>
             <param name="remark">备注</param>
         </member>
-        <member name="M:XCode.Membership.Menu`1.Export(System.Collections.Generic.IList{XCode.Membership.IMenu})">
-            <summary>导出</summary>
-            <param name="list"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.Menu`1.Export(XCode.EntityList{`0})">
-            <summary>导出</summary>
-            <param name="list"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.Menu`1.Import">
-            <summary>导入</summary>
-        </member>
-        <member name="M:XCode.Membership.Menu`1.Import(System.String)">
-            <summary>导入</summary>
-            <param name="xml"></param>
-        </member>
         <member name="M:XCode.Membership.Menu`1.ToString">
             <summary>已重载。</summary>
             <returns></returns>
@@ -6121,6 +6007,9 @@
         <member name="P:XCode.Setting.SQLiteDbPath">
             <summary>SQLite数据库默认目录。没有设置连接字符串的连接默认创建SQLite连接，数据库放在该目录</summary>
         </member>
+        <member name="P:XCode.Setting.BackupPath">
+            <summary>备份目录。备份数据库时存放的目录</summary>
+        </member>
         <member name="P:XCode.Setting.CommandTimeout">
             <summary>命令超时。查询执行超时时间，默认0秒不限制</summary>
         </member>
@@ -6134,7 +6023,7 @@
             <summary>扩展属性过期。默认10秒</summary>
         </member>
         <member name="P:XCode.Setting.Migration">
-            <summary>反向工程。Off 关闭；ReadOnly 只读不执行；On 打开，新建；Full 完全，修改删除</summary>
+            <summary>反向工程。Off 关闭；ReadOnly 只读不执行；On 打开，仅新建；Full 完全，修改删除</summary>
         </member>
         <member name="M:XCode.Setting.OnLoaded">
             <summary>加载后检查默认值</summary>
@@ -6160,7 +6049,7 @@
         <member name="M:XCode.Sharding.Shard.FindByEntityType(System.String)">
             <summary>根据实体类查找</summary>
             <param name="entitytype">实体类</param>
-            <returns>实体对象</returns>
+            <returns>实体列表</returns>
         </member>
         <member name="P:XCode.Sharding.Shard.ID">
             <summary>编号</summary>
@@ -6981,7 +6870,7 @@
         <member name="T:XCode.IDataRowEntityAccessor">
             <summary>在数据行和实体类之间映射数据的接口</summary>
         </member>
-        <member name="M:XCode.IDataRowEntityAccessor.LoadData(System.Data.DataTable)">
+        <member name="M:XCode.IDataRowEntityAccessor.LoadData``1(System.Data.DataTable)">
             <summary>加载数据表。无数据时返回空集合而不是null。</summary>
             <param name="dt">数据表</param>
             <returns>实体数组</returns>
@@ -6999,69 +6888,10 @@
             <param name="entityType"></param>
             <returns></returns>
         </member>
-        <member name="P:XCode.DataRowEntityAccessor.EntityType">
-            <summary>实体类</summary>
-        </member>
-        <member name="P:XCode.DataRowEntityAccessor.Factory">
-            <summary>实体操作者</summary>
-        </member>
-        <member name="P:XCode.DataRowEntityAccessor.FieldItems">
-            <summary>字段名-字段字典</summary>
-        </member>
-        <member name="M:XCode.DataRowEntityAccessor.LoadData(System.Data.DataTable)">
+        <member name="M:XCode.DataRowEntityAccessor.LoadData``1(System.Data.DataTable)">
             <summary>加载数据表。无数据时返回空集合而不是null。</summary>
             <param name="dt">数据表</param>
             <returns>实体数组</returns>
-        </member>
-        <member name="T:XCode.EntityListView`1">
-            <summary>实体列表视图</summary>
-            <typeparam name="T">实体类</typeparam>
-        </member>
-        <member name="M:XCode.EntityListView`1.#ctor">
-            <summary>初始化</summary>
-        </member>
-        <member name="M:XCode.EntityListView`1.#ctor(System.Collections.Generic.IList{`0})">
-            <summary>实体列表</summary>
-            <param name="list"></param>
-        </member>
-        <member name="M:XCode.EntityListView`1.Insert(System.Int32,`0)">
-            <summary>已重载。新增元素时，触发事件改变</summary>
-            <param name="index"></param>
-            <param name="value">数值</param>
-        </member>
-        <member name="M:XCode.EntityListView`1.RemoveAt(System.Int32)">
-            <summary>已重载。从列表中删除项时，同时从数据库中删除实体</summary>
-            <param name="index"></param>
-        </member>
-        <member name="P:XCode.EntityListView`1.AllowEdit">
-            <summary>获取是否可更新列表中的项。</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.AllowNew">
-            <summary>获取是否可以使用 System.ComponentModel.IBindingList.AddNew() 向列表中添加项。</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.AllowRemove">
-            <summary>获取是否可以使用 System.Collections.IList.Remove(System.Object) 或 System.Collections.IList.RemoveAt(System.Int32)从列表中移除项。</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.IsSorted">
-            <summary>获取是否对列表中的项进行排序。</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.SortDirection">
-            <summary>获取排序的方向。</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.SortProperty">
-            <summary>获取正在用于排序的 System.ComponentModel.PropertyDescriptor。</summary>
-        </member>
-        <member name="E:XCode.EntityListView`1.ListChanged">
-            <summary>列表改变事件</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.SortDescriptions">
-            <summary>获取当前应用于数据源的排序说明的集合。</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.EntityType">
-            <summary>真正的实体类型。有些场合为了需要会使用IEntity。</summary>
-        </member>
-        <member name="P:XCode.EntityListView`1.Factory">
-            <summary>实体操作者</summary>
         </member>
         <member name="T:XCode.EntityBase">
             <summary>数据实体基类的基类</summary>
@@ -7138,14 +6968,6 @@
             <param name="name"></param>
             <param name="value"></param>
             <returns>返回是否成功设置了数据</returns>
-        </member>
-        <member name="M:XCode.EntityBase.ToXml">
-            <summary>导出XML</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityBase.ToJson">
-            <summary>导出Json</summary>
-            <returns></returns>
         </member>
         <member name="M:XCode.EntityBase.Clone">
             <summary>创建当前对象的克隆对象，仅拷贝基本字段</summary>
@@ -7267,146 +7089,6 @@
         </member>
         <member name="M:XCode.EntityTransaction.Rollback">
             <summary>回滚事务</summary>
-        </member>
-        <member name="T:XCode.IEntityList">
-            <summary>实体列表接口</summary>
-        </member>
-        <member name="M:XCode.IEntityList.FindAll(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.FindAll(System.String[],System.Object[])">
-            <summary>根据指定项查找</summary>
-            <param name="names">属性名</param>
-            <param name="values">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Find(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.FindAllIgnoreCase(System.String,System.String)">
-            <summary>根据指定项查找字符串。忽略大小写</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.FindIgnoreCase(System.String,System.String)">
-            <summary>根据指定项查找字符串。忽略大小写</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Exists(System.String,System.Object)">
-            <summary>集合是否包含指定项</summary>
-            <param name="name">名称</param>
-            <param name="value">数值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Page(System.Int32,System.Int32)">
-            <summary>分页</summary>
-            <param name="startRowIndex">起始索引，0开始</param>
-            <param name="maximumRows">最大个数</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Insert(System.Boolean)">
-            <summary>把整个集合插入到数据库</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Update(System.Boolean)">
-            <summary>把整个集合更新到数据库</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Save(System.Boolean)">
-            <summary>把整个保存更新到数据库</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.SaveWithoutValid(System.Boolean)">
-            <summary>把整个保存更新到数据库，保存时不需要验证</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Delete(System.Boolean)">
-            <summary>把整个集合从数据库中删除</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.SetItem(System.String,System.Object)">
-            <summary>设置所有实体中指定项的值</summary>
-            <param name="name">名称</param>
-            <param name="value">数值</param>
-        </member>
-        <member name="M:XCode.IEntityList.GetItem``1(System.String)">
-            <summary>获取所有实体中指定项的值</summary>
-            <typeparam name="TResult">指定项的类型</typeparam>
-            <param name="name">名称</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Join(System.String,System.String)">
-            <summary>串联指定成员，方便由实体集合构造用于查询的子字符串</summary>
-            <param name="name">名称</param>
-            <param name="separator"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Join(System.String)">
-            <summary>串联</summary>
-            <param name="separator"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Sort(System.String,System.Boolean)">
-            <summary>按指定字段排序</summary>
-            <param name="name">字段</param>
-            <param name="isDesc">是否降序</param>
-        </member>
-        <member name="M:XCode.IEntityList.Sort(System.String[],System.Boolean[])">
-            <summary>按指定字段数组排序</summary>
-            <param name="names">字段</param>
-            <param name="isDescs">是否降序</param>
-        </member>
-        <member name="M:XCode.IEntityList.Up(XCode.IEntity,System.String)">
-            <summary>提升指定实体在当前列表中的位置，加大排序键的值</summary>
-            <param name="entity"></param>
-            <param name="sortKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.Down(XCode.IEntity,System.String)">
-            <summary>降低指定实体在当前列表中的位置，减少排序键的值</summary>
-            <param name="entity"></param>
-            <param name="sortKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.ToXml">
-            <summary>导出Xml文本</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.FromXml(System.String)">
-            <summary>导入Xml文本</summary>
-            <param name="xml"></param>
-        </member>
-        <member name="M:XCode.IEntityList.ToJson">
-            <summary>导出Json</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.ToDictionary(System.String)">
-            <summary>实体列表转为字典。主键为Key</summary>
-            <param name="valueField">作为Value部分的字段，默认为空表示整个实体对象为值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.ToDataTable(System.Boolean)">
-            <summary>转为DataTable</summary>
-            <param name="allowUpdate">是否允许更新数据，如果允许，将可以对DataTable进行添删改等操作</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityList.ToDataSet">
-            <summary>转为DataSet</summary>
-            <returns></returns>
         </member>
         <member name="T:XCode.IEntityPersistence">
             <summary>实体持久化接口。可通过实现该接口来自定义实体类持久化行为。</summary>
@@ -8194,16 +7876,6 @@
             <param name="where">条件，不带Where</param>
             <returns>总行数</returns>
         </member>
-        <member name="M:XCode.Entity`1.EntityOperate.FromXml(System.String)">
-            <summary>导入</summary>
-            <param name="xml"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Entity`1.EntityOperate.FromJson(System.String)">
-            <summary>导入</summary>
-            <param name="json"></param>
-            <returns></returns>
-        </member>
         <member name="M:XCode.Entity`1.EntityOperate.BeginTransaction">
             <summary>开始事务</summary>
             <returns></returns>
@@ -8312,336 +7984,6 @@
             </remarks>
             <param name="type">类型</param>
         </member>
-        <member name="T:XCode.EntityList`1">
-            <summary>实体集合，提供批量查询和批量操作实体等操作。若需要使用Linq，需要先用<see cref="M:XCode.EntityList`1.ToList"/>方法。</summary>
-            <remarks>
-            强烈建议所有返回实体集合的方法，在没有满足条件的数据时返回空集合而不是null，以减少各种判断！
-            
-            在.Net 2.0时代，没有Linq可用时，该类的对象查询等方法发挥了很大的作用。
-            但是弱类型比较的写法，不太方便，并且有时会带来非常难以查找的错误。
-            比如Object.Equal比较Int16和Int32两个数字，是不相等的，也就是说，如果有个Int32字段，传入Int16的数字是无法找到任何匹配项的。
-            
-            后来在.Net 2.0上实现了Linq，该类的对象查询方法将会逐步淡出，建议优先考虑Linq。
-            </remarks>
-        </member>
-        <member name="M:XCode.EntityList`1.#ctor">
-            <summary>构造一个实体对象集合</summary>
-        </member>
-        <member name="M:XCode.EntityList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
-            <summary>构造一个实体对象集合</summary>
-            <param name="collection"></param>
-        </member>
-        <member name="M:XCode.EntityList`1.#ctor(System.Int32)">
-            <summary>构造一个实体对象集合</summary>
-            <param name="capacity"></param>
-        </member>
-        <member name="M:XCode.EntityList`1.#ctor(System.Collections.IEnumerable)">
-            <summary>初始化</summary>
-            <param name="collection"></param>
-        </member>
-        <member name="M:XCode.EntityList`1.#ctor(System.Collections.IEnumerable,System.Int32,System.Int32)">
-            <summary>初始化</summary>
-            <param name="collection"></param>
-            <param name="startRowIndex"></param>
-            <param name="maximumRows"></param>
-        </member>
-        <member name="M:XCode.EntityList`1.ToString">
-            <summary>已重载。</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.op_Addition(XCode.EntityList{`0},XCode.EntityList{`0})">
-            <summary>集合相加</summary>
-            <param name="entities1">第一个实体集合</param>
-            <param name="entities2">第二个实体集合</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.op_Subtraction(XCode.EntityList{`0},XCode.EntityList{`0})">
-            <summary>集合相减</summary>
-            <param name="entities1">第一个实体集合</param>
-            <param name="entities2">第二个实体集合</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.RemoveRange(System.Collections.Generic.IEnumerable{`0})">
-            <summary>从集合中移除另一个集合指定的元素</summary>
-            <param name="collection"></param>
-        </member>
-        <member name="M:XCode.EntityList`1.Page(System.Int32,System.Int32)">
-            <summary>分页</summary>
-            <param name="startRowIndex">起始索引，0开始</param>
-            <param name="maximumRows">最大个数</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.FindAll(System.String,System.Object)">
-            <summary>根据指定项查找。没有数据时返回空集合而不是null</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.FindAll(System.String[],System.Object[],System.Boolean)">
-            <summary>根据指定项查找。没有数据时返回空集合而不是null</summary>
-            <param name="names">属性名集合</param>
-            <param name="values">属性值集合</param>
-            <param name="ignoreCase">对于字符串字段是否忽略大小写</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.FindAll(System.Predicate{`0})">
-            <summary>检索与指定谓词定义的条件匹配的所有元素。没有数据时返回空集合而不是null</summary>
-            <param name="match">条件</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Find(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.FindAllIgnoreCase(System.String,System.String)">
-            <summary>根据指定项查找字符串，忽略大小写，非字符串属性将报错。没有数据时返回空集合而不是null</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.FindIgnoreCase(System.String,System.String)">
-            <summary>根据指定项查找字符串。忽略大小写</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Exists(System.String,System.Object)">
-            <summary>集合是否包含指定项</summary>
-            <param name="name">名称</param>
-            <param name="value">数值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#FindAll(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#FindAll(System.String[],System.Object[])">
-            <summary>根据指定项查找</summary>
-            <param name="names">属性名</param>
-            <param name="values">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#Find(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#FindAllIgnoreCase(System.String,System.String)">
-            <summary>根据指定项查找字符串。忽略大小写</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#FindIgnoreCase(System.String,System.String)">
-            <summary>根据指定项查找字符串。忽略大小写</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#SetItem(System.String,System.Object)">
-            <summary>设置所有实体中指定项的值</summary>
-            <param name="name">指定项的名称</param>
-            <param name="value">数值</param>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#Page(System.Int32,System.Int32)">
-            <summary>分页</summary>
-            <param name="startRowIndex">起始索引，0开始</param>
-            <param name="maximumRows">最大个数</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Insert(System.Boolean)">
-            <summary>把整个集合插入到数据库</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Insert">
-            <summary>把整个集合插入到数据库</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Update(System.Boolean)">
-            <summary>把整个集合更新到数据库</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Update">
-            <summary>把整个集合更新到数据库</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Save(System.Boolean)">
-            <summary>把整个保存更新到数据库</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Save">
-            <summary>把整个集合保存到数据库</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.SaveWithoutValid(System.Boolean)">
-            <summary>把整个保存更新到数据库，保存时不需要验证</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.SaveWithoutValid">
-            <summary>把整个集合保存到数据库，保存时不需要验证</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Delete(System.Boolean)">
-            <summary>把整个集合从数据库中删除</summary>
-            <param name="useTransition">是否使用事务保护</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Delete">
-            <summary>把整个集合从数据库中删除</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.SetItem(System.String,System.Object)">
-            <summary>设置所有实体中指定项的值</summary>
-            <param name="name">指定项的名称</param>
-            <param name="value">数值</param>
-        </member>
-        <member name="M:XCode.EntityList`1.GetItem``1(System.String)">
-            <summary>获取所有实体中指定项的值，不允许重复项。无数据时返回空列表而不是null</summary>
-            <typeparam name="TResult">指定项的类型</typeparam>
-            <param name="name">指定项的名称</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.GetItem``1(System.String,System.Boolean)">
-            <summary>获取所有实体中指定项的值。无数据时返回空列表而不是null</summary>
-            <remarks>
-            有时候只是为了获取某个属性值的集合，可以允许重复项，而有时候是获取唯一主键，作为in操作的参数，不该允许重复项。
-            </remarks>
-            <typeparam name="TResult">指定项的类型</typeparam>
-            <param name="name">指定项的名称</param>
-            <param name="allowRepeated">是否允许重复项</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Join(System.String,System.String)">
-            <summary>串联指定成员，方便由实体集合构造用于查询的子字符串</summary>
-            <param name="name">名称</param>
-            <param name="separator"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Join(System.String)">
-            <summary>串联</summary>
-            <param name="separator"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Sort(System.String,System.Boolean)">
-            <summary>按指定字段排序</summary>
-            <param name="name">字段</param>
-            <param name="isDesc">是否降序</param>
-        </member>
-        <member name="M:XCode.EntityList`1.Sort(System.String[],System.Boolean[])">
-            <summary>按指定字段数组排序</summary>
-            <param name="names">字段</param>
-            <param name="isDescs">是否降序</param>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#Sort(System.String,System.Boolean)">
-            <summary>按指定字段排序</summary>
-            <param name="name">字段</param>
-            <param name="isDesc">是否降序</param>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#Sort(System.String[],System.Boolean[])">
-            <summary>按指定字段数组排序</summary>
-            <param name="names">字段</param>
-            <param name="isDescs">是否降序</param>
-        </member>
-        <member name="M:XCode.EntityList`1.Up(`0,System.String)">
-            <summary>提升指定实体在当前列表中的位置，加大排序键的值</summary>
-            <param name="entity"></param>
-            <param name="sortKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Down(`0,System.String)">
-            <summary>降低指定实体在当前列表中的位置，减少排序键的值</summary>
-            <param name="entity"></param>
-            <param name="sortKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#Up(XCode.IEntity,System.String)">
-            <summary>提升指定实体在当前列表中的位置，加大排序键的值</summary>
-            <param name="entity"></param>
-            <param name="sortKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.XCode#IEntityList#Down(XCode.IEntity,System.String)">
-            <summary>降低指定实体在当前列表中的位置，减少排序键的值</summary>
-            <param name="entity"></param>
-            <param name="sortKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.Export(System.IO.TextWriter)">
-            <summary>导出</summary>
-            <param name="writer"></param>
-        </member>
-        <member name="M:XCode.EntityList`1.Import(System.IO.TextReader)">
-            <summary>导入</summary>
-            <param name="reader"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.ToXml">
-            <summary>导出Xml文本</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.FromXml(System.String)">
-            <summary>导入Xml文本</summary>
-            <param name="xml"></param>
-        </member>
-        <member name="M:XCode.EntityList`1.ToJson">
-            <summary>导出Json</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.FromJson(System.String)">
-            <summary>导入Json</summary>
-            <param name="json"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.ToDataTable(System.Boolean)">
-            <summary>转为DataTable</summary>
-            <param name="allowUpdate">是否允许更新数据，如果允许，将可以对DataTable进行添删改等操作</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.ToDataSet">
-            <summary>转为DataSet</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.ToList">
-            <summary>转为泛型List，方便进行Linq</summary>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.ToDictionary(System.String)">
-            <summary>实体列表转为字典。主键为Key</summary>
-            <param name="valueField">作为Value部分的字段，默认为空表示整个实体对象为值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.From(System.Collections.IEnumerable)">
-            <summary>任意集合转为实体集合</summary>
-            <param name="collection"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityList`1.From``1(System.Collections.IEnumerable,System.Func{``0,`0})">
-            <summary>拥有指定类型转换器的转换</summary>
-            <typeparam name="T2"></typeparam>
-            <param name="collection"></param>
-            <param name="func"></param>
-            <returns></returns>
-        </member>
-        <member name="P:XCode.EntityList`1.EntityType">
-            <summary>真正的实体类型。有些场合为了需要会使用IEntity。</summary>
-        </member>
-        <member name="P:XCode.EntityList`1.Factory">
-            <summary>实体操作者</summary>
-        </member>
-        <member name="M:XCode.EntityList`1.Clone">
-            <summary>把当前列表的元素复制到新列表里面去</summary>
-            <remarks>其实直接new一个新的列表就好了，但是做克隆方法更方便链式写法</remarks>
-            <returns></returns>
-        </member>
         <member name="T:XCode.IEntity">
             <summary>数据实体接口</summary>
         </member>
@@ -8704,10 +8046,6 @@
             <param name="entity">来源实体对象</param>
             <param name="setDirty">是否设置脏数据</param>
             <returns>实际复制成员数</returns>
-        </member>
-        <member name="M:XCode.IEntity.ToXml">
-            <summary>导出XML</summary>
-            <returns></returns>
         </member>
         <member name="M:XCode.IEntity.EqualTo(XCode.IEntity)">
             <summary>判断两个实体是否相等。有可能是同一条数据的两个实体对象</summary>
@@ -8842,16 +8180,6 @@
             <summary>返回总记录数</summary>
             <param name="where">条件，不带Where</param>
             <returns>总行数</returns>
-        </member>
-        <member name="M:XCode.IEntityOperate.FromXml(System.String)">
-            <summary>导入</summary>
-            <param name="xml"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.IEntityOperate.FromJson(System.String)">
-            <summary>导入</summary>
-            <param name="json"></param>
-            <returns></returns>
         </member>
         <member name="M:XCode.IEntityOperate.BeginTransaction">
             <summary>开始事务</summary>
@@ -9001,6 +8329,57 @@
             <summary>创建实体类的数据行访问器</summary>
             <param name="entityType"></param>
             <returns></returns>
+        </member>
+        <member name="T:XCode.Transform.Sync`2">
+            <summary>数据同步</summary>
+            <typeparam name="TSource">源实体类</typeparam>
+            <typeparam name="TTarget">目标实体类</typeparam>
+        </member>
+        <member name="M:XCode.Transform.Sync`2.#ctor">
+            <summary>实例化数据抽取器</summary>
+        </member>
+        <member name="M:XCode.Transform.Sync`2.ProcessItem(XCode.IEntity,XCode.IEntity,System.Boolean)">
+            <summary>处理单行数据</summary>
+            <param name="source">源实体</param>
+            <param name="target">目标实体</param>
+            <param name="isNew">是否新增</param>
+        </member>
+        <member name="M:XCode.Transform.Sync`2.ProcessItem(`0,`1,System.Boolean)">
+            <summary>处理单行数据</summary>
+            <param name="source">源实体</param>
+            <param name="target">目标实体</param>
+            <param name="isNew">是否新增</param>
+        </member>
+        <member name="P:XCode.Transform.Sync.Target">
+            <summary>目标实体工厂。分批统计时不需要设定</summary>
+        </member>
+        <member name="M:XCode.Transform.Sync.#ctor(XCode.IEntityOperate,XCode.IEntityOperate)">
+            <summary>实例化数据抽取器</summary>
+            <param name="source"></param>
+            <param name="target"></param>
+        </member>
+        <member name="M:XCode.Transform.Sync.ProcessList(System.Collections.Generic.IList{XCode.IEntity})">
+            <summary>处理列表，批量事务提交</summary>
+            <param name="list"></param>
+        </member>
+        <member name="M:XCode.Transform.Sync.ProcessItem(XCode.IEntity,XCode.IEntity,System.Boolean)">
+            <summary>处理单行数据</summary>
+            <remarks>打开AutoSave时，上层ProcessList会自动保存数据</remarks>
+            <param name="source">源实体</param>
+            <param name="target">目标实体</param>
+            <param name="isNew">是否新增</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Transform.Sync.GetItem(XCode.IEntity,System.Boolean@)">
+            <summary>根据源实体获取目标实体</summary>
+            <param name="source">源实体</param>
+            <param name="isNew">是否新增</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Transform.Sync.SaveItem(XCode.IEntity,System.Boolean)">
+            <summary>保存目标实体</summary>
+            <param name="target"></param>
+            <param name="isNew"></param>
         </member>
         <member name="T:XCode.Transform.IETLStat">
             <summary>ETL统计接口</summary>
@@ -9190,42 +8569,12 @@
             <param name="src"></param>
             <param name="set"></param>
         </member>
-        <member name="T:XCode.Transform.ETL`2">
-            <summary>数据同步</summary>
-            <typeparam name="TSource">源实体类</typeparam>
-            <typeparam name="TTarget">目标实体类</typeparam>
-        </member>
-        <member name="M:XCode.Transform.ETL`2.#ctor">
-            <summary>实例化数据抽取器</summary>
-        </member>
-        <member name="M:XCode.Transform.ETL`2.ProcessItem(XCode.IEntity,XCode.IEntity,System.Boolean)">
-            <summary>处理单行数据</summary>
-            <param name="source">源实体</param>
-            <param name="target">目标实体</param>
-            <param name="isNew">是否新增</param>
-        </member>
-        <member name="M:XCode.Transform.ETL`2.ProcessItem(`0,`1,System.Boolean)">
-            <summary>处理单行数据</summary>
-            <param name="source">源实体</param>
-            <param name="target">目标实体</param>
-            <param name="isNew">是否新增</param>
-        </member>
         <member name="T:XCode.Transform.ETL`1">
             <summary>数据分批统计</summary>
             <typeparam name="TSource">源实体类</typeparam>
         </member>
         <member name="M:XCode.Transform.ETL`1.#ctor">
             <summary>实例化数据抽取器</summary>
-        </member>
-        <member name="M:XCode.Transform.ETL`1.ProcessItem(XCode.IEntity,XCode.IEntity,System.Boolean)">
-            <summary>处理单行数据</summary>
-            <param name="source">源实体</param>
-            <param name="target">目标实体</param>
-            <param name="isNew">是否新增</param>
-        </member>
-        <member name="M:XCode.Transform.ETL`1.ProcessItem(`0)">
-            <summary>处理单行数据</summary>
-            <param name="source">源实体</param>
         </member>
         <member name="T:XCode.Transform.ETL">
             <summary>数据抽取转换处理</summary>
@@ -9240,9 +8589,6 @@
         <member name="P:XCode.Transform.ETL.Extracter">
             <summary>数据源抽取器</summary>
         </member>
-        <member name="P:XCode.Transform.ETL.Target">
-            <summary>目标实体工厂。分批统计时不需要设定</summary>
-        </member>
         <member name="P:XCode.Transform.ETL.MaxError">
             <summary>最大错误数，连续发生多个错误时停止</summary>
         </member>
@@ -9255,10 +8601,9 @@
         <member name="M:XCode.Transform.ETL.#ctor">
             <summary>实例化数据抽取器</summary>
         </member>
-        <member name="M:XCode.Transform.ETL.#ctor(XCode.IEntityOperate,XCode.IEntityOperate)">
+        <member name="M:XCode.Transform.ETL.#ctor(XCode.IEntityOperate)">
             <summary>实例化数据抽取器</summary>
             <param name="source"></param>
-            <param name="target"></param>
         </member>
         <member name="M:XCode.Transform.ETL.Start">
             <summary>开始</summary>
@@ -9275,28 +8620,15 @@
             <summary>抽取并处理一批数据</summary>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.ETL.ProcessList(XCode.IEntityList)">
+        <member name="M:XCode.Transform.ETL.ProcessList(System.Collections.Generic.IList{XCode.IEntity})">
             <summary>处理列表，批量事务提交</summary>
             <param name="list"></param>
         </member>
-        <member name="M:XCode.Transform.ETL.GetItem(XCode.IEntity,System.Boolean@)">
-            <summary>根据源实体获取目标实体</summary>
-            <param name="source">源实体</param>
-            <param name="isNew">是否新增</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Transform.ETL.ProcessItem(XCode.IEntity,XCode.IEntity,System.Boolean)">
+        <member name="M:XCode.Transform.ETL.ProcessItem(XCode.IEntity)">
             <summary>处理单行数据</summary>
             <remarks>打开AutoSave时，上层ProcessList会自动保存数据</remarks>
             <param name="source">源实体</param>
-            <param name="target">目标实体</param>
-            <param name="isNew">是否新增</param>
             <returns></returns>
-        </member>
-        <member name="M:XCode.Transform.ETL.SaveItem(XCode.IEntity,System.Boolean)">
-            <summary>保存目标实体</summary>
-            <param name="target"></param>
-            <param name="isNew"></param>
         </member>
         <member name="M:XCode.Transform.ETL.OnError(System.Object,System.Exception)">
             <summary>处理单个实体遇到错误时如何处理</summary>
@@ -9357,7 +8689,7 @@
             <summary>把一个链接的数据全部导入到另一个链接</summary>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.EntityTransform.TransformTable(XCode.IEntityOperate,System.Int32,System.Nullable{System.Boolean},System.Func{System.Int32,System.Int32,XCode.IEntityList})">
+        <member name="M:XCode.Transform.EntityTransform.TransformTable(XCode.IEntityOperate,System.Int32,System.Nullable{System.Boolean},System.Func{System.Int32,System.Int32,System.Collections.Generic.IList{XCode.IEntity}})">
             <summary>把一个表的数据全部导入到另一个表</summary>
             <param name="eop">实体操作者。</param>
             <param name="count">要迁移的记录数，默认0表示全部</param>
@@ -9626,21 +8958,6 @@
             <summary>是否包含子节点</summary>
             <param name="key">子节点键值</param>
             <returns></returns>
-        </member>
-        <member name="P:XCode.EntityTree`2.ChildKeys">
-            <summary>子级键值集合</summary>
-        </member>
-        <member name="P:XCode.EntityTree`2.ChildKeyString">
-            <summary>逗号分隔的子级键值字符串，一般可用于SQL语句中</summary>
-        </member>
-        <member name="P:XCode.EntityTree`2.AllChildKeys">
-            <summary>子孙键值集合</summary>
-        </member>
-        <member name="P:XCode.EntityTree`2.MyAllChildKeys">
-            <summary>我的子孙键值集合，包含自己</summary>
-        </member>
-        <member name="P:XCode.EntityTree`2.AllChildKeyString">
-            <summary>逗号分隔的子孙键值字符串，一般可用于SQL语句中</summary>
         </member>
         <member name="M:XCode.EntityTree`2.GetFullPath(System.Boolean,System.String,System.Func{`1,System.String})">
             <summary>取得全路径的实体，由上向下排序</summary>

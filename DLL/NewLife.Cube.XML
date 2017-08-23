@@ -563,7 +563,7 @@
             <param name="autoPostback">自动回发</param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Cube.HtmlExtensions.ForDropDownList(System.Web.Mvc.HtmlHelper,System.String,XCode.IEntityList,System.String,System.Boolean)">
+        <member name="M:NewLife.Cube.HtmlExtensions.ForDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IList{XCode.IEntity},System.String,System.Boolean)">
             <summary>实体列表的下拉列表。单选，自动匹配当前模型的选中项</summary>
             <param name="Html"></param>
             <param name="name"></param>
@@ -581,7 +581,7 @@
             <param name="autoPostback">自动回发</param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Cube.HtmlExtensions.ForListBox(System.Web.Mvc.HtmlHelper,System.String,XCode.IEntityList,System.Boolean)">
+        <member name="M:NewLife.Cube.HtmlExtensions.ForListBox(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IList{XCode.IEntity},System.Boolean)">
             <summary>实体列表的下拉列表。多选，自动匹配当前模型的选中项，支持数组类型或字符串类型（自动分割）的选中项</summary>
             <param name="Html"></param>
             <param name="name"></param>
@@ -694,6 +694,10 @@
         </member>
         <member name="M:NewLife.Cube.EntityController`1.#ctor">
             <summary>构造函数</summary>
+        </member>
+        <member name="M:NewLife.Cube.EntityController`1.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)">
+            <summary>动作执行前</summary>
+            <param name="filterContext"></param>
         </member>
         <member name="M:NewLife.Cube.EntityController`1.OnActionExecuted(System.Web.Mvc.ActionExecutedContext)">
             <summary>执行后</summary>
@@ -852,10 +856,6 @@
             <summary>自动从实体类拿到显示名</summary>
             <param name="menu"></param>
             <returns></returns>
-        </member>
-        <member name="M:NewLife.Cube.EntityController`1.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)">
-            <summary>动作执行前</summary>
-            <param name="filterContext"></param>
         </member>
         <member name="T:NewLife.Cube.ConfigController`1">
             <summary>设置控制器</summary>
@@ -1282,6 +1282,12 @@
         </member>
         <member name="P:NewLife.Cube.Setting.WebBehavior">
             <summary>用户行为。记录用户所有操作</summary>
+        </member>
+        <member name="P:NewLife.Cube.Setting.FormGroupClass">
+            <summary>表单组样式。大中小屏幕分别3/2/1列</summary>
+        </member>
+        <member name="P:NewLife.Cube.Setting.BootstrapSelect">
+            <summary>下拉选择框。使用Bootstrap，美观，但有呈现方面的性能损耗</summary>
         </member>
         <member name="M:NewLife.Cube.Setting.#ctor">
             <summary>实例化</summary>

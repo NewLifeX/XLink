@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using NewLife.Common;
 using NewLife.Data;
 using XCode;
@@ -57,18 +58,16 @@ namespace xLink.Device.Entity
         #endregion
 
         #region 扩展查询
-        /// <summary>根据ID查找</summary>
-        /// <param name="id"></param>
+        /// <summary>根据编号查找</summary>
+        /// <param name="id">编号</param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static Device FindByID(Int32 id)
         {
-            if (id <= 0) return null;
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.ID == id);
 
-            if (Meta.Count >= 1000)
-                //return Find(__.ID, id);
-                return Meta.SingleCache[id];
-            else // 实体缓存
-                return Meta.Cache.Entities.Find(__.ID, id);
+            // 单对象缓存
+            return Meta.SingleCache[id];
         }
 
         /// <summary>根据名称。登录用户名查找</summary>
@@ -77,17 +76,9 @@ namespace xLink.Device.Entity
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static Device FindByName(String name)
         {
-            if (name.IsNullOrEmpty()) return null;
-            // 严格限制设备编码长度
-            //if (name.Length != 12) return null;
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Name == name);
 
-            // 偶尔出现找不到的情况
-            Device entity = null;
-            if (Meta.Count < 1000) entity = Meta.Cache.Entities.Find(__.Name, name);
-            if (entity == null) entity = Meta.SingleCache.GetItemWithSlaveKey(name) as Device;
-            if (entity == null) entity = Find(__.Name, name);
-
-            return entity;
+            return Find(__.Name, name);
         }
 
         /// <summary>根据唯一编码查找</summary>
@@ -96,24 +87,9 @@ namespace xLink.Device.Entity
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static Device FindByCode(String code)
         {
-            if (Meta.Count >= 1000)
-                return Find(__.Code, code);
-            else // 实体缓存
-                return Meta.Cache.Entities.Find(__.Code, code);
-            // 单对象缓存
-            //return Meta.SingleCache[code];
-        }
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
 
-        /// <summary>根据类型查找</summary>
-        /// <param name="type">类型</param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static EntityList<Device> FindAllByType(String type)
-        {
-            if (Meta.Count >= 1000)
-                return FindAll(__.Type, type);
-            else // 实体缓存
-                return Meta.Cache.Entities.FindAll(__.Type, type);
+            return Find(__.Code, code);
         }
         #endregion
 
@@ -126,7 +102,7 @@ namespace xLink.Device.Entity
         /// <param name="key"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static EntityList<Device> Search(String type, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<Device> Search(String type, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
         {
             // WhereExpression重载&和|运算符，作为And和Or的替代
             // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段
@@ -191,12 +167,14 @@ namespace xLink.Device.Entity
             var gw = FindByName(code);
             if (gw != null) throw new EntityException("{0}该设备已经注册", code);
 
-            gw = new Device();
-            gw.Name = code;
-            gw.Password = pass;
+            gw = new Device
+            {
+                Name = code,
+                Password = pass,
 
-            gw.Enable = true;
-            gw.RegisterTime = DateTime.Now;
+                Enable = true,
+                RegisterTime = DateTime.Now
+            };
 
             gw.Save();
         }
@@ -217,7 +195,7 @@ namespace xLink.Device.Entity
         #region 辅助
         /// <summary>显示友好名称</summary>
         /// <returns></returns>
-        public override string ToString()
+        public override String ToString()
         {
             if (!DisplayName.IsNullOrEmpty()) return DisplayName;
 

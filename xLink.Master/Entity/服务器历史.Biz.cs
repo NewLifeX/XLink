@@ -60,7 +60,7 @@ namespace xLink.Master.Entity
         /// <param name="key"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static EntityList<ServerHistory> Search(Int32 userid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<ServerHistory> Search(Int32 userid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param)
         {
             var list = Search(userid, type, action, result, start, end, key, param, false);
             // 如果结果为0，并且有key，则使用扩展查询，对内网外网地址进行模糊查询
@@ -69,7 +69,7 @@ namespace xLink.Master.Entity
             return list;
         }
 
-        private static EntityList<ServerHistory> Search(Int32 tokenid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        private static IList<ServerHistory> Search(Int32 tokenid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
         {
             var exp = new WhereExpression();
 
