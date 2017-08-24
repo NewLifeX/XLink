@@ -34,15 +34,16 @@
             this.cbAddr = new System.Windows.Forms.ComboBox();
             this.lbAddr = new System.Windows.Forms.Label();
             this.gbSend = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.numMutilSend = new System.Windows.Forms.NumericUpDown();
             this.numThreads = new System.Windows.Forms.NumericUpDown();
+            this.btnSend = new System.Windows.Forms.Button();
             this.numSleep = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             this.txtSend = new System.Windows.Forms.RichTextBox();
             this.menuSend = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.miHexSend = new System.Windows.Forms.ToolStripMenuItem();
             this.mi清空2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSend = new System.Windows.Forms.Button();
-            this.numMutilSend = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
             this.pnlSetting = new System.Windows.Forms.Panel();
             this.cbMode = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -66,17 +67,16 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.pnlAction = new System.Windows.Forms.Panel();
             this.btnTest = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.gbSend.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMutilSend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numThreads)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSleep)).BeginInit();
             this.menuSend.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numMutilSend)).BeginInit();
             this.pnlSetting.SuspendLayout();
             this.gbReceive.SuspendLayout();
             this.menuReceive.SuspendLayout();
             this.pnlAction.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label7
@@ -120,6 +120,42 @@
             this.gbSend.TabStop = false;
             this.gbSend.Text = "发送区：已发送0字节";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.numMutilSend);
+            this.panel1.Controls.Add(this.numThreads);
+            this.panel1.Controls.Add(this.btnSend);
+            this.panel1.Controls.Add(this.numSleep);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Location = new System.Drawing.Point(679, 13);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(148, 65);
+            this.panel1.TabIndex = 2;
+            // 
+            // numMutilSend
+            // 
+            this.numMutilSend.Location = new System.Drawing.Point(37, 5);
+            this.numMutilSend.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numMutilSend.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numMutilSend.Name = "numMutilSend";
+            this.numMutilSend.Size = new System.Drawing.Size(52, 21);
+            this.numMutilSend.TabIndex = 14;
+            this.numMutilSend.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numMutilSend.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // numThreads
             // 
             this.numThreads.Location = new System.Drawing.Point(92, 5);
@@ -144,6 +180,17 @@
             0,
             0});
             // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(95, 32);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(50, 30);
+            this.btnSend.TabIndex = 1;
+            this.btnSend.Text = "压力";
+            this.toolTip1.SetToolTip(this.btnSend, "上方连接数");
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
             // numSleep
             // 
             this.numSleep.Location = new System.Drawing.Point(37, 37);
@@ -161,6 +208,15 @@
             0,
             0,
             0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(2, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "间隔：";
             // 
             // txtSend
             // 
@@ -197,49 +253,6 @@
             this.mi清空2.Text = "清空";
             this.mi清空2.Click += new System.EventHandler(this.mi清空2_Click);
             // 
-            // btnSend
-            // 
-            this.btnSend.Location = new System.Drawing.Point(95, 32);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(50, 30);
-            this.btnSend.TabIndex = 1;
-            this.btnSend.Text = "压力";
-            this.toolTip1.SetToolTip(this.btnSend, "上方连接数");
-            this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
-            // numMutilSend
-            // 
-            this.numMutilSend.Location = new System.Drawing.Point(37, 5);
-            this.numMutilSend.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numMutilSend.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numMutilSend.Name = "numMutilSend";
-            this.numMutilSend.Size = new System.Drawing.Size(52, 21);
-            this.numMutilSend.TabIndex = 14;
-            this.numMutilSend.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numMutilSend.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 41);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "间隔：";
-            // 
             // pnlSetting
             // 
             this.pnlSetting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -258,8 +271,7 @@
             this.cbMode.FormattingEnabled = true;
             this.cbMode.Items.AddRange(new object[] {
             "User",
-            "Device",
-            "Master"});
+            "Device"});
             this.cbMode.Location = new System.Drawing.Point(6, 7);
             this.cbMode.Name = "cbMode";
             this.cbMode.Size = new System.Drawing.Size(68, 20);
@@ -424,19 +436,6 @@
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.numMutilSend);
-            this.panel1.Controls.Add(this.numThreads);
-            this.panel1.Controls.Add(this.btnSend);
-            this.panel1.Controls.Add(this.numSleep);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(679, 13);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(148, 65);
-            this.panel1.TabIndex = 2;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -453,17 +452,17 @@
             this.Text = "物联网设备模拟客户端";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.gbSend.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numMutilSend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numThreads)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSleep)).EndInit();
             this.menuSend.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numMutilSend)).EndInit();
             this.pnlSetting.ResumeLayout(false);
             this.pnlSetting.PerformLayout();
             this.gbReceive.ResumeLayout(false);
             this.menuReceive.ResumeLayout(false);
             this.pnlAction.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -8358,9 +8358,10 @@
             <param name="source"></param>
             <param name="target"></param>
         </member>
-        <member name="M:XCode.Transform.Sync.ProcessList(System.Collections.Generic.IList{XCode.IEntity})">
-            <summary>处理列表，批量事务提交</summary>
-            <param name="list"></param>
+        <member name="M:XCode.Transform.Sync.OnProcessList(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting)">
+            <summary>处理列表，传递批次配置，支持多线程</summary>
+            <param name="list">实体列表</param>
+            <param name="set">本批次配置</param>
         </member>
         <member name="M:XCode.Transform.Sync.ProcessItem(XCode.IEntity,XCode.IEntity,System.Boolean)">
             <summary>处理单行数据</summary>
@@ -8385,16 +8386,22 @@
             <summary>ETL统计接口</summary>
         </member>
         <member name="P:XCode.Transform.IETLStat.Total">
-            <summary>新增总数</summary>
+            <summary>总数</summary>
         </member>
-        <member name="P:XCode.Transform.IETLStat.TotalUpdate">
-            <summary>更新总数</summary>
+        <member name="P:XCode.Transform.IETLStat.Success">
+            <summary>成功</summary>
+        </member>
+        <member name="P:XCode.Transform.IETLStat.Changes">
+            <summary>改变数</summary>
         </member>
         <member name="P:XCode.Transform.IETLStat.Times">
             <summary>次数</summary>
         </member>
         <member name="P:XCode.Transform.IETLStat.Speed">
             <summary>速度</summary>
+        </member>
+        <member name="P:XCode.Transform.IETLStat.FetchSpeed">
+            <summary>抽取速度</summary>
         </member>
         <member name="P:XCode.Transform.IETLStat.Error">
             <summary>错误</summary>
@@ -8406,16 +8413,22 @@
             <summary>ETL统计</summary>
         </member>
         <member name="P:XCode.Transform.ETLStat.Total">
-            <summary>新增总数</summary>
+            <summary>总数</summary>
         </member>
-        <member name="P:XCode.Transform.ETLStat.TotalUpdate">
-            <summary>更新总数</summary>
+        <member name="P:XCode.Transform.ETLStat.Success">
+            <summary>成功</summary>
+        </member>
+        <member name="P:XCode.Transform.ETLStat.Changes">
+            <summary>改变数</summary>
         </member>
         <member name="P:XCode.Transform.ETLStat.Times">
             <summary>次数</summary>
         </member>
         <member name="P:XCode.Transform.ETLStat.Speed">
             <summary>速度</summary>
+        </member>
+        <member name="P:XCode.Transform.ETLStat.FetchSpeed">
+            <summary>抽取速度</summary>
         </member>
         <member name="P:XCode.Transform.ETLStat.Error">
             <summary>错误</summary>
@@ -8448,9 +8461,6 @@
             <summary>抽取一批数据</summary>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.IExtracter.SaveNext">
-            <summary>当前批数据处理完成，移动到下一块</summary>
-        </member>
         <member name="P:XCode.Transform.IExtracter.Log">
             <summary>日志</summary>
         </member>
@@ -8475,7 +8485,10 @@
         <member name="P:XCode.Transform.TimeExtracter.Field">
             <summary>时间字段</summary>
         </member>
-        <member name="P:XCode.Transform.TimeExtracter.BatchEnd">
+        <member name="P:XCode.Transform.TimeExtracter.ActualStart">
+            <summary>本批数据开始时间</summary>
+        </member>
+        <member name="P:XCode.Transform.TimeExtracter.ActualEnd">
             <summary>本批数据结束时间</summary>
         </member>
         <member name="M:XCode.Transform.TimeExtracter.#ctor">
@@ -8500,9 +8513,6 @@
             <summary>获取大于等于指定时间的最小修改时间</summary>
             <param name="start"></param>
             <returns></returns>
-        </member>
-        <member name="M:XCode.Transform.TimeExtracter.SaveNext">
-            <summary>当前批数据处理完成，移动到下一块</summary>
         </member>
         <member name="P:XCode.Transform.TimeExtracter.Log">
             <summary>日志</summary>
@@ -8530,9 +8540,6 @@
         <member name="P:XCode.Transform.IExtractSetting.BatchSize">
             <summary>批大小</summary>
         </member>
-        <member name="P:XCode.Transform.IExtractSetting.Enable">
-            <summary>启用</summary>
-        </member>
         <member name="T:XCode.Transform.ExtractSetting">
             <summary>数据抽取参数</summary>
         </member>
@@ -8551,9 +8558,6 @@
         <member name="P:XCode.Transform.ExtractSetting.BatchSize">
             <summary>批大小</summary>
         </member>
-        <member name="P:XCode.Transform.ExtractSetting.Enable">
-            <summary>启用</summary>
-        </member>
         <member name="M:XCode.Transform.ExtractSetting.#ctor">
             <summary>实例化</summary>
         </member>
@@ -8568,6 +8572,11 @@
             <summary>拷贝设置参数</summary>
             <param name="src"></param>
             <param name="set"></param>
+        </member>
+        <member name="M:XCode.Transform.ExtractSettingHelper.Clone(XCode.Transform.IExtractSetting)">
+            <summary>克隆一份设置参数</summary>
+            <param name="src"></param>
+            <returns></returns>
         </member>
         <member name="T:XCode.Transform.ETL`1">
             <summary>数据分批统计</summary>
@@ -8618,11 +8627,29 @@
         </member>
         <member name="M:XCode.Transform.ETL.Process">
             <summary>抽取并处理一批数据</summary>
-            <returns></returns>
+            <returns>返回抽取数据行数，没有数据返回0，初始化或配置失败返回-1</returns>
         </member>
-        <member name="M:XCode.Transform.ETL.ProcessList(System.Collections.Generic.IList{XCode.IEntity})">
-            <summary>处理列表，批量事务提交</summary>
-            <param name="list"></param>
+        <member name="M:XCode.Transform.ETL.ProcessList(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting,System.Int32)">
+            <summary>处理列表，传递批次配置，支持多线程和异步</summary>
+            <remarks>
+            子类可以根据需要重载该方法，实现异步处理。
+            异步处理之前，需要先保存配置
+            </remarks>
+            <param name="list">实体列表</param>
+            <param name="set">本批次配置</param>
+            <param name="fetchCost">抽取数据耗时</param>
+        </member>
+        <member name="M:XCode.Transform.ETL.OnProcessList(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting)">
+            <summary>处理列表</summary>
+            <param name="list">实体列表</param>
+            <param name="set">本批次配置</param>
+        </member>
+        <member name="M:XCode.Transform.ETL.ProcessFinished(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting,System.Int32,System.Int32,System.Int32)">
+            <summary>处理完成</summary>
+            <param name="list">实体列表</param>
+            <param name="set">本批次配置</param>
+            <param name="fetchCost">抽取数据耗时</param>
+            <param name="processCost">处理数据耗时</param>
         </member>
         <member name="M:XCode.Transform.ETL.ProcessItem(XCode.IEntity)">
             <summary>处理单行数据</summary>
@@ -8630,9 +8657,10 @@
             <param name="source">源实体</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.ETL.OnError(System.Object,System.Exception)">
+        <member name="M:XCode.Transform.ETL.OnError(System.Object,XCode.Transform.IExtractSetting,System.Exception)">
             <summary>处理单个实体遇到错误时如何处理</summary>
             <param name="source"></param>
+            <param name="set">本批次配置</param>
             <param name="ex"></param>
             <returns></returns>
         </member>

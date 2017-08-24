@@ -28,6 +28,7 @@
     <OldToolsVersion>12.0</OldToolsVersion>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -117,20 +118,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Areas\Master\Controllers\ServerController.cs" />
-    <Compile Include="Areas\Master\Controllers\ServerHistoryController.cs" />
-    <Compile Include="Areas\Master\Controllers\ServerOnlineController.cs" />
-    <Compile Include="Areas\Master\MasterAreaRegistration.cs" />
-    <Compile Include="Areas\Master\Views\ServerHistory\_List_Toolbar.generated.cs">
-      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Areas\Master\Views\ServerOnline\_List_Toolbar.generated.cs">
-      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Areas\User\Controllers\UserController.cs" />
     <Compile Include="Areas\User\Controllers\UserHistoryController.cs" />
     <Compile Include="Areas\User\Controllers\UserOnlineController.cs" />
@@ -152,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -182,15 +170,6 @@
       <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Device\Views\Web.config" />
-    <Content Include="Areas\Master\Views\ServerHistory\_List_Toolbar.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\Master\Views\ServerOnline\_List_Toolbar.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\Master\Views\Web.config" />
     <None Include="Properties\PublishProfiles\Front.pubxml" />
   </ItemGroup>
   <ItemGroup>

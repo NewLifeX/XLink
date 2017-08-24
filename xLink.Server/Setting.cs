@@ -17,9 +17,9 @@ namespace xLink.Server
         [Description("服务名称")]
         public String ServiceName { get; set; } = "LinkServer";
 
-        /// <summary>端口。默认1234</summary>
-        [Description("端口。默认1234")]
-        public Int32 Port { get; set; } = 1234;
+        /// <summary>端口。默认2233</summary>
+        [Description("端口。默认2233")]
+        public Int32 Port { get; set; } = 2233;
 
         /// <summary>会话超时时间。默认360秒</summary>
         [Description("会话超时时间。默认360秒")]

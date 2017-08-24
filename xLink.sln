@@ -1,17 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink", "xLink\xLink.csproj", "{8DF06706-AD6E-4F75-99A8-3F610F0FBE7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.Server", "xLink.Server\xLink.Server.csproj", "{F51C838F-757F-415B-8968-94E3C9029D82}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.Master", "xLink.Master\xLink.Master.csproj", "{6E040324-A476-47BA-8BBB-379B76CC02D6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.Device", "xLink.Device\xLink.Device.csproj", "{92F0EC15-0052-494B-B850-51848BB84968}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xLink.User", "xLink.User\xLink.User.csproj", "{680041BF-43E3-4059-911D-5A858A73F5B0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{E9E982D4-367F-4305-ABDF-3B590673DADD}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,18 +30,6 @@ Global
 		{F51C838F-757F-415B-8968-94E3C9029D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F51C838F-757F-415B-8968-94E3C9029D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F51C838F-757F-415B-8968-94E3C9029D82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E040324-A476-47BA-8BBB-379B76CC02D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92F0EC15-0052-494B-B850-51848BB84968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92F0EC15-0052-494B-B850-51848BB84968}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92F0EC15-0052-494B-B850-51848BB84968}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92F0EC15-0052-494B-B850-51848BB84968}.Release|Any CPU.Build.0 = Release|Any CPU
-		{680041BF-43E3-4059-911D-5A858A73F5B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{680041BF-43E3-4059-911D-5A858A73F5B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{680041BF-43E3-4059-911D-5A858A73F5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{680041BF-43E3-4059-911D-5A858A73F5B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B82E70B-389D-4328-A5E2-BE2837072C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,5 +41,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2BACAC2-15CC-4C71-9436-1616D7607684}
 	EndGlobalSection
 EndGlobal

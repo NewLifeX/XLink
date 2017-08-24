@@ -58,6 +58,7 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="LinkClient.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,12 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="link.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\xLink\xLink.csproj">
-      <Project>{8df06706-ad6e-4f75-99a8-3f610f0fbe7c}</Project>
-      <Name>xLink</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

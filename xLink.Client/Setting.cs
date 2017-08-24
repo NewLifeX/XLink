@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Text;
-using System.Xml.Serialization;
 using NewLife.Xml;
 
 namespace xLink.Client
@@ -24,7 +22,7 @@ namespace xLink.Client
 
         /// <summary>地址</summary>
         [Description("地址")]
-        public String Address { get; set; } = "Tcp://feifan.link:1234";
+        public String Address { get; set; } = "tcp://127.0.0.1:2233,tcp;//feifan.link:2233";
 
         /// <summary>十六进制显示</summary>
         [Description("十六进制显示")]

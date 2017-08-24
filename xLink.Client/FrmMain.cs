@@ -107,9 +107,11 @@ namespace xLink.Client
             var cfg = Setting.Current;
             var mode = cbMode.Text;
 
-            var ac = new LinkClient(uri.ToString());
-            ac.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
-            ac.EncoderLog = cfg.ShowEncoderLog ? XTrace.Log : Logger.Null;
+            var ac = new LinkClient(uri.ToString())
+            {
+                Log = cfg.ShowLog ? XTrace.Log : Logger.Null,
+                EncoderLog = cfg.ShowEncoderLog ? XTrace.Log : Logger.Null
+            };
             ac.Received += OnReceived;
             ac.UserName = cfg.UserName;
             ac.Password = cfg.Password;
@@ -219,7 +221,7 @@ namespace xLink.Client
                 var line = e.Message.Payload.ToStr();
                 XTrace.WriteLine(line);
 
-                if (BizLog != null) BizLog.Info(line);
+                BizLog?.Info(line);
             }
         }
 
@@ -267,7 +269,7 @@ namespace xLink.Client
             Task.Run(() =>
             {
                 var cc = _Client;
-                for (Int32 i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     var ac = new LinkClient(uri.ToString());
                     ac.Received += OnReceived;
@@ -284,7 +286,7 @@ namespace xLink.Client
 
                     Task.Run(() =>
                     {
-                        for (Int32 k = 0; k < 10; k++)
+                        for (var k = 0; k < 10; k++)
                         {
                             if (ac.Open()) break;
                             Thread.Sleep(1000);

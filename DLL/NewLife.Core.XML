@@ -9986,6 +9986,12 @@
         <member name="P:NewLife.Web.WebClientX.Encoding">
             <summary>编码。网络时代，绝大部分使用utf8编码</summary>
         </member>
+        <member name="P:NewLife.Web.WebClientX.ProxyAddress">
+            <summary>代理服务器地址</summary>
+        </member>
+        <member name="P:NewLife.Web.WebClientX.Proxy">
+            <summary>网页代理</summary>
+        </member>
         <member name="P:NewLife.Web.WebClientX.Request">
             <summary>请求</summary>
         </member>

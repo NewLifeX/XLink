@@ -49,8 +49,10 @@ namespace xLink.Client
 
             var ms = new MemoryStream(buf);
 
-            var binary = new Binary();
-            binary.EncodeInt = true;
+            var binary = new Binary
+            {
+                EncodeInt = true
+            };
             binary.AddHandler<BinaryFont>(11);
             binary.AddHandler<BinaryColor>(12);
             binary.AddHandler<BinaryUnknown>(20);
@@ -68,8 +70,10 @@ namespace xLink.Client
 
         public void Save()
         {
-            var binary = new Binary();
-            binary.EncodeInt = true;
+            var binary = new Binary
+            {
+                EncodeInt = true
+            };
             binary.AddHandler<BinaryFont>(11);
             binary.AddHandler<BinaryColor>(12);
             binary.AddHandler<BinaryUnknown>(20);
@@ -163,8 +167,10 @@ namespace xLink.Client
             var ti = sender as ToolStripItem;
             var txt = (ti.Owner as ContextMenuStrip).SourceControl as TextBoxBase;
 
-            var fd = new FontDialog();
-            fd.Font = txt.Font;
+            var fd = new FontDialog
+            {
+                Font = txt.Font
+            };
             if (fd.ShowDialog() != DialogResult.OK) return;
 
             txt.Font = fd.Font;
@@ -179,8 +185,10 @@ namespace xLink.Client
             var ti = sender as ToolStripItem;
             var txt = (ti.Owner as ContextMenuStrip).SourceControl as TextBoxBase;
 
-            var cd = new ColorDialog();
-            cd.Color = txt.ForeColor;
+            var cd = new ColorDialog
+            {
+                Color = txt.ForeColor
+            };
             if (cd.ShowDialog() != DialogResult.OK) return;
 
             txt.ForeColor = cd.Color;
@@ -196,8 +204,10 @@ namespace xLink.Client
             var ti = sender as ToolStripItem;
             var txt = (ti.Owner as ContextMenuStrip).SourceControl as TextBoxBase;
 
-            var cd = new ColorDialog();
-            cd.Color = txt.BackColor;
+            var cd = new ColorDialog
+            {
+                Color = txt.BackColor
+            };
             if (cd.ShowDialog() != DialogResult.OK) return;
 
             txt.BackColor = cd.Color;
