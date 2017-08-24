@@ -49,7 +49,7 @@ namespace ASP
     using XCode.Membership;
     
     #line 4 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-    using xLink.Device.Entity;
+    using xLink.Entity;
     
     #line default
     #line hidden
@@ -76,52 +76,52 @@ namespace ASP
             
             #line default
             #line hidden
-WriteLiteral("\r\n<div");
+WriteLiteral("\n<div");
 
 WriteLiteral(" class=\"tableTools-container list-toolbar\"");
 
-WriteLiteral(">\r\n    <div");
+WriteLiteral(">\n    <div");
 
 WriteLiteral(" class=\"form-inline clear-fix\"");
 
-WriteLiteral(">\r\n        <form");
+WriteLiteral(">\n        <form");
 
-WriteAttribute("action", Tuple.Create(" action=\"", 378), Tuple.Create("\"", 458)
+WriteAttribute("action", Tuple.Create(" action=\"", 357), Tuple.Create("\"", 437)
             
             #line 15 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 387), Tuple.Create<System.Object, System.Int32>(Url.Action("index")
+, Tuple.Create(Tuple.Create("", 366), Tuple.Create<System.Object, System.Int32>(Url.Action("index")
             
             #line default
             #line hidden
-, 387), false)
+, 366), false)
             
             #line 15 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 407), Tuple.Create<System.Object, System.Int32>(Html.Raw("?" + page.GetBaseUrl(false, true, true))
+, Tuple.Create(Tuple.Create("", 386), Tuple.Create<System.Object, System.Int32>(Html.Raw("?" + page.GetBaseUrl(false, true, true))
             
             #line default
             #line hidden
-, 407), false)
+, 386), false)
 );
 
 WriteLiteral(" method=\"post\"");
 
 WriteLiteral(" role=\"form\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\n            <div");
 
 WriteLiteral(" class=\"pull-right form-group\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\n                    <label");
 
 WriteLiteral(" for=\"type\"");
 
 WriteLiteral(" class=\"control-label\"");
 
-WriteLiteral(">类型：</label>\r\n");
+WriteLiteral(">类型：</label>\n");
 
 WriteLiteral("                    ");
 
@@ -132,17 +132,17 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n                <div");
+WriteLiteral("\n                </div>\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\n                    <label");
 
 WriteLiteral(" for=\"action\"");
 
 WriteLiteral(" class=\"control-label\"");
 
-WriteLiteral(">操作：</label>\r\n");
+WriteLiteral(">操作：</label>\n");
 
 WriteLiteral("                    ");
 
@@ -153,17 +153,17 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n                <div");
+WriteLiteral("\n                </div>\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\n                    <label");
 
 WriteLiteral(" for=\"result\"");
 
 WriteLiteral(" class=\"control-label\"");
 
-WriteLiteral(">结果：</label>\r\n");
+WriteLiteral(">结果：</label>\n");
 
 WriteLiteral("                    ");
 
@@ -174,21 +174,21 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n                <div");
+WriteLiteral("\n                </div>\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\n                    <label");
 
 WriteLiteral(" for=\"dtStart\"");
 
 WriteLiteral(" class=\"control-label\"");
 
-WriteLiteral(">时间：</label>\r\n                    <div");
+WriteLiteral(">时间：</label>\n                    <div");
 
 WriteLiteral(" class=\"input-group\"");
 
-WriteLiteral(">\r\n                        <span");
+WriteLiteral(">\n                        <span");
 
 WriteLiteral(" class=\"input-group-addon\"");
 
@@ -196,41 +196,41 @@ WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-calendar\"");
 
-WriteLiteral("></i></span>\r\n                        <input");
+WriteLiteral("></i></span>\n                        <input");
 
 WriteLiteral(" name=\"dtStart\"");
 
 WriteLiteral(" id=\"dtStart\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1597), Tuple.Create("\"", 1624)
+WriteAttribute("value", Tuple.Create(" value=\"", 1558), Tuple.Create("\"", 1585)
             
             #line 33 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1605), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
+, Tuple.Create(Tuple.Create("", 1566), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
             
             #line default
             #line hidden
-, 1605), false)
+, 1566), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
 
 WriteLiteral(" class=\"form-control form_datetime\"");
 
-WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n                <div");
+WriteLiteral(" />\n                    </div>\n                </div>\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\n                    <label");
 
 WriteLiteral(" for=\"dtEnd\"");
 
 WriteLiteral(" class=\"control-label\"");
 
-WriteLiteral(">至</label>\r\n                    <div");
+WriteLiteral(">至</label>\n                    <div");
 
 WriteLiteral(" class=\"input-group\"");
 
-WriteLiteral(">\r\n                        <span");
+WriteLiteral(">\n                        <span");
 
 WriteLiteral(" class=\"input-group-addon\"");
 
@@ -238,47 +238,47 @@ WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-calendar\"");
 
-WriteLiteral("></i></span>\r\n                        <input");
+WriteLiteral("></i></span>\n                        <input");
 
 WriteLiteral(" name=\"dtEnd\"");
 
 WriteLiteral(" id=\"dtEnd\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2051), Tuple.Create("\"", 2076)
+WriteAttribute("value", Tuple.Create(" value=\"", 2005), Tuple.Create("\"", 2030)
             
             #line 40 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 2059), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
+, Tuple.Create(Tuple.Create("", 2013), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
             
             #line default
             #line hidden
-, 2059), false)
+, 2013), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
 
 WriteLiteral(" class=\"form-control form_datetime\"");
 
-WriteLiteral(" />\r\n                    </div>\r\n                </div>\r\n                <div");
+WriteLiteral(" />\n                    </div>\n                </div>\n                <div");
 
 WriteLiteral(" class=\"input-group btn-toolbar\"");
 
-WriteLiteral(">\r\n                    <input");
+WriteLiteral(">\n                    <input");
 
 WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" name=\"TokenID\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2303), Tuple.Create("\"", 2327)
+WriteAttribute("value", Tuple.Create(" value=\"", 2253), Tuple.Create("\"", 2277)
             
             #line 44 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 2311), Tuple.Create<System.Object, System.Int32>(page["TokenID"]
+, Tuple.Create(Tuple.Create("", 2261), Tuple.Create<System.Object, System.Int32>(page["TokenID"]
             
             #line default
             #line hidden
-, 2311), false)
+, 2261), false)
 );
 
-WriteLiteral(" />\r\n");
+WriteLiteral(" />\n");
 
 WriteLiteral("                    ");
 
@@ -289,7 +289,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\n");
 
 WriteLiteral("                    ");
 
@@ -300,8 +300,7 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </form>\r\n    </div>\r\n</div>" +
-"\r\n");
+WriteLiteral("\n                </div>\n            </div>\n        </form>\n    </div>\n</div>\n");
 
         }
     }

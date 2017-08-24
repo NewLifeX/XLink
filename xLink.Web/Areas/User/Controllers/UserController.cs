@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Web.Mvc;
 using NewLife.Cube;
 using NewLife.Web;
-using UserX = xLink.User.Entity.User;
+using UserX = xLink.Entity.User;
 
 namespace xLink.User.Web.Controllers
 {

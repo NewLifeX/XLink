@@ -8,10 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using NewLife.Data;
-using NewLife.Web;
 using XCode;
 using XCode.Cache;
-using XCode.Membership;
 
 namespace xLink.Entity
 {

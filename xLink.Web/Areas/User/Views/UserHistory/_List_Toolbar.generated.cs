@@ -49,7 +49,7 @@ namespace ASP
     using XCode.Membership;
     
     #line 4 "..\..\Areas\User\Views\UserHistory\_List_Toolbar.cshtml"
-    using xLink.User.Entity;
+    using xLink.Entity;
     
     #line default
     #line hidden
@@ -86,21 +86,21 @@ WriteLiteral(" class=\"form-inline clear-fix\"");
 
 WriteLiteral(">\r\n        <form");
 
-WriteAttribute("action", Tuple.Create(" action=\"", 376), Tuple.Create("\"", 456)
+WriteAttribute("action", Tuple.Create(" action=\"", 371), Tuple.Create("\"", 451)
             
             #line 15 "..\..\Areas\User\Views\UserHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 385), Tuple.Create<System.Object, System.Int32>(Url.Action("index")
+, Tuple.Create(Tuple.Create("", 380), Tuple.Create<System.Object, System.Int32>(Url.Action("index")
             
             #line default
             #line hidden
-, 385), false)
+, 380), false)
             
             #line 15 "..\..\Areas\User\Views\UserHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 405), Tuple.Create<System.Object, System.Int32>(Html.Raw("?" + page.GetBaseUrl(false, true, true))
+, Tuple.Create(Tuple.Create("", 400), Tuple.Create<System.Object, System.Int32>(Html.Raw("?" + page.GetBaseUrl(false, true, true))
             
             #line default
             #line hidden
-, 405), false)
+, 400), false)
 );
 
 WriteLiteral(" method=\"post\"");
@@ -202,14 +202,14 @@ WriteLiteral(" name=\"dtStart\"");
 
 WriteLiteral(" id=\"dtStart\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1591), Tuple.Create("\"", 1618)
+WriteAttribute("value", Tuple.Create(" value=\"", 1586), Tuple.Create("\"", 1613)
             
             #line 33 "..\..\Areas\User\Views\UserHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1599), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
+, Tuple.Create(Tuple.Create("", 1594), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
             
             #line default
             #line hidden
-, 1599), false)
+, 1594), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -244,14 +244,14 @@ WriteLiteral(" name=\"dtEnd\"");
 
 WriteLiteral(" id=\"dtEnd\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2045), Tuple.Create("\"", 2070)
+WriteAttribute("value", Tuple.Create(" value=\"", 2040), Tuple.Create("\"", 2065)
             
             #line 40 "..\..\Areas\User\Views\UserHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 2053), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
+, Tuple.Create(Tuple.Create("", 2048), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
             
             #line default
             #line hidden
-, 2053), false)
+, 2048), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -268,14 +268,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" name=\"TokenID\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2297), Tuple.Create("\"", 2321)
+WriteAttribute("value", Tuple.Create(" value=\"", 2292), Tuple.Create("\"", 2316)
             
             #line 44 "..\..\Areas\User\Views\UserHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 2305), Tuple.Create<System.Object, System.Int32>(page["TokenID"]
+, Tuple.Create(Tuple.Create("", 2300), Tuple.Create<System.Object, System.Int32>(page["TokenID"]
             
             #line default
             #line hidden
-, 2305), false)
+, 2300), false)
 );
 
 WriteLiteral(" />\r\n");

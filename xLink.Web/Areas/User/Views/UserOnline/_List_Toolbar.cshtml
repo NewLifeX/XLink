@@ -1,7 +1,7 @@
 ﻿@using NewLife;
 @using NewLife.Web;
 @using XCode;
-@using xLink.User.Entity;
+@using xLink.Entity;
 @{
     var fact = ViewBag.Factory as IEntityOperate;
     var page = ViewBag.Page as Pager;
@@ -12,7 +12,7 @@
             <div class="pull-right form-group">
                 <div class="form-group">
                     <label for="kind" class="control-label">类型：</label>
-                    @Html.ForDropDownList("Type", xLink.User.Entity.UserOnline.FindAllTypeName(), Request["Type"], "全部", true)
+                    @Html.ForDropDownList("Type", xLink.Entity.UserOnline.FindAllTypeName(), Request["Type"], "全部", true)
                 </div>
                 <div class="form-group">
                     <label for="dtStart" class="control-label">登录时间：</label>

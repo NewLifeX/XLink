@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Web.Mvc;
 using NewLife.Cube;
 using NewLife.Web;
-using xLink.Device.Entity;
+using xLink.Entity;
 
 namespace xLink.Device.Web.Controllers
 {
