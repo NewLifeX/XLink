@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
 using NewLife.Security;
+using XCode.Remoting;
 using xLink.Entity;
 
 namespace xLink
@@ -17,8 +19,8 @@ namespace xLink
         /// <summary>当前用户</summary>
         public User User { get; private set; }
 
-        /// <summary>在线对象</summary>
-        public UserOnline Online { get; private set; }
+        ///// <summary>在线对象</summary>
+        //public UserOnline Online { get; private set; }
         #endregion
 
         #region 构造
@@ -27,14 +29,6 @@ namespace xLink
             // 异步初始化数据
             Task.Run(() =>
             {
-                var set = XCode.Setting.Current;
-                if (set.IsNew)
-                {
-                    set.Debug = false;
-                    set.SQLiteDbPath = "../Data";
-                    set.Save();
-                }
-
                 var n = 0;
                 n = User.Meta.Count;
                 n = UserOnline.Meta.Count;
@@ -44,96 +38,63 @@ namespace xLink
         #endregion
 
         #region 登录注册
-        /// <summary>检查登录，默认检查密码MD5散列，可继承修改</summary>
-        /// <param name="user">用户名</param>
-        /// <param name="pass">密码</param>
-        /// <returns>返回要发给客户端的对象</returns>
-        protected override Object CheckLogin(String user, String pass)
+        /// <summary>查找用户并登录，找不到用户是返回空，登录失败则抛出异常</summary>
+        /// <param name="user"></param>
+        /// <param name="pass"></param>
+        /// <returns></returns>
+        protected override IManageUser CheckUser(String user, String pass)
         {
-            if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
-
             var u = User.FindByName(user);
-
-            // 注册
-            if (u == null) return Register(user, pass);
+            if (u == null) return null;
 
             // 登录
             Name = user;
 
-            // 密码有盐值和密文两部分组成
-            var salt = pass.Substring(0, pass.Length / 2).ToHex();
-            pass = pass.Substring(pass.Length / 2);
-
-            WriteLog("登录 {0} => {1}/{2}", user, salt.ToHex(), pass);
+            WriteLog("登录 {0} => {1}", user, pass);
 
             // 验证密码
-            var tpass = u.Password.GetBytes();
-            if (salt.RC4(tpass).ToHex() != pass) throw Error(4, "密码错误");
+            u.CheckRC4(pass);
 
-            var ns = Session as NetSession;
-            u.Logins++;
-            u.LastLogin = DateTime.Now;
-            u.LastLoginIP = ns.Remote.EndPoint.Address + "";
-
-            u.Save();
-
-            return OnLogin(u, true);
+            return u;
         }
 
-        /// <summary>注册</summary>
+        /// <summary>注册，登录找不到用户时调用注册，返回空表示禁止注册</summary>
         /// <param name="user"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        protected virtual Object Register(String user, String pass)
+        protected override IManageUser Register(String user, String pass)
         {
             var u = User.FindByName(user);
             if (u == null) u = new User { Name = user };
 
-            //u.Name = user.GetBytes().Crc().GetBytes().ToHex();
             u.Password = Rand.NextString(8);
             u.Enable = true;
+            u.Registers++;
 
             Name = u.Name;
             WriteLog("注册 {0} => {1}/{2}", user, u.Name, u.Password);
 
-            var ns = Session as NetSession;
-
-            u.Registers++;
-            u.RegisterTime = DateTime.Now;
-            u.RegisterIP = ns.Remote.EndPoint.Address + "";
-
-            u.Online = true;
-
-            u.Save();
-
-            return OnLogin(u, false);
+            return u;
         }
+        #endregion
 
-        private Object OnLogin(User dv, Boolean islogin)
+        #region 操作历史
+        /// <summary>创建在线</summary>
+        /// <param name="sessionid"></param>
+        /// <returns></returns>
+        protected override IOnline CreateOnline(Int32 sessionid)
         {
-            // 当前用户
-            User = dv;
-
             var ns = Session as NetSession;
 
-            var olt = Online ?? UserOnline.FindBySessionID(ns.ID) ?? new UserOnline();
-            olt.UserID = dv.ID;
-            olt.SessionID = ns.ID;
+            var olt = UserOnline.FindBySessionID(sessionid) ?? new UserOnline();
             olt.ExternalUri = ns.Remote + "";
-            olt.LoginCount++;
-            olt.LoginTime = DateTime.Now;
 
-            olt.Save();
-            Online = olt;
-
-            // 加密返回的密钥
-            var key = Key.RC4(dv.Password.GetBytes()).ToHex();
-
-            if (islogin)
-                return new { Name = dv.Name };
-            else
-                return new { user = dv.Name, pass = dv.Password };
+            return olt;
         }
+
+        /// <summary>创建历史</summary>
+        /// <returns></returns>
+        protected override IHistory CreateHistory() { return new UserHistory(); }
         #endregion
     }
 }

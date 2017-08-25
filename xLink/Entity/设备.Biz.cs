@@ -10,13 +10,14 @@ using System.ComponentModel;
 using System.Linq;
 using NewLife.Common;
 using NewLife.Data;
+using NewLife.Model;
 using XCode;
 using XCode.Cache;
 
 namespace xLink.Entity
 {
     /// <summary>设备</summary>
-    public partial class Device : Entity<Device>
+    public partial class Device : Entity<Device>, IManageUser
     {
         #region 对象操作
         static Device()
@@ -25,8 +26,9 @@ namespace xLink.Entity
             df.Add(__.Logins);
             df.Add(__.Registers);
 
-            var sc = Meta.SingleCache as SingleEntityCache<Object, Device>;
+            var sc = Meta.SingleCache;
             sc.FindSlaveKeyMethod = e => Find(__.Name, e);
+            sc.GetSlaveKeyMethod = e => e.Name;
             sc.SlaveKeyIgnoreCase = false;
         }
 
@@ -44,7 +46,7 @@ namespace xLink.Entity
             if (Name.Length > 16) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最长16个字符！" + Name);
 
             // 修正显示名
-            if (!DisplayName.IsNullOrEmpty() && DisplayName.Length > 16) DisplayName = DisplayName.Substring(0, 16);
+            if (!NickName.IsNullOrEmpty() && NickName.Length > 16) NickName = NickName.Substring(0, 16);
 
             // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
             base.Valid(isNew);
@@ -197,7 +199,7 @@ namespace xLink.Entity
         /// <returns></returns>
         public override String ToString()
         {
-            if (!DisplayName.IsNullOrEmpty()) return DisplayName;
+            if (!NickName.IsNullOrEmpty()) return NickName;
 
             return Name;
         }

@@ -8,13 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using NewLife.Data;
+using NewLife.Model;
 using XCode;
 using XCode.Cache;
 
 namespace xLink.Entity
 {
     /// <summary>设备历史</summary>
-    public partial class DeviceHistory : Entity<DeviceHistory>
+    public partial class DeviceHistory : Entity<DeviceHistory>, IHistory
     {
         #region 对象操作
         static DeviceHistory()
@@ -38,6 +39,8 @@ namespace xLink.Entity
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("创建地址")]
         public String CreateAddress { get { return CreateIP.IPToAddress(); } }
+
+        Int32 IHistory.UserID { get => DeviceID; set => DeviceID = value; }
         #endregion
 
         #region 扩展查询

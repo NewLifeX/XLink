@@ -41,13 +41,13 @@ namespace xLink.Entity
         [BindColumn("Password", "密码", "nvarchar(50)")]
         public String Password { get { return _Password; } set { if (OnPropertyChanging(__.Password, value)) { _Password = value; OnPropertyChanged(__.Password); } } }
 
-        private String _DisplayName;
-        /// <summary>显示名。昵称、中文名等</summary>
-        [DisplayName("显示名")]
-        [Description("显示名。昵称、中文名等")]
+        private String _NickName;
+        /// <summary>昵称</summary>
+        [DisplayName("昵称")]
+        [Description("昵称")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("DisplayName", "显示名。昵称、中文名等", "nvarchar(50)", Master = true)]
-        public String DisplayName { get { return _DisplayName; } set { if (OnPropertyChanging(__.DisplayName, value)) { _DisplayName = value; OnPropertyChanged(__.DisplayName); } } }
+        [BindColumn("NickName", "昵称", "nvarchar(50)", Master = true)]
+        public String NickName { get { return _NickName; } set { if (OnPropertyChanging(__.NickName, value)) { _NickName = value; OnPropertyChanged(__.NickName); } } }
 
         private String _Location;
         /// <summary>位置</summary>
@@ -215,7 +215,7 @@ namespace xLink.Entity
                     case __.ID : return _ID;
                     case __.Name : return _Name;
                     case __.Password : return _Password;
-                    case __.DisplayName : return _DisplayName;
+                    case __.NickName : return _NickName;
                     case __.Location : return _Location;
                     case __.Enable : return _Enable;
                     case __.Type : return _Type;
@@ -245,7 +245,7 @@ namespace xLink.Entity
                     case __.ID : _ID = Convert.ToInt32(value); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Password : _Password = Convert.ToString(value); break;
-                    case __.DisplayName : _DisplayName = Convert.ToString(value); break;
+                    case __.NickName : _NickName = Convert.ToString(value); break;
                     case __.Location : _Location = Convert.ToString(value); break;
                     case __.Enable : _Enable = Convert.ToBoolean(value); break;
                     case __.Type : _Type = Convert.ToString(value); break;
@@ -284,8 +284,8 @@ namespace xLink.Entity
             /// <summary>密码</summary>
             public static readonly Field Password = FindByName(__.Password);
 
-            /// <summary>显示名。昵称、中文名等</summary>
-            public static readonly Field DisplayName = FindByName(__.DisplayName);
+            /// <summary>昵称</summary>
+            public static readonly Field NickName = FindByName(__.NickName);
 
             /// <summary>位置</summary>
             public static readonly Field Location = FindByName(__.Location);
@@ -359,8 +359,8 @@ namespace xLink.Entity
             /// <summary>密码</summary>
             public const String Password = "Password";
 
-            /// <summary>显示名。昵称、中文名等</summary>
-            public const String DisplayName = "DisplayName";
+            /// <summary>昵称</summary>
+            public const String NickName = "NickName";
 
             /// <summary>位置</summary>
             public const String Location = "Location";
@@ -435,8 +435,8 @@ namespace xLink.Entity
         /// <summary>密码</summary>
         String Password { get; set; }
 
-        /// <summary>显示名。昵称、中文名等</summary>
-        String DisplayName { get; set; }
+        /// <summary>昵称</summary>
+        String NickName { get; set; }
 
         /// <summary>位置</summary>
         String Location { get; set; }

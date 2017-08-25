@@ -9,16 +9,27 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using NewLife.Data;
+using NewLife.Model;
 using NewLife.Web;
 using XCode;
 
 namespace xLink.Entity
 {
     /// <summary>用户</summary>
-    public partial class User : Entity<User>
+    public partial class User : Entity<User>, IManageUser
     {
         #region 对象操作
+        static User()
+        {
+            var df = Meta.Factory.AdditionalFields;
+            df.Add(__.Logins);
+            df.Add(__.Registers);
 
+            var sc = Meta.SingleCache;
+            sc.FindSlaveKeyMethod = e => Find(__.Name, e);
+            sc.GetSlaveKeyMethod = e => e.Name;
+            sc.SlaveKeyIgnoreCase = false;
+        }
 
         /// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
         /// <param name="isNew"></param>
@@ -44,63 +55,6 @@ namespace xLink.Entity
             if (!Dirtys[__.UpdateTime]) UpdateTime = DateTime.Now;
             if (!Dirtys[__.UpdateIP]) UpdateIP = WebHelper.UserHost;
         }
-
-        ///// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //protected override void InitData()
-        //{
-        //    base.InitData();
-
-        //    // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
-        //    // Meta.Count是快速取得表记录数
-        //    if (Meta.Count > 0) return;
-
-        //    // 需要注意的是，如果该方法调用了其它实体类的首次数据库操作，目标实体类的数据初始化将会在同一个线程完成
-        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化{0}[{1}]数据……", typeof(User).Name, Meta.Table.DataTable.DisplayName);
-
-        //    var entity = new User();
-        //    entity.Name = "abc";
-        //    entity.Password = "abc";
-        //    entity.DisplayName = "abc";
-        //    entity.Location = "abc";
-        //    entity.Enable = true;
-        //    entity.Type = "abc";
-        //    entity.Version = "abc";
-        //    entity.InternalUri = "abc";
-        //    entity.ExternalUri = "abc";
-        //    entity.Online = true;
-        //    entity.Logins = 0;
-        //    entity.LastLogin = DateTime.Now;
-        //    entity.LastLoginIP = "abc";
-        //    entity.Registers = 0;
-        //    entity.RegisterTime = DateTime.Now;
-        //    entity.RegisterIP = "abc";
-        //    entity.CreateUserID = 0;
-        //    entity.CreateTime = DateTime.Now;
-        //    entity.CreateIP = "abc";
-        //    entity.UpdateUserID = 0;
-        //    entity.UpdateTime = DateTime.Now;
-        //    entity.UpdateIP = "abc";
-        //    entity.Insert();
-
-        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化{0}[{1}]数据！", typeof(User).Name, Meta.Table.DataTable.DisplayName);
-        //}
-
-
-        ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
-        ///// <returns></returns>
-        //public override Int32 Insert()
-        //{
-        //    return base.Insert();
-        //}
-
-        ///// <summary>已重载。在事务保护范围内处理业务，位于Valid之后</summary>
-        ///// <returns></returns>
-        //protected override Int32 OnInsert()
-        //{
-        //    return base.OnInsert();
-        //}
-
         #endregion
 
         #region 扩展属性
@@ -143,7 +97,6 @@ namespace xLink.Entity
             else // 实体缓存
                 return Meta.Cache.Entities.Where(e => e.Type == type).ToList();
         }
-
         #endregion
 
         #region 高级查询
@@ -175,6 +128,17 @@ namespace xLink.Entity
         #endregion
 
         #region 业务
+        #endregion
+
+        #region 辅助
+        /// <summary>显示友好名称</summary>
+        /// <returns></returns>
+        public override String ToString()
+        {
+            if (!NickName.IsNullOrEmpty()) return NickName;
+
+            return Name;
+        }
         #endregion
     }
 }

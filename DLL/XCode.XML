@@ -5950,13 +5950,13 @@
             <returns></returns>
         </member>
         <member name="M:XCode.Remoting.ApiUserSession.CheckUser(System.String,System.String)">
-            <summary>查找用户并登录</summary>
+            <summary>查找用户并登录，找不到用户是返回空，登录失败则抛出异常</summary>
             <param name="user"></param>
             <param name="pass"></param>
             <returns></returns>
         </member>
         <member name="M:XCode.Remoting.ApiUserSession.Register(System.String,System.String)">
-            <summary>注册</summary>
+            <summary>注册，登录找不到用户时调用注册，返回空表示禁止注册</summary>
             <param name="user"></param>
             <param name="pass"></param>
             <returns></returns>

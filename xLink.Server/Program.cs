@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NewLife;
 using NewLife.Agent;
 using NewLife.Log;
@@ -48,6 +49,18 @@ namespace xLink.Server
         /// <summary>启动工作</summary>
         public override void StartWork()
         {
+            // 异步初始化数据
+            Task.Run(() =>
+            {
+                var set2 = XCode.Setting.Current;
+                if (set2.IsNew)
+                {
+                    set2.Debug = false;
+                    set2.SQLiteDbPath = "../Data";
+                    set2.Save();
+                }
+            });
+
             base.StartWork();
 
             // 每次上线清空一次在线表

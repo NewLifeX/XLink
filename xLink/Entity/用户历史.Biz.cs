@@ -8,13 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using NewLife.Data;
+using NewLife.Model;
 using XCode;
 using XCode.Cache;
 
 namespace xLink.Entity
 {
     /// <summary>用户历史</summary>
-    public partial class UserHistory : Entity<UserHistory>
+    public partial class UserHistory : Entity<UserHistory>, IHistory
     {
         #region 对象操作
         static UserHistory()

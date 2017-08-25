@@ -115,14 +115,6 @@ namespace xLink.Entity
         [BindColumn("LastActive", "最后活跃", "datetime")]
         public DateTime LastActive { get { return _LastActive; } set { if (OnPropertyChanging(__.LastActive, value)) { _LastActive = value; OnPropertyChanged(__.LastActive); } } }
 
-        private DateTime _CreateTime;
-        /// <summary>创建时间</summary>
-        [DisplayName("创建时间")]
-        [Description("创建时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("CreateTime", "创建时间", "datetime")]
-        public DateTime CreateTime { get { return _CreateTime; } set { if (OnPropertyChanging(__.CreateTime, value)) { _CreateTime = value; OnPropertyChanged(__.CreateTime); } } }
-
         private Int32 _ErrorCount;
         /// <summary>错误</summary>
         [DisplayName("错误")]
@@ -138,6 +130,30 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("LastError", "最后错误", "nvarchar(50)")]
         public String LastError { get { return _LastError; } set { if (OnPropertyChanging(__.LastError, value)) { _LastError = value; OnPropertyChanged(__.LastError); } } }
+
+        private DateTime _CreateTime;
+        /// <summary>创建时间</summary>
+        [DisplayName("创建时间")]
+        [Description("创建时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("CreateTime", "创建时间", "datetime")]
+        public DateTime CreateTime { get { return _CreateTime; } set { if (OnPropertyChanging(__.CreateTime, value)) { _CreateTime = value; OnPropertyChanged(__.CreateTime); } } }
+
+        private String _CreateIP;
+        /// <summary>创建地址</summary>
+        [DisplayName("创建地址")]
+        [Description("创建地址")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("CreateIP", "创建地址", "nvarchar(50)")]
+        public String CreateIP { get { return _CreateIP; } set { if (OnPropertyChanging(__.CreateIP, value)) { _CreateIP = value; OnPropertyChanged(__.CreateIP); } } }
+
+        private DateTime _UpdateTime;
+        /// <summary>更新时间</summary>
+        [DisplayName("更新时间")]
+        [Description("更新时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("UpdateTime", "更新时间", "datetime")]
+        public DateTime UpdateTime { get { return _UpdateTime; } set { if (OnPropertyChanging(__.UpdateTime, value)) { _UpdateTime = value; OnPropertyChanged(__.UpdateTime); } } }
         #endregion
 
         #region 获取/设置 字段值
@@ -162,9 +178,11 @@ namespace xLink.Entity
                     case __.PingCount : return _PingCount;
                     case __.LoginTime : return _LoginTime;
                     case __.LastActive : return _LastActive;
-                    case __.CreateTime : return _CreateTime;
                     case __.ErrorCount : return _ErrorCount;
                     case __.LastError : return _LastError;
+                    case __.CreateTime : return _CreateTime;
+                    case __.CreateIP : return _CreateIP;
+                    case __.UpdateTime : return _UpdateTime;
                     default: return base[name];
                 }
             }
@@ -184,9 +202,11 @@ namespace xLink.Entity
                     case __.PingCount : _PingCount = Convert.ToInt32(value); break;
                     case __.LoginTime : _LoginTime = Convert.ToDateTime(value); break;
                     case __.LastActive : _LastActive = Convert.ToDateTime(value); break;
-                    case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
                     case __.ErrorCount : _ErrorCount = Convert.ToInt32(value); break;
                     case __.LastError : _LastError = Convert.ToString(value); break;
+                    case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
+                    case __.CreateIP : _CreateIP = Convert.ToString(value); break;
+                    case __.UpdateTime : _UpdateTime = Convert.ToDateTime(value); break;
                     default: base[name] = value; break;
                 }
             }
@@ -233,14 +253,20 @@ namespace xLink.Entity
             /// <summary>最后活跃</summary>
             public static readonly Field LastActive = FindByName(__.LastActive);
 
-            /// <summary>创建时间</summary>
-            public static readonly Field CreateTime = FindByName(__.CreateTime);
-
             /// <summary>错误</summary>
             public static readonly Field ErrorCount = FindByName(__.ErrorCount);
 
             /// <summary>最后错误</summary>
             public static readonly Field LastError = FindByName(__.LastError);
+
+            /// <summary>创建时间</summary>
+            public static readonly Field CreateTime = FindByName(__.CreateTime);
+
+            /// <summary>创建地址</summary>
+            public static readonly Field CreateIP = FindByName(__.CreateIP);
+
+            /// <summary>更新时间</summary>
+            public static readonly Field UpdateTime = FindByName(__.UpdateTime);
 
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
@@ -284,14 +310,20 @@ namespace xLink.Entity
             /// <summary>最后活跃</summary>
             public const String LastActive = "LastActive";
 
-            /// <summary>创建时间</summary>
-            public const String CreateTime = "CreateTime";
-
             /// <summary>错误</summary>
             public const String ErrorCount = "ErrorCount";
 
             /// <summary>最后错误</summary>
             public const String LastError = "LastError";
+
+            /// <summary>创建时间</summary>
+            public const String CreateTime = "CreateTime";
+
+            /// <summary>创建地址</summary>
+            public const String CreateIP = "CreateIP";
+
+            /// <summary>更新时间</summary>
+            public const String UpdateTime = "UpdateTime";
         }
         #endregion
     }
@@ -336,14 +368,20 @@ namespace xLink.Entity
         /// <summary>最后活跃</summary>
         DateTime LastActive { get; set; }
 
-        /// <summary>创建时间</summary>
-        DateTime CreateTime { get; set; }
-
         /// <summary>错误</summary>
         Int32 ErrorCount { get; set; }
 
         /// <summary>最后错误</summary>
         String LastError { get; set; }
+
+        /// <summary>创建时间</summary>
+        DateTime CreateTime { get; set; }
+
+        /// <summary>创建地址</summary>
+        String CreateIP { get; set; }
+
+        /// <summary>更新时间</summary>
+        DateTime UpdateTime { get; set; }
         #endregion
 
         #region 获取/设置 字段值

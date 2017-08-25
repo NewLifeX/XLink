@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables Version="9.6.6445.42021" Output="Entity" NameSpace="xLink.Entity" ConnName="">
+<Tables Version="9.6.6446.35741" Output="Entity" NameSpace="xLink.Entity" ConnName="">
   <Table Name="Device" Description="设备" ConnName="Device" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称。登录用户名" />
       <Column Name="Code" DataType="String" Description="唯一编码" />
       <Column Name="Password" DataType="String" Description="密码" />
-      <Column Name="DisplayName" DataType="String" Master="True" Description="显示名。昵称、中文名等" />
+      <Column Name="NickName" DataType="String" Master="True" Description="昵称" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="Version" DataType="String" Description="版本" />
@@ -44,9 +44,11 @@
       <Column Name="PingCount" DataType="Int32" Description="心跳" />
       <Column Name="LoginTime" DataType="DateTime" Description="登录时间" />
       <Column Name="LastActive" DataType="DateTime" Description="最后活跃" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="ErrorCount" DataType="Int32" Description="错误" />
       <Column Name="LastError" DataType="String" Description="最后错误" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
     </Columns>
     <Indexes>
       <Index Columns="SessionID" />
@@ -80,7 +82,7 @@
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称。登录用户名" />
       <Column Name="Password" DataType="String" Description="密码" />
-      <Column Name="DisplayName" DataType="String" Master="True" Description="显示名。昵称、中文名等" />
+      <Column Name="NickName" DataType="String" Master="True" Description="昵称" />
       <Column Name="Location" DataType="String" Description="位置" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="Type" DataType="String" Description="类型" />
@@ -120,9 +122,11 @@
       <Column Name="PingCount" DataType="Int32" Description="心跳" />
       <Column Name="LoginTime" DataType="DateTime" Description="登录时间" />
       <Column Name="LastActive" DataType="DateTime" Description="最后活跃" />
-      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="ErrorCount" DataType="Int32" Description="错误" />
       <Column Name="LastError" DataType="String" Description="最后错误" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
     </Columns>
     <Indexes>
       <Index Columns="SessionID" />

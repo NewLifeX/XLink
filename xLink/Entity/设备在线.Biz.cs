@@ -9,13 +9,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using NewLife.Data;
+using NewLife.Model;
 using XCode;
 using XCode.Cache;
 
 namespace xLink.Entity
 {
     /// <summary>设备在线</summary>
-    public partial class DeviceOnline : Entity<DeviceOnline>
+    public partial class DeviceOnline : Entity<DeviceOnline>, IOnline
     {
         #region 对象操作
         ///// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -34,6 +35,8 @@ namespace xLink.Entity
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]
         public String ExternalAddress { get { return ExternalUri.IPToAddress(); } }
+
+        Int32 IOnline.UserID { get => DeviceID; set => DeviceID = value; }
         #endregion
 
         #region 扩展查询
