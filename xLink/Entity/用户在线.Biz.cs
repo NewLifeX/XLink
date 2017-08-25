@@ -32,6 +32,13 @@ namespace xLink.Entity
         #endregion
 
         #region 扩展属性
+        /// <summary>用户</summary>
+        public User User { get { return Extends.Get(nameof(User), k => User.FindByID(UserID)); } }
+
+        /// <summary>用户名</summary>
+        [Map(__.UserID, typeof(User), "ID")]
+        public String UserName { get { return User + ""; } }
+
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]
         public String ExternalAddress { get { return ExternalUri.IPToAddress(); } }
