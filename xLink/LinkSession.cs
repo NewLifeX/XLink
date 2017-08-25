@@ -94,8 +94,6 @@ namespace xLink
                 }
             }
 
-            Session["_TruePass"] = truepass;
-
             // 注册需要返回用户名密码
             if (pass.IsNullOrEmpty()) return new { user, pass = truepass };
 

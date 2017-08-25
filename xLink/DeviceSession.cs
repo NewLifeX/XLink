@@ -111,8 +111,6 @@ namespace xLink
 
         private Object OnLogin(Device dv, Boolean islogin)
         {
-            Session["_TruePass"] = dv.Password;
-
             // 当前设备
             Device = dv;
 

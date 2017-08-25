@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Threading.Tasks;
 using NewLife;
 using NewLife.Log;
 using NewLife.Net;
@@ -81,7 +80,7 @@ namespace xLink
             //var mixLog = new CompositeLog(dbLog, Log);
             svr.Log = Log;
 
-            if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 000);
+            if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 1000);
 
             var dic = Parameters;
             dic["Type"] = Name;
