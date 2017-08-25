@@ -5945,6 +5945,10 @@
             <param name="pass">密码</param>
             <returns>返回要发给客户端的对象</returns>
         </member>
+        <member name="M:XCode.Remoting.ApiUserSession.SaveLogin(NewLife.Model.IManageUser)">
+            <summary>登录或注册完成后，保存登录信息</summary>
+            <param name="user"></param>
+        </member>
         <member name="M:XCode.Remoting.ApiUserSession.GenerateKey(System.String)">
             <summary>生成密钥，默认密码加密密钥，可继承修改</summary>
             <returns></returns>

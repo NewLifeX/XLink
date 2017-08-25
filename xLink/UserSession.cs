@@ -55,9 +55,6 @@ namespace xLink
             // 验证密码
             u.CheckRC4(pass);
 
-            u.Type = Type;
-            u.Version = Version;
-
             return u;
         }
 
@@ -79,6 +76,18 @@ namespace xLink
 
             return u;
         }
+
+        /// <summary>登录或注册完成后，保存登录信息</summary>
+        /// <param name="user"></param>
+        protected override void SaveLogin(IManageUser user)
+        {
+            var u = user as User;
+            u.Type = Type;
+            u.Version = Version;
+            if (u.NickName.IsNullOrEmpty()) u.NickName = Agent;
+
+            base.SaveLogin(user);
+        }
         #endregion
 
         #region 操作历史
@@ -90,6 +99,7 @@ namespace xLink
             var ns = Session as NetSession;
 
             var olt = UserOnline.FindBySessionID(sessionid) ?? new UserOnline();
+            olt.Version = Version;
             olt.ExternalUri = ns.Remote + "";
 
             return olt;
@@ -97,7 +107,13 @@ namespace xLink
 
         /// <summary>创建历史</summary>
         /// <returns></returns>
-        protected override IHistory CreateHistory() { return new UserHistory(); }
+        protected override IHistory CreateHistory()
+        {
+            var hi = new UserHistory();
+            hi.Version = Version;
+
+            return hi;
+        }
         #endregion
     }
 }

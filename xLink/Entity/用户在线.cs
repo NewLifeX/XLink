@@ -43,13 +43,13 @@ namespace xLink.Entity
         [BindColumn("Name", "名称", "nvarchar(50)", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
-        private String _Ver;
+        private String _Version;
         /// <summary>版本</summary>
         [DisplayName("版本")]
         [Description("版本")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Ver", "版本", "nvarchar(50)")]
-        public String Ver { get { return _Ver; } set { if (OnPropertyChanging(__.Ver, value)) { _Ver = value; OnPropertyChanged(__.Ver); } } }
+        [BindColumn("Version", "版本", "nvarchar(50)")]
+        public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
         private String _Type;
         /// <summary>类型</summary>
@@ -169,7 +169,7 @@ namespace xLink.Entity
                     case __.ID : return _ID;
                     case __.UserID : return _UserID;
                     case __.Name : return _Name;
-                    case __.Ver : return _Ver;
+                    case __.Version : return _Version;
                     case __.Type : return _Type;
                     case __.SessionID : return _SessionID;
                     case __.InternalUri : return _InternalUri;
@@ -193,7 +193,7 @@ namespace xLink.Entity
                     case __.ID : _ID = Convert.ToInt32(value); break;
                     case __.UserID : _UserID = Convert.ToInt32(value); break;
                     case __.Name : _Name = Convert.ToString(value); break;
-                    case __.Ver : _Ver = Convert.ToString(value); break;
+                    case __.Version : _Version = Convert.ToString(value); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.SessionID : _SessionID = Convert.ToInt32(value); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
@@ -227,7 +227,7 @@ namespace xLink.Entity
             public static readonly Field Name = FindByName(__.Name);
 
             /// <summary>版本</summary>
-            public static readonly Field Ver = FindByName(__.Ver);
+            public static readonly Field Version = FindByName(__.Version);
 
             /// <summary>类型</summary>
             public static readonly Field Type = FindByName(__.Type);
@@ -284,7 +284,7 @@ namespace xLink.Entity
             public const String Name = "Name";
 
             /// <summary>版本</summary>
-            public const String Ver = "Ver";
+            public const String Version = "Version";
 
             /// <summary>类型</summary>
             public const String Type = "Type";
@@ -342,7 +342,7 @@ namespace xLink.Entity
         String Name { get; set; }
 
         /// <summary>版本</summary>
-        String Ver { get; set; }
+        String Version { get; set; }
 
         /// <summary>类型</summary>
         String Type { get; set; }

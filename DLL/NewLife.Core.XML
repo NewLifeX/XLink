@@ -2982,6 +2982,12 @@
         <member name="P:NewLife.Model.IOnline.UserID">
             <summary>会员</summary>
         </member>
+        <member name="P:NewLife.Model.IOnline.Name">
+            <summary>名称</summary>
+        </member>
+        <member name="P:NewLife.Model.IOnline.Type">
+            <summary>类型</summary>
+        </member>
         <member name="P:NewLife.Model.IOnline.SessionID">
             <summary>会话</summary>
         </member>
