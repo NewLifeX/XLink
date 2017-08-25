@@ -13,6 +13,7 @@ using NewLife.Data;
 using NewLife.Model;
 using XCode;
 using XCode.Cache;
+using XCode.Membership;
 
 namespace xLink.Entity
 {
@@ -30,6 +31,10 @@ namespace xLink.Entity
             sc.FindSlaveKeyMethod = e => Find(__.Name, e);
             sc.GetSlaveKeyMethod = e => e.Name;
             sc.SlaveKeyIgnoreCase = false;
+
+            Meta.Modules.Add<UserModule>();
+            Meta.Modules.Add<TimeModule>();
+            Meta.Modules.Add<IPModule>();
         }
 
         /// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>

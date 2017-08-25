@@ -44,8 +44,8 @@ namespace xLink
         /// <returns></returns>
         protected override IManageUser CheckUser(String user, String pass)
         {
-            var dv = Device.FindByName(user);
-            if (dv == null) return null;
+            var u = Device.FindByName(user);
+            if (u == null) return null;
 
             // 登录
             Name = user;
@@ -53,9 +53,12 @@ namespace xLink
             WriteLog("登录 {0} => {1}", user, pass);
 
             // 验证密码
-            dv.CheckRC4(pass);
+            u.CheckRC4(pass);
 
-            return dv;
+            u.Type = Type;
+            u.Version = Version;
+
+            return u;
         }
 
         /// <summary>注册，登录找不到用户时调用注册，返回空表示禁止注册</summary>
@@ -64,18 +67,18 @@ namespace xLink
         /// <returns></returns>
         protected override IManageUser Register(String user, String pass)
         {
-            var dv = Device.FindByCode(user);
-            if (dv == null) dv = new Device { Code = user };
+            var u = Device.FindByCode(user);
+            if (u == null) u = new Device { Code = user };
 
-            dv.Name = user.GetBytes().Crc().GetBytes().ToHex();
-            dv.Password = Rand.NextString(8);
-            dv.Enable = true;
-            dv.Registers++;
+            u.Name = user.GetBytes().Crc().GetBytes().ToHex();
+            u.Password = Rand.NextString(8);
+            u.Enable = true;
+            u.Registers++;
 
-            Name = dv.Name;
-            WriteLog("注册 {0} => {1}/{2}", user, dv.Name, dv.Password);
+            Name = u.Name;
+            WriteLog("注册 {0} => {1}/{2}", user, u.Name, u.Password);
 
-            return dv;
+            return u;
         }
         #endregion
 

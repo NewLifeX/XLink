@@ -55,6 +55,9 @@ namespace xLink
             // 验证密码
             u.CheckRC4(pass);
 
+            u.Type = Type;
+            u.Version = Version;
+
             return u;
         }
 

@@ -12,6 +12,7 @@ using NewLife.Data;
 using NewLife.Model;
 using NewLife.Web;
 using XCode;
+using XCode.Membership;
 
 namespace xLink.Entity
 {
@@ -29,6 +30,10 @@ namespace xLink.Entity
             sc.FindSlaveKeyMethod = e => Find(__.Name, e);
             sc.GetSlaveKeyMethod = e => e.Name;
             sc.SlaveKeyIgnoreCase = false;
+
+            Meta.Modules.Add<UserModule>();
+            Meta.Modules.Add<TimeModule>();
+            Meta.Modules.Add<IPModule>();
         }
 
         /// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -48,12 +53,12 @@ namespace xLink.Entity
             // 在新插入数据或者修改了指定字段时进行唯一性验证，CheckExist内部抛出参数异常
             //if (isNew || Dirtys[__.Name]) CheckExist(__.Name);
 
-            if (!Dirtys[__.LastLoginIP]) LastLoginIP = WebHelper.UserHost;
-            if (!Dirtys[__.RegisterIP]) RegisterIP = WebHelper.UserHost;
-            if (isNew && !Dirtys[__.CreateTime]) CreateTime = DateTime.Now;
-            if (!Dirtys[__.CreateIP]) CreateIP = WebHelper.UserHost;
-            if (!Dirtys[__.UpdateTime]) UpdateTime = DateTime.Now;
-            if (!Dirtys[__.UpdateIP]) UpdateIP = WebHelper.UserHost;
+            //if (!Dirtys[__.LastLoginIP]) LastLoginIP = WebHelper.UserHost;
+            //if (!Dirtys[__.RegisterIP]) RegisterIP = WebHelper.UserHost;
+            //if (isNew && !Dirtys[__.CreateTime]) CreateTime = DateTime.Now;
+            //if (!Dirtys[__.CreateIP]) CreateIP = WebHelper.UserHost;
+            //if (!Dirtys[__.UpdateTime]) UpdateTime = DateTime.Now;
+            //if (!Dirtys[__.UpdateIP]) UpdateIP = WebHelper.UserHost;
         }
         #endregion
 

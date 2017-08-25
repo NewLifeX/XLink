@@ -2962,6 +2962,9 @@
         <member name="P:NewLife.Model.IHistory.Success">
             <summary>成功</summary>
         </member>
+        <member name="P:NewLife.Model.IHistory.CreateTime">
+            <summary>创建时间</summary>
+        </member>
         <member name="P:NewLife.Model.IHistory.CreateIP">
             <summary>创建地址</summary>
         </member>
