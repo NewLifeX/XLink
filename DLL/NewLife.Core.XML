@@ -52,7 +52,7 @@
             <summary>开始循环工作</summary>
             <param name="index">线程序号</param>
         </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.workWaper(System.Object)">
+        <member name="M:NewLife.Agent.AgentServiceBase`1.WorkWaper(System.Object)">
             <summary>线程包装</summary>
             <param name="data">线程序号</param>
         </member>
@@ -9487,6 +9487,9 @@
         </member>
         <member name="M:NewLife.Threading.TimerX.Dispose">
             <summary>销毁定时器</summary>
+        </member>
+        <member name="F:NewLife.Threading.TimerX.hasSetNext">
+            <summary>是否已设置下一次时间</summary>
         </member>
         <member name="M:NewLife.Threading.TimerX.SetNext(System.Int32)">
             <summary>设置下一次运行时间</summary>
