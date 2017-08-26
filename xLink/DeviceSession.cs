@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using NewLife.Model;
@@ -90,6 +91,14 @@ namespace xLink
             u.Type = Type;
             u.Version = Version;
             if (u.NickName.IsNullOrEmpty()) u.NickName = Agent;
+
+            var dic = ControllerContext.Current?.Parameters?.ToNullable();
+            if (dic != null)
+            {
+                var olt = Online as DeviceOnline;
+                // 本地地址
+                olt.InternalUri = dic["ip"] + "";
+            }
 
             base.SaveLogin(user);
         }
