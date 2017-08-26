@@ -107,14 +107,6 @@ namespace xLink.Entity
         [BindColumn("LoginTime", "登录时间", "datetime")]
         public DateTime LoginTime { get { return _LoginTime; } set { if (OnPropertyChanging(__.LoginTime, value)) { _LoginTime = value; OnPropertyChanged(__.LoginTime); } } }
 
-        private DateTime _LastActive;
-        /// <summary>最后活跃</summary>
-        [DisplayName("最后活跃")]
-        [Description("最后活跃")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("LastActive", "最后活跃", "datetime")]
-        public DateTime LastActive { get { return _LastActive; } set { if (OnPropertyChanging(__.LastActive, value)) { _LastActive = value; OnPropertyChanged(__.LastActive); } } }
-
         private Int32 _ErrorCount;
         /// <summary>错误</summary>
         [DisplayName("错误")]
@@ -177,7 +169,6 @@ namespace xLink.Entity
                     case __.LoginCount : return _LoginCount;
                     case __.PingCount : return _PingCount;
                     case __.LoginTime : return _LoginTime;
-                    case __.LastActive : return _LastActive;
                     case __.ErrorCount : return _ErrorCount;
                     case __.LastError : return _LastError;
                     case __.CreateTime : return _CreateTime;
@@ -201,7 +192,6 @@ namespace xLink.Entity
                     case __.LoginCount : _LoginCount = Convert.ToInt32(value); break;
                     case __.PingCount : _PingCount = Convert.ToInt32(value); break;
                     case __.LoginTime : _LoginTime = Convert.ToDateTime(value); break;
-                    case __.LastActive : _LastActive = Convert.ToDateTime(value); break;
                     case __.ErrorCount : _ErrorCount = Convert.ToInt32(value); break;
                     case __.LastError : _LastError = Convert.ToString(value); break;
                     case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
@@ -249,9 +239,6 @@ namespace xLink.Entity
 
             /// <summary>登录时间</summary>
             public static readonly Field LoginTime = FindByName(__.LoginTime);
-
-            /// <summary>最后活跃</summary>
-            public static readonly Field LastActive = FindByName(__.LastActive);
 
             /// <summary>错误</summary>
             public static readonly Field ErrorCount = FindByName(__.ErrorCount);
@@ -307,9 +294,6 @@ namespace xLink.Entity
             /// <summary>登录时间</summary>
             public const String LoginTime = "LoginTime";
 
-            /// <summary>最后活跃</summary>
-            public const String LastActive = "LastActive";
-
             /// <summary>错误</summary>
             public const String ErrorCount = "ErrorCount";
 
@@ -364,9 +348,6 @@ namespace xLink.Entity
 
         /// <summary>登录时间</summary>
         DateTime LoginTime { get; set; }
-
-        /// <summary>最后活跃</summary>
-        DateTime LastActive { get; set; }
 
         /// <summary>错误</summary>
         Int32 ErrorCount { get; set; }

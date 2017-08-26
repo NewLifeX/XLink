@@ -11,7 +11,7 @@ using xLink.Entity;
 namespace xLink
 {
     /// <summary>设备会话</summary>
-    [Api("Device")]
+    [Api("Device", true)]
     [DisplayName("设备")]
     public class DeviceSession : LinkSession
     {
@@ -55,6 +55,10 @@ namespace xLink
             // 验证密码
             u.CheckRC4(pass);
 
+            var olt = Online as DeviceOnline;
+            olt.LoginTime = DateTime.Now;
+            olt.LoginCount++;
+
             return u;
         }
 
@@ -88,6 +92,16 @@ namespace xLink
             if (u.NickName.IsNullOrEmpty()) u.NickName = Agent;
 
             base.SaveLogin(user);
+        }
+
+        /// <summary>心跳</summary>
+        /// <returns></returns>
+        protected override Object OnPing()
+        {
+            var olt = Online as DeviceOnline;
+            olt.PingCount++;
+
+            return base.OnPing();
         }
         #endregion
 

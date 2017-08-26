@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using NewLife.Data;
 using NewLife.Model;
 using XCode;
@@ -19,6 +18,13 @@ namespace xLink.Entity
     public partial class UserOnline : Entity<UserOnline>, IOnline
     {
         #region 对象操作
+        static UserOnline()
+        {
+            var df = Meta.Factory.AdditionalFields;
+            df.Add(__.LoginCount);
+            df.Add(__.PingCount);
+        }
+
         ///// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
         ///// <param name="isNew"></param>
         //public override void Valid(Boolean isNew)
@@ -51,10 +57,10 @@ namespace xLink.Entity
         [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static UserOnline FindBySessionID(Int32 sessionid)
         {
-            if (Meta.Count >= 1000)
-                return Find(__.SessionID, sessionid);
-            else // 实体缓存
-                return Meta.Cache.Entities.FirstOrDefault(e => e.SessionID == sessionid);
+            //if (Meta.Count >= 1000)
+            return Find(__.SessionID, sessionid);
+            //else // 实体缓存
+            //    return Meta.Cache.Entities.FirstOrDefault(e => e.SessionID == sessionid);
         }
         #endregion
 
@@ -121,7 +127,7 @@ namespace xLink.Entity
         public static IList<UserOnline> ClearExpire(Int32 secTimeout)
         {
             // 10分钟不活跃将会被删除
-            var exp = _.LastActive < DateTime.Now.AddSeconds(-secTimeout) | _.LastActive.IsNull();
+            var exp = _.UpdateTime < DateTime.Now.AddSeconds(-secTimeout);
             var list = FindAll(exp, null, null, 0, 0);
             list.Delete();
 

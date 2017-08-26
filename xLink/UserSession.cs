@@ -5,13 +5,12 @@ using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
 using NewLife.Security;
-using XCode.Remoting;
 using xLink.Entity;
 
 namespace xLink
 {
     /// <summary>用户会话</summary>
-    [Api("User")]
+    [Api("User", true)]
     [DisplayName("用户")]
     public class UserSession : LinkSession
     {
@@ -55,6 +54,10 @@ namespace xLink
             // 验证密码
             u.CheckRC4(pass);
 
+            var olt = Online as UserOnline;
+            olt.LoginTime = DateTime.Now;
+            olt.LoginCount++;
+
             return u;
         }
 
@@ -87,6 +90,16 @@ namespace xLink
             if (u.NickName.IsNullOrEmpty()) u.NickName = Agent;
 
             base.SaveLogin(user);
+        }
+
+        /// <summary>心跳</summary>
+        /// <returns></returns>
+        protected override Object OnPing()
+        {
+            var olt = Online as UserOnline;
+            olt.PingCount++;
+
+            return base.OnPing();
         }
         #endregion
 

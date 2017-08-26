@@ -7,6 +7,7 @@ using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Threading;
+using xLink.Entity;
 
 namespace xLink.Server
 {
@@ -64,7 +65,7 @@ namespace xLink.Server
             base.StartWork();
 
             // 每次上线清空一次在线表
-            _timer = new TimerX(CheckExpire, null, 0, 10000);
+            _timer = new TimerX(CheckExpire, null, 0, 60000);
 
             var set = Setting.Current;
 
@@ -113,6 +114,8 @@ namespace xLink.Server
             var timeout = Setting.Current.SessionTimeout;
 
             //if (Svr != null) Svr.ClearExpire(timeout);
+            DeviceOnline.ClearExpire(timeout);
+            UserOnline.ClearExpire(timeout);
         }
         #endregion
 
