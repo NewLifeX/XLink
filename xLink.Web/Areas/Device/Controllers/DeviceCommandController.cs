@@ -19,7 +19,7 @@ namespace xLink.Device.Web.Controllers
             Boolean? flag = null;
             if (!p["finished"].IsNullOrEmpty()) flag = p["finished"].ToBoolean();
 
-            return DeviceCommand.Search(p["cmd"], flag, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            return DeviceCommand.Search(p["deviceid"].ToInt(), p["cmd"], flag, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

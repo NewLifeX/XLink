@@ -137,7 +137,8 @@ namespace xLink
             svr.SessionLog = session ? null : Logger.Null;
             svr.SocketLog = socket ? null : Logger.Null;
 
-            if (Encoder != null) Encoder.Log = Log;
+            //if (Encoder != null) Encoder.Log = Log;
+            if (encoder) EncoderLog = Log;
         }
 
         private TimerX _timer { get; set; }

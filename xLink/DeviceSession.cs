@@ -6,6 +6,7 @@ using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
 using NewLife.Security;
+using NewLife.Serialization;
 using XCode.Remoting;
 using xLink.Entity;
 
@@ -100,6 +101,9 @@ namespace xLink
                 olt.InternalUri = dic["ip"] + "";
             }
 
+            // 检查下发指令
+            Task.Run(() => CheckCommandAsync());
+
             base.SaveLogin(user);
         }
 
@@ -109,6 +113,9 @@ namespace xLink
         {
             var olt = Online as DeviceOnline;
             olt.PingCount++;
+
+            // 检查下发指令
+            Task.Run(() => CheckCommandAsync());
 
             return base.OnPing();
         }
@@ -138,6 +145,36 @@ namespace xLink
             hi.Name = Current + "";
 
             return hi;
+        }
+        #endregion
+
+        #region 下发指令
+        private async Task CheckCommandAsync()
+        {
+            var dv = Current as Device;
+            if (dv == null) return;
+
+            var list = DeviceCommand.GetCommands(dv.ID, 0, 100);
+            foreach (var item in list)
+            {
+                try
+                {
+                    var args = (item.Argument + "").Trim();
+                    Object obj = args;
+                    if (!args.IsNullOrEmpty() && args.StartsWith("{") && args.EndsWith("}"))
+                    {
+                        obj = new JsonParser(args).Decode();
+                    }
+
+                    var rs = await Session.InvokeAsync<Object>(item.Command, obj);
+
+                    item.Finished = true;
+                    item.FinishTime = DateTime.Now;
+                }
+                catch { }
+
+                item.Save();
+            }
         }
         #endregion
     }

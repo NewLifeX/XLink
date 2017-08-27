@@ -148,6 +148,7 @@ namespace xLink.Entity
 
         #region 高级查询
         /// <summary>高级查询</summary>
+        /// <param name="deviceid"></param>
         /// <param name="cmd"></param>
         /// <param name="finished"></param>
         /// <param name="start"></param>
@@ -155,10 +156,11 @@ namespace xLink.Entity
         /// <param name="key"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static IList<DeviceCommand> Search(String cmd, Boolean? finished, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<DeviceCommand> Search(Int32 deviceid, String cmd, Boolean? finished, DateTime start, DateTime end, String key, PageParameter param)
         {
             var exp = SearchWhereByKeys(key, null, null);
 
+            if (deviceid > 0) exp &= _.DeviceID == deviceid;
             if (!cmd.IsNullOrEmpty()) exp &= _.Command == cmd;
             if (finished != null) exp &= _.Finished == finished.Value;
 
@@ -169,6 +171,15 @@ namespace xLink.Entity
         #endregion
 
         #region 业务操作
+        /// <summary>获取该设备未完成指令</summary>
+        /// <param name="deviceid"></param>
+        /// <param name="start"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static IList<DeviceCommand> GetCommands(Int32 deviceid, Int32 start, Int32 max)
+        {
+            return FindAll(_.DeviceID == deviceid & _.Finished == false, _.ID.Asc(), null, start, max);
+        }
         #endregion
     }
 }

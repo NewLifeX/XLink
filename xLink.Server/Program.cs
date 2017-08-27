@@ -73,11 +73,13 @@ namespace xLink.Server
             Svr = new LinkServer
             {
                 Name = "平台",
-                Port = set.Port
+                Port = set.Port,
+                Encrypted = false,
+                Compressed = false,
             };
             Svr.EnsureServer();
             Svr.Log = XTrace.Log;
-            Svr.SetLog(set.Debug, set.SocketDebug);
+            Svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
 
             // 遍历注册各服务控制器
             foreach (var item in typeof(LinkSession).GetAllSubclasses(true))

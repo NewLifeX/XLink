@@ -11,6 +11,7 @@ using NewLife.Remoting;
 namespace xLink
 {
     /// <summary>物联客户端</summary>
+    [Api(null, false)]
     public class LinkClient : ApiClient
     {
         #region 属性
@@ -33,6 +34,10 @@ namespace xLink
 
             var asmx = AssemblyX.Create(Assembly.GetCallingAssembly());
             dic["Version"] = asmx.Version;
+
+            // 注册当前类所有接口
+            Manager.Register(this, null, true);
+            //Register(this, nameof(OnWrite));
         }
         #endregion
 
@@ -123,6 +128,14 @@ namespace xLink
         #endregion
 
         #region 心跳
+        #endregion
+
+        #region 读写
+        [Api("Write")]
+        private void OnWrite(Int32 start, String data)
+        {
+            WriteLog("start={0} data={1}", start, data);
+        }
         #endregion
 
         #region 业务
