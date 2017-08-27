@@ -76,6 +76,27 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
+  <Table Name="DeviceCommand" Description="设备指令" ConnName="Device" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
+      <Column Name="Command" DataType="String" Master="True" Description="命令" />
+      <Column Name="Argument" DataType="String" Description="参数" />
+      <Column Name="StartTime" DataType="DateTime" Description="开始时间" />
+      <Column Name="EndTime" DataType="DateTime" Description="结束时间" />
+      <Column Name="Finished" DataType="Boolean" Description="完成" />
+      <Column Name="FinishTime" DataType="DateTime" Description="完成时间" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Command" />
+    </Indexes>
+  </Table>
   <Table Name="User" Description="用户" ConnName="User" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />

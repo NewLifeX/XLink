@@ -60,6 +60,8 @@
     <Compile Include="Entity\设备历史.cs" />
     <Compile Include="Entity\设备在线.Biz.cs" />
     <Compile Include="Entity\设备在线.cs" />
+    <Compile Include="Entity\设备指令.Biz.cs" />
+    <Compile Include="Entity\设备指令.cs" />
     <Compile Include="LinkServer.cs" />
     <Compile Include="LinkSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
