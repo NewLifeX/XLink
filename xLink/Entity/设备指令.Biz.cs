@@ -23,6 +23,22 @@ using XCode.Membership;
 
 namespace xLink.Entity
 {
+    /// <summary>指令状态</summary>
+    public enum CommandStatus
+    {
+        /// <summary>就绪</summary>
+        就绪 = 0,
+
+        /// <summary>已完成</summary>
+        完成 = 1,
+
+        /// <summary>错误</summary>
+        错误 = 2,
+
+        /// <summary>取消</summary>
+        取消 = 3
+    }
+
     /// <summary>设备指令</summary>
     public partial class DeviceCommand : Entity<DeviceCommand>
     {
@@ -162,9 +178,9 @@ namespace xLink.Entity
 
             if (deviceid > 0) exp &= _.DeviceID == deviceid;
             if (!cmd.IsNullOrEmpty()) exp &= _.Command == cmd;
-            if (finished != null) exp &= _.Finished == finished.Value;
+            if (finished != null) exp &= _.Status == (finished.Value ? CommandStatus.完成 : CommandStatus.就绪);
 
-            exp &= _.FinishTime.Between(start, end);
+            exp &= _.UpdateTime.Between(start, end);
 
             return FindAll(exp, param);
         }
@@ -178,7 +194,7 @@ namespace xLink.Entity
         /// <returns></returns>
         public static IList<DeviceCommand> GetCommands(Int32 deviceid, Int32 start, Int32 max)
         {
-            return FindAll(_.DeviceID == deviceid & _.Finished == false, _.ID.Asc(), null, start, max);
+            return FindAll(_.DeviceID == deviceid & _.Status == CommandStatus.就绪, _.ID.Asc(), null, start, max);
         }
         #endregion
     }

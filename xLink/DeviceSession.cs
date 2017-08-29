@@ -7,6 +7,7 @@ using NewLife.Net;
 using NewLife.Remoting;
 using NewLife.Security;
 using NewLife.Serialization;
+using NewLife.Threading;
 using XCode.Remoting;
 using xLink.Entity;
 
@@ -102,7 +103,8 @@ namespace xLink
             }
 
             // 检查下发指令
-            Task.Run(() => CheckCommandAsync());
+            //Task.Run(() => CheckCommandAsync());
+            TimerX.Delay(CheckCommand, 100);
 
             base.SaveLogin(user);
         }
@@ -115,7 +117,8 @@ namespace xLink
             olt.PingCount++;
 
             // 检查下发指令
-            Task.Run(() => CheckCommandAsync());
+            //Task.Run(() => CheckCommandAsync());
+            TimerX.Delay(CheckCommand, 100);
 
             return base.OnPing();
         }
@@ -149,7 +152,7 @@ namespace xLink
         #endregion
 
         #region 下发指令
-        private async Task CheckCommandAsync()
+        private void CheckCommand(Object state)
         {
             var dv = Current as Device;
             if (dv == null) return;
@@ -157,21 +160,36 @@ namespace xLink
             var list = DeviceCommand.GetCommands(dv.ID, 0, 100);
             foreach (var item in list)
             {
-                try
+                // 尚未到开始时间
+                if (item.StartTime > DateTime.MinValue && item.StartTime > DateTime.Now) continue;
+
+                // 过期指令
+                if (item.EndTime > DateTime.MinValue && item.EndTime < DateTime.Now)
                 {
-                    var args = (item.Argument + "").Trim();
-                    Object obj = args;
-                    if (!args.IsNullOrEmpty() && args.StartsWith("{") && args.EndsWith("}"))
-                    {
-                        obj = new JsonParser(args).Decode();
-                    }
-
-                    var rs = await Session.InvokeAsync<Object>(item.Command, obj);
-
-                    item.Finished = true;
-                    item.FinishTime = DateTime.Now;
+                    item.Status = CommandStatus.取消;
                 }
-                catch { }
+                else
+                {
+                    try
+                    {
+                        var args = (item.Argument + "").Trim();
+                        Object obj = args;
+                        if (!args.IsNullOrEmpty() && args.StartsWith("{") && args.EndsWith("}"))
+                        {
+                            obj = new JsonParser(args).Decode();
+                        }
+
+                        var dic = Session.InvokeAsync<IDictionary<String, Object>>(item.Command, obj).Result;
+
+                        item.Status = CommandStatus.完成;
+                        item.Message = dic.ToJson();
+                    }
+                    catch (Exception ex)
+                    {
+                        item.Status = CommandStatus.错误;
+                        item.Message = ex?.GetTrue()?.Message;
+                    }
+                }
 
                 item.Save();
             }

@@ -64,21 +64,21 @@ namespace xLink.Entity
         [BindColumn("EndTime", "结束时间", "datetime")]
         public DateTime EndTime { get { return _EndTime; } set { if (OnPropertyChanging(__.EndTime, value)) { _EndTime = value; OnPropertyChanged(__.EndTime); } } }
 
-        private Boolean _Finished;
-        /// <summary>完成</summary>
-        [DisplayName("完成")]
-        [Description("完成")]
+        private CommandStatus _Status;
+        /// <summary>状态</summary>
+        [DisplayName("状态")]
+        [Description("状态")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Finished", "完成", "bit")]
-        public Boolean Finished { get { return _Finished; } set { if (OnPropertyChanging(__.Finished, value)) { _Finished = value; OnPropertyChanged(__.Finished); } } }
+        [BindColumn("Status", "状态", "int")]
+        public CommandStatus Status { get { return _Status; } set { if (OnPropertyChanging(__.Status, value)) { _Status = value; OnPropertyChanged(__.Status); } } }
 
-        private DateTime _FinishTime;
-        /// <summary>完成时间</summary>
-        [DisplayName("完成时间")]
-        [Description("完成时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("FinishTime", "完成时间", "datetime")]
-        public DateTime FinishTime { get { return _FinishTime; } set { if (OnPropertyChanging(__.FinishTime, value)) { _FinishTime = value; OnPropertyChanged(__.FinishTime); } } }
+        private String _Message;
+        /// <summary>内容</summary>
+        [DisplayName("内容")]
+        [Description("内容")]
+        [DataObjectField(false, false, true, 200)]
+        [BindColumn("Message", "内容", "nvarchar(200)")]
+        public String Message { get { return _Message; } set { if (OnPropertyChanging(__.Message, value)) { _Message = value; OnPropertyChanged(__.Message); } } }
 
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
@@ -145,8 +145,8 @@ namespace xLink.Entity
                     case __.Argument : return _Argument;
                     case __.StartTime : return _StartTime;
                     case __.EndTime : return _EndTime;
-                    case __.Finished : return _Finished;
-                    case __.FinishTime : return _FinishTime;
+                    case __.Status : return _Status;
+                    case __.Message : return _Message;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -166,8 +166,8 @@ namespace xLink.Entity
                     case __.Argument : _Argument = Convert.ToString(value); break;
                     case __.StartTime : _StartTime = Convert.ToDateTime(value); break;
                     case __.EndTime : _EndTime = Convert.ToDateTime(value); break;
-                    case __.Finished : _Finished = Convert.ToBoolean(value); break;
-                    case __.FinishTime : _FinishTime = Convert.ToDateTime(value); break;
+                    case __.Status : _Status = (CommandStatus)Convert.ToInt32(value); break;
+                    case __.Message : _Message = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = Convert.ToInt32(value); break;
                     case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -202,11 +202,11 @@ namespace xLink.Entity
             /// <summary>结束时间</summary>
             public static readonly Field EndTime = FindByName(__.EndTime);
 
-            /// <summary>完成</summary>
-            public static readonly Field Finished = FindByName(__.Finished);
+            /// <summary>状态</summary>
+            public static readonly Field Status = FindByName(__.Status);
 
-            /// <summary>完成时间</summary>
-            public static readonly Field FinishTime = FindByName(__.FinishTime);
+            /// <summary>内容</summary>
+            public static readonly Field Message = FindByName(__.Message);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -250,11 +250,11 @@ namespace xLink.Entity
             /// <summary>结束时间</summary>
             public const String EndTime = "EndTime";
 
-            /// <summary>完成</summary>
-            public const String Finished = "Finished";
+            /// <summary>状态</summary>
+            public const String Status = "Status";
 
-            /// <summary>完成时间</summary>
-            public const String FinishTime = "FinishTime";
+            /// <summary>内容</summary>
+            public const String Message = "Message";
 
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
@@ -299,11 +299,11 @@ namespace xLink.Entity
         /// <summary>结束时间</summary>
         DateTime EndTime { get; set; }
 
-        /// <summary>完成</summary>
-        Boolean Finished { get; set; }
+        /// <summary>状态</summary>
+        CommandStatus Status { get; set; }
 
-        /// <summary>完成时间</summary>
-        DateTime FinishTime { get; set; }
+        /// <summary>内容</summary>
+        String Message { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }

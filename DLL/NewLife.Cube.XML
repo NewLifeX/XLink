@@ -28,6 +28,11 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Cube.Admin.Controllers.DbController.BackupAndCompress(System.String)">
+            <summary>备份并压缩数据库</summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
         <member name="M:NewLife.Cube.Admin.Controllers.DbController.Download(System.String)">
             <summary>下载数据库备份</summary>
             <param name="name"></param>
