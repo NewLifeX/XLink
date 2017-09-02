@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using NewLife.Net;
 using NewLife.Xml;
 
 namespace xLink.Client
@@ -8,6 +11,7 @@ namespace xLink.Client
     [XmlConfigFile("Config\\Client.config")]
     public class Setting : XmlConfig<Setting>
     {
+        #region 属性
         /// <summary>设备编码</summary>
         [Description("设备编码")]
         public String UserName { get; set; } = "";
@@ -22,7 +26,7 @@ namespace xLink.Client
 
         /// <summary>地址</summary>
         [Description("地址")]
-        public String Address { get; set; } = "tcp://127.0.0.1:2233,tcp;//feifan.link:2233";
+        public String Address { get; set; } = "tcp://127.0.0.1:2233,tcp://feifan.link:2233";
 
         /// <summary>十六进制显示</summary>
         [Description("十六进制显示")]
@@ -87,9 +91,31 @@ namespace xLink.Client
         /// <summary>扩展数据</summary>
         [Description("扩展数据")]
         public String Extend { get; set; } = "";
+        #endregion
 
-        public Setting()
+        #region 地址
+        public List<String> GetAddresss()
         {
+            return (Address + "").Split(",").Distinct().ToList();
         }
+
+        public void AddAddresss(String addr)
+        {
+            if (addr.IsNullOrWhiteSpace()) return;
+
+            //addr = addr.Trim();
+            addr = new NetUri(addr).ToString();
+
+            var list = GetAddresss();
+
+            // 先删除再插入，保持第一位
+            var addrs = new List<String>();
+            addrs.Add(addr);
+            // 最多10个
+            addrs.AddRange(list.Where(e => !e.EqualIgnoreCase(addr)).Take(10 - 1));
+
+            Address = addrs.Join(",");
+        }
+        #endregion
     }
 }

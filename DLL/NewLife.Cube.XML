@@ -4,6 +4,78 @@
         <name>NewLife.Cube</name>
     </assembly>
     <members>
+        <member name="T:NewLife.Cube.AdminMobile.AdminMobileAreaRegistration">
+            <summary>移动管理区域注册</summary>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.AdminMobileAreaRegistration.RegisterArea(System.Web.Mvc.AreaRegistrationContext)">
+            <summary>注册区域</summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:NewLife.Cube.AdminMobile.Controllers.IndexController">
+            <summary>移动首页</summary>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.IndexController.Index">
+            <summary>首页</summary>
+            <returns></returns>
+        </member>
+        <member name="T:NewLife.Cube.AdminMobile.Controllers.UserController">
+            <summary>用户控制器</summary>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.Search(NewLife.Web.Pager)">
+            <summary>搜索数据集</summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.FormView(XCode.Membership.UserX)">
+            <summary>表单页视图。</summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.Login(System.String)">
+            <summary>登录</summary>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.Login(System.String,System.String,System.Nullable{System.Boolean},System.String)">
+            <summary>登录</summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="remember"></param>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.Logout">
+            <summary>注销</summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.Info(System.Nullable{System.Int32})">
+            <summary>用户资料</summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.Info(XCode.Membership.UserX)">
+            <summary>用户资料</summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.ForgetPassword(System.String)">
+            <summary>忘记密码</summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.Register(System.String,System.String,System.String,System.String)">
+            <summary>注册</summary>
+            <param name="email"></param>
+            <param name="username"></param>
+            <param name="password"></param>
+            <param name="password2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.AdminMobile.Controllers.UserController.ClearPassword(System.Int32)">
+            <summary>清空密码</summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:NewLife.Cube.Admin.AdminAreaRegistration">
             <summary>权限管理区域注册</summary>
         </member>
@@ -955,6 +1027,23 @@
         <member name="M:NewLife.Cube.MvcHandleErrorAttribute.OnException(System.Web.Mvc.ExceptionContext)">
             <summary>拦截异常</summary>
             <param name="ctx"></param>
+        </member>
+        <member name="T:NewLife.Cube.WeuiJS">
+             <summary>
+            提示
+             </summary>
+        </member>
+        <member name="M:NewLife.Cube.WeuiJS.Toast(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:NewLife.Cube.WeuiJS.Alert(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
         </member>
         <member name="T:NewLife.Cube.Controllers.CubeHomeController">
             <summary>主页面</summary>

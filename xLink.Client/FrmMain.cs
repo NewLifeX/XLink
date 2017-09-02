@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,6 +40,8 @@ namespace xLink.Client
             var cfg = Setting.Current;
             cbMode.SelectedItem = cfg.Mode;
 
+            if (cfg.IsNew) "欢迎使用物联网客户端！".SpeechTip();
+
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
 
@@ -66,7 +67,7 @@ namespace xLink.Client
             numSleep.Value = cfg.SendSleep;
             numThreads.Value = cfg.SendUsers;
 
-            if (!cfg.Address.IsNullOrEmpty()) cbAddr.DataSource = cfg.Address.Split(";").Distinct().ToList();
+            cbAddr.DataSource = cfg.GetAddresss();
         }
 
         void SaveConfig()
@@ -87,11 +88,7 @@ namespace xLink.Client
             cfg.ColorLog = mi日志着色.Checked;
 
             cfg.Mode = cbMode.Text;
-
-            var addrs = (cfg.Address + "").Split(";").Distinct().ToList();
-            if (!addrs.Contains(cbAddr.Text)) addrs.Insert(0, cbAddr.Text);
-            while (addrs.Count > 10) addrs.RemoveAt(addrs.Count - 1);
-            cfg.Address = addrs.Join(";");
+            cfg.AddAddresss(cbAddr.Text);
 
             cfg.Save();
         }
@@ -137,11 +134,7 @@ namespace xLink.Client
             btnConnect.Text = "关闭";
 
             // 添加地址
-            var addr = uri.ToString();
-            var list = cfg.Address.Split(";").ToList();
-            list.Remove(addr);
-            list.Insert(0, addr);
-            cfg.Address = list.Join(";");
+            cfg.AddAddresss(uri.ToString());
 
             cfg.Save();
 
@@ -168,6 +161,8 @@ namespace xLink.Client
             pnlSetting.Enabled = true;
             pnlAction.Enabled = false;
             btnConnect.Text = "打开";
+
+            LoadConfig();
         }
 
         TimerX _timer;
@@ -380,6 +375,22 @@ namespace xLink.Client
         {
             var rs = await _Client.InvokeAsync<String[]>("Api/All");
             XTrace.WriteLine(rs.Join(Environment.NewLine));
+        }
+
+        private void btnAdv_Click(Object sender, EventArgs e)
+        {
+            var cfg = Setting.Current;
+            switch (cfg.Mode?.ToLower())
+            {
+                case "user":
+                    new FrmUser { Client = _Client }.Show();
+                    break;
+                case "device":
+                    new FrmDevice { Client = _Client }.Show();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

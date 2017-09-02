@@ -403,6 +403,16 @@
             <param name="key">键</param>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Caching.Cache.SetExpire(System.String,System.TimeSpan)">
+            <summary>设置缓存项有效期</summary>
+            <param name="key">键</param>
+            <param name="expire">过期时间，秒</param>
+        </member>
+        <member name="M:NewLife.Caching.Cache.GetExpire(System.String)">
+            <summary>获取缓存项有效期</summary>
+            <param name="key">键</param>
+            <returns></returns>
+        </member>
         <member name="M:NewLife.Caching.Cache.GetAll``1(System.String[])">
             <summary>批量获取缓存项</summary>
             <typeparam name="T"></typeparam>
@@ -526,6 +536,16 @@
             <param name="key"></param>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Caching.ICache.SetExpire(System.String,System.TimeSpan)">
+            <summary>设置缓存项有效期</summary>
+            <param name="key">键</param>
+            <param name="expire">过期时间</param>
+        </member>
+        <member name="M:NewLife.Caching.ICache.GetExpire(System.String)">
+            <summary>获取缓存项有效期</summary>
+            <param name="key">键</param>
+            <returns></returns>
+        </member>
         <member name="T:NewLife.Caching.MemoryCache">
             <summary>默认字典缓存</summary>
         </member>
@@ -566,6 +586,16 @@
         </member>
         <member name="M:NewLife.Caching.MemoryCache.Remove(System.String)">
             <summary>移除缓存项</summary>
+            <param name="key">键</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Caching.MemoryCache.SetExpire(System.String,System.TimeSpan)">
+            <summary>设置缓存项有效期</summary>
+            <param name="key">键</param>
+            <param name="expire">过期时间</param>
+        </member>
+        <member name="M:NewLife.Caching.MemoryCache.GetExpire(System.String)">
+            <summary>获取缓存项有效期</summary>
             <param name="key">键</param>
             <returns></returns>
         </member>

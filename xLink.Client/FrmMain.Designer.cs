@@ -45,7 +45,6 @@
             this.miHexSend = new System.Windows.Forms.ToolStripMenuItem();
             this.mi清空2 = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlSetting = new System.Windows.Forms.Panel();
-            this.cbMode = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.gbReceive = new System.Windows.Forms.GroupBox();
@@ -67,6 +66,8 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.pnlAction = new System.Windows.Forms.Panel();
             this.btnTest = new System.Windows.Forms.Button();
+            this.cbMode = new System.Windows.Forms.ComboBox();
+            this.btnAdv = new System.Windows.Forms.Button();
             this.gbSend.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMutilSend)).BeginInit();
@@ -95,7 +96,7 @@
             this.cbAddr.FormattingEnabled = true;
             this.cbAddr.Location = new System.Drawing.Point(117, 7);
             this.cbAddr.Name = "cbAddr";
-            this.cbAddr.Size = new System.Drawing.Size(413, 20);
+            this.cbAddr.Size = new System.Drawing.Size(250, 20);
             this.cbAddr.TabIndex = 10;
             // 
             // lbAddr
@@ -262,20 +263,8 @@
             this.pnlSetting.Controls.Add(this.lbAddr);
             this.pnlSetting.Location = new System.Drawing.Point(6, 12);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(533, 31);
+            this.pnlSetting.Size = new System.Drawing.Size(370, 31);
             this.pnlSetting.TabIndex = 18;
-            // 
-            // cbMode
-            // 
-            this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMode.FormattingEnabled = true;
-            this.cbMode.Items.AddRange(new object[] {
-            "User",
-            "Device"});
-            this.cbMode.Location = new System.Drawing.Point(6, 7);
-            this.cbMode.Name = "cbMode";
-            this.cbMode.Size = new System.Drawing.Size(68, 20);
-            this.cbMode.TabIndex = 12;
             // 
             // gbReceive
             // 
@@ -380,7 +369,7 @@
             // btnConnect
             // 
             this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConnect.Location = new System.Drawing.Point(545, 13);
+            this.btnConnect.Location = new System.Drawing.Point(401, 13);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(67, 29);
             this.btnConnect.TabIndex = 16;
@@ -417,13 +406,14 @@
             // pnlAction
             // 
             this.pnlAction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlAction.Controls.Add(this.btnAdv);
             this.pnlAction.Controls.Add(this.btnTest);
             this.pnlAction.Controls.Add(this.btnPing);
             this.pnlAction.Controls.Add(this.btnLogin);
             this.pnlAction.Enabled = false;
-            this.pnlAction.Location = new System.Drawing.Point(632, 12);
+            this.pnlAction.Location = new System.Drawing.Point(486, 12);
             this.pnlAction.Name = "pnlAction";
-            this.pnlAction.Size = new System.Drawing.Size(205, 31);
+            this.pnlAction.Size = new System.Drawing.Size(273, 31);
             this.pnlAction.TabIndex = 22;
             // 
             // btnTest
@@ -435,6 +425,28 @@
             this.btnTest.Text = "测试";
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // cbMode
+            // 
+            this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMode.FormattingEnabled = true;
+            this.cbMode.Items.AddRange(new object[] {
+            "User",
+            "Device"});
+            this.cbMode.Location = new System.Drawing.Point(6, 7);
+            this.cbMode.Name = "cbMode";
+            this.cbMode.Size = new System.Drawing.Size(68, 20);
+            this.cbMode.TabIndex = 12;
+            // 
+            // btnAdv
+            // 
+            this.btnAdv.Location = new System.Drawing.Point(207, 2);
+            this.btnAdv.Name = "btnAdv";
+            this.btnAdv.Size = new System.Drawing.Size(62, 29);
+            this.btnAdv.TabIndex = 7;
+            this.btnAdv.Text = "高级";
+            this.btnAdv.UseVisualStyleBackColor = true;
+            this.btnAdv.Click += new System.EventHandler(this.btnAdv_Click);
             // 
             // FrmMain
             // 
@@ -449,7 +461,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "物联网设备模拟客户端";
+            this.Text = "物联网客户端";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.gbSend.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -503,9 +515,10 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Panel pnlAction;
         private System.Windows.Forms.Button btnTest;
-        private System.Windows.Forms.ComboBox cbMode;
         private System.Windows.Forms.ToolStripMenuItem mi日志着色;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox cbMode;
+        private System.Windows.Forms.Button btnAdv;
     }
 }
 

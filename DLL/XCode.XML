@@ -8340,6 +8340,42 @@
             <param name="entityType"></param>
             <returns></returns>
         </member>
+        <member name="T:XCode.Transform.DataContext">
+            <summary>数据上下文</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.Setting">
+            <summary>抽取设置</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.Data">
+            <summary>实体列表</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.FetchCost">
+            <summary>抽取耗时，毫秒</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.Success">
+            <summary>成功处理数</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.ProcessCost">
+            <summary>处理耗时</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.Entity">
+            <summary>实体对象</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.Error">
+            <summary>处理异常</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.StartTime">
+            <summary>开始时间</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.State">
+            <summary>状态对象</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.FetchSpeed">
+            <summary>抽取速度</summary>
+        </member>
+        <member name="P:XCode.Transform.DataContext.ProcessSpeed">
+            <summary>处理速度</summary>
+        </member>
         <member name="T:XCode.Transform.IETLModule">
             <summary>数据抽取模块，用于自定义抽取过程中各个环节</summary>
         </member>
@@ -8352,26 +8388,26 @@
         <member name="M:XCode.Transform.IETLModule.Init">
             <summary>首次初始化任务</summary>
         </member>
-        <member name="M:XCode.Transform.IETLModule.Processing">
+        <member name="M:XCode.Transform.IETLModule.Processing(XCode.Transform.DataContext)">
             <summary>单批数据处理前</summary>
+            <param name="ctx">数据上下文</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.IETLModule.Processed">
+        <member name="M:XCode.Transform.IETLModule.Processed(XCode.Transform.DataContext)">
             <summary>单批数据处理后</summary>
+            <param name="ctx">数据上下文</param>
         </member>
-        <member name="M:XCode.Transform.IETLModule.OnFinished(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting,System.Int32,System.Double,System.Double)">
+        <member name="M:XCode.Transform.IETLModule.Fetched(XCode.Transform.DataContext)">
+            <summary>抽取完成</summary>
+            <param name="ctx">数据上下文</param>
+        </member>
+        <member name="M:XCode.Transform.IETLModule.OnFinished(XCode.Transform.DataContext)">
             <summary>实体列表完成后</summary>
-            <param name="list"></param>
-            <param name="set"></param>
-            <param name="success"></param>
-            <param name="fetchCost"></param>
-            <param name="processCost"></param>
+            <param name="ctx">数据上下文</param>
         </member>
-        <member name="M:XCode.Transform.IETLModule.OnError(System.Object,XCode.Transform.IExtractSetting,System.Exception)">
+        <member name="M:XCode.Transform.IETLModule.OnError(XCode.Transform.DataContext)">
             <summary>出错</summary>
-            <param name="source"></param>
-            <param name="set"></param>
-            <param name="ex"></param>
+            <param name="ctx">数据上下文</param>
         </member>
         <member name="T:XCode.Transform.Sync`2">
             <summary>数据同步，不同实体类之间</summary>
@@ -8398,6 +8434,12 @@
             <summary>数据同步，相同实体类不同表和库</summary>
             <typeparam name="TSource">源实体类</typeparam>
         </member>
+        <member name="P:XCode.Transform.Sync`1.SourceConn">
+            <summary>来源连接</summary>
+        </member>
+        <member name="P:XCode.Transform.Sync`1.SourceTable">
+            <summary>来源表名</summary>
+        </member>
         <member name="P:XCode.Transform.Sync`1.TargetConn">
             <summary>目标连接</summary>
         </member>
@@ -8410,10 +8452,14 @@
         <member name="M:XCode.Transform.Sync`1.Start">
             <summary>启动时检查参数</summary>
         </member>
-        <member name="M:XCode.Transform.Sync`1.OnSync(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting)">
+        <member name="M:XCode.Transform.Sync`1.Fetch(XCode.Transform.IExtracter)">
+            <summary>从来源表查数据</summary>
+            <param name="extracter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Transform.Sync`1.OnSync(XCode.Transform.DataContext)">
             <summary>同步数据列表时，在目标表上执行</summary>
-            <param name="list"></param>
-            <param name="set"></param>
+            <param name="ctx">数据上下文</param>
             <returns></returns>
         </member>
         <member name="M:XCode.Transform.Sync`1.SyncItem(XCode.IEntity)">
@@ -8441,21 +8487,19 @@
         <member name="M:XCode.Transform.Sync.#ctor(XCode.IEntityOperate,XCode.IEntityOperate)">
             <summary>实例化数据抽取器</summary>
             <param name="source"></param>
+            <param name="target"></param>
         </member>
-        <member name="M:XCode.Transform.Sync.ProcessList(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting,System.Double)">
+        <member name="M:XCode.Transform.Sync.ProcessList(XCode.Transform.DataContext)">
             <summary>处理列表，传递批次配置，支持多线程和异步</summary>
             <remarks>
             子类可以根据需要重载该方法，实现异步处理。
             异步处理之前，需要先保存配置
             </remarks>
-            <param name="list">实体列表</param>
-            <param name="set">本批次配置</param>
-            <param name="fetchCost">抽取数据耗时</param>
+            <param name="ctx">数据上下文</param>
         </member>
-        <member name="M:XCode.Transform.Sync.OnSync(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting)">
+        <member name="M:XCode.Transform.Sync.OnSync(XCode.Transform.DataContext)">
             <summary>处理列表，传递批次配置，支持多线程</summary>
-            <param name="list">实体列表</param>
-            <param name="set">本批次配置</param>
+            <param name="ctx">数据上下文</param>
         </member>
         <member name="M:XCode.Transform.Sync.SyncItem(XCode.IEntity)">
             <summary>同步单行数据</summary>
@@ -8698,6 +8742,15 @@
         <member name="P:XCode.Transform.ETL.Stat">
             <summary>统计</summary>
         </member>
+        <member name="P:XCode.Transform.ETL.MaxTask">
+            <summary>最大并行处理任务数。默认0表示同步，N表示最多可以有N批数据同时处理</summary>
+        </member>
+        <member name="F:XCode.Transform.ETL._currentTask">
+            <summary>当前处理中的任务数</summary>
+        </member>
+        <member name="P:XCode.Transform.ETL.Modules">
+            <summary>过滤模块列表</summary>
+        </member>
         <member name="M:XCode.Transform.ETL.#ctor">
             <summary>实例化数据抽取器</summary>
         </member>
@@ -8725,28 +8778,25 @@
             <param name="extracter"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.ETL.ProcessList(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting,System.Double)">
+        <member name="M:XCode.Transform.ETL.ProcessList(XCode.Transform.DataContext)">
             <summary>处理列表，传递批次配置，支持多线程和异步</summary>
             <remarks>
             子类可以根据需要重载该方法，实现异步处理。
             异步处理之前，需要先保存配置
             </remarks>
-            <param name="list">实体列表</param>
-            <param name="set">本批次配置</param>
-            <param name="fetchCost">抽取数据耗时</param>
+            <param name="ctx">数据上下文</param>
         </member>
-        <member name="M:XCode.Transform.ETL.OnProcess(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting)">
+        <member name="M:XCode.Transform.ETL.ProcessListAsync(XCode.Transform.DataContext)">
+            <summary>异步处理列表，传递批次配置</summary>
+            <param name="ctx">数据上下文</param>
+        </member>
+        <member name="M:XCode.Transform.ETL.OnProcess(XCode.Transform.DataContext)">
             <summary>处理列表</summary>
-            <param name="list">实体列表</param>
-            <param name="set">本批次配置</param>
+            <param name="ctx">数据上下文</param>
         </member>
-        <member name="M:XCode.Transform.ETL.OnFinished(System.Collections.Generic.IList{XCode.IEntity},XCode.Transform.IExtractSetting,System.Int32,System.Double,System.Double)">
+        <member name="M:XCode.Transform.ETL.OnFinished(XCode.Transform.DataContext)">
             <summary>处理完成</summary>
-            <param name="list">实体列表</param>
-            <param name="set">本批次配置</param>
-            <param name="success">成功行数</param>
-            <param name="fetchCost">抽取数据耗时</param>
-            <param name="processCost">处理数据耗时</param>
+            <param name="ctx">数据上下文</param>
         </member>
         <member name="M:XCode.Transform.ETL.ProcessItem(XCode.IEntity)">
             <summary>处理单行数据</summary>
@@ -8754,11 +8804,9 @@
             <param name="source">源实体</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.ETL.OnError(System.Object,XCode.Transform.IExtractSetting,System.Exception)">
+        <member name="M:XCode.Transform.ETL.OnError(XCode.Transform.DataContext)">
             <summary>遇到错误时如何处理</summary>
-            <param name="source"></param>
-            <param name="set">本批次配置</param>
-            <param name="ex"></param>
+            <param name="ctx">数据上下文</param>
             <returns></returns>
         </member>
         <member name="P:XCode.Transform.ETL.Log">
