@@ -20,10 +20,7 @@ namespace xLink
     {
         #region 属性
         /// <summary>当前设备</summary>
-        public Device Device { get; private set; }
-
-        ///// <summary>在线对象</summary>
-        //public DeviceOnline Online { get; private set; }
+        public Device Device { get => Current as Device; }
         #endregion
 
         #region 构造
@@ -193,6 +190,76 @@ namespace xLink
 
                 item.Save();
             }
+        }
+        #endregion
+
+        #region 读写
+        /// <summary>写入数据</summary>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public async Task<Byte[]> Write(Int32 start, params Byte[] data)
+        {
+            var rs = await InvokeAsync<Object>("Write", new { start, data = data.ToHex() });
+            var dic = rs.ToDictionary();
+            return (dic["data"] + "").ToHex();
+        }
+
+        /// <summary>收到写入请求</summary>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
+        [Api("Write")]
+        private String OnWrite(Int32 start, String data)
+        {
+            //WriteLog("start={0} data={1}", start, data);
+
+            var dv = Device;
+            if (dv == null) throw Error(405, "找不到设备！");
+
+            var ds = data.ToHex();
+            var buf = dv.Data.ToHex();
+
+            // 检查扩容
+            if (start + ds.Length > buf.Length)
+            {
+                var buf2 = new Byte[start + ds.Length];
+                buf2.Write(0, buf);
+                buf = buf2;
+            }
+            buf.Write(start, ds);
+            buf[0] = (Byte)buf.Length;
+
+            // 保存回去
+            dv.Data = buf.ToHex();
+            dv.SaveAsync();
+
+            return dv.Data;
+        }
+
+        /// <summary>读取对方数据</summary>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public async Task<Byte[]> Read(Int32 start, Int32 count)
+        {
+            var dic = await InvokeAsync<IDictionary<String, Object>>("Read", new { start, count });
+            return (dic["data"] + "").ToHex();
+        }
+
+        /// <summary>收到读取请求</summary>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        [Api("Read")]
+        private String OnRead(Int32 start, Int32 count)
+        {
+            //WriteLog("start={0} count={1}", start, count);
+
+            var dv = Device;
+            if (dv == null) throw Error(405, "找不到设备！");
+
+            var buf = dv.Data.ToHex();
+
+            return buf.ReadBytes(start, count).ToHex();
         }
         #endregion
     }

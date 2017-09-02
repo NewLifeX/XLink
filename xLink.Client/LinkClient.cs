@@ -18,6 +18,9 @@ namespace xLink
         /// <summary>远程地址</summary>
         public NetUri Remote { get; set; }
 
+        /// <summary>动作前缀</summary>
+        public String ActionPrefix { get; set; }
+
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
         #endregion
@@ -131,10 +134,43 @@ namespace xLink
         #endregion
 
         #region 读写
+        /// <summary>写入数据</summary>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public async Task<Byte[]> Write(Int32 start, params Byte[] data)
+        {
+            var rs = await InvokeAsync<Object>(ActionPrefix + "Write", new { start, data = data.ToHex() });
+            var dic = rs.ToDictionary();
+            return (dic["data"] + "").ToHex();
+        }
+
+        /// <summary>收到写入请求</summary>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
         [Api("Write")]
         private void OnWrite(Int32 start, String data)
         {
             WriteLog("start={0} data={1}", start, data);
+        }
+
+        /// <summary>读取对方数据</summary>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public async Task<Byte[]> Read(Int32 start, Int32 count)
+        {
+            var dic = await InvokeAsync<IDictionary<String, Object>>(ActionPrefix + "Read", new { start, count });
+            return (dic["data"] + "").ToHex();
+        }
+
+        /// <summary>收到读取请求</summary>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        [Api("Read")]
+        private void OnRead(Int32 start, Int32 count)
+        {
+            WriteLog("start={0} count={1}", start, count);
         }
         #endregion
 

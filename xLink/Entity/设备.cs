@@ -82,6 +82,14 @@ namespace xLink.Entity
         [BindColumn("Version", "版本", "nvarchar(50)")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
+        private String _Data;
+        /// <summary>数据</summary>
+        [DisplayName("数据")]
+        [Description("数据")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Data", "数据", "nvarchar(50)")]
+        public String Data { get { return _Data; } set { if (OnPropertyChanging(__.Data, value)) { _Data = value; OnPropertyChanged(__.Data); } } }
+
         private Boolean _Online;
         /// <summary>在线</summary>
         [DisplayName("在线")]
@@ -205,6 +213,7 @@ namespace xLink.Entity
                     case __.Enable : return _Enable;
                     case __.Type : return _Type;
                     case __.Version : return _Version;
+                    case __.Data : return _Data;
                     case __.Online : return _Online;
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
@@ -233,6 +242,7 @@ namespace xLink.Entity
                     case __.Enable : _Enable = Convert.ToBoolean(value); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
+                    case __.Data : _Data = Convert.ToString(value); break;
                     case __.Online : _Online = Convert.ToBoolean(value); break;
                     case __.Logins : _Logins = Convert.ToInt32(value); break;
                     case __.LastLogin : _LastLogin = Convert.ToDateTime(value); break;
@@ -279,6 +289,9 @@ namespace xLink.Entity
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
+
+            /// <summary>数据</summary>
+            public static readonly Field Data = FindByName(__.Data);
 
             /// <summary>在线</summary>
             public static readonly Field Online = FindByName(__.Online);
@@ -349,6 +362,9 @@ namespace xLink.Entity
             /// <summary>版本</summary>
             public const String Version = "Version";
 
+            /// <summary>数据</summary>
+            public const String Data = "Data";
+
             /// <summary>在线</summary>
             public const String Online = "Online";
 
@@ -418,6 +434,9 @@ namespace xLink.Entity
 
         /// <summary>版本</summary>
         String Version { get; set; }
+
+        /// <summary>数据</summary>
+        String Data { get; set; }
 
         /// <summary>在线</summary>
         Boolean Online { get; set; }

@@ -114,6 +114,7 @@ namespace xLink.Client
             ac.Password = cfg.Password;
             ac.LoginAction = mode + "/Login";
             ac.PingAction = mode + "/Ping";
+            ac.ActionPrefix = mode + "/";
 
             ac.Encrypted = cfg.Encrypted;
             ac.Compressed = cfg.Compressed;
