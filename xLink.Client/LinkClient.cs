@@ -133,22 +133,24 @@ namespace xLink
 
         #region 读写
         /// <summary>写入数据，返回整个数据区</summary>
+        /// <param name="id">设备</param>
         /// <param name="start"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public async Task<Byte[]> Write(Int32 start, params Byte[] data)
+        public async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
         {
-            var rs = await InvokeAsync<DataModel>("Write", new { start, data = data.ToHex() });
+            var rs = await InvokeAsync<DataModel>("Write", new { id, start, data = data.ToHex() });
             return rs.Data.ToHex();
         }
 
         /// <summary>读取对方数据</summary>
+        /// <param name="id">设备</param>
         /// <param name="start"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public async Task<Byte[]> Read(Int32 start, Int32 count)
+        public async Task<Byte[]> Read(String id, Int32 start, Int32 count)
         {
-            var rs = await InvokeAsync<DataModel>("Read", new { start, count });
+            var rs = await InvokeAsync<DataModel>("Read", new { id, start, count });
             return rs.Data.ToHex();
         }
 
@@ -156,15 +158,13 @@ namespace xLink
         public Action<String, Byte[]> SetData;
 
         /// <summary>收到写入请求</summary>
-        /// <param name="deviceid">设备</param>
+        /// <param name="id">设备</param>
         /// <param name="start"></param>
         /// <param name="data"></param>
         [Api("Write")]
-        private DataModel OnWrite(String deviceid, Int32 start, String data)
+        private DataModel OnWrite(String id, Int32 start, String data)
         {
-            WriteLog("start={0} data={1}", start, data);
-
-            var buf = GetData?.Invoke(deviceid);
+            var buf = GetData?.Invoke(id);
             if (buf == null) throw new ApiException(405, "找不到设备！");
 
             var ds = data.ToHex();
@@ -180,24 +180,22 @@ namespace xLink
             buf[0] = (Byte)buf.Length;
 
             // 保存回去
-            SetData("", buf);
+            SetData?.Invoke(id, buf);
 
-            return new DataModel { Start = 0, Data = buf.ToHex() };
+            return new DataModel { ID = id, Start = 0, Data = buf.ToHex() };
         }
 
         /// <summary>收到读取请求</summary>
-        /// <param name="deviceid">设备</param>
+        /// <param name="id">设备</param>
         /// <param name="start"></param>
         /// <param name="count"></param>
         [Api("Read")]
-        private DataModel OnRead(String deviceid, Int32 start, Int32 count)
+        private DataModel OnRead(String id, Int32 start, Int32 count)
         {
-            WriteLog("start={0} count={1}", start, count);
-
-            var buf = GetData?.Invoke(deviceid);
+            var buf = GetData?.Invoke(id);
             if (buf == null) throw new ApiException(405, "找不到设备！");
 
-            return new DataModel { Start = start, Data = buf.ReadBytes(start, count).ToHex() };
+            return new DataModel { ID = id, Start = start, Data = buf.ReadBytes(start, count).ToHex() };
         }
         #endregion
 

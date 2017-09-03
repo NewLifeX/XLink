@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\xLink\Models\DataModel.cs">
+      <Link>Models\DataModel.cs</Link>
+    </Compile>
     <Compile Include="FrmDevice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,7 +74,6 @@
       <DependentUpon>FrmUser.cs</DependentUpon>
     </Compile>
     <Compile Include="LinkClient.cs" />
-    <Compile Include="Models\DataModel.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

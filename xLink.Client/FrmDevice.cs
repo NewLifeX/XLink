@@ -28,7 +28,7 @@ namespace xLink.Client
             var b = (Byte)(Data[idx] == 0 ? 1 : 0);
             //txtData.Text = Data.ToHex();
 
-            var buf = await Client.Write(idx, b);
+            var buf = await Client.Write(null, idx, b);
             if (buf != null && buf.Length > 0)
             {
                 Data = buf;
