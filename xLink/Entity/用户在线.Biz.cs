@@ -15,7 +15,7 @@ using XCode.Cache;
 namespace xLink.Entity
 {
     /// <summary>用户在线</summary>
-    public partial class UserOnline : Entity<UserOnline>, IOnline
+    public partial class UserOnline : Entity<UserOnline>, IMyOnline
     {
         #region 对象操作
         static UserOnline()

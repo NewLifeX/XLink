@@ -15,7 +15,7 @@ using XCode.Cache;
 namespace xLink.Entity
 {
     /// <summary>设备历史</summary>
-    public partial class DeviceHistory : Entity<DeviceHistory>, IHistory
+    public partial class DeviceHistory : Entity<DeviceHistory>, IMyHistory
     {
         #region 对象操作
         static DeviceHistory()

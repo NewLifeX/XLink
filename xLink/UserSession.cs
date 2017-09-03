@@ -54,10 +54,6 @@ namespace xLink
             // 验证密码
             u.CheckRC4(pass);
 
-            var olt = Online as UserOnline;
-            olt.LoginTime = DateTime.Now;
-            olt.LoginCount++;
-
             return u;
         }
 
@@ -65,41 +61,15 @@ namespace xLink
         /// <param name="user"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        protected override IManageUser Register(String user, String pass)
+        protected override IMyModel CreateUser(String user, String pass)
         {
             var u = User.FindByName(user);
             if (u == null) u = new User { Name = user };
 
             u.Password = Rand.NextString(8);
-            u.Enable = true;
-            u.Registers++;
-
-            Name = u.Name;
-            WriteLog("注册 {0} => {1}/{2}", user, u.Name, u.Password);
+            //u.Password = pass.MD5();
 
             return u;
-        }
-
-        /// <summary>登录或注册完成后，保存登录信息</summary>
-        /// <param name="user"></param>
-        protected override void SaveLogin(IManageUser user)
-        {
-            var u = user as User;
-            u.Type = Type;
-            u.Version = Version;
-            if (u.NickName.IsNullOrEmpty()) u.NickName = Agent;
-
-            base.SaveLogin(user);
-        }
-
-        /// <summary>心跳</summary>
-        /// <returns></returns>
-        protected override Object OnPing()
-        {
-            var olt = Online as UserOnline;
-            olt.PingCount++;
-
-            return base.OnPing();
         }
         #endregion
 
@@ -126,6 +96,18 @@ namespace xLink
             hi.Version = Version;
 
             return hi;
+        }
+        #endregion
+
+        #region 读写
+        /// <summary>读取对方数据</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public override Task<Byte[]> Read(String id, Int32 start, Int32 count)
+        {
+            throw new NotSupportedException("不支持向用户端发起读取请求");
         }
         #endregion
     }

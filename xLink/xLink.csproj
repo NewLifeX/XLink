@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceSession.cs" />
+    <Compile Include="Entity\MyModel.cs" />
     <Compile Include="Entity\用户.Biz.cs" />
     <Compile Include="Entity\用户.cs" />
     <Compile Include="Entity\用户历史.Biz.cs" />

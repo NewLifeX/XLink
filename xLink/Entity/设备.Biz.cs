@@ -18,7 +18,7 @@ using XCode.Membership;
 namespace xLink.Entity
 {
     /// <summary>设备</summary>
-    public partial class Device : Entity<Device>, IManageUser
+    public partial class Device : Entity<Device>, IMyModel
     {
         #region 对象操作
         static Device()

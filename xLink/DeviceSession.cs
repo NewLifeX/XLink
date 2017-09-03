@@ -8,7 +8,6 @@ using NewLife.Remoting;
 using NewLife.Security;
 using NewLife.Serialization;
 using NewLife.Threading;
-using XCode.Remoting;
 using xLink.Entity;
 using xLink.Models;
 
@@ -36,6 +35,13 @@ namespace xLink
                 n = DeviceHistory.Meta.Count;
             });
         }
+
+        /// <summary>实例化</summary>
+        public DeviceSession()
+        {
+            GetData = OnGetData;
+            SetData = OnSetData;
+        }
         #endregion
 
         #region 登录注册
@@ -56,10 +62,6 @@ namespace xLink
             // 验证密码
             u.CheckRC4(pass);
 
-            var olt = Online as DeviceOnline;
-            olt.LoginTime = DateTime.Now;
-            olt.LoginCount++;
-
             return u;
         }
 
@@ -67,18 +69,13 @@ namespace xLink
         /// <param name="user"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        protected override IManageUser Register(String user, String pass)
+        protected override IMyModel CreateUser(String user, String pass)
         {
             var u = Device.FindByCode(user);
             if (u == null) u = new Device { Code = user };
 
             u.Name = user.GetBytes().Crc().GetBytes().ToHex();
             u.Password = Rand.NextString(8);
-            u.Enable = true;
-            u.Registers++;
-
-            Name = u.Name;
-            WriteLog("注册 {0} => {1}/{2}", user, u.Name, u.Password);
 
             return u;
         }
@@ -87,21 +84,7 @@ namespace xLink
         /// <param name="user"></param>
         protected override void SaveLogin(IManageUser user)
         {
-            var u = user as Device;
-            u.Type = Type;
-            u.Version = Version;
-            if (u.NickName.IsNullOrEmpty()) u.NickName = Agent;
-
-            var dic = ControllerContext.Current?.Parameters?.ToNullable();
-            if (dic != null)
-            {
-                var olt = Online as DeviceOnline;
-                // 本地地址
-                olt.InternalUri = dic["ip"] + "";
-            }
-
             // 检查下发指令
-            //Task.Run(() => CheckCommandAsync());
             TimerX.Delay(CheckCommand, 100);
 
             base.SaveLogin(user);
@@ -111,11 +94,7 @@ namespace xLink
         /// <returns></returns>
         protected override Object OnPing()
         {
-            var olt = Online as DeviceOnline;
-            olt.PingCount++;
-
             // 检查下发指令
-            //Task.Run(() => CheckCommandAsync());
             TimerX.Delay(CheckCommand, 100);
 
             return base.OnPing();
@@ -195,68 +174,43 @@ namespace xLink
         #endregion
 
         #region 读写
-        /// <summary>写入数据</summary>
+        /// <summary>写入数据，返回整个数据区</summary>
+        /// <param name="id">设备</param>
         /// <param name="start"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public async Task<Byte[]> Write(Int32 start, params Byte[] data)
+        public override async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
         {
-            var rs = await InvokeAsync<Object>("Write", new { start, data = data.ToHex() });
-            var dic = rs.ToDictionary();
-            return (dic["data"] + "").ToHex();
-        }
-
-        /// <summary>收到写入请求</summary>
-        /// <param name="start"></param>
-        /// <param name="data"></param>
-        [Api("Write")]
-        private DataModel OnWrite(Int32 start, String data)
-        {
-            var dv = Device;
-            if (dv == null) throw Error(405, "找不到设备！");
-
-            var ds = data.ToHex();
-            var buf = dv.Data.ToHex();
-
-            // 检查扩容
-            if (start + ds.Length > buf.Length)
-            {
-                var buf2 = new Byte[start + ds.Length];
-                buf2.Write(0, buf);
-                buf = buf2;
-            }
-            buf.Write(start, ds);
-            buf[0] = (Byte)buf.Length;
-
-            // 保存回去
-            dv.Data = buf.ToHex();
-            dv.SaveAsync();
-
-            return new DataModel { Data = dv.Data };
+            var rs = await InvokeAsync<DataModel>("Write", new { id, start, data = data.ToHex() });
+            return rs.Data.ToHex();
         }
 
         /// <summary>读取对方数据</summary>
+        /// <param name="id">设备</param>
         /// <param name="start"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public async Task<Byte[]> Read(Int32 start, Int32 count)
+        public override async Task<Byte[]> Read(String id, Int32 start, Int32 count)
         {
-            var dic = await InvokeAsync<IDictionary<String, Object>>("Read", new { start, count });
-            return (dic["data"] + "").ToHex();
+            var rs = await InvokeAsync<DataModel>("Read", new { id, start, count });
+            return rs.Data.ToHex();
         }
 
-        /// <summary>收到读取请求</summary>
-        /// <param name="start"></param>
-        /// <param name="count"></param>
-        [Api("Read")]
-        private DataModel OnRead(Int32 start, Int32 count)
+        private Byte[] OnGetData(String id)
         {
             var dv = Device;
-            if (dv == null) throw Error(405, "找不到设备！");
+            if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
 
-            var buf = dv.Data.ToHex();
+            return dv?.Data.ToHex();
+        }
 
-            return new DataModel { Start = start, Data = buf.ReadBytes(start, count).ToHex() };
+        private void OnSetData(String id, Byte[] data)
+        {
+            var dv = Device;
+            if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
+
+            dv.Data = data.ToHex();
+            dv.SaveAsync();
         }
         #endregion
     }
