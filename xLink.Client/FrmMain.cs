@@ -112,8 +112,6 @@ namespace xLink.Client
             ac.Received += OnReceived;
             ac.UserName = cfg.UserName;
             ac.Password = cfg.Password;
-            ac.LoginAction = mode + "/Login";
-            ac.PingAction = mode + "/Ping";
             ac.ActionPrefix = mode + "/";
 
             ac.Encrypted = cfg.Encrypted;
@@ -272,8 +270,7 @@ namespace xLink.Client
 
                     ac.UserName = cc.UserName;
                     ac.Password = cc.Password;
-                    ac.LoginAction = cc.LoginAction;
-                    ac.PingAction = cc.PingAction;
+                    ac.ActionPrefix = cc.ActionPrefix;
 
                     ac.Encrypted = cc.Encrypted;
                     ac.Compressed = cc.Compressed;

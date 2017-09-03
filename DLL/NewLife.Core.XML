@@ -7260,6 +7260,9 @@
         <member name="P:NewLife.Remoting.ApiClient.NewLife#Remoting#IApiSession#Host">
             <summary>主机</summary>
         </member>
+        <member name="P:NewLife.Remoting.ApiClient.ActionPrefix">
+            <summary>动作前缀。自动在每个没有/的动作名之前加上</summary>
+        </member>
         <member name="P:NewLife.Remoting.ApiClient.UserState">
             <summary>用户对象。一般用于共享用户信息对象</summary>
         </member>
@@ -7333,9 +7336,6 @@
         <member name="P:NewLife.Remoting.ApiClient.Logined">
             <summary>是否已登录</summary>
         </member>
-        <member name="P:NewLife.Remoting.ApiClient.LoginAction">
-            <summary>登录动作名</summary>
-        </member>
         <member name="E:NewLife.Remoting.ApiClient.OnLogined">
             <summary>登录完成事件</summary>
         </member>
@@ -7356,9 +7356,6 @@
         </member>
         <member name="P:NewLife.Remoting.ApiClient.Span">
             <summary>服务端与客户端的时间差</summary>
-        </member>
-        <member name="P:NewLife.Remoting.ApiClient.PingAction">
-            <summary>心跳动作名</summary>
         </member>
         <member name="M:NewLife.Remoting.ApiClient.PingAsync(System.Object)">
             <summary>发送心跳</summary>

@@ -10,6 +10,7 @@ using NewLife.Serialization;
 using NewLife.Threading;
 using XCode.Remoting;
 using xLink.Entity;
+using xLink.Models;
 
 namespace xLink
 {
@@ -209,10 +210,8 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="data"></param>
         [Api("Write")]
-        private Object OnWrite(Int32 start, String data)
+        private DataModel OnWrite(Int32 start, String data)
         {
-            //WriteLog("start={0} data={1}", start, data);
-
             var dv = Device;
             if (dv == null) throw Error(405, "找不到设备！");
 
@@ -233,7 +232,7 @@ namespace xLink
             dv.Data = buf.ToHex();
             dv.SaveAsync();
 
-            return new { start = 0, data = dv.Data };
+            return new DataModel { Data = dv.Data };
         }
 
         /// <summary>读取对方数据</summary>
@@ -250,16 +249,14 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="count"></param>
         [Api("Read")]
-        private Object OnRead(Int32 start, Int32 count)
+        private DataModel OnRead(Int32 start, Int32 count)
         {
-            //WriteLog("start={0} count={1}", start, count);
-
             var dv = Device;
             if (dv == null) throw Error(405, "找不到设备！");
 
             var buf = dv.Data.ToHex();
 
-            return new { start, data = buf.ReadBytes(start, count).ToHex() };
+            return new DataModel { Start = start, Data = buf.ReadBytes(start, count).ToHex() };
         }
         #endregion
     }

@@ -71,6 +71,7 @@
       <DependentUpon>FrmUser.cs</DependentUpon>
     </Compile>
     <Compile Include="LinkClient.cs" />
+    <Compile Include="Models\DataModel.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

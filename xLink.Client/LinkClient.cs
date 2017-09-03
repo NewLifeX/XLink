@@ -7,6 +7,7 @@ using NewLife;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
+using xLink.Models;
 
 namespace xLink
 {
@@ -17,9 +18,6 @@ namespace xLink
         #region 属性
         /// <summary>远程地址</summary>
         public NetUri Remote { get; set; }
-
-        /// <summary>动作前缀</summary>
-        public String ActionPrefix { get; set; }
 
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
@@ -134,15 +132,14 @@ namespace xLink
         #endregion
 
         #region 读写
-        /// <summary>写入数据</summary>
+        /// <summary>写入数据，返回整个数据区</summary>
         /// <param name="start"></param>
         /// <param name="data"></param>
         /// <returns></returns>
         public async Task<Byte[]> Write(Int32 start, params Byte[] data)
         {
-            var rs = await InvokeAsync<Object>(ActionPrefix + "Write", new { start, data = data.ToHex() });
-            var dic = rs.ToDictionary();
-            return (dic["data"] + "").ToHex();
+            var rs = await InvokeAsync<DataModel>("Write", new { start, data = data.ToHex() });
+            return rs.Data.ToHex();
         }
 
         /// <summary>收到写入请求</summary>
@@ -160,8 +157,8 @@ namespace xLink
         /// <returns></returns>
         public async Task<Byte[]> Read(Int32 start, Int32 count)
         {
-            var dic = await InvokeAsync<IDictionary<String, Object>>(ActionPrefix + "Read", new { start, count });
-            return (dic["data"] + "").ToHex();
+            var rs = await InvokeAsync<DataModel>("Read", new { start, count });
+            return rs.Data.ToHex();
         }
 
         /// <summary>收到读取请求</summary>
