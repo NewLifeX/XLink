@@ -174,28 +174,6 @@ namespace xLink
         #endregion
 
         #region 读写
-        /// <summary>写入数据，返回整个数据区</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public override async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
-        {
-            var rs = await InvokeAsync<DataModel>("Write", new { id, start, data = data.ToHex() });
-            return rs.Data.ToHex();
-        }
-
-        /// <summary>读取对方数据</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        public override async Task<Byte[]> Read(String id, Int32 start, Int32 count)
-        {
-            var rs = await InvokeAsync<DataModel>("Read", new { id, start, count });
-            return rs.Data.ToHex();
-        }
-
         private Byte[] OnGetData(String id)
         {
             var dv = Device;

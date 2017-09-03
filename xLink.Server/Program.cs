@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using NewLife;
 using NewLife.Agent;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
+using NewLife.Remoting;
 using NewLife.Threading;
 using xLink.Entity;
 
@@ -82,13 +84,8 @@ namespace xLink.Server
             Svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
 
             // 遍历注册各服务控制器
-            foreach (var item in typeof(LinkSession).GetAllSubclasses(true))
-            {
-                // 触发异步初始化
-                var obj = item.CreateInstance();
-
-                Svr.Manager.Register(item, null, true);
-            }
+            Svr.Register<DeviceSession>();
+            Svr.Register<UserSession>();
 
             Svr.Start();
 

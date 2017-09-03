@@ -76,7 +76,7 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public virtual async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
+        public async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
         {
             var rs = await InvokeAsync<DataModel>("Write", new { id, start, data = data.ToHex() });
             return rs.Data.ToHex();
@@ -87,7 +87,7 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public virtual async Task<Byte[]> Read(String id, Int32 start, Int32 count)
+        public async Task<Byte[]> Read(String id, Int32 start, Int32 count)
         {
             var rs = await InvokeAsync<DataModel>("Read", new { id, start, count });
             return rs.Data.ToHex();
@@ -101,7 +101,7 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="data"></param>
         [Api("Write")]
-        protected virtual DataModel OnWrite(String id, Int32 start, String data)
+        protected DataModel OnWrite(String id, Int32 start, String data)
         {
             var buf = GetData?.Invoke(id);
             if (buf == null) throw new ApiException(405, "找不到设备！");
@@ -129,7 +129,7 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="count"></param>
         [Api("Read")]
-        protected virtual DataModel OnRead(String id, Int32 start, Int32 count)
+        protected DataModel OnRead(String id, Int32 start, Int32 count)
         {
             var buf = GetData?.Invoke(id);
             if (buf == null) throw new ApiException(405, "找不到设备！");

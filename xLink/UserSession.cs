@@ -100,15 +100,15 @@ namespace xLink
         #endregion
 
         #region 读写
-        /// <summary>读取对方数据</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        public override Task<Byte[]> Read(String id, Int32 start, Int32 count)
-        {
-            throw new NotSupportedException("不支持向用户端发起读取请求");
-        }
+        ///// <summary>读取对方数据</summary>
+        ///// <param name="id">设备</param>
+        ///// <param name="start"></param>
+        ///// <param name="count"></param>
+        ///// <returns></returns>
+        //public override Task<Byte[]> Read(String id, Int32 start, Int32 count)
+        //{
+        //    throw new NotSupportedException("不支持向用户端发起读取请求");
+        //}
         #endregion
     }
 }

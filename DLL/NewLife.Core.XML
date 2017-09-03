@@ -6665,6 +6665,9 @@
             <param name="type">控制器类型</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
         </member>
+        <member name="M:NewLife.Remoting.ApiHost.ShowService">
+            <summary>显示可用服务</summary>
+        </member>
         <member name="P:NewLife.Remoting.ApiHost.Encrypted">
             <summary>是否加密</summary>
         </member>
@@ -7106,22 +7109,19 @@
         <member name="P:NewLife.Remoting.IApiManager.Services">
             <summary>可提供服务的方法</summary>
         </member>
-        <member name="M:NewLife.Remoting.IApiManager.Register``1(System.Boolean)">
+        <member name="M:NewLife.Remoting.IApiManager.Register``1">
             <summary>注册服务提供类。该类的所有公开方法将直接暴露</summary>
-            <param name="requireApi">是否要求Api特性</param>
             <typeparam name="TService"></typeparam>
         </member>
-        <member name="M:NewLife.Remoting.IApiManager.Register(System.Object,System.String,System.Boolean)">
+        <member name="M:NewLife.Remoting.IApiManager.Register(System.Object,System.String)">
             <summary>注册服务</summary>
             <param name="controller">控制器对象</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
-            <param name="requireApi">是否要求Api特性</param>
         </member>
-        <member name="M:NewLife.Remoting.IApiManager.Register(System.Type,System.String,System.Boolean)">
+        <member name="M:NewLife.Remoting.IApiManager.Register(System.Type,System.String)">
             <summary>注册服务</summary>
             <param name="type">控制器类型</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
-            <param name="requireApi">是否要求Api特性</param>
         </member>
         <member name="M:NewLife.Remoting.IApiManager.Register(System.Reflection.MethodInfo)">
             <summary>注册服务</summary>
@@ -7135,22 +7135,19 @@
         <member name="P:NewLife.Remoting.ApiManager.Services">
             <summary>可提供服务的方法</summary>
         </member>
-        <member name="M:NewLife.Remoting.ApiManager.Register``1(System.Boolean)">
+        <member name="M:NewLife.Remoting.ApiManager.Register``1">
             <summary>注册服务提供类。该类的所有公开方法将直接暴露</summary>
             <typeparam name="TService"></typeparam>
-            <param name="requireApi">是否要求Api特性</param>
         </member>
-        <member name="M:NewLife.Remoting.ApiManager.Register(System.Object,System.String,System.Boolean)">
+        <member name="M:NewLife.Remoting.ApiManager.Register(System.Object,System.String)">
             <summary>注册服务</summary>
             <param name="controller">控制器对象</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
-            <param name="requireApi">是否要求Api特性</param>
         </member>
-        <member name="M:NewLife.Remoting.ApiManager.Register(System.Type,System.String,System.Boolean)">
+        <member name="M:NewLife.Remoting.ApiManager.Register(System.Type,System.String)">
             <summary>注册服务</summary>
             <param name="type">控制器类型</param>
             <param name="method">动作名称。为空时遍历控制器所有公有成员方法</param>
-            <param name="requireApi">是否要求Api特性</param>
         </member>
         <member name="M:NewLife.Remoting.ApiManager.Register(System.Reflection.MethodInfo)">
             <summary>注册服务</summary>
