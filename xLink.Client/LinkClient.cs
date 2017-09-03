@@ -37,7 +37,7 @@ namespace xLink
             dic["Version"] = asmx.Version;
 
             // 注册当前类所有接口
-            Manager.Register(this, null, true);
+            Manager.Register(this, null);
             //Register(this, nameof(OnWrite));
         }
         #endregion
