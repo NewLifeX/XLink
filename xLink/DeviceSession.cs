@@ -209,7 +209,7 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="data"></param>
         [Api("Write")]
-        private String OnWrite(Int32 start, String data)
+        private Object OnWrite(Int32 start, String data)
         {
             //WriteLog("start={0} data={1}", start, data);
 
@@ -233,7 +233,7 @@ namespace xLink
             dv.Data = buf.ToHex();
             dv.SaveAsync();
 
-            return dv.Data;
+            return new { start = 0, data = dv.Data };
         }
 
         /// <summary>读取对方数据</summary>
@@ -250,7 +250,7 @@ namespace xLink
         /// <param name="start"></param>
         /// <param name="count"></param>
         [Api("Read")]
-        private String OnRead(Int32 start, Int32 count)
+        private Object OnRead(Int32 start, Int32 count)
         {
             //WriteLog("start={0} count={1}", start, count);
 
@@ -259,7 +259,7 @@ namespace xLink
 
             var buf = dv.Data.ToHex();
 
-            return buf.ReadBytes(start, count).ToHex();
+            return new { start, data = buf.ReadBytes(start, count).ToHex() };
         }
         #endregion
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace xLink.Client
@@ -22,40 +23,37 @@ namespace xLink.Client
             Data = buf;
         }
 
-        private async void Led1_Click(Object sender, EventArgs e)
+        private async Task Blink(Int32 idx)
         {
-            var idx = 1;
-            Data[idx] = (Byte)(Data[idx] == 0 ? 1 : 0);
-            txtData.Text = Data.ToHex();
+            var b = (Byte)(Data[idx] == 0 ? 1 : 0);
+            //txtData.Text = Data.ToHex();
 
-            await Client.Write(idx, Data[idx]);
+            var buf = await Client.Write(idx, b);
+            if (buf != null && buf.Length > 0)
+            {
+                Data = buf;
+                txtData.Text = buf.ToHex();
+            }
+        }
+
+        private async void lbLed1_Click(Object sender, EventArgs e)
+        {
+            await Blink(1);
         }
 
         private async void lbLed2_Click(Object sender, EventArgs e)
         {
-            var idx = 2;
-            Data[idx] = (Byte)(Data[idx] == 0 ? 1 : 0);
-            txtData.Text = Data.ToHex();
-
-            await Client.Write(idx, Data[idx]);
+            await Blink(2);
         }
 
         private async void lbButton1_Click(Object sender, EventArgs e)
         {
-            var idx = 3;
-            Data[idx] = (Byte)(Data[idx] == 0 ? 1 : 0);
-            txtData.Text = Data.ToHex();
-
-            await Client.Write(idx, Data[idx]);
+            await Blink(3);
         }
 
         private async void lbButton2_Click(Object sender, EventArgs e)
         {
-            var idx = 4;
-            Data[idx] = (Byte)(Data[idx] == 0 ? 1 : 0);
-            txtData.Text = Data.ToHex();
-
-            await Client.Write(idx, Data[idx]);
+            await Blink(4);
         }
     }
 }
