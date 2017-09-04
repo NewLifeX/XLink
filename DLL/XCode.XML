@@ -8452,6 +8452,11 @@
         <member name="M:XCode.Transform.Sync`1.Start">
             <summary>启动时检查参数</summary>
         </member>
+        <member name="M:XCode.Transform.Sync`1.Init(XCode.Transform.IExtractSetting)">
+            <summary>每一轮启动时</summary>
+            <param name="set"></param>
+            <returns></returns>
+        </member>
         <member name="M:XCode.Transform.Sync`1.Fetch(XCode.Transform.IExtracter)">
             <summary>从来源表查数据</summary>
             <param name="extracter"></param>
@@ -8768,6 +8773,9 @@
             <summary>每一轮启动时</summary>
             <param name="set"></param>
             <returns></returns>
+        </member>
+        <member name="F:XCode.Transform.ETL._Last">
+            <summary>最后一次处理的配置</summary>
         </member>
         <member name="M:XCode.Transform.ETL.Process">
             <summary>抽取并处理一批数据</summary>

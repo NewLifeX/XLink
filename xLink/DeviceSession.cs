@@ -86,6 +86,17 @@ namespace xLink
         {
             // 检查下发指令
             TimerX.Delay(CheckCommand, 100);
+            // 读取信息
+            TimerX.Delay(async s =>
+            {
+                try
+                {
+                    var rs = await InvokeAsync<Object>("GetServer");
+                    var dic = rs.ToDictionary();
+                    WriteLog("Server={0}", dic["Server"]);
+                }
+                catch { }
+            }, 1000);
 
             base.SaveLogin(user);
         }
