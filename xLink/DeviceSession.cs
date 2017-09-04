@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using NewLife.MessageQueue;
 using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
@@ -84,6 +85,15 @@ namespace xLink
         /// <param name="user"></param>
         protected override void SaveLogin(IManageUser user)
         {
+            //var dv = Device;
+            //if (dv != null)
+            //{
+            //    // 注册消息队列
+            //    MQHost.Instance.Subscribe(dv.Name, dv.Name, "Device", async (sub, msg) =>
+            //    {
+            //    }, Session);
+            //}
+
             // 检查下发指令
             TimerX.Delay(CheckCommand, 100);
             // 读取信息

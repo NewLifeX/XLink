@@ -35,12 +35,14 @@
             this.lbLed1 = new System.Windows.Forms.Label();
             this.txtData = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtDevice = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbButton2
             // 
             this.lbButton2.AutoSize = true;
-            this.lbButton2.Location = new System.Drawing.Point(525, 113);
+            this.lbButton2.Location = new System.Drawing.Point(430, 113);
             this.lbButton2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbButton2.Name = "lbButton2";
             this.lbButton2.Size = new System.Drawing.Size(40, 16);
@@ -51,7 +53,7 @@
             // lbButton1
             // 
             this.lbButton1.AutoSize = true;
-            this.lbButton1.Location = new System.Drawing.Point(384, 113);
+            this.lbButton1.Location = new System.Drawing.Point(318, 113);
             this.lbButton1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbButton1.Name = "lbButton1";
             this.lbButton1.Size = new System.Drawing.Size(40, 16);
@@ -62,7 +64,7 @@
             // lbLed2
             // 
             this.lbLed2.AutoSize = true;
-            this.lbLed2.Location = new System.Drawing.Point(245, 113);
+            this.lbLed2.Location = new System.Drawing.Point(190, 113);
             this.lbLed2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbLed2.Name = "lbLed2";
             this.lbLed2.Size = new System.Drawing.Size(56, 16);
@@ -73,7 +75,7 @@
             // lbLed1
             // 
             this.lbLed1.AutoSize = true;
-            this.lbLed1.Location = new System.Drawing.Point(109, 113);
+            this.lbLed1.Location = new System.Drawing.Point(62, 113);
             this.lbLed1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbLed1.Name = "lbLed1";
             this.lbLed1.Size = new System.Drawing.Size(56, 16);
@@ -83,8 +85,8 @@
             // 
             // txtData
             // 
-            this.txtData.Location = new System.Drawing.Point(139, 17);
-            this.txtData.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtData.Location = new System.Drawing.Point(103, 54);
+            this.txtData.Margin = new System.Windows.Forms.Padding(5);
             this.txtData.Name = "txtData";
             this.txtData.Size = new System.Drawing.Size(349, 26);
             this.txtData.TabIndex = 7;
@@ -93,18 +95,37 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 24);
+            this.label1.Location = new System.Drawing.Point(30, 59);
             this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
             this.label1.TabIndex = 6;
             this.label1.Text = "数据区：";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(30, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "设备：";
+            // 
+            // txtDevice
+            // 
+            this.txtDevice.Location = new System.Drawing.Point(103, 13);
+            this.txtDevice.Name = "txtDevice";
+            this.txtDevice.Size = new System.Drawing.Size(131, 26);
+            this.txtDevice.TabIndex = 13;
+            this.txtDevice.Text = "2BE762F3";
+            // 
             // FrmUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 215);
+            this.ClientSize = new System.Drawing.Size(517, 168);
+            this.Controls.Add(this.txtDevice);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lbButton2);
             this.Controls.Add(this.lbButton1);
             this.Controls.Add(this.lbLed2);
@@ -113,7 +134,7 @@
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "用户客户端";
@@ -131,5 +152,7 @@
         private System.Windows.Forms.Label lbLed1;
         private System.Windows.Forms.TextBox txtData;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtDevice;
     }
 }

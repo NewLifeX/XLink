@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
 using NewLife.Security;
 using xLink.Entity;
+using xLink.Models;
 
 namespace xLink
 {
@@ -33,6 +35,13 @@ namespace xLink
                 n = UserOnline.Meta.Count;
                 n = UserHistory.Meta.Count;
             });
+        }
+
+        /// <summary>实例化</summary>
+        public UserSession()
+        {
+            GetData = OnGetData;
+            SetData = OnSetData;
         }
         #endregion
 
@@ -100,15 +109,66 @@ namespace xLink
         #endregion
 
         #region 读写
-        ///// <summary>读取对方数据</summary>
-        ///// <param name="id">设备</param>
-        ///// <param name="start"></param>
-        ///// <param name="count"></param>
-        ///// <returns></returns>
-        //public override Task<Byte[]> Read(String id, Int32 start, Int32 count)
-        //{
-        //    throw new NotSupportedException("不支持向用户端发起读取请求");
-        //}
+
+        /// <summary>收到写入请求</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
+        [Api("Write")]
+        protected override DataModel OnWrite(String id, Int32 start, String data)
+        {
+            var dv = Device.FindByName(id);
+            if (dv == null) throw new ApiException(405, "找不到设备！");
+
+            var ss = Session.AllSessions.FirstOrDefault(e => e.UserSession is DeviceSession d && d.Name.EqualIgnoreCase(id));
+            if (ss == null) throw new Exception("设备离线");
+
+            var ds = ss.UserSession as DeviceSession;
+            var rs = ds.Write(id, start, data.ToHex()).Result;
+
+            return base.OnWrite(id, start, data);
+        }
+
+        /// <summary>收到读取请求</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        [Api("Read")]
+        protected override DataModel OnRead(String id, Int32 start, Int32 count)
+        {
+            var ss = Session.AllSessions.FirstOrDefault(e => e.UserSession is DeviceSession d && d.Name.EqualIgnoreCase(id));
+            var ds = ss as DeviceSession;
+            if (ds != null) Task.Run(() => ds.Read(id, 0, 64));
+
+            return base.OnRead(id, start, count);
+        }
+
+        /// <summary>读取对方数据</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public override Task<Byte[]> Read(String id, Int32 start, Int32 count)
+        {
+            throw new NotSupportedException("不支持向用户端发起读取请求");
+        }
+
+        private Byte[] OnGetData(String id)
+        {
+            var dv = Device.FindByName(id);
+            if (dv == null) throw new ApiException(405, "找不到设备！");
+
+            return dv?.Data.ToHex();
+        }
+
+        private void OnSetData(String id, Byte[] data)
+        {
+            var dv = Device.FindByName(id);
+            if (dv == null) throw new ApiException(405, "找不到设备！");
+
+            dv.Data = data.ToHex();
+            dv.SaveAsync();
+        }
         #endregion
     }
 }

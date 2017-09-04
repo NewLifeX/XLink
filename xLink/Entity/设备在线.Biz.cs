@@ -54,9 +54,16 @@ namespace xLink.Entity
 
         #region 扩展查询
         /// <summary>根据会话查找</summary>
+        /// <param name="deviceid">会话</param>
+        /// <returns></returns>
+        public static DeviceOnline FindByDeviceID(Int32 deviceid)
+        {
+            return Find(__.DeviceID, deviceid);
+        }
+
+        /// <summary>根据会话查找</summary>
         /// <param name="sessionid">会话</param>
         /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static DeviceOnline FindBySessionID(Int32 sessionid)
         {
             //if (Meta.Count >= 1000)
