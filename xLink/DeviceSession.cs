@@ -195,6 +195,52 @@ namespace xLink
         #endregion
 
         #region 读写
+        /// <summary>写入数据，返回整个数据区</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public override async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
+        {
+            var err = "";
+            try
+            {
+                return await base.Write(id, start, data);
+            }
+            catch (Exception ex)
+            {
+                err = ex?.GetTrue()?.Message;
+                throw;
+            }
+            finally
+            {
+                SaveHistory("Write", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, data, err));
+            }
+        }
+
+        /// <summary>读取对方数据</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public override async Task<Byte[]> Read(String id, Int32 start, Int32 count)
+        {
+            var err = "";
+            try
+            {
+                return await base.Read(id, start, count);
+            }
+            catch (Exception ex)
+            {
+                err = ex?.GetTrue()?.Message;
+                throw;
+            }
+            finally
+            {
+                SaveHistory("Read", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, count, err));
+            }
+        }
+
         private Byte[] OnGetData(String id)
         {
             var dv = Device;

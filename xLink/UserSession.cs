@@ -109,7 +109,6 @@ namespace xLink
         #endregion
 
         #region 读写
-
         /// <summary>收到写入请求</summary>
         /// <param name="id">设备</param>
         /// <param name="start"></param>
@@ -117,14 +116,27 @@ namespace xLink
         [Api("Write")]
         protected override DataModel OnWrite(String id, Int32 start, String data)
         {
-            var dv = Device.FindByName(id);
-            if (dv == null) throw new ApiException(405, "找不到设备！");
+            var err = "";
+            try
+            {
+                var dv = Device.FindByName(id);
+                if (dv == null) throw new ApiException(405, "找不到设备！");
 
-            var ss = Session.AllSessions.FirstOrDefault(e => e.UserSession is DeviceSession d && d.Name.EqualIgnoreCase(id));
-            if (ss == null) throw new Exception("设备离线");
+                var ss = Session.AllSessions.FirstOrDefault(e => e.UserSession is DeviceSession d && d.Name.EqualIgnoreCase(id));
+                if (ss == null) throw new Exception("设备离线");
 
-            var ds = ss.UserSession as DeviceSession;
-            var rs = ds.Write(id, start, data.ToHex()).Result;
+                var ds = ss.UserSession as DeviceSession;
+                var rs = ds.Write(id, start, data.ToHex()).Result;
+            }
+            catch (Exception ex)
+            {
+                err = ex?.GetTrue()?.Message;
+                throw;
+            }
+            finally
+            {
+                SaveHistory("Write", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, data, err));
+            }
 
             return base.OnWrite(id, start, data);
         }
@@ -136,9 +148,21 @@ namespace xLink
         [Api("Read")]
         protected override DataModel OnRead(String id, Int32 start, Int32 count)
         {
-            var ss = Session.AllSessions.FirstOrDefault(e => e.UserSession is DeviceSession d && d.Name.EqualIgnoreCase(id));
-            var ds = ss as DeviceSession;
-            if (ds != null) Task.Run(() => ds.Read(id, 0, 64));
+            var err = "";
+            try
+            {
+                var ss = Session.AllSessions.FirstOrDefault(e => e.UserSession is DeviceSession d && d.Name.EqualIgnoreCase(id));
+                if (ss is DeviceSession ds) Task.Run(() => ds.Read(id, 0, 64));
+            }
+            catch (Exception ex)
+            {
+                err = ex?.GetTrue()?.Message;
+                throw;
+            }
+            finally
+            {
+                SaveHistory("Read", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, count, err));
+            }
 
             return base.OnRead(id, start, count);
         }
