@@ -8417,8 +8417,10 @@
         <member name="M:XCode.Transform.Sync`2.#ctor">
             <summary>实例化数据抽取器</summary>
         </member>
-        <member name="M:XCode.Transform.Sync`2.Start">
-            <summary>启动时检查参数</summary>
+        <member name="M:XCode.Transform.Sync`2.Init(XCode.Transform.IExtractSetting)">
+            <summary>每一轮启动时</summary>
+            <param name="set"></param>
+            <returns></returns>
         </member>
         <member name="M:XCode.Transform.Sync`2.SyncItem(XCode.IEntity)">
             <summary>处理单行数据</summary>
@@ -8501,6 +8503,11 @@
             异步处理之前，需要先保存配置
             </remarks>
             <param name="ctx">数据上下文</param>
+        </member>
+        <member name="M:XCode.Transform.Sync.Fetch(XCode.Transform.IExtracter)">
+            <summary>抽取数据</summary>
+            <param name="extracter"></param>
+            <returns></returns>
         </member>
         <member name="M:XCode.Transform.Sync.OnSync(XCode.Transform.DataContext)">
             <summary>处理列表，传递批次配置，支持多线程</summary>
