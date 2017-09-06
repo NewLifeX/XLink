@@ -135,7 +135,7 @@ namespace xLink
             }
             finally
             {
-                SaveHistory("Write", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, data, err));
+                SaveHistory("Write", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, data.ToHex(), err));
             }
 
             return base.OnWrite(id, start, data);

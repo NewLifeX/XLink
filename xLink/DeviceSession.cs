@@ -75,7 +75,10 @@ namespace xLink
             var u = Device.FindByCode(user);
             if (u == null) u = new Device { Code = user };
 
-            u.Name = user.GetBytes().Crc().GetBytes().ToHex();
+            var devideid = user.GetBytes().Crc().GetBytes().ToHex();
+            if (!Type.IsNullOrEmpty() && Type.Length == 4) devideid = Type + devideid;
+
+            u.Name = devideid;
             u.Password = Rand.NextString(8);
 
             return u;
@@ -214,7 +217,7 @@ namespace xLink
             }
             finally
             {
-                SaveHistory("Write", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, data, err));
+                SaveHistory("Write", err.IsNullOrEmpty(), "({0}, {1}, {2}) {3}".F(id, start, data.ToHex(), err));
             }
         }
 

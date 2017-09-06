@@ -3725,7 +3725,7 @@
             <summary>是否活动</summary>
         </member>
         <member name="P:NewLife.Net.ISocketServer.SessionTimeout">
-            <summary>会话超时时间。默认30秒</summary>
+            <summary>会话超时时间。默认20*60秒</summary>
             <remarks>
             对于每一个会话连接，如果超过该时间仍然没有收到任何数据，则断开会话连接。
             </remarks>
@@ -4500,7 +4500,7 @@
             <summary>网络调试</summary>
         </member>
         <member name="P:NewLife.Net.Setting.SessionTimeout">
-            <summary>会话超时时间。默认30秒</summary>
+            <summary>会话超时时间。默认20*60秒</summary>
         </member>
         <member name="P:NewLife.Net.Setting.BufferSize">
             <summary>缓冲区大小。默认8k</summary>
@@ -6587,6 +6587,12 @@
         <member name="M:NewLife.Remoting.ApiAction.#ctor(System.Reflection.MethodInfo,System.Type)">
             <summary>实例化</summary>
         </member>
+        <member name="M:NewLife.Remoting.ApiAction.GetName(System.Type,System.Reflection.MethodInfo)">
+            <summary>获取名称</summary>
+            <param name="type"></param>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
         <member name="M:NewLife.Remoting.ApiAction.ToString">
             <summary>已重载。</summary>
             <returns></returns>
@@ -6830,6 +6836,9 @@
         </member>
         <member name="P:NewLife.Remoting.ControllerContext.Action">
             <summary>处理动作</summary>
+        </member>
+        <member name="P:NewLife.Remoting.ControllerContext.ActionName">
+            <summary>真实动作名称</summary>
         </member>
         <member name="P:NewLife.Remoting.ControllerContext.Session">
             <summary>会话</summary>
