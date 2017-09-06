@@ -44,7 +44,7 @@ namespace xLink
             var u = user as IMyModel;
             u.Type = Type;
             u.Version = Version;
-            if (u.NickName.IsNullOrEmpty()) u.NickName = Agent;
+            if (u.NickName.IsNullOrEmpty()) u.NickName = "{0}{1}".F(Agent, user.Name);
 
             var dic = ControllerContext.Current?.Parameters?.ToNullable();
             if (dic != null)

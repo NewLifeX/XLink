@@ -43,7 +43,7 @@ namespace xLink.Entity
 
         /// <summary>设备名</summary>
         [Map(__.DeviceID, typeof(Device), "ID")]
-        public String DeviceName { get { return Device + ""; } }
+        public String DeviceName { get { return Device?.Name + ""; } }
 
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]
