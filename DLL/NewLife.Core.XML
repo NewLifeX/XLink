@@ -28,22 +28,20 @@
         <member name="M:NewLife.Agent.AgentServiceBase`1.ShowMenu">
             <summary>显示菜单</summary>
         </member>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.AddMenu(System.Char,System.String,System.Action)">
+            <summary>添加菜单</summary>
+            <param name="key"></param>
+            <param name="name"></param>
+            <param name="callbak"></param>
+        </member>
         <member name="P:NewLife.Agent.AgentServiceBase`1.Threads">
             <summary>线程组</summary>
         </member>
-        <member name="P:NewLife.Agent.AgentServiceBase`1.AttachServers">
-            <summary>附加服务</summary>
+        <member name="P:NewLife.Agent.AgentServiceBase`1.Actives">
+            <summary>各线程活跃状态</summary>
         </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.OnStart(System.String[])">
-            <summary>服务启动事件</summary>
-            <param name="args"></param>
-        </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.OnStop">
-            <summary>服务停止事件</summary>
-        </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.Dispose(System.Boolean)">
-            <summary>销毁资源</summary>
-            <param name="disposing"></param>
+        <member name="P:NewLife.Agent.AgentServiceBase`1.TaskEvents">
+            <summary>等待事件</summary>
         </member>
         <member name="M:NewLife.Agent.AgentServiceBase`1.StartWork">
             <summary>开始循环工作</summary>
@@ -85,7 +83,7 @@
             <summary>服务管理线程封装</summary>
             <param name="data"></param>
         </member>
-        <member name="P:NewLife.Agent.AgentServiceBase`1.Active">
+        <member name="P:NewLife.Agent.AgentServiceBase`1.LastActive">
             <summary>活动时间</summary>
         </member>
         <member name="M:NewLife.Agent.AgentServiceBase`1.CheckActive">
@@ -302,6 +300,9 @@
         </member>
         <member name="P:NewLife.Agent.Setting.AutoRestart">
             <summary>自动重启时间，单位：分。到达自动重启时间时，整个服务进程将会重启，以释放资源。默认0分，表示无限</summary>
+        </member>
+        <member name="P:NewLife.Agent.Setting.WaitForExit">
+            <summary>等待退出。停止服务时，等待每个线程完成当前工作的退出时间，默认3000ms</summary>
         </member>
         <member name="P:NewLife.Agent.Setting.WatchDog">
             <summary>看门狗，保护其它服务，每分钟检查一次。多个服务名逗号分隔</summary>
@@ -4421,6 +4422,9 @@
         <member name="P:NewLife.Net.SerialTransport.Packet">
             <summary>粘包处理接口</summary>
         </member>
+        <member name="P:NewLife.Net.SerialTransport.ByteTimeout">
+            <summary>字节超时。数据包间隔，默认20ms</summary>
+        </member>
         <member name="M:NewLife.Net.SerialTransport.#ctor">
             <summary>串口传输</summary>
         </member>
@@ -6756,10 +6760,11 @@
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Remoting.ApiSession.Error(System.Int32,System.String)">
+        <member name="M:NewLife.Remoting.ApiSession.Error(System.Int32,System.String,System.Object)">
             <summary>抛出异常</summary>
             <param name="errCode"></param>
             <param name="msg"></param>
+            <param name="result"></param>
             <returns></returns>
         </member>
         <member name="M:NewLife.Remoting.ApiSession.OnLogin(System.String,System.String)">
