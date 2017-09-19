@@ -34,25 +34,22 @@
             <param name="name"></param>
             <param name="callbak"></param>
         </member>
-        <member name="P:NewLife.Agent.AgentServiceBase`1.Threads">
-            <summary>线程组</summary>
+        <member name="P:NewLife.Agent.AgentServiceBase`1.Items">
+            <summary>任务项</summary>
         </member>
-        <member name="P:NewLife.Agent.AgentServiceBase`1.Actives">
-            <summary>各线程活跃状态</summary>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.OnStart(System.String[])">
+            <summary>服务启动事件</summary>
+            <param name="args"></param>
         </member>
-        <member name="P:NewLife.Agent.AgentServiceBase`1.TaskEvents">
-            <summary>等待事件</summary>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.OnStop">
+            <summary>服务停止事件</summary>
         </member>
         <member name="M:NewLife.Agent.AgentServiceBase`1.StartWork">
             <summary>开始循环工作</summary>
         </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.StartWork(System.Int32)">
-            <summary>开始循环工作</summary>
-            <param name="index">线程序号</param>
-        </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.WorkWaper(System.Object)">
-            <summary>线程包装</summary>
-            <param name="data">线程序号</param>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.StartWork(System.String)">
+            <summary>开始工作</summary>
+            <param name="reason"></param>
         </member>
         <member name="M:NewLife.Agent.AgentServiceBase`1.Work(System.Int32)">
             <summary>核心工作方法。调度线程会定期调用该方法</summary>
@@ -66,9 +63,9 @@
             则内部需要捕获ThreadAbortException异常，否则无法停止任务处理。
             </remarks>
         </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.StopWork(System.Int32)">
-            <summary>停止循环工作</summary>
-            <param name="index">线程序号</param>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.StopWork(System.String)">
+            <summary>停止服务</summary>
+            <param name="reason"></param>
         </member>
         <member name="F:NewLife.Agent.AgentServiceBase`1.ManagerThread">
             <summary>服务管理线程</summary>
@@ -83,9 +80,6 @@
             <summary>服务管理线程封装</summary>
             <param name="data"></param>
         </member>
-        <member name="P:NewLife.Agent.AgentServiceBase`1.LastActive">
-            <summary>活动时间</summary>
-        </member>
         <member name="M:NewLife.Agent.AgentServiceBase`1.CheckActive">
             <summary>检查是否有工作线程死亡</summary>
         </member>
@@ -97,6 +91,10 @@
             <summary>检查服务进程的总线程数是否超标</summary>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.CheckHandle">
+            <summary>检查服务进程的句柄数是否超标</summary>
+            <returns></returns>
+        </member>
         <member name="F:NewLife.Agent.AgentServiceBase`1.Start">
             <summary>服务开始时间</summary>
         </member>
@@ -104,11 +102,27 @@
             <summary>检查自动重启</summary>
             <returns></returns>
         </member>
-        <member name="F:NewLife.Agent.AgentServiceBase`1.IsShutdowning">
-            <summary>是否正在重启</summary>
-        </member>
-        <member name="M:NewLife.Agent.AgentServiceBase`1.Restart">
+        <member name="M:NewLife.Agent.AgentServiceBase`1.Restart(System.String)">
             <summary>重启服务</summary>
+            <param name="reason"></param>
+        </member>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.OnPause">
+            <summary>暂停命令发送到服务的服务控制管理器 (SCM) 时执行。 指定当服务就会暂停时要执行的操作。</summary>
+        </member>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.OnContinue">
+            <summary>继续命令发送到服务的服务控制管理器 (SCM) 运行。 指定当某个服务后继续正常工作正在暂停时要执行的操作。</summary>
+        </member>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.OnShutdown">
+            <summary>在系统关闭时执行。 指定在系统关闭之前应该发生什么。</summary>
+        </member>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.OnPowerEvent(System.ServiceProcess.PowerBroadcastStatus)">
+            <summary>在计算机的电源状态已发生更改时执行。 这适用于便携式计算机，当他们进入挂起模式，这不是系统关闭相同。</summary>
+            <param name="powerStatus"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Agent.AgentServiceBase`1.OnSessionChange(System.ServiceProcess.SessionChangeDescription)">
+            <summary>在终端服务器会话中接收的更改事件时执行</summary>
+            <param name="changeDescription"></param>
         </member>
         <member name="P:NewLife.Agent.AgentServiceBase`1.WatchDogs">
             <summary>看门狗要保护的服务</summary>
@@ -171,8 +185,9 @@
         <member name="M:NewLife.Agent.IAgentService.Stop">
             <summary>停止</summary>
         </member>
-        <member name="M:NewLife.Agent.IAgentService.Restart">
+        <member name="M:NewLife.Agent.IAgentService.Restart(System.String)">
             <summary>重启服务</summary>
+            <param name="reason"></param>
         </member>
         <member name="T:NewLife.Agent.ServiceControl">
             <summary>
@@ -271,6 +286,57 @@
             <summary>写日志</summary>
             <param name="msg"></param>
         </member>
+        <member name="T:NewLife.Agent.ServiceItem">
+            <summary>服务工作项</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.Index">
+            <summary>服务项索引</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.Name">
+            <summary>线程名称</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.Callback">
+            <summary>任务委托</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.Thread">
+            <summary>线程</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.Interval">
+            <summary>间隔</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.Active">
+            <summary>可用</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.LastActive">
+            <summary>最后活跃时间</summary>
+        </member>
+        <member name="P:NewLife.Agent.ServiceItem.Event">
+            <summary>阻塞任务用的自动事件量</summary>
+        </member>
+        <member name="M:NewLife.Agent.ServiceItem.#ctor(System.Int32,System.String,System.Int32)">
+            <summary>实例化一个服务工作项</summary>
+            <param name="index"></param>
+            <param name="name"></param>
+            <param name="interval"></param>
+        </member>
+        <member name="M:NewLife.Agent.ServiceItem.Start(System.String)">
+            <summary>启动工作项</summary>
+        </member>
+        <member name="M:NewLife.Agent.ServiceItem.Stop(System.String)">
+            <summary>停止工作项</summary>
+        </member>
+        <member name="M:NewLife.Agent.ServiceItem.WorkWaper(System.Object)">
+            <summary>线程包装</summary>
+            <param name="data">线程序号</param>
+        </member>
+        <member name="M:NewLife.Agent.ServiceItem.CheckActive">
+            <summary>检查是否有工作线程死亡</summary>
+        </member>
+        <member name="M:NewLife.Agent.ServiceItem.WriteLine(System.String,System.Object[])">
+            <summary>写日志</summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
         <member name="T:NewLife.Agent.Setting">
             <summary>服务设置</summary>
         </member>
@@ -296,16 +362,22 @@
             <summary>最大占用内存，单位： M。超过最大占用时，整个服务进程将会重启，以释放资源。默认0秒，表示无限</summary>
         </member>
         <member name="P:NewLife.Agent.Setting.MaxThread">
-            <summary>最大总线程数，单位：个。超过最大占用时，整个服务进程将会重启，以释放资源。默认0个，表示无限</summary>
+            <summary>最大线程数，单位：个。超过最大占用时，整个服务进程将会重启，以释放资源。默认0个，表示无限</summary>
+        </member>
+        <member name="P:NewLife.Agent.Setting.MaxHandle">
+            <summary>最大句柄数，单位：个。超过最大占用时，整个服务进程将会重启，以释放资源。默认0个，表示无限</summary>
         </member>
         <member name="P:NewLife.Agent.Setting.AutoRestart">
             <summary>自动重启时间，单位：分。到达自动重启时间时，整个服务进程将会重启，以释放资源。默认0分，表示无限</summary>
         </member>
         <member name="P:NewLife.Agent.Setting.WaitForExit">
-            <summary>等待退出。停止服务时，等待每个线程完成当前工作的退出时间，默认3000ms</summary>
+            <summary>等待退出。停止服务时，等待每个线程完成当前工作的退出时间，默认5000ms</summary>
         </member>
         <member name="P:NewLife.Agent.Setting.WatchDog">
             <summary>看门狗，保护其它服务，每分钟检查一次。多个服务名逗号分隔</summary>
+        </member>
+        <member name="P:NewLife.Agent.Setting.ServicesDependedOn">
+            <summary>依赖服务</summary>
         </member>
         <member name="M:NewLife.Agent.Setting.OnNew">
             <summary>新建时调用</summary>

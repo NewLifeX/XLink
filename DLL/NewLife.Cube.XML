@@ -940,6 +940,11 @@
             <param name="controller"></param>
             <returns></returns>
         </member>
+        <member name="M:NewLife.Cube.ViewHelper.GetRouteKey(XCode.IEntity)">
+            <summary>获取路由Key</summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
         <member name="T:NewLife.Cube.Bootstrap">
             <summary>Bootstrap页面控制。允许继承</summary>
         </member>
@@ -1351,6 +1356,9 @@
         </member>
         <member name="P:NewLife.Cube.Setting.WebBehavior">
             <summary>用户行为。记录用户所有操作</summary>
+        </member>
+        <member name="P:NewLife.Cube.Setting.WebStatistics">
+            <summary>访问统计。统计页面访问量</summary>
         </member>
         <member name="P:NewLife.Cube.Setting.FormGroupClass">
             <summary>表单组样式。大中小屏幕分别3/2/1列</summary>

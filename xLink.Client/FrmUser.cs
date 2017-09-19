@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NewLife.Log;
 
 namespace xLink.Client
 {
@@ -25,6 +26,7 @@ namespace xLink.Client
 
         private async Task Blink(Int32 idx)
         {
+            if (idx >= Data.Length) Data = new Byte[idx + 1];
             var b = (Byte)(Data[idx] == 0 ? 1 : 0);
             //txtData.Text = Data.ToHex();
 
@@ -38,22 +40,17 @@ namespace xLink.Client
 
         private async void lbLed1_Click(Object sender, EventArgs e)
         {
-            await Blink(1);
-        }
+            var idx = (sender as Control).Tag.ToInt();
+            if (idx <= 0) return;
 
-        private async void lbLed2_Click(Object sender, EventArgs e)
-        {
-            await Blink(2);
-        }
-
-        private async void lbButton1_Click(Object sender, EventArgs e)
-        {
-            await Blink(3);
-        }
-
-        private async void lbButton2_Click(Object sender, EventArgs e)
-        {
-            await Blink(4);
+            try
+            {
+                await Blink(idx);
+            }
+            catch (Exception ex)
+            {
+                XTrace.WriteLine(ex.GetTrue().Message);
+            }
         }
     }
 }

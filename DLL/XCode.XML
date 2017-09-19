@@ -448,8 +448,9 @@
             <param name="key"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.TryAdd(`1)">
+        <member name="M:XCode.Cache.SingleEntityCache`2.TryAdd(`0,`1)">
             <summary>尝试向两个字典加入数据</summary>
+            <param name="key"></param>
             <param name="entity"></param>
             <returns></returns>
         </member>
@@ -648,12 +649,13 @@
             <param name="nameSpace">命名空间</param>
             <param name="connName">连接名</param>
         </member>
-        <member name="M:XCode.Code.EntityBuilder.BuildTables(System.Collections.Generic.IList{XCode.DataAccessLayer.IDataTable},System.String,System.String,System.String)">
+        <member name="M:XCode.Code.EntityBuilder.BuildTables(System.Collections.Generic.IList{XCode.DataAccessLayer.IDataTable},System.String,System.String,System.String,System.String)">
             <summary>为Xml模型文件生成实体类</summary>
             <param name="tables">模型文件</param>
             <param name="output">输出目录</param>
             <param name="nameSpace">命名空间</param>
             <param name="connName">连接名</param>
+            <param name="baseClass">基类</param>
         </member>
         <member name="M:XCode.Code.EntityBuilder.Execute">
             <summary>执行生成</summary>
@@ -848,6 +850,12 @@
         </member>
         <member name="T:XCode.FieldExtension">
             <summary>字段扩展</summary>
+        </member>
+        <member name="M:XCode.FieldExtension.Between(XCode.Configuration.FieldItem,System.DateTime,System.DateTime)">
+            <summary>时间专用区间函数</summary>
+            <param name="start">起始时间，大于等于</param>
+            <param name="end">结束时间，小于。如果是日期，则加一天</param>
+            <returns></returns>
         </member>
         <member name="M:XCode.FieldExtension.Today(XCode.Configuration.FieldItem)">
             <summary>当天范围</summary>
@@ -2102,11 +2110,11 @@
             <param name="mode"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DbMetaData.CheckTableDescriptionAndIndex(XCode.DataAccessLayer.IDataTable,XCode.DataAccessLayer.IDataTable,System.Boolean)">
+        <member name="M:XCode.DataAccessLayer.DbMetaData.CheckTableDescriptionAndIndex(XCode.DataAccessLayer.IDataTable,XCode.DataAccessLayer.IDataTable,XCode.DataAccessLayer.Migration)">
             <summary>检查表说明和索引</summary>
             <param name="entitytable"></param>
             <param name="dbtable"></param>
-            <param name="onlySql"></param>
+            <param name="mode"></param>
             <returns></returns>
         </member>
         <member name="M:XCode.DataAccessLayer.DbMetaData.IsColumnChanged(XCode.DataAccessLayer.IDataColumn,XCode.DataAccessLayer.IDataColumn,XCode.DataAccessLayer.IDatabase)">
@@ -2419,9 +2427,6 @@
         <member name="P:XCode.DataAccessLayer.IDataIndex.PrimaryKey">
             <summary>是否主键</summary>
         </member>
-        <member name="P:XCode.DataAccessLayer.IDataIndex.Computed">
-            <summary>是否计算出来的，而不是数据库内置的。主要供反向工程识别该索引是否由计算产生，反向工程会要求数据库拥有真正的索引。</summary>
-        </member>
         <member name="P:XCode.DataAccessLayer.IDataIndex.Table">
             <summary>说明数据表</summary>
         </member>
@@ -2565,9 +2570,6 @@
         </member>
         <member name="P:XCode.DataAccessLayer.XIndex.PrimaryKey">
             <summary>是否主键</summary>
-        </member>
-        <member name="P:XCode.DataAccessLayer.XIndex.Computed">
-            <summary>是否计算出来的，而不是数据库内置的</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.XIndex.Table">
             <summary>表</summary>
@@ -4522,17 +4524,23 @@
         <member name="T:XCode.Membership.LogProvider">
             <summary>日志提供者。提供业务日志输出到数据库的功能</summary>
         </member>
-        <member name="M:XCode.Membership.LogProvider.WriteLog(System.String,System.String,System.String)">
+        <member name="M:XCode.Membership.LogProvider.WriteLog(System.String,System.String,System.String,System.Int32,System.String,System.String)">
             <summary>写日志</summary>
             <param name="category">类型</param>
             <param name="action">操作</param>
             <param name="remark">备注</param>
+            <param name="userid">用户</param>
+            <param name="name">名称</param>
+            <param name="ip">地址</param>
         </member>
-        <member name="M:XCode.Membership.LogProvider.WriteLog(System.Type,System.String,System.String)">
+        <member name="M:XCode.Membership.LogProvider.WriteLog(System.Type,System.String,System.String,System.Int32,System.String,System.String)">
             <summary>写日志</summary>
             <param name="type">类型</param>
             <param name="action">操作</param>
             <param name="remark">备注</param>
+            <param name="userid">用户</param>
+            <param name="name">名称</param>
+            <param name="ip">地址</param>
         </member>
         <member name="M:XCode.Membership.LogProvider.WriteLog(System.String,XCode.IEntity)">
             <summary>输出实体对象日志</summary>
@@ -4549,11 +4557,14 @@
             <summary>泛型日志提供者，使用泛型日志实体基类作为派生</summary>
             <typeparam name="TLog"></typeparam>
         </member>
-        <member name="M:XCode.Membership.LogProvider`1.WriteLog(System.String,System.String,System.String)">
+        <member name="M:XCode.Membership.LogProvider`1.WriteLog(System.String,System.String,System.String,System.Int32,System.String,System.String)">
             <summary>写日志</summary>
             <param name="category">类型</param>
             <param name="action">操作</param>
             <param name="remark">备注</param>
+            <param name="userid">用户</param>
+            <param name="name">名称</param>
+            <param name="ip">地址</param>
         </member>
         <member name="T:XCode.Membership.DefaultLogProvider">
             <summary>默认日志提供者，使用实体类<seealso cref="T:XCode.Membership.Log"/></summary>
@@ -7066,9 +7077,6 @@
         <member name="P:XCode.Configuration.TableItem.Description">
             <summary>说明</summary>
         </member>
-        <member name="F:XCode.Configuration.TableItem._ModelCheckMode">
-            <summary>模型检查模式</summary>
-        </member>
         <member name="P:XCode.Configuration.TableItem.TableName">
             <summary>表名</summary>
         </member>
@@ -7094,7 +7102,7 @@
             <summary>标识列</summary>
         </member>
         <member name="P:XCode.Configuration.TableItem.PrimaryKeys">
-            <summary>主键</summary>
+            <summary>主键。不会返回null</summary>
         </member>
         <member name="P:XCode.Configuration.TableItem.Master">
             <summary>主字段。主字段作为业务主要字段，代表当前数据行意义</summary>
@@ -7310,12 +7318,6 @@
         <member name="M:XCode.Configuration.FieldItem.IsFalse(System.Nullable{System.Boolean})">
             <summary>是否False或者True/Null，参数决定两组之一</summary>
             <param name="flag"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Configuration.FieldItem.Between(System.DateTime,System.DateTime)">
-            <summary>时间专用区间函数</summary>
-            <param name="start">起始时间，大于等于</param>
-            <param name="end">结束时间，小于。如果是日期，则加一天</param>
             <returns></returns>
         </member>
         <member name="M:XCode.Configuration.FieldItem.op_GreaterThan(XCode.Configuration.FieldItem,System.Object)">
@@ -8072,7 +8074,23 @@
         <member name="M:XCode.Entity`1.Search(System.String,NewLife.Data.PageParameter)">
             <summary>同时查询满足条件的记录集和记录总数。没有数据时返回空集合而不是null</summary>
             <param name="key"></param>
-            <param name="param">分页排序参数，同时返回满足条件的总记录数</param>
+            <param name="page">分页排序参数，同时返回满足条件的总记录数</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Entity`1.Search(System.DateTime,System.DateTime,System.String,NewLife.Data.PageParameter)">
+            <summary>同时查询满足条件的记录集和记录总数。没有数据时返回空集合而不是null</summary>
+            <param name="start">开始时间</param>
+            <param name="end">结束时间</param>
+            <param name="key">关键字</param>
+            <param name="page">分页排序参数，同时返回满足条件的总记录数</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Entity`1.SearchWhere(System.DateTime,System.DateTime,System.String,NewLife.Data.PageParameter)">
+            <summary>构造高级查询条件</summary>
+            <param name="start">开始时间</param>
+            <param name="end">结束时间</param>
+            <param name="key">关键字</param>
+            <param name="page">分页排序参数，同时返回满足条件的总记录数</param>
             <returns></returns>
         </member>
         <member name="M:XCode.Entity`1.SearchWhereByKeys(System.String,XCode.Configuration.FieldItem[],System.Func{System.String,XCode.Configuration.FieldItem[],XCode.WhereExpression})">
@@ -8311,6 +8329,9 @@
         <member name="P:XCode.Entity`1.EntityOperate.Count">
             <summary>总记录数</summary>
         </member>
+        <member name="M:XCode.Entity`1.EntityOperate.#ctor">
+            <summary>构造实体工厂</summary>
+        </member>
         <member name="M:XCode.Entity`1.EntityOperate.Create(System.Boolean)">
             <summary>创建一个实体对象</summary>
             <param name="forEdit">是否为了编辑而创建，如果是，可以再次做一些相关的初始化工作</param>
@@ -8436,6 +8457,9 @@
         </member>
         <member name="P:XCode.Entity`1.EntityOperate.AdditionalFields">
             <summary>默认累加字段</summary>
+        </member>
+        <member name="P:XCode.Entity`1.EntityOperate.MasterTime">
+            <summary>主时间字段。代表当前数据行更新时间</summary>
         </member>
         <member name="T:XCode.EntityFactory">
             <summary>实体工厂</summary>
@@ -8725,6 +8749,9 @@
         </member>
         <member name="P:XCode.IEntityOperate.AdditionalFields">
             <summary>默认累加字段</summary>
+        </member>
+        <member name="P:XCode.IEntityOperate.MasterTime">
+            <summary>主时间字段。代表当前数据行更新时间</summary>
         </member>
         <member name="T:XCode.OrderExpression">
             <summary>排序表达式</summary>
@@ -9032,12 +9059,6 @@
         <member name="P:XCode.Transform.IETLStat.Times">
             <summary>次数</summary>
         </member>
-        <member name="P:XCode.Transform.IETLStat.Speed">
-            <summary>速度</summary>
-        </member>
-        <member name="P:XCode.Transform.IETLStat.FetchSpeed">
-            <summary>抽取速度</summary>
-        </member>
         <member name="P:XCode.Transform.IETLStat.Error">
             <summary>错误</summary>
         </member>
@@ -9058,12 +9079,6 @@
         </member>
         <member name="P:XCode.Transform.ETLStat.Times">
             <summary>次数</summary>
-        </member>
-        <member name="P:XCode.Transform.ETLStat.Speed">
-            <summary>速度</summary>
-        </member>
-        <member name="P:XCode.Transform.ETLStat.FetchSpeed">
-            <summary>抽取速度</summary>
         </member>
         <member name="P:XCode.Transform.ETLStat.Error">
             <summary>错误</summary>
@@ -9394,6 +9409,9 @@
         </member>
         <member name="P:XCode.Web.UserBehaviorModule.WebBehavior">
             <summary>访问记录</summary>
+        </member>
+        <member name="P:XCode.Web.UserBehaviorModule.WebStatistics">
+            <summary>访问统计</summary>
         </member>
         <member name="P:XCode.Web.UserBehaviorModule.ExcludeSuffixes">
             <summary>忽略的后缀</summary>
