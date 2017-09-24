@@ -103,6 +103,7 @@ namespace xLink
         {
             var hi = new UserHistory();
             hi.Version = Version;
+            hi.NetType = NetType;
 
             return hi;
         }

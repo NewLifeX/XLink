@@ -10341,14 +10341,16 @@
             <param name="target">要反射搜索的目标对象，比如页面Page</param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Web.WebHelper.RequestInt(System.String)">
+        <member name="M:NewLife.Web.WebHelper.RequestInt(System.String,System.Int32)">
             <summary>获取整型参数</summary>
             <param name="name">名称</param>
+            <param name="defaultint"></param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Web.WebHelper.RequestLong(System.String)">
+        <member name="M:NewLife.Web.WebHelper.RequestLong(System.String,System.Int32)">
             <summary>获取长整型参数</summary>
             <param name="name">名称</param>
+            <param name="defaultint"></param>
             <returns></returns>
         </member>
         <member name="M:NewLife.Web.WebHelper.RequestBool(System.String)">
@@ -10990,6 +10992,21 @@
             <typeparam name="TValue"></typeparam>
             <param name="dict"></param>
             <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:System.ListExtension">
+            <summary>扩展List，支持遍历中修改元素</summary>
+        </member>
+        <member name="M:System.ListExtension.Find``1(System.Collections.Generic.IList{``0},System.Predicate{``0})">
+            <summary>搜索并返回第一个，支持遍历中修改元素</summary>
+            <param name="list">实体列表</param>
+            <param name="match">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.ListExtension.FindAll``1(System.Collections.Generic.IList{``0},System.Predicate{``0})">
+            <summary>搜索并返回第一个，支持遍历中修改元素</summary>
+            <param name="list">实体列表</param>
+            <param name="match">条件</param>
             <returns></returns>
         </member>
         <member name="T:System.IO.PathHelper">

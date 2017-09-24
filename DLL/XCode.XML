@@ -354,6 +354,16 @@
         <member name="P:XCode.Cache.EntityCache`1.Entities">
             <summary>实体集合。无数据返回空集合而不是null</summary>
         </member>
+        <member name="M:XCode.Cache.EntityCache`1.Find(System.Predicate{`0})">
+            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
+            <param name="match">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.FindAll(System.Predicate{`0})">
+            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
+            <param name="match">条件</param>
+            <returns></returns>
+        </member>
         <member name="M:XCode.Cache.EntityCache`1.Clear(System.String)">
             <summary>清除缓存</summary>
         </member>
@@ -853,6 +863,7 @@
         </member>
         <member name="M:XCode.FieldExtension.Between(XCode.Configuration.FieldItem,System.DateTime,System.DateTime)">
             <summary>时间专用区间函数</summary>
+            <param name="fi"></param>
             <param name="start">起始时间，大于等于</param>
             <param name="end">结束时间，小于。如果是日期，则加一天</param>
             <returns></returns>
@@ -3300,6 +3311,9 @@
         <member name="T:XCode.DataAccessLayer.SQLiteSession">
             <summary>SQLite数据库</summary>
         </member>
+        <member name="M:XCode.DataAccessLayer.SQLiteSession.AutoClose">
+            <summary>不关闭连接</summary>
+        </member>
         <member name="M:XCode.DataAccessLayer.SQLiteSession.InsertAndGetIdentity(System.String,System.Data.CommandType,System.Data.IDataParameter[])">
             <summary>执行插入语句并返回新增行的自动编号</summary>
             <param name="sql">SQL语句</param>
@@ -3707,12 +3721,6 @@
             <param name="value">属性值</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.EntityExtension.Find``1(System.Collections.Generic.IList{``0},System.Predicate{``0})">
-            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
-            <param name="list">实体列表</param>
-            <param name="match">条件</param>
-            <returns></returns>
-        </member>
         <member name="M:XCode.EntityExtension.FindAll``1(System.Collections.Generic.IList{``0},System.String,System.Object)">
             <summary>根据指定项查找</summary>
             <param name="list">实体列表</param>
@@ -3725,12 +3733,6 @@
             <param name="list">实体列表</param>
             <param name="name">属性名</param>
             <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityExtension.FindAll``1(System.Collections.Generic.IList{``0},System.Predicate{``0})">
-            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
-            <param name="list">实体列表</param>
-            <param name="match">条件</param>
             <returns></returns>
         </member>
         <member name="M:XCode.EntityExtension.Exists``1(System.Collections.Generic.IList{``0},System.String,System.Object)">
@@ -4302,6 +4304,128 @@
             <summary>从数据库中删除该对象，同时从实体缓存中删除</summary>
             <param name="entity">实体对象</param>
             <returns></returns>
+        </member>
+        <member name="T:XCode.ActionDelegatedEventHandler`1">
+            <summary>
+            表示代理给定的领域事件处理委托的领域事件处理器。
+            </summary>
+            <typeparam name="TEvent"></typeparam>
+        </member>
+        <member name="M:XCode.ActionDelegatedEventHandler`1.#ctor(System.Action{`0})">
+            <summary>
+            初始化一个新的<c>ActionDelegatedDomainEventHandler{TEvent}</c>实例。
+            </summary>
+            <param name="eventHandlerDelegate">用于当前领域事件处理器所代理的事件处理委托。</param>
+        </member>
+        <member name="M:XCode.ActionDelegatedEventHandler`1.Handle(`0)">
+            <summary>
+            处理给定的事件。
+            </summary>
+            <param name="evnt">需要处理的事件。</param>
+        </member>
+        <member name="M:XCode.ActionDelegatedEventHandler`1.Equals(System.Object)">
+            <summary>
+            获取一个<see cref="T:System.Boolean"/>值，该值表示当前对象是否与给定的类型相同的另一对象相等。
+            </summary>
+            <param name="other">需要比较的与当前对象类型相同的另一对象。</param>
+            <returns>如果两者相等，则返回true，否则返回false。</returns>
+        </member>
+        <member name="T:XCode.EventBus">
+            <summary>
+            事件总线
+            发布与订阅处理逻辑
+            核心功能代码
+            </summary>
+        </member>
+        <member name="F:XCode.EventBus.eventHandlers">
+            <summary>
+            对于事件数据的存储，目前采用内存字典
+            </summary>
+        </member>
+        <member name="P:XCode.EventBus.Instance">
+            <summary>
+            初始化空的事件总件
+            </summary>
+        </member>
+        <member name="M:XCode.EventBus.Subscribe``1(XCode.IEventHandler{``0})">
+            <summary>
+            订阅事件列表
+            </summary>
+            <param name="type"></param>
+            <param name="subTypeList"></param>
+        </member>
+        <member name="M:XCode.EventBus.Subscribe``1(System.Action{``0})">
+            <summary>
+            订阅事件实体
+            </summary>
+            <param name="type"></param>
+            <param name="subTypeList"></param>
+        </member>
+        <member name="M:XCode.EventBus.Unsubscribe``1(XCode.IEventHandler{``0})">
+            <summary>
+            取消订阅事件
+            </summary>
+            <param name="type"></param>
+            <param name="subType"></param>
+        </member>
+        <member name="M:XCode.EventBus.Publish``1(``0)">
+            <summary>
+            发布事件，支持异步事件
+            </summary>
+            <typeparam name="TEvent"></typeparam>
+            <param name="evnt"></param>
+        </member>
+        <member name="T:XCode.HandlesAsynchronouslyAttribute">
+            <summary>
+            Represents that the event handlers applied with this attribute
+            will handle the events in a asynchronous process.
+            </summary>
+            <remarks>This attribute is only applicable to the message handlers and will only
+            be used by the message buses or message dispatchers. Applying this attribute to
+            other types of classes will take no effect.</remarks>
+        </member>
+        <member name="T:XCode.IEvent">
+            <summary>
+            事件实体基类
+            </summary>
+        </member>
+        <member name="T:XCode.IEventHandler`1">
+            <summary>
+            事件处理接口
+            </summary>
+            <typeparam name="TEvent">继承IEvent对象的事件源对象</typeparam>
+        </member>
+        <member name="M:XCode.IEventHandler`1.Handle(`0)">
+            <summary>
+            处理程序
+            </summary>
+            <param name="evt"></param>
+        </member>
+        <member name="T:XCode.SQLRunEvent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:XCode.SQLRunEvent.RunTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:XCode.SQLRunEvent.Sql">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:XCode.SqlRunEventHandler">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XCode.SqlRunEventHandler.Handle(XCode.SQLRunEvent)">
+            <summary>
+            
+            </summary>
+            <param name="evt"></param>
         </member>
         <member name="T:XCode.EntityException">
             <summary>实体异常</summary>
@@ -5481,6 +5605,9 @@
             <summary>如果Permission被修改，则重新加载</summary>
             <param name="fieldName"></param>
         </member>
+        <member name="P:XCode.Membership.Menu`1.Url2">
+            <summary></summary>
+        </member>
         <member name="P:XCode.Membership.Menu`1.ParentMenuName">
             <summary>父菜单名</summary>
         </member>
@@ -5606,6 +5733,9 @@
         <member name="P:XCode.Membership.Menu`1.Sort">
             <summary>排序</summary>
         </member>
+        <member name="P:XCode.Membership.Menu`1.Icon">
+            <summary>图标</summary>
+        </member>
         <member name="P:XCode.Membership.Menu`1.Visible">
             <summary>是否可见</summary>
         </member>
@@ -5644,6 +5774,9 @@
         <member name="F:XCode.Membership.Menu`1._.Sort">
             <summary>排序</summary>
         </member>
+        <member name="F:XCode.Membership.Menu`1._.Icon">
+            <summary>图标</summary>
+        </member>
         <member name="F:XCode.Membership.Menu`1._.Visible">
             <summary>是否可见</summary>
         </member>
@@ -5676,6 +5809,9 @@
         </member>
         <member name="F:XCode.Membership.Menu`1.__.Sort">
             <summary>排序</summary>
+        </member>
+        <member name="F:XCode.Membership.Menu`1.__.Icon">
+            <summary>图标</summary>
         </member>
         <member name="F:XCode.Membership.Menu`1.__.Visible">
             <summary>是否可见</summary>
@@ -5782,6 +5918,9 @@
         </member>
         <member name="P:XCode.Membership.IMenu.Sort">
             <summary>排序</summary>
+        </member>
+        <member name="P:XCode.Membership.IMenu.Icon">
+            <summary>图标</summary>
         </member>
         <member name="P:XCode.Membership.IMenu.Visible">
             <summary>是否可见</summary>
@@ -8882,8 +9021,10 @@
         <member name="P:XCode.Transform.DataContext.StartTime">
             <summary>开始时间</summary>
         </member>
-        <member name="P:XCode.Transform.DataContext.State">
-            <summary>状态对象</summary>
+        <member name="P:XCode.Transform.DataContext.Item(System.String)">
+            <summary>用户数据</summary>
+            <param name="item"></param>
+            <returns></returns>
         </member>
         <member name="P:XCode.Transform.DataContext.FetchSpeed">
             <summary>抽取速度</summary>
@@ -8937,8 +9078,9 @@
             <param name="set"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.Sync`2.SyncItem(XCode.IEntity)">
+        <member name="M:XCode.Transform.Sync`2.ProcessItem(XCode.Transform.DataContext,XCode.IEntity)">
             <summary>处理单行数据</summary>
+            <param name="ctx">数据上下文</param>
             <param name="source">源实体</param>
         </member>
         <member name="M:XCode.Transform.Sync`2.SyncItem(`0,`1,System.Boolean)">
@@ -8974,18 +9116,21 @@
             <param name="set"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.Sync`1.Fetch(XCode.Transform.IExtracter)">
+        <member name="M:XCode.Transform.Sync`1.Fetch(XCode.Transform.DataContext,XCode.Transform.IExtracter,XCode.Transform.IExtractSetting)">
             <summary>从来源表查数据</summary>
+            <param name="ctx">数据上下文</param>
             <param name="extracter"></param>
+            <param name="set">设置</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.Sync`1.OnSync(XCode.Transform.DataContext)">
+        <member name="M:XCode.Transform.Sync`1.OnProcess(XCode.Transform.DataContext)">
             <summary>同步数据列表时，在目标表上执行</summary>
             <param name="ctx">数据上下文</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.Sync`1.SyncItem(XCode.IEntity)">
+        <member name="M:XCode.Transform.Sync`1.ProcessItem(XCode.Transform.DataContext,XCode.IEntity)">
             <summary>处理单行数据</summary>
+            <param name="ctx">数据上下文</param>
             <param name="source">源实体</param>
         </member>
         <member name="M:XCode.Transform.Sync`1.SyncItem(`0,`0,System.Boolean)">
@@ -9007,29 +9152,24 @@
             <summary>实例化数据抽取器</summary>
         </member>
         <member name="M:XCode.Transform.Sync.#ctor(XCode.IEntityOperate,XCode.IEntityOperate)">
-            <summary>实例化数据抽取器</summary>
+            <summary>实例化数据同步</summary>
             <param name="source"></param>
             <param name="target"></param>
         </member>
-        <member name="M:XCode.Transform.Sync.ProcessList(XCode.Transform.DataContext)">
-            <summary>处理列表，传递批次配置，支持多线程和异步</summary>
-            <remarks>
-            子类可以根据需要重载该方法，实现异步处理。
-            异步处理之前，需要先保存配置
-            </remarks>
-            <param name="ctx">数据上下文</param>
-        </member>
-        <member name="M:XCode.Transform.Sync.Fetch(XCode.Transform.IExtracter)">
+        <member name="M:XCode.Transform.Sync.Fetch(XCode.Transform.DataContext,XCode.Transform.IExtracter,XCode.Transform.IExtractSetting)">
             <summary>抽取数据</summary>
+            <param name="ctx">数据上下文</param>
             <param name="extracter"></param>
+            <param name="set">设置</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Transform.Sync.OnSync(XCode.Transform.DataContext)">
-            <summary>处理列表，传递批次配置，支持多线程</summary>
+        <member name="M:XCode.Transform.Sync.OnProcess(XCode.Transform.DataContext)">
+            <summary>处理列表，带事务保护，传递批次配置，支持多线程</summary>
             <param name="ctx">数据上下文</param>
         </member>
-        <member name="M:XCode.Transform.Sync.SyncItem(XCode.IEntity)">
+        <member name="M:XCode.Transform.Sync.ProcessItem(XCode.Transform.DataContext,XCode.IEntity)">
             <summary>同步单行数据</summary>
+            <param name="ctx">数据上下文</param>
             <param name="source">源实体</param>
             <returns></returns>
         </member>
@@ -9092,9 +9232,6 @@
         <member name="P:XCode.Transform.IExtracter.Name">
             <summary>名称</summary>
         </member>
-        <member name="P:XCode.Transform.IExtracter.Setting">
-            <summary>设置</summary>
-        </member>
         <member name="P:XCode.Transform.IExtracter.Factory">
             <summary>实体工厂</summary>
         </member>
@@ -9107,8 +9244,9 @@
         <member name="M:XCode.Transform.IExtracter.Init">
             <summary>初始化</summary>
         </member>
-        <member name="M:XCode.Transform.IExtracter.Fetch">
+        <member name="M:XCode.Transform.IExtracter.Fetch(XCode.Transform.IExtractSetting)">
             <summary>抽取一批数据</summary>
+            <param name="set">设置</param>
             <returns></returns>
         </member>
         <member name="P:XCode.Transform.IExtracter.Log">
@@ -9119,9 +9257,6 @@
         </member>
         <member name="P:XCode.Transform.TimeExtracter.Name">
             <summary>名称</summary>
-        </member>
-        <member name="P:XCode.Transform.TimeExtracter.Setting">
-            <summary>设置</summary>
         </member>
         <member name="P:XCode.Transform.TimeExtracter.Factory">
             <summary>实体工厂</summary>
@@ -9147,8 +9282,9 @@
         <member name="M:XCode.Transform.TimeExtracter.Init">
             <summary>初始化</summary>
         </member>
-        <member name="M:XCode.Transform.TimeExtracter.Fetch">
+        <member name="M:XCode.Transform.TimeExtracter.Fetch(XCode.Transform.IExtractSetting)">
             <summary>抽取一批数据</summary>
+            <param name="set">设置</param>
             <returns></returns>
         </member>
         <member name="M:XCode.Transform.TimeExtracter.FetchData(System.DateTime,System.DateTime,System.Int32,System.Int32)">
@@ -9248,6 +9384,9 @@
         <member name="P:XCode.Transform.ETL.Extracter">
             <summary>数据源抽取器</summary>
         </member>
+        <member name="P:XCode.Transform.ETL.Setting">
+            <summary>数据源抽取设置</summary>
+        </member>
         <member name="P:XCode.Transform.ETL.MaxError">
             <summary>最大错误数，连续发生多个错误时停止</summary>
         </member>
@@ -9291,9 +9430,11 @@
             <summary>抽取并处理一批数据</summary>
             <returns>返回抽取数据行数，没有数据返回0，初始化或配置失败返回-1</returns>
         </member>
-        <member name="M:XCode.Transform.ETL.Fetch(XCode.Transform.IExtracter)">
+        <member name="M:XCode.Transform.ETL.Fetch(XCode.Transform.DataContext,XCode.Transform.IExtracter,XCode.Transform.IExtractSetting)">
             <summary>抽取一批数据</summary>
+            <param name="ctx">数据上下文</param>
             <param name="extracter"></param>
+            <param name="set">设置</param>
             <returns></returns>
         </member>
         <member name="M:XCode.Transform.ETL.ProcessList(XCode.Transform.DataContext)">
@@ -9309,16 +9450,16 @@
             <param name="ctx">数据上下文</param>
         </member>
         <member name="M:XCode.Transform.ETL.OnProcess(XCode.Transform.DataContext)">
-            <summary>处理列表</summary>
+            <summary>批量处理数据列表，可重载打开事务保护</summary>
             <param name="ctx">数据上下文</param>
         </member>
         <member name="M:XCode.Transform.ETL.OnFinished(XCode.Transform.DataContext)">
             <summary>处理完成</summary>
             <param name="ctx">数据上下文</param>
         </member>
-        <member name="M:XCode.Transform.ETL.ProcessItem(XCode.IEntity)">
+        <member name="M:XCode.Transform.ETL.ProcessItem(XCode.Transform.DataContext,XCode.IEntity)">
             <summary>处理单行数据</summary>
-            <remarks>打开AutoSave时，上层ProcessList会自动保存数据</remarks>
+            <param name="ctx">数据上下文</param>
             <param name="source">源实体</param>
             <returns></returns>
         </member>

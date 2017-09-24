@@ -147,6 +147,7 @@ namespace xLink
             var hi = new DeviceHistory();
             hi.Version = Version;
             hi.Name = Current + "";
+            hi.NetType = NetType;
 
             return hi;
         }

@@ -55,6 +55,9 @@ namespace xLink.Entity
         /// <summary>版本</summary>
         String Version { get; set; }
 
+        /// <summary>网络类型</summary>
+        String NetType { get; set; }
+
         ///// <summary>创建者</summary>
         //Int32 CreateDeviceID { get; set; }
         #endregion
@@ -72,6 +75,9 @@ namespace xLink.Entity
 
         /// <summary>版本</summary>
         String Version { get; set; }
+
+        /// <summary>网络类型</summary>
+        String NetType { get; set; }
 
         /// <summary>内网</summary>
         String InternalUri { get; set; }

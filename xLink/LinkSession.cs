@@ -13,6 +13,11 @@ namespace xLink
     [Api(null)]
     public abstract class LinkSession : ApiUserSession
     {
+        #region 属性
+        /// <summary>网络类型</summary>
+        public String NetType { get; set; }
+        #endregion
+
         #region 登录注册
         /// <summary>注册，登录找不到用户时调用注册，返回空表示禁止注册</summary>
         /// <param name="user"></param>
@@ -49,11 +54,14 @@ namespace xLink
             var dic = ControllerContext.Current?.Parameters?.ToNullable();
             if (dic != null)
             {
+                NetType = dic["NetType"] + "";
+
                 var olt = Online as IMyOnline;
                 olt.LoginTime = DateTime.Now;
                 olt.LoginCount++;
                 // 本地地址
                 olt.InternalUri = dic["ip"] + "";
+                olt.NetType = NetType;
             }
 
             base.SaveLogin(user);
