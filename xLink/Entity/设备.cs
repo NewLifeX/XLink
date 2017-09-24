@@ -86,8 +86,8 @@ namespace xLink.Entity
         /// <summary>数据</summary>
         [DisplayName("数据")]
         [Description("数据")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Data", "数据", "nvarchar(50)")]
+        [DataObjectField(false, false, true, 200)]
+        [BindColumn("Data", "数据", "nvarchar(200)")]
         public String Data { get { return _Data; } set { if (OnPropertyChanging(__.Data, value)) { _Data = value; OnPropertyChanged(__.Data); } } }
 
         private Boolean _Online;

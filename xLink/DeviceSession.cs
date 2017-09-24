@@ -121,6 +121,21 @@ namespace xLink
             // 检查下发指令
             TimerX.Delay(CheckCommand, 100);
 
+            // 保存数据区
+            var dic = ControllerContext.Current?.Parameters?.ToNullable();
+            if (dic != null)
+            {
+                var data = dic["data"] + "";
+                if (!data.IsNullOrEmpty())
+                {
+                    var buf = data.ToHex();
+
+                    var dv = Device;
+                    dv.Data = buf.ToHex();
+                    dv.SaveAsync();
+                }
+            }
+
             return base.OnPing();
         }
         #endregion
