@@ -50,7 +50,7 @@ namespace xLink.Server
         LinkServer Svr;
 
         /// <summary>启动工作</summary>
-        public override void StartWork()
+        protected override void StartWork(String reason)
         {
             // 异步初始化数据
             Task.Run(() =>
@@ -64,7 +64,7 @@ namespace xLink.Server
                 }
             });
 
-            base.StartWork();
+            base.StartWork(reason);
 
             // 每次上线清空一次在线表
             _timer = new TimerX(CheckExpire, null, 0, 60000);
@@ -98,9 +98,9 @@ namespace xLink.Server
         /// <summary>
         /// 停止工作
         /// </summary>
-        public override void StopWork()
+        protected override void StopWork(String reason)
         {
-            base.StopWork();
+            base.StopWork(reason);
 
             _timer.TryDispose();
             Svr.TryDispose();
