@@ -15,6 +15,7 @@ namespace xLink
     [Api(null, false)]
     public class LinkClient : ApiClient
     {
+
         #region 属性
         /// <summary>远程地址</summary>
         public NetUri Remote { get; set; }
