@@ -50,7 +50,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceSession.cs" />
     <Compile Include="Entity\MyModel.cs" />
     <Compile Include="Entity\用户.Biz.cs" />
     <Compile Include="Entity\用户.cs" />
@@ -66,11 +65,8 @@
     <Compile Include="Entity\设备在线.cs" />
     <Compile Include="Entity\设备指令.Biz.cs" />
     <Compile Include="Entity\设备指令.cs" />
-    <Compile Include="LinkServer.cs" />
-    <Compile Include="LinkSession.cs" />
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

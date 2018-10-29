@@ -54,6 +54,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DeviceController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\LinkController.cs" />
+    <Compile Include="LinkServer.cs" />
+    <Compile Include="Models\DeviceSession.cs" />
+    <Compile Include="Models\LinkSession.cs" />
+    <Compile Include="Models\UserSession.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting.cs" />

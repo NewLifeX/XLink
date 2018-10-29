@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using NewLife;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
@@ -12,13 +11,18 @@ using xLink.Models;
 namespace xLink
 {
     /// <summary>物联客户端</summary>
-    [Api(null, false)]
+    [Api(null)]
     public class LinkClient : ApiClient
     {
-
         #region 属性
         /// <summary>远程地址</summary>
         public NetUri Remote { get; set; }
+
+        /// <summary>用户名</summary>
+        public String UserName { get; set; }
+
+        /// <summary>密码</summary>
+        public String Password { get; set; }
 
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
@@ -31,7 +35,7 @@ namespace xLink
 
             // 初始数据
             var dic = Parameters;
-            dic["OS"] = Runtime.OSName;
+            dic["OS"] = Environment.OSVersion + "";
             dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
 
             var asmx = AssemblyX.Create(Assembly.GetCallingAssembly());

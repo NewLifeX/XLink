@@ -10,14 +10,13 @@ using System.ComponentModel;
 using System.Linq;
 using NewLife.Data;
 using NewLife.Model;
-using NewLife.Web;
 using XCode;
 using XCode.Membership;
 
 namespace xLink.Entity
 {
     /// <summary>用户</summary>
-    public partial class User : Entity<User>, IMyModel
+    public partial class User : Entity<User>, IMyModel, IAuthUser
     {
         #region 对象操作
         static User()

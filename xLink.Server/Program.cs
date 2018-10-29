@@ -10,6 +10,7 @@ using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Threading;
 using xLink.Entity;
+using xLink.Server.Controllers;
 
 namespace xLink.Server
 {
@@ -76,16 +77,16 @@ namespace xLink.Server
             {
                 Name = "平台",
                 Port = set.Port,
-                Encrypted = false,
-                Compressed = false,
+                //Encrypted = false,
+                //Compressed = false,
             };
-            Svr.EnsureServer();
+            //Svr.EnsureServer();
             Svr.Log = XTrace.Log;
             Svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
 
             // 遍历注册各服务控制器
-            Svr.Register<DeviceSession>();
-            Svr.Register<UserSession>();
+            Svr.Register<DeviceController>();
+            Svr.Register<UserController>();
 
             Svr.Start();
 
@@ -106,6 +107,8 @@ namespace xLink.Server
             Svr.TryDispose();
         }
 
+        public override Boolean Work(Int32 index) => false;
+
         #region 定时删除在线
         TimerX _timer;
         void CheckExpire(Object state)
@@ -124,7 +127,7 @@ namespace xLink.Server
         {
             if (_Title == null) _Title = Console.Title;
 
-            var ns = Svr.Servers.FirstOrDefault() as NetServer;
+            var ns = Svr.Server as NetServer;
             Console.Title = "{0} {1}".F(_Title, ns.GetStat());
         }
     }

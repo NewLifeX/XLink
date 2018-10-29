@@ -15,7 +15,6 @@ namespace xLink.Client
     public partial class FrmMain : Form
     {
         LinkClient _Client;
-        IPacket _Packet;
 
         #region 窗体
         public FrmMain()
@@ -100,7 +99,6 @@ namespace xLink.Client
             _Client = null;
 
             var uri = new NetUri(cbAddr.Text);
-            _Packet = new DefaultPacket();
             var cfg = Setting.Current;
             var mode = cbMode.Text;
 
