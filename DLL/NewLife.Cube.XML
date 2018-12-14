@@ -145,7 +145,7 @@
             <param name="entity"></param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Cube.Admin.Controllers.VisitStatController.Delete(System.Int32)">
+        <member name="M:NewLife.Cube.Admin.Controllers.VisitStatController.Delete(System.String)">
             <summary>不允许删除</summary>
             <param name="id"></param>
             <returns></returns>
@@ -181,7 +181,7 @@
             <returns></returns>
         </member>
         <member name="T:NewLife.Cube.Admin.Controllers.LogController">
-            <summary>日志控制器</summary>
+            <summary>审计日志控制器</summary>
         </member>
         <member name="M:NewLife.Cube.Admin.Controllers.LogController.Search(NewLife.Web.Pager)">
             <summary>搜索数据集</summary>
@@ -198,7 +198,7 @@
             <param name="entity"></param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Cube.Admin.Controllers.LogController.Delete(System.Int32)">
+        <member name="M:NewLife.Cube.Admin.Controllers.LogController.Delete(System.String)">
             <summary>不允许删除日志</summary>
             <param name="id"></param>
             <returns></returns>
@@ -328,6 +328,12 @@
         </member>
         <member name="M:NewLife.Cube.Admin.Controllers.IndexController.Restart">
             <summary>重启</summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewLife.Cube.Admin.Controllers.IndexController.MemoryFree">
+            <summary>
+            释放内存，参考之前的Runtime方法
+            </summary>
             <returns></returns>
         </member>
         <member name="M:NewLife.Cube.Admin.Controllers.IndexController.ScanActionMenu(XCode.Membership.IMenu)">
@@ -918,7 +924,7 @@
             <summary>获取选中键</summary>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Cube.EntityController`1.ExportData">
+        <member name="M:NewLife.Cube.EntityController`1.ExportData(System.Int32)">
             <summary>导出当前页以后的数据</summary>
             <returns></returns>
         </member>
@@ -936,7 +942,7 @@
             <param name="id">主键。可能为空（表示添加），所以用字符串而不是整数</param>
             <returns></returns>
         </member>
-        <member name="M:NewLife.Cube.EntityController`1.Delete(System.Int32)">
+        <member name="M:NewLife.Cube.EntityController`1.Delete(System.String)">
             <summary>删除</summary>
             <param name="id"></param>
             <returns></returns>
@@ -1080,6 +1086,9 @@
         </member>
         <member name="P:NewLife.Cube.EntityController`1.IsJsonRequest">
             <summary>是否Json请求</summary>
+        </member>
+        <member name="M:NewLife.Cube.EntityController`1.SetCompress">
+            <summary>启用压缩</summary>
         </member>
         <member name="T:NewLife.Cube.ConfigController`1">
             <summary>设置控制器</summary>
@@ -2322,6 +2331,9 @@
         </member>
         <member name="P:NewLife.Cube.Setting.SslMode">
             <summary>强制SSL。强制使用https访问</summary>
+        </member>
+        <member name="P:NewLife.Cube.Setting.EnableCompress">
+            <summary>启用压缩。默认false</summary>
         </member>
         <member name="P:NewLife.Cube.Setting.AvatarPath">
             <summary>头像目录。设定后下载远程头像到本地</summary>

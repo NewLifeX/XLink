@@ -1,5 +1,6 @@
 ﻿using System;
 using NewLife.Model;
+using xLink.Models;
 
 namespace xLink.Entity
 {

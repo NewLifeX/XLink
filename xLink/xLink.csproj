@@ -66,6 +66,8 @@
     <Compile Include="Entity\设备指令.Biz.cs" />
     <Compile Include="Entity\设备指令.cs" />
     <Compile Include="Models\DataModel.cs" />
+    <Compile Include="Models\IHistory.cs" />
+    <Compile Include="Models\IOnline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

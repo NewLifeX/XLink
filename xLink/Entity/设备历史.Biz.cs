@@ -11,6 +11,7 @@ using NewLife.Data;
 using NewLife.Model;
 using XCode;
 using XCode.Cache;
+using xLink.Models;
 
 namespace xLink.Entity
 {

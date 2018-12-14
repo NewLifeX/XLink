@@ -9,6 +9,7 @@ using NewLife.Security;
 using NewLife.Serialization;
 using NewLife.Threading;
 using xLink.Entity;
+using xLink.Models;
 
 namespace xLink.Server.Models
 {
@@ -19,6 +20,9 @@ namespace xLink.Server.Models
         #region 属性
         /// <summary>当前设备</summary>
         public Device Device { get => Current as Device; }
+
+        ///// <summary>在线对象</summary>
+        //public DeviceOnline Online { get; private set; }
         #endregion
 
         #region 构造
@@ -193,7 +197,7 @@ namespace xLink.Server.Models
         /// <param name="start"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public virtual async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
+        public override async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
         {
             var err = "";
             try
@@ -216,7 +220,7 @@ namespace xLink.Server.Models
         /// <param name="start"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public virtual async Task<Byte[]> Read(String id, Int32 start, Int32 count)
+        public override async Task<Byte[]> Read(String id, Int32 start, Int32 count)
         {
             var err = "";
             try
