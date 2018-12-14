@@ -7164,9 +7164,10 @@
             <summary>实例化</summary>
             <param name="uri"></param>
         </member>
-        <member name="M:XCode.Service.DbClient.OnLoginAsync(NewLife.Net.ISocketClient)">
+        <member name="M:XCode.Service.DbClient.OnLoginAsync(NewLife.Net.ISocketClient,System.Boolean)">
             <summary>连接后自动登录</summary>
             <param name="client">客户端</param>
+            <param name="force">强制登录</param>
         </member>
         <member name="M:XCode.Service.DbClient.QueryAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>异步查询</summary>

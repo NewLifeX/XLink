@@ -47,8 +47,8 @@ namespace xLink.Entity
             if (Name.IsNullOrEmpty()) throw new ArgumentNullException(__.Name, _.Name.DisplayName + "不能为空！");
             if (Password.IsNullOrEmpty()) throw new ArgumentNullException(__.Password, _.Password.DisplayName + "不能为空！");
             //if (Password.Length != 16 && Password.Length != 32) throw new ArgumentOutOfRangeException(__.Password, _.Password.DisplayName + "非法！");
-            if (Name.Length < 8) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最短8个字符！" + Name);
-            if (Name.Length > 16) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最长16个字符！" + Name);
+            //if (Name.Length < 8) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最短8个字符！" + Name);
+            //if (Name.Length > 16) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最长16个字符！" + Name);
 
             // 修正显示名
             if (!NickName.IsNullOrEmpty() && NickName.Length > 16) NickName = NickName.Substring(0, 16);

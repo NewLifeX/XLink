@@ -7320,9 +7320,10 @@
             <param name="session">会话</param>
             <param name="state">状态。客户端ISocketClient</param>
         </member>
-        <member name="M:NewLife.Remoting.ApiClient.OnLoginAsync(NewLife.Net.ISocketClient)">
+        <member name="M:NewLife.Remoting.ApiClient.OnLoginAsync(NewLife.Net.ISocketClient,System.Boolean)">
             <summary>连接后自动登录</summary>
             <param name="client">客户端</param>
+            <param name="force">强制登录</param>
         </member>
         <member name="M:NewLife.Remoting.ApiClient.LoginAsync">
             <summary>登录</summary>

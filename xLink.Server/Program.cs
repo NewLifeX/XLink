@@ -69,7 +69,7 @@ namespace xLink
             if (set.EncoderDebug) Svr.Encoder.Log = Svr.Log;
 
             // 如果是控制台调试，则在标题显示统计
-            if (!Environment.CommandLine.EndsWith(" -s")) _Timer = new TimerX(ShowStat, null, 1000, 1000);
+            if (!Environment.CommandLine.EndsWith(" -s")) _Timer = new TimerX(ShowStat, null, 1000, 1000) { Async = true };
         }
 
         /// <summary>

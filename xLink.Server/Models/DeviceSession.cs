@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using NewLife.Model;
 using NewLife.Net;
-using NewLife.Remoting;
-using NewLife.Security;
 using NewLife.Serialization;
 using NewLife.Threading;
 using xLink.Entity;
@@ -65,7 +63,7 @@ namespace xLink.Server.Models
             // 登录
             Name = user;
 
-            WriteLog("登录 {0} => {1}", user, pass);
+            //WriteLog("登录 {0} => {1}", user, pass);
 
             // 验证密码
             u.CheckMD5(pass);

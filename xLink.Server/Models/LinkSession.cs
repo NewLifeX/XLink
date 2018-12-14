@@ -67,7 +67,7 @@ namespace xLink.Server.Models
             CheckOnline(user);
 
             var msg = "登录 {0}/{1}".F(user, pass);
-            WriteLog(msg);
+            //WriteLog(msg);
 
             var ns = Session as NetSession;
             var flag = true;

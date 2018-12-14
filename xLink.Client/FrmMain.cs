@@ -314,6 +314,7 @@ namespace xLink.Client
             var ct = _Client;
             ct.UserName = user;
             ct.Password = pass;
+            ct.Logined = false;
 
             try
             {

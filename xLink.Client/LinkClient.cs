@@ -17,9 +17,6 @@ namespace xLink
     public class LinkClient : ApiClient
     {
         #region 属性
-        ///// <summary>远程地址</summary>
-        //public NetUri Remote { get; set; }
-
         /// <summary>用户名</summary>
         public String UserName { get; set; }
 
@@ -32,7 +29,8 @@ namespace xLink
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
 
-        public Boolean Logined { get; private set; }
+        /// <summary>已登录</summary>
+        public Boolean Logined { get; set; }
 
         /// <summary>最后一次登录成功后的消息</summary>
         public IDictionary<String, Object> Info { get; private set; }
@@ -50,8 +48,6 @@ namespace xLink
             EncoderLog = XTrace.Log;
             StatPeriod = 10;
 #endif
-
-            //Remote = uri;
 
             // 初始数据
             var dic = Parameters;
@@ -71,17 +67,6 @@ namespace xLink
         #endregion
 
         #region 执行
-        ///// <summary>打开连接</summary>
-        ///// <returns></returns>
-        //public override Boolean Open()
-        //{
-        //    if (!base.Open()) return false;
-
-        //    GetClient(true);
-
-        //    return true;
-        //}
-
         /// <summary>异步调用</summary>
         /// <param name="resultType"></param>
         /// <param name="action"></param>
@@ -99,8 +84,13 @@ namespace xLink
         #region 登录
         /// <summary>连接后自动登录</summary>
         /// <param name="client">客户端</param>
-        protected override async Task<Object> OnLoginAsync(ISocketClient client)
+        /// <param name="force">强制登录</param>
+        protected override async Task<Object> OnLoginAsync(ISocketClient client, Boolean force)
         {
+            if (Logined && !force) return null;
+
+            Logined = false;
+
             var user = UserName;
             var pass = Password;
             //if (user.IsNullOrEmpty()) return null;
@@ -130,18 +120,6 @@ namespace xLink
 
             return Info = rs as IDictionary<String, Object>;
         }
-
-        ///// <summary>登录</summary>
-        ///// <returns></returns>
-        //public override async Task<Object> LoginAsync()
-        //{
-        //    await Task.Yield();
-
-        //    var client = GetClient(true);
-        //    await OnLoginAsync(client);
-
-        //    return Info;
-        //}
         #endregion
 
         #region 心跳
