@@ -61,7 +61,6 @@ namespace xLink.Server.Models
                     Enable = true
                 };
                 u.SaveRegister(Session as INetSession);
-                //u.Insert();
             }
 
             // 登录
@@ -71,21 +70,6 @@ namespace xLink.Server.Models
 
             // 验证密码
             u.CheckMD5(pass);
-
-            return u;
-        }
-
-        /// <summary>注册，登录找不到用户时调用注册，返回空表示禁止注册</summary>
-        /// <param name="user"></param>
-        /// <param name="pass"></param>
-        /// <returns></returns>
-        protected override IAuthUser CreateUser(String user, String pass)
-        {
-            var u = User.FindByName(user);
-            if (u == null) u = new User { Name = user };
-
-            u.Password = Rand.NextString(8);
-            //u.Password = pass.MD5();
 
             return u;
         }

@@ -145,12 +145,6 @@ namespace xLink.Server.Models
             var ns = Session as NetSession;
             user.SaveLogin(ns);
         }
-
-        /// <summary>创建用户</summary>
-        /// <param name="user"></param>
-        /// <param name="pass"></param>
-        /// <returns></returns>
-        protected abstract IAuthUser CreateUser(String user, String pass);
         #endregion
 
         #region 心跳历史

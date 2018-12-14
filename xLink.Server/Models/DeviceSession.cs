@@ -20,9 +20,6 @@ namespace xLink.Server.Models
         #region 属性
         /// <summary>当前设备</summary>
         public Device Device { get => Current as Device; }
-
-        ///// <summary>在线对象</summary>
-        //public DeviceOnline Online { get; private set; }
         #endregion
 
         #region 构造
@@ -54,7 +51,16 @@ namespace xLink.Server.Models
         protected override IAuthUser CheckUser(String user, String pass)
         {
             var u = Device.FindByName(user);
-            if (u == null) return null;
+            if (u == null)
+            {
+                u = new Device
+                {
+                    Name = user,
+                    Password = pass.MD5(),
+                    Enable = true
+                };
+                u.SaveRegister(Session as INetSession);
+            }
 
             // 登录
             Name = user;
@@ -63,24 +69,6 @@ namespace xLink.Server.Models
 
             // 验证密码
             u.CheckMD5(pass);
-
-            return u;
-        }
-
-        /// <summary>注册，登录找不到用户时调用注册，返回空表示禁止注册</summary>
-        /// <param name="user"></param>
-        /// <param name="pass"></param>
-        /// <returns></returns>
-        protected override IAuthUser CreateUser(String user, String pass)
-        {
-            var u = Device.FindByCode(user);
-            if (u == null) u = new Device { Code = user };
-
-            var devideid = user.GetBytes().Crc().GetBytes().ToHex();
-            if (!Type.IsNullOrEmpty() && Type.Length == 4) devideid = Type + devideid;
-
-            u.Name = devideid;
-            u.Password = Rand.NextString(8);
 
             return u;
         }

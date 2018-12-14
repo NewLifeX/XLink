@@ -53,9 +53,6 @@ namespace xLink
             // 登录会话
             ss.Logined = true;
 
-            //// 生成密钥
-            //if (!dic.ContainsKey("Key")) dic["Key"] = GenerateKey(user).ToHex();
-
             return dic;
         }
         #endregion
@@ -71,10 +68,12 @@ namespace xLink
 
             ss.CheckOnline(ss.Current + "");
 
+            var now = DateTime.Now;
+
             var dic = ControllerContext.Current.Parameters;
             // 返回服务器时间
-            dic["ServerTime"] = DateTime.Now;
-            dic["ServerSeconds"] = (Int32)(DateTime.Now - new DateTime(1970, 1, 1)).TotalSeconds;
+            dic["ServerTime"] = now;
+            dic["ServerSeconds"] = now.ToInt();
 
             return dic;
         }

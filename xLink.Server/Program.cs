@@ -56,10 +56,7 @@ namespace xLink
             {
                 Name = "平台",
                 Port = set.Port,
-                //Encrypted = false,
-                //Compressed = false,
             };
-            //Svr.EnsureServer();
             Svr.Log = XTrace.Log;
             Svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
 

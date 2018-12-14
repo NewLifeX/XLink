@@ -13,10 +13,6 @@ namespace xLink
         [Description("调试开关。默认true")]
         public Boolean Debug { get; set; } = true;
 
-        ///// <summary>服务名称</summary>
-        //[Description("服务名称")]
-        //public String ServiceName { get; set; } = "LinkServer";
-
         /// <summary>端口。默认2233</summary>
         [Description("端口。默认2233")]
         public Int32 Port { get; set; } = 2233;

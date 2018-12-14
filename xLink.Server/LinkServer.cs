@@ -6,7 +6,6 @@ using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
-using NewLife.Threading;
 
 namespace xLink
 {
@@ -14,9 +13,6 @@ namespace xLink
     public class LinkServer : ApiServer
     {
         #region 属性
-        /// <summary>显示总会话数的时间间隔。默认60秒</summary>
-        public Int32 ShowSessionCount { get; set; }
-
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
         #endregion
@@ -25,8 +21,6 @@ namespace xLink
         /// <summary>实例化令牌服务器</summary>
         public LinkServer()
         {
-            ShowSessionCount = 60;
-
             Log = XTrace.Log;
 
             StatPeriod = 60;
@@ -48,15 +42,6 @@ namespace xLink
             dic["Version"] = asmx?.Version;
             dic["Compile"] = asmx?.Compile;
         }
-
-        ///// <summary>销毁</summary>
-        ///// <param name="disposing"></param>
-        //protected override void OnDispose(Boolean disposing)
-        //{
-        //    base.OnDispose(disposing);
-
-        //    _timer.TryDispose();
-        //}
         #endregion
 
         #region 方法
@@ -65,8 +50,6 @@ namespace xLink
         {
             var svr = EnsureCreate();
             svr.Log = Log;
-
-            //if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 1000);
 
             var dic = Parameters;
             dic["Type"] = Name;
@@ -111,14 +94,6 @@ namespace xLink
             //if (Encoder != null) Encoder.Log = Log;
             if (encoder) EncoderLog = Log;
         }
-
-        //private TimerX _timer { get; set; }
-        //void ShowCount(Object stat)
-        //{
-        //    if (!(Server is NetServer svr)) return;
-
-        //    if (svr.SessionCount > 0) svr.WriteLog("会话总数:{0:n0}/{1:n0}", svr.SessionCount, svr.MaxSessionCount);
-        //}
         #endregion
     }
 }
