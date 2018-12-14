@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NewLife.Net;
 using NewLife.Remoting;
 using xLink.Models;
 using xLink.Server.Models;
@@ -150,22 +149,13 @@ namespace xLink
         #endregion
 
         #region 辅助
-        private String _prefix;
-
         /// <summary>写日志</summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
         protected void WriteLog(String format, params Object[] args)
         {
-            var ns = Session as NetSession;
-            if (_prefix == null)
-            {
-                var type = GetType();
-                _prefix = "{0}[{1}] ".F(type.GetDisplayName() ?? type.Name.TrimEnd("Session"), ns.ID);
-                ns.LogPrefix = _prefix;
-            }
-
-            ns.WriteLog(Session.Name + " " + format, args);
+            var ns = Session as LinkSession;
+            ns?.WriteLog(format, args);
         }
         #endregion
     }

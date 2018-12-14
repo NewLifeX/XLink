@@ -133,11 +133,12 @@ namespace xLink
 
         ///// <summary>登录</summary>
         ///// <returns></returns>
-        //public async Task<Object> LoginAsync()
+        //public override async Task<Object> LoginAsync()
         //{
         //    await Task.Yield();
 
-        //    GetClient(true);
+        //    var client = GetClient(true);
+        //    await OnLoginAsync(client);
 
         //    return Info;
         //}

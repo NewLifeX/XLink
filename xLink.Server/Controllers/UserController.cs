@@ -10,7 +10,6 @@ namespace xLink
 {
     class UserController : LinkController<UserSession>
     {
-
         #region 读写
         /// <summary>收到写入请求</summary>
         /// <param name="id">设备</param>
