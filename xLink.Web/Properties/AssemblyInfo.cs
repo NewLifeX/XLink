@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列特性集
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("飞联物联网平台")]
+[assembly: AssemblyTitle("菲凡物联网平台")]
 [assembly: AssemblyDescription("物联网平台")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("xLink.Web")]
