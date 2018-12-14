@@ -30,7 +30,7 @@ namespace xLink
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
 
         /// <summary>最后一次登录成功后的消息</summary>
-        public String Info { get; private set; }
+        public IDictionary<String, Object> Info { get; private set; }
         #endregion
 
         #region 构造
@@ -98,8 +98,8 @@ namespace xLink
 
             var arg = new
             {
-                user = UserName,
-                pass = Password.MD5(),
+                user,
+                pass = pass.MD5(),
             };
 
             // 克隆一份，避免修改原始数据
@@ -110,11 +110,30 @@ namespace xLink
             var inf = rs.ToJson();
             if (Setting.Current.Debug) XTrace.WriteLine("登录{0}成功！{1}", Servers.FirstOrDefault(), inf);
 
-            return Info = inf;
+            return Info = rs as IDictionary<String, Object>;
+        }
+
+        /// <summary>登录</summary>
+        /// <returns></returns>
+        public async Task<Object> LoginAsync()
+        {
+            await Task.Yield();
+
+            GetClient(false);
+
+            return Info;
         }
         #endregion
 
         #region 心跳
+        /// <summary>心跳</summary>
+        /// <returns></returns>
+        public async Task<Object> PingAsync()
+        {
+            await Task.Yield();
+
+            return await InvokeAsync<Object>("Ping", new { time = DateTime.Now });
+        }
         #endregion
 
         #region 读写

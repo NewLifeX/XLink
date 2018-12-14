@@ -107,20 +107,22 @@ namespace xLink.Client
                 Log = cfg.ShowLog ? XTrace.Log : Logger.Null,
                 EncoderLog = cfg.ShowEncoderLog ? XTrace.Log : Logger.Null
             };
-            ac.Received += OnReceived;
+            //ac.Received += OnReceived;
             ac.UserName = cfg.UserName;
             ac.Password = cfg.Password;
-            ac.ActionPrefix = mode + "/";
+            //ac.ActionPrefix = mode + "/";
 
-            ac.Encrypted = cfg.Encrypted;
-            ac.Compressed = cfg.Compressed;
+            //ac.Encrypted = cfg.Encrypted;
+            //ac.Compressed = cfg.Compressed;
 
             if (!ac.Open()) return;
 
-            var sc = ac.Client.GetService<ISocketClient>();
-            sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
-            sc.LogSend = cfg.ShowSend;
-            sc.LogReceive = cfg.ShowReceive;
+            ac.CreateCallback = sc =>
+            {
+                sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
+                sc.LogSend = cfg.ShowSend;
+                sc.LogReceive = cfg.ShowReceive;
+            };
 
             "已连接服务器".SpeechTip();
 
@@ -135,8 +137,6 @@ namespace xLink.Client
 
             cfg.Save();
 
-            _timer = new TimerX(ShowStat, null, 5000, 5000);
-
             BizLog = TextFileLog.Create("DeviceLog");
         }
 
@@ -149,11 +149,6 @@ namespace xLink.Client
 
                 "关闭连接".SpeechTip();
             }
-            if (_timer != null)
-            {
-                _timer.Dispose();
-                _timer = null;
-            }
 
             pnlSetting.Enabled = true;
             pnlAction.Enabled = false;
@@ -164,25 +159,6 @@ namespace xLink.Client
 
         TimerX _timer;
         String _lastStat;
-        void ShowStat(Object state)
-        {
-            if (!Setting.Current.ShowStat) return;
-
-            var msg = "";
-            if (_Client != null)
-            {
-                var sc = _Client.Client.GetService<ISocketClient>();
-                msg = sc.GetStat();
-
-                msg += " 并发 " + cs.Count;
-            }
-
-            if (!msg.IsNullOrEmpty() && msg != _lastStat)
-            {
-                _lastStat = msg;
-                XTrace.WriteLine(msg);
-            }
-        }
 
         private void btnConnect_Click(Object sender, EventArgs e)
         {
@@ -198,24 +174,24 @@ namespace xLink.Client
         /// <summary>业务日志输出</summary>
         ILog BizLog;
 
-        void OnReceived(Object sender, ApiMessageEventArgs e)
-        {
-            var session = sender as ISocketSession;
-            if (session == null)
-            {
-                var ns = sender as INetSession;
-                if (ns == null) return;
-                session = ns.Session;
-            }
+        //void OnReceived(Object sender, ApiMessageEventArgs e)
+        //{
+        //    var session = sender as ISocketSession;
+        //    if (session == null)
+        //    {
+        //        var ns = sender as INetSession;
+        //        if (ns == null) return;
+        //        session = ns.Session;
+        //    }
 
-            if (Setting.Current.ShowReceiveString)
-            {
-                var line = e.Message.Payload.ToStr();
-                XTrace.WriteLine(line);
+        //    if (Setting.Current.ShowReceiveString)
+        //    {
+        //        var line = e.Message.Payload.ToStr();
+        //        XTrace.WriteLine(line);
 
-                BizLog?.Info(line);
-            }
-        }
+        //        BizLog?.Info(line);
+        //    }
+        //}
 
         Int32 _pColor = 0;
         Int32 BytesOfReceived = 0;
@@ -253,8 +229,8 @@ namespace xLink.Client
             var count = (Int32)numThreads.Value;
             if (count <= cs.Count) return;
 
-            var sc = _Client.Client.GetService<ISocketClient>();
-            if (sc == null) return;
+            //var sc = _Client.Client.GetService<ISocketClient>();
+            //if (sc == null) return;
 
             var uri = new NetUri(cbAddr.Text);
 
@@ -264,14 +240,14 @@ namespace xLink.Client
                 for (var i = 0; i < count; i++)
                 {
                     var ac = new LinkClient(uri.ToString());
-                    ac.Received += OnReceived;
+                    //ac.Received += OnReceived;
 
                     ac.UserName = cc.UserName;
                     ac.Password = cc.Password;
-                    ac.ActionPrefix = cc.ActionPrefix;
+                    //ac.ActionPrefix = cc.ActionPrefix;
 
-                    ac.Encrypted = cc.Encrypted;
-                    ac.Compressed = cc.Compressed;
+                    //ac.Encrypted = cc.Encrypted;
+                    //ac.Compressed = cc.Compressed;
 
                     cs.Add(ac);
 
@@ -283,13 +259,13 @@ namespace xLink.Client
                             Thread.Sleep(1000);
                         }
 
-                        // 共用统计对象
-                        if (ac.Active)
-                        {
-                            var sc2 = ac.Client.GetService<ISocketClient>();
-                            sc2.StatSend = sc.StatSend;
-                            sc2.StatReceive = sc.StatReceive;
-                        }
+                        //// 共用统计对象
+                        //if (ac.Active)
+                        //{
+                        //    var sc2 = ac.Client.GetService<ISocketClient>();
+                        //    sc2.StatSend = sc.StatSend;
+                        //    sc2.StatReceive = sc.StatReceive;
+                        //}
                     });
                 }
             });

@@ -9523,6 +9523,9 @@
         <member name="P:XCode.Entity`1.EntityOperate.Selects">
             <summary>默认选择的字段</summary>
         </member>
+        <member name="P:XCode.Entity`1.EntityOperate.SelectStat">
+            <summary>默认选择统计语句</summary>
+        </member>
         <member name="P:XCode.Entity`1.EntityOperate.Modules">
             <summary>实体模块集合</summary>
         </member>
@@ -9829,6 +9832,9 @@
         </member>
         <member name="P:XCode.IEntityOperate.Selects">
             <summary>默认选择的字段</summary>
+        </member>
+        <member name="P:XCode.IEntityOperate.SelectStat">
+            <summary>默认选择统计语句</summary>
         </member>
         <member name="P:XCode.IEntityOperate.Modules">
             <summary>实体模块集合</summary>
