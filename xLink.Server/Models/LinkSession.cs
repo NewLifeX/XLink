@@ -42,9 +42,6 @@ namespace xLink.Server.Models
 
         /// <summary>版本</summary>
         public String Version { get; set; }
-
-        /// <summary>验证Key</summary>
-        public String AuthKey { get; set; }
         #endregion
 
         #region 登录注册
@@ -77,30 +74,12 @@ namespace xLink.Server.Models
             var act = "Login";
             try
             {
-                Object rs = null;
-
                 // 查找并登录，找不到用户是返回空，登录失败则抛出异常
                 var u = CheckUser(user, pass);
+                if (u == null) throw Error(3, user + " 不存在");
+                if (!u.Enable) throw Error(4, user + " 已被禁用");
 
-                // 注册
-                if (u == null)
-                {
-                    act = "Register";
-                    u = Register(user, pass);
-                    if (u == null) throw Error(3, user + " 禁止注册");
-
-                    if (u.ID == 0) u.SaveRegister(ns);
-
-                    rs = new { user = u.Name, pass = u.Password };
-                }
-                // 登录
-                else
-                {
-                    if (!u.Enable) throw Error(4, user + " 已被禁用");
-
-                    if (AuthKey.IsNullOrEmpty()) rs = new { Name = u + "" };
-                    else rs = new { Name = u + "", Key = AuthKey };
-                }
+                var rs = new { Name = u + "" };
 
                 //u.SaveLogin(ns);
                 SaveLogin(u);
@@ -165,27 +144,6 @@ namespace xLink.Server.Models
 
             var ns = Session as NetSession;
             user.SaveLogin(ns);
-        }
-
-        /// <summary>注册，登录找不到用户时调用注册，返回空表示禁止注册</summary>
-        /// <param name="user"></param>
-        /// <param name="pass"></param>
-        /// <returns></returns>
-        protected virtual IAuthUser Register(String user, String pass)
-        {
-            var u = CreateUser(user, pass);
-
-            u.Enable = true;
-
-            if (u is IMyModel u2)
-            {
-                u2.Registers++;
-            }
-
-            Name = u.Name;
-            WriteLog("注册 {0} => {1}/{2}", user, u.Name, u.Password);
-
-            return u;
         }
 
         /// <summary>创建用户</summary>

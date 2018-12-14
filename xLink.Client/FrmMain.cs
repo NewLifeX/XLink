@@ -8,6 +8,7 @@ using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
+using NewLife.Security;
 using NewLife.Threading;
 
 namespace xLink.Client
@@ -306,8 +307,8 @@ namespace xLink.Client
             // 如果没有编码或者密码，则使用MAC注册
             if (user.IsNullOrEmpty() || pass.IsNullOrEmpty())
             {
-                user = NetHelper.GetMacs().FirstOrDefault()?.ToHex();
-                pass = null;
+                user = Environment.UserName;
+                pass = Environment.UserName;
             }
 
             var ct = _Client;
@@ -319,19 +320,12 @@ namespace xLink.Client
                 var rs = await ct.LoginAsync();
                 var dic = rs.ToDictionary().ToNullable();
 
-                // 注册成功，需要保存密码
-                if (dic["User"] != null)
-                {
-                    cfg.UserName = ct.UserName;
-                    cfg.Password = ct.Password;
-                    cfg.Save();
+                // 登录成功，需要保存密码
+                cfg.UserName = ct.UserName;
+                cfg.Password = ct.Password;
+                cfg.Save();
 
-                    XTrace.WriteLine("注册成功！DeviceID={0} Password={1}", cfg.UserName, cfg.Password);
-                }
-                else
-                {
-                    XTrace.WriteLine("登录成功！");
-                }
+                XTrace.WriteLine("登录成功！");
             }
             catch (ApiException ex)
             {

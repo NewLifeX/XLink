@@ -62,7 +62,7 @@ namespace xLink.Server.Models
             WriteLog("登录 {0} => {1}", user, pass);
 
             // 验证密码
-            u.CheckRC4(pass);
+            u.CheckMD5(pass);
 
             return u;
         }

@@ -52,7 +52,17 @@ namespace xLink.Server.Models
         protected override IAuthUser CheckUser(String user, String pass)
         {
             var u = User.FindByName(user);
-            if (u == null) return null;
+            if (u == null)
+            {
+                u = new User
+                {
+                    Name = user,
+                    Password = pass.MD5(),
+                    Enable = true
+                };
+                u.SaveRegister(Session as INetSession);
+                //u.Insert();
+            }
 
             // 登录
             Name = user;
@@ -60,7 +70,7 @@ namespace xLink.Server.Models
             WriteLog("登录 {0} => {1}", user, pass);
 
             // 验证密码
-            u.CheckRC4(pass);
+            u.CheckMD5(pass);
 
             return u;
         }
