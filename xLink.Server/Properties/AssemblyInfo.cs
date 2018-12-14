@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("飞联物联网服务端")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("物联网服务端")]
+[assembly: AssemblyDescription("物联网云平台，负责在硬件设备以及用户端之间交互数据指令")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("xLink.Server")]
-[assembly: AssemblyCopyright("Copyright © 新生命团队 2017")]
+[assembly: AssemblyCopyright("Copyright © 新生命团队 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,6 +31,11 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("1.0.2017.0316")]
+[assembly: AssemblyVersion("2.0.*")]
+[assembly: AssemblyFileVersion("2.0.2018.1215")]
+
+/*
+ * v2.0.2018.1215   升级新版通信框架
+ * 
+ * v1.0.2017.0316   轻量版物联网平台
+ */

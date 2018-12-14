@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F51C838F-757F-415B-8968-94E3C9029D82}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>xLink.Server</RootNamespace>
+    <RootNamespace>xLink</RootNamespace>
     <AssemblyName>xLink.Server</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

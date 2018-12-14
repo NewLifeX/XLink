@@ -26,8 +26,13 @@ namespace xLink
         /// <summary>密码</summary>
         public String Password { get; set; }
 
+        /// <summary>动作前缀</summary>
+        public String ActionPrefix { get; set; }
+
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
+
+        public Boolean Logined { get; private set; }
 
         /// <summary>最后一次登录成功后的消息</summary>
         public IDictionary<String, Object> Info { get; private set; }
@@ -65,23 +70,30 @@ namespace xLink
         }
         #endregion
 
-        #region 打开关闭
-        ///// <summary>开始处理数据</summary>
+        #region 执行
+        ///// <summary>打开连接</summary>
+        ///// <returns></returns>
         //public override Boolean Open()
         //{
-        //    if (Active) return true;
-
-        //    if (Remote == null) throw new ArgumentNullException(nameof(Remote));
-
-        //    SetRemote(Remote + "");
-
-        //    WriteLog("连接服务器 {0}", Remote);
-
         //    if (!base.Open()) return false;
 
+        //    GetClient(true);
 
-        //    return Active;
+        //    return true;
         //}
+
+        /// <summary>异步调用</summary>
+        /// <param name="resultType"></param>
+        /// <param name="action"></param>
+        /// <param name="args"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        public override Task<Object> InvokeAsync(Type resultType, String action, Object args = null, Byte flag = 0)
+        {
+            if (!ActionPrefix.IsNullOrEmpty() && !action.Contains("/")) action = ActionPrefix + "/" + action;
+
+            return base.InvokeAsync(resultType, action, args, flag);
+        }
         #endregion
 
         #region 登录
@@ -91,6 +103,7 @@ namespace xLink
         {
             var user = UserName;
             var pass = Password;
+            //if (user.IsNullOrEmpty()) return null;
             if (user.IsNullOrEmpty()) throw new ArgumentNullException(nameof(user), "用户名不能为空！");
             //if (pass.IsNullOrEmpty()) throw new ArgumentNullException(nameof(pass), "密码不能为空！");
 
@@ -106,23 +119,28 @@ namespace xLink
             var dic = arg.ToDictionary();
             dic.Merge(Parameters, false);
 
-            var rs = await base.InvokeWithClientAsync<Object>(client, "Login", dic);
+            var act = "Login";
+            if (!ActionPrefix.IsNullOrEmpty()) act = ActionPrefix + "/" + act;
+
+            var rs = await base.InvokeWithClientAsync<Object>(client, act, dic);
             var inf = rs.ToJson();
             if (Setting.Current.Debug) XTrace.WriteLine("登录{0}成功！{1}", Servers.FirstOrDefault(), inf);
+
+            Logined = true;
 
             return Info = rs as IDictionary<String, Object>;
         }
 
-        /// <summary>登录</summary>
-        /// <returns></returns>
-        public async Task<Object> LoginAsync()
-        {
-            await Task.Yield();
+        ///// <summary>登录</summary>
+        ///// <returns></returns>
+        //public async Task<Object> LoginAsync()
+        //{
+        //    await Task.Yield();
 
-            GetClient(false);
+        //    GetClient(true);
 
-            return Info;
-        }
+        //    return Info;
+        //}
         #endregion
 
         #region 心跳

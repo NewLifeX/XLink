@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using NewLife;
 using NewLife.Agent;
 using NewLife.Log;
 using NewLife.Net;
-using NewLife.Reflection;
-using NewLife.Remoting;
 using NewLife.Threading;
 using xLink.Entity;
-using xLink.Server.Controllers;
 
-namespace xLink.Server
+namespace xLink
 {
     class Program
     {
@@ -24,27 +19,23 @@ namespace xLink.Server
 
     class MyService : AgentServiceBase<MyService>
     {
-        private String _DisplayName = "物联网平台";
-        /// <summary>显示名称</summary>
-        public override String DisplayName { get { return _DisplayName; } }
-
-        /// <summary>描述</summary>
-        public override String Description
-        {
-            get
-            {
-                var set = Setting.Current;
-                return "物联网平台 端口:{0}".F(set.Port);
-            }
-        }
-
         /// <summary>构造函数</summary>
         public MyService()
         {
-            var set = Setting.Current;
-            if (!set.ServiceName.IsNullOrEmpty()) ServiceName = set.ServiceName.Trim();
-            set.ServiceName = ServiceName;
-            _DisplayName += "_{0}".F(set.Port);
+            ServiceName = "LinkServer";
+
+            // 异步初始化数据
+            Task.Run(() =>
+            {
+                var set2 = XCode.Setting.Current;
+                if (set2.IsNew)
+                {
+                    set2.Debug = false;
+                    set2.ShowSQL = false;
+                    set2.SQLiteDbPath = "../Data";
+                    set2.SaveAsync();
+                }
+            });
         }
 
         /// <summary>服务器</summary>
@@ -53,18 +44,6 @@ namespace xLink.Server
         /// <summary>启动工作</summary>
         protected override void StartWork(String reason)
         {
-            // 异步初始化数据
-            Task.Run(() =>
-            {
-                var set2 = XCode.Setting.Current;
-                if (set2.IsNew)
-                {
-                    set2.Debug = false;
-                    set2.SQLiteDbPath = "../Data";
-                    set2.Save();
-                }
-            });
-
             base.StartWork(reason);
 
             // 每次上线清空一次在线表

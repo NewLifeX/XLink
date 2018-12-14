@@ -6,7 +6,7 @@ using NewLife.Threading;
 using xLink.Entity;
 using xLink.Server.Models;
 
-namespace xLink.Server.Controllers
+namespace xLink
 {
     class DeviceController : LinkController<DeviceSession>
     {

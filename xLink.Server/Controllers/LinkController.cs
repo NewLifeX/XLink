@@ -6,7 +6,7 @@ using NewLife.Remoting;
 using xLink.Models;
 using xLink.Server.Models;
 
-namespace xLink.Server.Controllers
+namespace xLink
 {
     class LinkController<TSession> : IActionFilter where TSession : LinkSession, new()
     {

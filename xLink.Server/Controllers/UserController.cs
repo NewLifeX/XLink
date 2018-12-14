@@ -6,7 +6,7 @@ using xLink.Entity;
 using xLink.Models;
 using xLink.Server.Models;
 
-namespace xLink.Server.Controllers
+namespace xLink
 {
     class UserController : LinkController<UserSession>
     {

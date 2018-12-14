@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using NewLife.Xml;
 
-namespace xLink.Server
+namespace xLink
 {
     /// <summary>配置</summary>
     [XmlConfigFile("Config/Server.config", 15000)]
@@ -13,9 +13,9 @@ namespace xLink.Server
         [Description("调试开关。默认true")]
         public Boolean Debug { get; set; } = true;
 
-        /// <summary>服务名称</summary>
-        [Description("服务名称")]
-        public String ServiceName { get; set; } = "LinkServer";
+        ///// <summary>服务名称</summary>
+        //[Description("服务名称")]
+        //public String ServiceName { get; set; } = "LinkServer";
 
         /// <summary>端口。默认2233</summary>
         [Description("端口。默认2233")]

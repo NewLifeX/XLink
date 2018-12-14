@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Diagnostics;
 using NewLife;
 using NewLife.Log;
 using NewLife.Net;
@@ -8,7 +8,7 @@ using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Threading;
 
-namespace xLink.Server
+namespace xLink
 {
     /// <summary>物联服务器</summary>
     public class LinkServer : ApiServer
@@ -27,23 +27,36 @@ namespace xLink.Server
         {
             ShowSessionCount = 60;
 
+            Log = XTrace.Log;
+
+            StatPeriod = 60;
+            ShowError = true;
+
+#if DEBUG
+            EncoderLog = XTrace.Log;
+            StatPeriod = 10;
+#endif
+
             // 初始数据
             var dic = Parameters;
             dic["OS"] = Environment.OSVersion + "";
-            dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
+            dic["Machine"] = Environment.MachineName;
+            dic["Agent"] = Environment.UserName;
+            dic["ProcessID"] = Process.GetCurrentProcess().Id;
 
-            var asmx = AssemblyX.Create(Assembly.GetCallingAssembly());
-            dic["Version"] = asmx.Version;
+            var asmx = AssemblyX.Entry;
+            dic["Version"] = asmx?.Version;
+            dic["Compile"] = asmx?.Compile;
         }
 
-        /// <summary>销毁</summary>
-        /// <param name="disposing"></param>
-        protected override void OnDispose(Boolean disposing)
-        {
-            base.OnDispose(disposing);
+        ///// <summary>销毁</summary>
+        ///// <param name="disposing"></param>
+        //protected override void OnDispose(Boolean disposing)
+        //{
+        //    base.OnDispose(disposing);
 
-            _timer.TryDispose();
-        }
+        //    _timer.TryDispose();
+        //}
         #endregion
 
         #region 方法
@@ -53,7 +66,7 @@ namespace xLink.Server
             var svr = EnsureCreate();
             svr.Log = Log;
 
-            if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 1000);
+            //if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 1000);
 
             var dic = Parameters;
             dic["Type"] = Name;
@@ -99,13 +112,13 @@ namespace xLink.Server
             if (encoder) EncoderLog = Log;
         }
 
-        private TimerX _timer { get; set; }
-        void ShowCount(Object stat)
-        {
-            if (!(Server is NetServer svr)) return;
+        //private TimerX _timer { get; set; }
+        //void ShowCount(Object stat)
+        //{
+        //    if (!(Server is NetServer svr)) return;
 
-            if (svr.SessionCount > 0) svr.WriteLog("会话总数:{0:n0}/{1:n0}", svr.SessionCount, svr.MaxSessionCount);
-        }
+        //    if (svr.SessionCount > 0) svr.WriteLog("会话总数:{0:n0}/{1:n0}", svr.SessionCount, svr.MaxSessionCount);
+        //}
         #endregion
     }
 }

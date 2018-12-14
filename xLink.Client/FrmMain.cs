@@ -110,7 +110,7 @@ namespace xLink.Client
             //ac.Received += OnReceived;
             ac.UserName = cfg.UserName;
             ac.Password = cfg.Password;
-            //ac.ActionPrefix = mode + "/";
+            ac.ActionPrefix = mode;
 
             //ac.Encrypted = cfg.Encrypted;
             //ac.Compressed = cfg.Compressed;
@@ -239,12 +239,14 @@ namespace xLink.Client
                 var cc = _Client;
                 for (var i = 0; i < count; i++)
                 {
-                    var ac = new LinkClient(uri.ToString());
-                    //ac.Received += OnReceived;
+                    var ac = new LinkClient(uri.ToString())
+                    {
+                        //ac.Received += OnReceived;
 
-                    ac.UserName = cc.UserName;
-                    ac.Password = cc.Password;
-                    //ac.ActionPrefix = cc.ActionPrefix;
+                        UserName = cc.UserName,
+                        Password = cc.Password,
+                        ActionPrefix = cc.ActionPrefix
+                    };
 
                     //ac.Encrypted = cc.Encrypted;
                     //ac.Compressed = cc.Compressed;
@@ -339,7 +341,7 @@ namespace xLink.Client
 
         private async void btnPing_Click(Object sender, EventArgs e)
         {
-            await _Client.PingAsync();
+            await _Client.PingAsync().ConfigureAwait(false);
         }
         #endregion
 

@@ -7324,6 +7324,10 @@
             <summary>连接后自动登录</summary>
             <param name="client">客户端</param>
         </member>
+        <member name="M:NewLife.Remoting.ApiClient.LoginAsync">
+            <summary>登录</summary>
+            <returns></returns>
+        </member>
         <member name="P:NewLife.Remoting.ApiClient.CreateCallback">
             <summary>创建回调</summary>
         </member>
