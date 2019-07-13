@@ -57,6 +57,14 @@ namespace xLink.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
+        private Int32 _ProductID;
+        /// <summary>产品</summary>
+        [DisplayName("产品")]
+        [Description("产品")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("ProductID", "产品", "")]
+        public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
+
         private String _Type;
         /// <summary>类型</summary>
         [DisplayName("类型")]
@@ -112,14 +120,6 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("LastLoginIP", "最后登录IP", "")]
         public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
-
-        private Int32 _Registers;
-        /// <summary>注册次数</summary>
-        [DisplayName("注册次数")]
-        [Description("注册次数")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Registers", "注册次数", "")]
-        public Int32 Registers { get { return _Registers; } set { if (OnPropertyChanging(__.Registers, value)) { _Registers = value; OnPropertyChanged(__.Registers); } } }
 
         private DateTime _RegisterTime;
         /// <summary>注册时间</summary>
@@ -184,6 +184,14 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("UpdateIP", "更新地址", "")]
         public String UpdateIP { get { return _UpdateIP; } set { if (OnPropertyChanging(__.UpdateIP, value)) { _UpdateIP = value; OnPropertyChanged(__.UpdateIP); } } }
+
+        private String _Description;
+        /// <summary>描述</summary>
+        [DisplayName("描述")]
+        [Description("描述")]
+        [DataObjectField(false, false, true, 500)]
+        [BindColumn("Description", "描述", "")]
+        public String Description { get { return _Description; } set { if (OnPropertyChanging(__.Description, value)) { _Description = value; OnPropertyChanged(__.Description); } } }
         #endregion
 
         #region 获取/设置 字段值
@@ -201,6 +209,7 @@ namespace xLink.Entity
                     case __.Password : return _Password;
                     case __.NickName : return _NickName;
                     case __.Enable : return _Enable;
+                    case __.ProductID : return _ProductID;
                     case __.Type : return _Type;
                     case __.Version : return _Version;
                     case __.Data : return _Data;
@@ -208,7 +217,6 @@ namespace xLink.Entity
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
                     case __.LastLoginIP : return _LastLoginIP;
-                    case __.Registers : return _Registers;
                     case __.RegisterTime : return _RegisterTime;
                     case __.RegisterIP : return _RegisterIP;
                     case __.CreateUserID : return _CreateUserID;
@@ -217,6 +225,7 @@ namespace xLink.Entity
                     case __.UpdateUserID : return _UpdateUserID;
                     case __.UpdateTime : return _UpdateTime;
                     case __.UpdateIP : return _UpdateIP;
+                    case __.Description : return _Description;
                     default: return base[name];
                 }
             }
@@ -229,6 +238,7 @@ namespace xLink.Entity
                     case __.Password : _Password = Convert.ToString(value); break;
                     case __.NickName : _NickName = Convert.ToString(value); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
+                    case __.ProductID : _ProductID = value.ToInt(); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.Data : _Data = Convert.ToString(value); break;
@@ -236,7 +246,6 @@ namespace xLink.Entity
                     case __.Logins : _Logins = value.ToInt(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
-                    case __.Registers : _Registers = value.ToInt(); break;
                     case __.RegisterTime : _RegisterTime = value.ToDateTime(); break;
                     case __.RegisterIP : _RegisterIP = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
@@ -245,6 +254,7 @@ namespace xLink.Entity
                     case __.UpdateUserID : _UpdateUserID = value.ToInt(); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
                     case __.UpdateIP : _UpdateIP = Convert.ToString(value); break;
+                    case __.Description : _Description = Convert.ToString(value); break;
                     default: base[name] = value; break;
                 }
             }
@@ -270,6 +280,9 @@ namespace xLink.Entity
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
+            /// <summary>产品</summary>
+            public static readonly Field ProductID = FindByName(__.ProductID);
+
             /// <summary>类型</summary>
             public static readonly Field Type = FindByName(__.Type);
 
@@ -290,9 +303,6 @@ namespace xLink.Entity
 
             /// <summary>最后登录IP</summary>
             public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
-
-            /// <summary>注册次数</summary>
-            public static readonly Field Registers = FindByName(__.Registers);
 
             /// <summary>注册时间</summary>
             public static readonly Field RegisterTime = FindByName(__.RegisterTime);
@@ -318,6 +328,9 @@ namespace xLink.Entity
             /// <summary>更新地址</summary>
             public static readonly Field UpdateIP = FindByName(__.UpdateIP);
 
+            /// <summary>描述</summary>
+            public static readonly Field Description = FindByName(__.Description);
+
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
 
@@ -339,6 +352,9 @@ namespace xLink.Entity
             /// <summary>启用</summary>
             public const String Enable = "Enable";
 
+            /// <summary>产品</summary>
+            public const String ProductID = "ProductID";
+
             /// <summary>类型</summary>
             public const String Type = "Type";
 
@@ -359,9 +375,6 @@ namespace xLink.Entity
 
             /// <summary>最后登录IP</summary>
             public const String LastLoginIP = "LastLoginIP";
-
-            /// <summary>注册次数</summary>
-            public const String Registers = "Registers";
 
             /// <summary>注册时间</summary>
             public const String RegisterTime = "RegisterTime";
@@ -386,6 +399,9 @@ namespace xLink.Entity
 
             /// <summary>更新地址</summary>
             public const String UpdateIP = "UpdateIP";
+
+            /// <summary>描述</summary>
+            public const String Description = "Description";
         }
         #endregion
     }
@@ -409,6 +425,9 @@ namespace xLink.Entity
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
 
+        /// <summary>产品</summary>
+        Int32 ProductID { get; set; }
+
         /// <summary>类型</summary>
         String Type { get; set; }
 
@@ -429,9 +448,6 @@ namespace xLink.Entity
 
         /// <summary>最后登录IP</summary>
         String LastLoginIP { get; set; }
-
-        /// <summary>注册次数</summary>
-        Int32 Registers { get; set; }
 
         /// <summary>注册时间</summary>
         DateTime RegisterTime { get; set; }
@@ -456,6 +472,9 @@ namespace xLink.Entity
 
         /// <summary>更新地址</summary>
         String UpdateIP { get; set; }
+
+        /// <summary>描述</summary>
+        String Description { get; set; }
         #endregion
 
         #region 获取/设置 字段值

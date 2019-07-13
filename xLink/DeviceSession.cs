@@ -78,7 +78,7 @@ namespace xLink
         {
             var ip = ns.Remote.Host;
             var sessionid = ns.Remote.EndPoint + "";
-            var online = DeviceOnline.FindBySessionID(sessionid) ?? new DeviceOnline { CreateIP = ip };
+            var online = /*DeviceOnline.FindBySessionID(sessionid) ??*/ new DeviceOnline { CreateIP = ip };
             online.Version = Version;
             online.ExternalUri = ns.Remote + "";
 

@@ -20,8 +20,8 @@ namespace xLink.Entity
         ///// <summary>数据</summary>
         //String Data { get; set; }
 
-        /// <summary>注册次数</summary>
-        Int32 Registers { get; set; }
+        ///// <summary>注册次数</summary>
+        //Int32 Registers { get; set; }
 
         ///// <summary>创建者</summary>
         //Int32 CreateUserID { get; set; }

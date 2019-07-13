@@ -25,7 +25,7 @@ namespace xLink.Entity
         {
             var df = Meta.Factory.AdditionalFields;
             df.Add(__.Logins);
-            df.Add(__.Registers);
+            //df.Add(__.Registers);
 
             var sc = Meta.SingleCache;
             sc.FindSlaveKeyMethod = e => Find(__.Name, e);
@@ -192,7 +192,7 @@ namespace xLink.Entity
         {
             //if (Name == null || Password == null) return;
 
-            Registers++;
+            //Registers++;
             RegisterTime = DateTime.Now;
             RegisterIP = ip;
             Save();

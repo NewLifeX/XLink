@@ -12,6 +12,7 @@ namespace xLink.Entity
     [DataObject]
     [Description("产品")]
     [BindIndex("IU_Product_Name", true, "Name")]
+    [BindIndex("IU_Product_Key", true, "Key")]
     [BindTable("Product", Description = "产品", ConnName = "Device", DbType = DatabaseType.SqlServer)]
     public partial class Product : IProduct
     {
@@ -55,6 +56,14 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("DataFormat", "数据格式", "")]
         public String DataFormat { get { return _DataFormat; } set { if (OnPropertyChanging(__.DataFormat, value)) { _DataFormat = value; OnPropertyChanged(__.DataFormat); } } }
+
+        private String _Key;
+        /// <summary>编码</summary>
+        [DisplayName("编码")]
+        [Description("编码")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Key", "编码", "")]
+        public String Key { get { return _Key; } set { if (OnPropertyChanging(__.Key, value)) { _Key = value; OnPropertyChanged(__.Key); } } }
 
         private String _Secret;
         /// <summary>密钥</summary>
@@ -160,6 +169,7 @@ namespace xLink.Entity
                     case __.Kind : return _Kind;
                     case __.Category : return _Category;
                     case __.DataFormat : return _DataFormat;
+                    case __.Key : return _Key;
                     case __.Secret : return _Secret;
                     case __.NetworkProtocol : return _NetworkProtocol;
                     case __.Status : return _Status;
@@ -183,6 +193,7 @@ namespace xLink.Entity
                     case __.Kind : _Kind = Convert.ToString(value); break;
                     case __.Category : _Category = Convert.ToString(value); break;
                     case __.DataFormat : _DataFormat = Convert.ToString(value); break;
+                    case __.Key : _Key = Convert.ToString(value); break;
                     case __.Secret : _Secret = Convert.ToString(value); break;
                     case __.NetworkProtocol : _NetworkProtocol = Convert.ToString(value); break;
                     case __.Status : _Status = value.ToInt(); break;
@@ -218,6 +229,9 @@ namespace xLink.Entity
 
             /// <summary>数据格式</summary>
             public static readonly Field DataFormat = FindByName(__.DataFormat);
+
+            /// <summary>编码</summary>
+            public static readonly Field Key = FindByName(__.Key);
 
             /// <summary>密钥</summary>
             public static readonly Field Secret = FindByName(__.Secret);
@@ -273,6 +287,9 @@ namespace xLink.Entity
             /// <summary>数据格式</summary>
             public const String DataFormat = "DataFormat";
 
+            /// <summary>编码</summary>
+            public const String Key = "Key";
+
             /// <summary>密钥</summary>
             public const String Secret = "Secret";
 
@@ -327,6 +344,9 @@ namespace xLink.Entity
 
         /// <summary>数据格式</summary>
         String DataFormat { get; set; }
+
+        /// <summary>编码</summary>
+        String Key { get; set; }
 
         /// <summary>密钥</summary>
         String Secret { get; set; }
