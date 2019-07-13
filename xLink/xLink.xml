@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables Version="9.6.6476.40525" Output="Entity" NameSpace="xLink.Entity" ConnName="" BaseClass="Entity">
+<Tables Version="9.12.7126.42295" Output="Entity" NameSpace="xLink.Entity" ConnName="" BaseClass="Entity">
+  <Table Name="Product" Description="产品" ConnName="Device" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Kind" DataType="String" Description="节点类型" />
+      <Column Name="Category" DataType="String" Description="分类" />
+      <Column Name="DataFormat" DataType="String" Description="数据格式" />
+      <Column Name="Secret" DataType="String" Description="密钥" />
+      <Column Name="NetworkProtocol" DataType="String" Description="网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它" />
+      <Column Name="Status" DataType="Int32" Description="状态。0测试1发布" />
+      <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+      <Column Name="Description" DataType="String" Length="500" Description="描述" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Name" Unique="True" />
+    </Indexes>
+  </Table>
   <Table Name="Device" Description="设备" ConnName="Device" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称。登录用户名" />
-      <Column Name="Code" DataType="String" Description="唯一编码" />
       <Column Name="Password" DataType="String" Description="密码" />
       <Column Name="NickName" DataType="String" Master="True" Description="昵称" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
@@ -27,7 +49,6 @@
     </Columns>
     <Indexes>
       <Index Columns="Name" Unique="True" />
-      <Index Columns="Code" Unique="True" />
       <Index Columns="Type" />
     </Indexes>
   </Table>

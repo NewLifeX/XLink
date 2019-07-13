@@ -24,7 +24,7 @@ namespace xLink.Entity
         [DisplayName("编号")]
         [Description("编号")]
         [DataObjectField(true, true, false, 0)]
-        [BindColumn("ID", "编号", "int")]
+        [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
         private Int32 _UserID;
@@ -32,7 +32,7 @@ namespace xLink.Entity
         [DisplayName("编码")]
         [Description("编码")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("UserID", "编码", "int")]
+        [BindColumn("UserID", "编码", "")]
         public Int32 UserID { get { return _UserID; } set { if (OnPropertyChanging(__.UserID, value)) { _UserID = value; OnPropertyChanged(__.UserID); } } }
 
         private String _Name;
@@ -40,7 +40,7 @@ namespace xLink.Entity
         [DisplayName("名称")]
         [Description("名称")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Name", "名称", "nvarchar(50)", Master = true)]
+        [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
         private String _Version;
@@ -48,7 +48,7 @@ namespace xLink.Entity
         [DisplayName("版本")]
         [Description("版本")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本", "nvarchar(50)")]
+        [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
         private String _Type;
@@ -56,7 +56,7 @@ namespace xLink.Entity
         [DisplayName("类型")]
         [Description("类型")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "nvarchar(50)")]
+        [BindColumn("Type", "类型", "")]
         public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
 
         private String _NetType;
@@ -64,7 +64,7 @@ namespace xLink.Entity
         [DisplayName("网络")]
         [Description("网络")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "nvarchar(50)")]
+        [BindColumn("NetType", "网络", "")]
         public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
 
         private Int32 _SessionID;
@@ -72,7 +72,7 @@ namespace xLink.Entity
         [DisplayName("会话")]
         [Description("会话")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("SessionID", "会话", "int")]
+        [BindColumn("SessionID", "会话", "")]
         public Int32 SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
 
         private String _InternalUri;
@@ -80,7 +80,7 @@ namespace xLink.Entity
         [DisplayName("内网")]
         [Description("内网")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("InternalUri", "内网", "nvarchar(50)")]
+        [BindColumn("InternalUri", "内网", "")]
         public String InternalUri { get { return _InternalUri; } set { if (OnPropertyChanging(__.InternalUri, value)) { _InternalUri = value; OnPropertyChanged(__.InternalUri); } } }
 
         private String _ExternalUri;
@@ -88,7 +88,7 @@ namespace xLink.Entity
         [DisplayName("外网")]
         [Description("外网")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("ExternalUri", "外网", "nvarchar(50)")]
+        [BindColumn("ExternalUri", "外网", "")]
         public String ExternalUri { get { return _ExternalUri; } set { if (OnPropertyChanging(__.ExternalUri, value)) { _ExternalUri = value; OnPropertyChanged(__.ExternalUri); } } }
 
         private Int32 _LoginCount;
@@ -96,7 +96,7 @@ namespace xLink.Entity
         [DisplayName("登录")]
         [Description("登录")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("LoginCount", "登录", "int")]
+        [BindColumn("LoginCount", "登录", "")]
         public Int32 LoginCount { get { return _LoginCount; } set { if (OnPropertyChanging(__.LoginCount, value)) { _LoginCount = value; OnPropertyChanged(__.LoginCount); } } }
 
         private Int32 _PingCount;
@@ -104,7 +104,7 @@ namespace xLink.Entity
         [DisplayName("心跳")]
         [Description("心跳")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("PingCount", "心跳", "int")]
+        [BindColumn("PingCount", "心跳", "")]
         public Int32 PingCount { get { return _PingCount; } set { if (OnPropertyChanging(__.PingCount, value)) { _PingCount = value; OnPropertyChanged(__.PingCount); } } }
 
         private DateTime _LoginTime;
@@ -112,7 +112,7 @@ namespace xLink.Entity
         [DisplayName("登录时间")]
         [Description("登录时间")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("LoginTime", "登录时间", "datetime")]
+        [BindColumn("LoginTime", "登录时间", "")]
         public DateTime LoginTime { get { return _LoginTime; } set { if (OnPropertyChanging(__.LoginTime, value)) { _LoginTime = value; OnPropertyChanged(__.LoginTime); } } }
 
         private Int32 _ErrorCount;
@@ -120,7 +120,7 @@ namespace xLink.Entity
         [DisplayName("错误")]
         [Description("错误")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("ErrorCount", "错误", "int")]
+        [BindColumn("ErrorCount", "错误", "")]
         public Int32 ErrorCount { get { return _ErrorCount; } set { if (OnPropertyChanging(__.ErrorCount, value)) { _ErrorCount = value; OnPropertyChanged(__.ErrorCount); } } }
 
         private String _LastError;
@@ -128,7 +128,7 @@ namespace xLink.Entity
         [DisplayName("最后错误")]
         [Description("最后错误")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("LastError", "最后错误", "nvarchar(50)")]
+        [BindColumn("LastError", "最后错误", "")]
         public String LastError { get { return _LastError; } set { if (OnPropertyChanging(__.LastError, value)) { _LastError = value; OnPropertyChanged(__.LastError); } } }
 
         private DateTime _CreateTime;
@@ -136,7 +136,7 @@ namespace xLink.Entity
         [DisplayName("创建时间")]
         [Description("创建时间")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("CreateTime", "创建时间", "datetime")]
+        [BindColumn("CreateTime", "创建时间", "")]
         public DateTime CreateTime { get { return _CreateTime; } set { if (OnPropertyChanging(__.CreateTime, value)) { _CreateTime = value; OnPropertyChanged(__.CreateTime); } } }
 
         private String _CreateIP;
@@ -144,7 +144,7 @@ namespace xLink.Entity
         [DisplayName("创建地址")]
         [Description("创建地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("CreateIP", "创建地址", "nvarchar(50)")]
+        [BindColumn("CreateIP", "创建地址", "")]
         public String CreateIP { get { return _CreateIP; } set { if (OnPropertyChanging(__.CreateIP, value)) { _CreateIP = value; OnPropertyChanged(__.CreateIP); } } }
 
         private DateTime _UpdateTime;
@@ -152,7 +152,7 @@ namespace xLink.Entity
         [DisplayName("更新时间")]
         [Description("更新时间")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("UpdateTime", "更新时间", "datetime")]
+        [BindColumn("UpdateTime", "更新时间", "")]
         public DateTime UpdateTime { get { return _UpdateTime; } set { if (OnPropertyChanging(__.UpdateTime, value)) { _UpdateTime = value; OnPropertyChanged(__.UpdateTime); } } }
         #endregion
 
@@ -190,23 +190,23 @@ namespace xLink.Entity
             {
                 switch (name)
                 {
-                    case __.ID : _ID = Convert.ToInt32(value); break;
-                    case __.UserID : _UserID = Convert.ToInt32(value); break;
+                    case __.ID : _ID = value.ToInt(); break;
+                    case __.UserID : _UserID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.NetType : _NetType = Convert.ToString(value); break;
-                    case __.SessionID : _SessionID = Convert.ToInt32(value); break;
+                    case __.SessionID : _SessionID = value.ToInt(); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
                     case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
-                    case __.LoginCount : _LoginCount = Convert.ToInt32(value); break;
-                    case __.PingCount : _PingCount = Convert.ToInt32(value); break;
-                    case __.LoginTime : _LoginTime = Convert.ToDateTime(value); break;
-                    case __.ErrorCount : _ErrorCount = Convert.ToInt32(value); break;
+                    case __.LoginCount : _LoginCount = value.ToInt(); break;
+                    case __.PingCount : _PingCount = value.ToInt(); break;
+                    case __.LoginTime : _LoginTime = value.ToDateTime(); break;
+                    case __.ErrorCount : _ErrorCount = value.ToInt(); break;
                     case __.LastError : _LastError = Convert.ToString(value); break;
-                    case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
+                    case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
-                    case __.UpdateTime : _UpdateTime = Convert.ToDateTime(value); break;
+                    case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
                     default: base[name] = value; break;
                 }
             }

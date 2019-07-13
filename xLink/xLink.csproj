@@ -57,4 +57,20 @@
     <PackageReference Include="NewLife.XCode" Version="9.13.2019.706" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="XCoder.log">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>XCoder.tt</DependentUpon>
+    </None>
+    <None Update="XCoder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XCoder.log</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
 </Project>

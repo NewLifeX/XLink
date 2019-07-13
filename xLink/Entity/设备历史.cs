@@ -23,7 +23,7 @@ namespace xLink.Entity
         [DisplayName("编号")]
         [Description("编号")]
         [DataObjectField(true, true, false, 0)]
-        [BindColumn("ID", "编号", "int")]
+        [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
         private Int32 _DeviceID;
@@ -31,7 +31,7 @@ namespace xLink.Entity
         [DisplayName("编码")]
         [Description("编码")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("DeviceID", "编码", "int")]
+        [BindColumn("DeviceID", "编码", "")]
         public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
 
         private String _Name;
@@ -39,7 +39,7 @@ namespace xLink.Entity
         [DisplayName("名称")]
         [Description("名称")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Name", "名称", "nvarchar(50)", Master = true)]
+        [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
         private String _Version;
@@ -47,7 +47,7 @@ namespace xLink.Entity
         [DisplayName("版本")]
         [Description("版本")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本", "nvarchar(50)")]
+        [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
         private String _Type;
@@ -55,7 +55,7 @@ namespace xLink.Entity
         [DisplayName("类型")]
         [Description("类型")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "nvarchar(50)")]
+        [BindColumn("Type", "类型", "")]
         public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
 
         private String _NetType;
@@ -63,7 +63,7 @@ namespace xLink.Entity
         [DisplayName("网络")]
         [Description("网络")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "nvarchar(50)")]
+        [BindColumn("NetType", "网络", "")]
         public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
 
         private String _Action;
@@ -71,7 +71,7 @@ namespace xLink.Entity
         [DisplayName("操作")]
         [Description("操作")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Action", "操作", "nvarchar(50)")]
+        [BindColumn("Action", "操作", "")]
         public String Action { get { return _Action; } set { if (OnPropertyChanging(__.Action, value)) { _Action = value; OnPropertyChanged(__.Action); } } }
 
         private Boolean _Success;
@@ -79,7 +79,7 @@ namespace xLink.Entity
         [DisplayName("成功")]
         [Description("成功")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Success", "成功", "bit")]
+        [BindColumn("Success", "成功", "")]
         public Boolean Success { get { return _Success; } set { if (OnPropertyChanging(__.Success, value)) { _Success = value; OnPropertyChanged(__.Success); } } }
 
         private Int32 _CreateDeviceID;
@@ -87,7 +87,7 @@ namespace xLink.Entity
         [DisplayName("创建者")]
         [Description("创建者")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("CreateDeviceID", "创建者", "int")]
+        [BindColumn("CreateDeviceID", "创建者", "")]
         public Int32 CreateDeviceID { get { return _CreateDeviceID; } set { if (OnPropertyChanging(__.CreateDeviceID, value)) { _CreateDeviceID = value; OnPropertyChanged(__.CreateDeviceID); } } }
 
         private DateTime _CreateTime;
@@ -95,7 +95,7 @@ namespace xLink.Entity
         [DisplayName("创建时间")]
         [Description("创建时间")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("CreateTime", "创建时间", "datetime")]
+        [BindColumn("CreateTime", "创建时间", "")]
         public DateTime CreateTime { get { return _CreateTime; } set { if (OnPropertyChanging(__.CreateTime, value)) { _CreateTime = value; OnPropertyChanged(__.CreateTime); } } }
 
         private String _CreateIP;
@@ -103,7 +103,7 @@ namespace xLink.Entity
         [DisplayName("创建地址")]
         [Description("创建地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("CreateIP", "创建地址", "nvarchar(50)")]
+        [BindColumn("CreateIP", "创建地址", "")]
         public String CreateIP { get { return _CreateIP; } set { if (OnPropertyChanging(__.CreateIP, value)) { _CreateIP = value; OnPropertyChanged(__.CreateIP); } } }
 
         private String _Remark;
@@ -111,7 +111,7 @@ namespace xLink.Entity
         [DisplayName("内容")]
         [Description("内容")]
         [DataObjectField(false, false, true, 500)]
-        [BindColumn("Content", "内容", "nvarchar(500)")]
+        [BindColumn("Content", "内容", "")]
         public String Remark { get { return _Remark; } set { if (OnPropertyChanging(__.Remark, value)) { _Remark = value; OnPropertyChanged(__.Remark); } } }
         #endregion
 
@@ -144,16 +144,16 @@ namespace xLink.Entity
             {
                 switch (name)
                 {
-                    case __.ID : _ID = Convert.ToInt32(value); break;
-                    case __.DeviceID : _DeviceID = Convert.ToInt32(value); break;
+                    case __.ID : _ID = value.ToInt(); break;
+                    case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.Action : _Action = Convert.ToString(value); break;
-                    case __.Success : _Success = Convert.ToBoolean(value); break;
-                    case __.CreateDeviceID : _CreateDeviceID = Convert.ToInt32(value); break;
-                    case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
+                    case __.Success : _Success = value.ToBoolean(); break;
+                    case __.CreateDeviceID : _CreateDeviceID = value.ToInt(); break;
+                    case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.Remark : _Remark = Convert.ToString(value); break;
                     default: base[name] = value; break;

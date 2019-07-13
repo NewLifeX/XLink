@@ -88,16 +88,16 @@ namespace xLink.Entity
             return Find(__.Name, name);
         }
 
-        /// <summary>根据唯一编码查找</summary>
-        /// <param name="code">唯一编码</param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static Device FindByCode(String code)
-        {
-            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
+        ///// <summary>根据唯一编码查找</summary>
+        ///// <param name="code">唯一编码</param>
+        ///// <returns></returns>
+        //[DataObjectMethod(DataObjectMethodType.Select, false)]
+        //public static Device FindByCode(String code)
+        //{
+        //    if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
 
-            return Find(__.Code, code);
-        }
+        //    return Find(__.Code, code);
+        //}
         #endregion
 
         #region 高级查询

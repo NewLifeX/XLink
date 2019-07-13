@@ -12,7 +12,6 @@ namespace xLink.Entity
     [DataObject]
     [Description("设备")]
     [BindIndex("IU_Device_Name", true, "Name")]
-    [BindIndex("IU_Device_Code", true, "Code")]
     [BindIndex("IX_Device_Type", false, "Type")]
     [BindTable("Device", Description = "设备", ConnName = "Device", DbType = DatabaseType.SqlServer)]
     public partial class Device : IDevice
@@ -23,7 +22,7 @@ namespace xLink.Entity
         [DisplayName("编号")]
         [Description("编号")]
         [DataObjectField(true, true, false, 0)]
-        [BindColumn("ID", "编号", "int")]
+        [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
         private String _Name;
@@ -31,23 +30,15 @@ namespace xLink.Entity
         [DisplayName("名称")]
         [Description("名称。登录用户名")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Name", "名称。登录用户名", "nvarchar(50)", Master = true)]
+        [BindColumn("Name", "名称。登录用户名", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
-
-        private String _Code;
-        /// <summary>唯一编码</summary>
-        [DisplayName("唯一编码")]
-        [Description("唯一编码")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Code", "唯一编码", "nvarchar(50)")]
-        public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
 
         private String _Password;
         /// <summary>密码</summary>
         [DisplayName("密码")]
         [Description("密码")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Password", "密码", "nvarchar(50)")]
+        [BindColumn("Password", "密码", "")]
         public String Password { get { return _Password; } set { if (OnPropertyChanging(__.Password, value)) { _Password = value; OnPropertyChanged(__.Password); } } }
 
         private String _NickName;
@@ -55,7 +46,7 @@ namespace xLink.Entity
         [DisplayName("昵称")]
         [Description("昵称")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("NickName", "昵称", "nvarchar(50)", Master = true)]
+        [BindColumn("NickName", "昵称", "", Master = true)]
         public String NickName { get { return _NickName; } set { if (OnPropertyChanging(__.NickName, value)) { _NickName = value; OnPropertyChanged(__.NickName); } } }
 
         private Boolean _Enable;
@@ -63,7 +54,7 @@ namespace xLink.Entity
         [DisplayName("启用")]
         [Description("启用")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Enable", "启用", "bit")]
+        [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
         private String _Type;
@@ -71,7 +62,7 @@ namespace xLink.Entity
         [DisplayName("类型")]
         [Description("类型")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "nvarchar(50)")]
+        [BindColumn("Type", "类型", "")]
         public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
 
         private String _Version;
@@ -79,7 +70,7 @@ namespace xLink.Entity
         [DisplayName("版本")]
         [Description("版本")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本", "nvarchar(50)")]
+        [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
         private String _Data;
@@ -87,7 +78,7 @@ namespace xLink.Entity
         [DisplayName("数据")]
         [Description("数据")]
         [DataObjectField(false, false, true, 200)]
-        [BindColumn("Data", "数据", "nvarchar(200)")]
+        [BindColumn("Data", "数据", "")]
         public String Data { get { return _Data; } set { if (OnPropertyChanging(__.Data, value)) { _Data = value; OnPropertyChanged(__.Data); } } }
 
         private Boolean _Online;
@@ -95,7 +86,7 @@ namespace xLink.Entity
         [DisplayName("在线")]
         [Description("在线")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Online", "在线", "bit")]
+        [BindColumn("Online", "在线", "")]
         public Boolean Online { get { return _Online; } set { if (OnPropertyChanging(__.Online, value)) { _Online = value; OnPropertyChanged(__.Online); } } }
 
         private Int32 _Logins;
@@ -103,7 +94,7 @@ namespace xLink.Entity
         [DisplayName("登录")]
         [Description("登录")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Logins", "登录", "int")]
+        [BindColumn("Logins", "登录", "")]
         public Int32 Logins { get { return _Logins; } set { if (OnPropertyChanging(__.Logins, value)) { _Logins = value; OnPropertyChanged(__.Logins); } } }
 
         private DateTime _LastLogin;
@@ -111,7 +102,7 @@ namespace xLink.Entity
         [DisplayName("最后登录")]
         [Description("最后登录")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("LastLogin", "最后登录", "datetime")]
+        [BindColumn("LastLogin", "最后登录", "")]
         public DateTime LastLogin { get { return _LastLogin; } set { if (OnPropertyChanging(__.LastLogin, value)) { _LastLogin = value; OnPropertyChanged(__.LastLogin); } } }
 
         private String _LastLoginIP;
@@ -119,7 +110,7 @@ namespace xLink.Entity
         [DisplayName("最后登录IP")]
         [Description("最后登录IP")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("LastLoginIP", "最后登录IP", "nvarchar(50)")]
+        [BindColumn("LastLoginIP", "最后登录IP", "")]
         public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
 
         private Int32 _Registers;
@@ -127,7 +118,7 @@ namespace xLink.Entity
         [DisplayName("注册次数")]
         [Description("注册次数")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Registers", "注册次数", "int")]
+        [BindColumn("Registers", "注册次数", "")]
         public Int32 Registers { get { return _Registers; } set { if (OnPropertyChanging(__.Registers, value)) { _Registers = value; OnPropertyChanged(__.Registers); } } }
 
         private DateTime _RegisterTime;
@@ -135,7 +126,7 @@ namespace xLink.Entity
         [DisplayName("注册时间")]
         [Description("注册时间")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("RegisterTime", "注册时间", "datetime")]
+        [BindColumn("RegisterTime", "注册时间", "")]
         public DateTime RegisterTime { get { return _RegisterTime; } set { if (OnPropertyChanging(__.RegisterTime, value)) { _RegisterTime = value; OnPropertyChanged(__.RegisterTime); } } }
 
         private String _RegisterIP;
@@ -143,7 +134,7 @@ namespace xLink.Entity
         [DisplayName("注册IP")]
         [Description("注册IP")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("RegisterIP", "注册IP", "nvarchar(50)")]
+        [BindColumn("RegisterIP", "注册IP", "")]
         public String RegisterIP { get { return _RegisterIP; } set { if (OnPropertyChanging(__.RegisterIP, value)) { _RegisterIP = value; OnPropertyChanged(__.RegisterIP); } } }
 
         private Int32 _CreateUserID;
@@ -151,7 +142,7 @@ namespace xLink.Entity
         [DisplayName("创建者")]
         [Description("创建者")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("CreateUserID", "创建者", "int")]
+        [BindColumn("CreateUserID", "创建者", "")]
         public Int32 CreateUserID { get { return _CreateUserID; } set { if (OnPropertyChanging(__.CreateUserID, value)) { _CreateUserID = value; OnPropertyChanged(__.CreateUserID); } } }
 
         private DateTime _CreateTime;
@@ -159,7 +150,7 @@ namespace xLink.Entity
         [DisplayName("创建时间")]
         [Description("创建时间")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("CreateTime", "创建时间", "datetime")]
+        [BindColumn("CreateTime", "创建时间", "")]
         public DateTime CreateTime { get { return _CreateTime; } set { if (OnPropertyChanging(__.CreateTime, value)) { _CreateTime = value; OnPropertyChanged(__.CreateTime); } } }
 
         private String _CreateIP;
@@ -167,7 +158,7 @@ namespace xLink.Entity
         [DisplayName("创建地址")]
         [Description("创建地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("CreateIP", "创建地址", "nvarchar(50)")]
+        [BindColumn("CreateIP", "创建地址", "")]
         public String CreateIP { get { return _CreateIP; } set { if (OnPropertyChanging(__.CreateIP, value)) { _CreateIP = value; OnPropertyChanged(__.CreateIP); } } }
 
         private Int32 _UpdateUserID;
@@ -175,7 +166,7 @@ namespace xLink.Entity
         [DisplayName("更新者")]
         [Description("更新者")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("UpdateUserID", "更新者", "int")]
+        [BindColumn("UpdateUserID", "更新者", "")]
         public Int32 UpdateUserID { get { return _UpdateUserID; } set { if (OnPropertyChanging(__.UpdateUserID, value)) { _UpdateUserID = value; OnPropertyChanged(__.UpdateUserID); } } }
 
         private DateTime _UpdateTime;
@@ -183,7 +174,7 @@ namespace xLink.Entity
         [DisplayName("更新时间")]
         [Description("更新时间")]
         [DataObjectField(false, false, true, 0)]
-        [BindColumn("UpdateTime", "更新时间", "datetime")]
+        [BindColumn("UpdateTime", "更新时间", "")]
         public DateTime UpdateTime { get { return _UpdateTime; } set { if (OnPropertyChanging(__.UpdateTime, value)) { _UpdateTime = value; OnPropertyChanged(__.UpdateTime); } } }
 
         private String _UpdateIP;
@@ -191,7 +182,7 @@ namespace xLink.Entity
         [DisplayName("更新地址")]
         [Description("更新地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("UpdateIP", "更新地址", "nvarchar(50)")]
+        [BindColumn("UpdateIP", "更新地址", "")]
         public String UpdateIP { get { return _UpdateIP; } set { if (OnPropertyChanging(__.UpdateIP, value)) { _UpdateIP = value; OnPropertyChanged(__.UpdateIP); } } }
         #endregion
 
@@ -207,7 +198,6 @@ namespace xLink.Entity
                 {
                     case __.ID : return _ID;
                     case __.Name : return _Name;
-                    case __.Code : return _Code;
                     case __.Password : return _Password;
                     case __.NickName : return _NickName;
                     case __.Enable : return _Enable;
@@ -234,27 +224,26 @@ namespace xLink.Entity
             {
                 switch (name)
                 {
-                    case __.ID : _ID = Convert.ToInt32(value); break;
+                    case __.ID : _ID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
-                    case __.Code : _Code = Convert.ToString(value); break;
                     case __.Password : _Password = Convert.ToString(value); break;
                     case __.NickName : _NickName = Convert.ToString(value); break;
-                    case __.Enable : _Enable = Convert.ToBoolean(value); break;
+                    case __.Enable : _Enable = value.ToBoolean(); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.Data : _Data = Convert.ToString(value); break;
-                    case __.Online : _Online = Convert.ToBoolean(value); break;
-                    case __.Logins : _Logins = Convert.ToInt32(value); break;
-                    case __.LastLogin : _LastLogin = Convert.ToDateTime(value); break;
+                    case __.Online : _Online = value.ToBoolean(); break;
+                    case __.Logins : _Logins = value.ToInt(); break;
+                    case __.LastLogin : _LastLogin = value.ToDateTime(); break;
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
-                    case __.Registers : _Registers = Convert.ToInt32(value); break;
-                    case __.RegisterTime : _RegisterTime = Convert.ToDateTime(value); break;
+                    case __.Registers : _Registers = value.ToInt(); break;
+                    case __.RegisterTime : _RegisterTime = value.ToDateTime(); break;
                     case __.RegisterIP : _RegisterIP = Convert.ToString(value); break;
-                    case __.CreateUserID : _CreateUserID = Convert.ToInt32(value); break;
-                    case __.CreateTime : _CreateTime = Convert.ToDateTime(value); break;
+                    case __.CreateUserID : _CreateUserID = value.ToInt(); break;
+                    case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
-                    case __.UpdateUserID : _UpdateUserID = Convert.ToInt32(value); break;
-                    case __.UpdateTime : _UpdateTime = Convert.ToDateTime(value); break;
+                    case __.UpdateUserID : _UpdateUserID = value.ToInt(); break;
+                    case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
                     case __.UpdateIP : _UpdateIP = Convert.ToString(value); break;
                     default: base[name] = value; break;
                 }
@@ -271,9 +260,6 @@ namespace xLink.Entity
 
             /// <summary>名称。登录用户名</summary>
             public static readonly Field Name = FindByName(__.Name);
-
-            /// <summary>唯一编码</summary>
-            public static readonly Field Code = FindByName(__.Code);
 
             /// <summary>密码</summary>
             public static readonly Field Password = FindByName(__.Password);
@@ -344,9 +330,6 @@ namespace xLink.Entity
             /// <summary>名称。登录用户名</summary>
             public const String Name = "Name";
 
-            /// <summary>唯一编码</summary>
-            public const String Code = "Code";
-
             /// <summary>密码</summary>
             public const String Password = "Password";
 
@@ -416,9 +399,6 @@ namespace xLink.Entity
 
         /// <summary>名称。登录用户名</summary>
         String Name { get; set; }
-
-        /// <summary>唯一编码</summary>
-        String Code { get; set; }
 
         /// <summary>密码</summary>
         String Password { get; set; }
