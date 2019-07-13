@@ -118,12 +118,12 @@ namespace xLink.Client
 
             if (!ac.Open()) return;
 
-            ac.CreateCallback = sc =>
-            {
-                sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
-                sc.LogSend = cfg.ShowSend;
-                sc.LogReceive = cfg.ShowReceive;
-            };
+            //ac.CreateCallback = sc =>
+            //{
+            //    sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
+            //    sc.LogSend = cfg.ShowSend;
+            //    sc.LogReceive = cfg.ShowReceive;
+            //};
 
             "已连接服务器".SpeechTip();
 

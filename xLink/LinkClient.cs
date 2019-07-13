@@ -1,128 +1,202 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
-using NewLife;
+using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
+using NewLife.Serialization;
+using xLink.Models;
 
 namespace xLink
 {
     /// <summary>物联客户端</summary>
+    [Api(null)]
     public class LinkClient : ApiClient
     {
         #region 属性
-        /// <summary>远程地址</summary>
-        public NetUri Remote { get; set; }
+        /// <summary>用户名</summary>
+        public String UserName { get; set; }
+
+        /// <summary>密码</summary>
+        public String Password { get; set; }
+
+        /// <summary>动作前缀</summary>
+        public String ActionPrefix { get; set; }
 
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
+
+        /// <summary>已登录</summary>
+        public Boolean Logined { get; set; }
+
+        /// <summary>最后一次登录成功后的消息</summary>
+        public IDictionary<String, Object> Info { get; private set; }
         #endregion
 
         #region 构造
-        public LinkClient(String uri)
+        public LinkClient(String uri) : base(uri)
         {
-            Remote = uri;
+            Log = XTrace.Log;
+
+            StatPeriod = 60;
+            ShowError = true;
+
+#if DEBUG
+            EncoderLog = XTrace.Log;
+            StatPeriod = 10;
+#endif
 
             // 初始数据
             var dic = Parameters;
-            dic["OS"] = Runtime.OSName;
-            dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
+            dic["OS"] = Environment.OSVersion + "";
+            dic["Machine"] = Environment.MachineName;
+            dic["Agent"] = Environment.UserName;
+            dic["ProcessID"] = Process.GetCurrentProcess().Id;
 
-            var asmx = AssemblyX.Create(Assembly.GetCallingAssembly());
-            dic["Version"] = asmx.Version;
+            var asmx = AssemblyX.Entry;
+            dic["Version"] = asmx?.Version;
+            dic["Compile"] = asmx?.Compile;
+
+            // 注册当前类所有接口
+            Manager.Register(this, null);
+            //Register(this, nameof(OnWrite));
         }
         #endregion
 
-        #region 打开关闭
-        /// <summary>开始处理数据</summary>
-        public override Boolean Open()
+        #region 执行
+        /// <summary>异步调用</summary>
+        /// <param name="resultType"></param>
+        /// <param name="action"></param>
+        /// <param name="args"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        public override Task<Object> InvokeAsync(Type resultType, String action, Object args = null, Byte flag = 0)
         {
-            if (Active) return true;
+            if (!ActionPrefix.IsNullOrEmpty() && !action.Contains("/")) action = ActionPrefix + "/" + action;
 
-            if (Remote == null) throw new ArgumentNullException(nameof(Remote));
-
-            SetRemote(Remote + "");
-
-            WriteLog("连接服务器 {0}", Remote);
-
-            if (!base.Open()) return false;
-
-
-            return Active;
+            return base.InvokeAsync(resultType, action, args, flag);
         }
         #endregion
 
         #region 登录
-        /// <summary>预登录。参数准备</summary>
-        /// <returns></returns>
-        protected override Object OnPreLogin()
+        /// <summary>连接后自动登录</summary>
+        /// <param name="client">客户端</param>
+        /// <param name="force">强制登录</param>
+        protected override async Task<Object> OnLoginAsync(ISocketClient client, Boolean force)
         {
-            //!!! 安全起见，强烈建议不用传输明文密码
+            if (Logined && !force) return null;
+
+            Logined = false;
+
             var user = UserName;
             var pass = Password;
+            //if (user.IsNullOrEmpty()) return null;
             if (user.IsNullOrEmpty()) throw new ArgumentNullException(nameof(user), "用户名不能为空！");
             //if (pass.IsNullOrEmpty()) throw new ArgumentNullException(nameof(pass), "密码不能为空！");
 
-            // 加密随机数，密码为空表示注册
-            var p = "";
-            if (!pass.IsNullOrEmpty())
+            var asmx = AssemblyX.Entry;
+
+            var arg = new
             {
-                var salt = ((Int64)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).GetBytes();
-                p = salt.RC4(pass.GetBytes()).ToHex();
-                p = salt.ToHex() + p;
-            }
+                user,
+                pass = pass.MD5(),
+            };
 
             // 克隆一份，避免修改原始数据
-            var dic = new { user, pass = p }.ToDictionary();
+            var dic = arg.ToDictionary();
             dic.Merge(Parameters, false);
 
-            return dic;
-        }
+            var act = "Login";
+            if (!ActionPrefix.IsNullOrEmpty()) act = ActionPrefix + "/" + act;
 
-        protected override async Task<Object> OnLogin(Object args)
-        {
-            var dic = args.ToDictionary();
-            var rs = dic;
+            var rs = await base.InvokeWithClientAsync<Object>(client, act, dic);
+            var inf = rs.ToJson();
+            if (Setting.Current.Debug) XTrace.WriteLine("登录{0}成功！{1}", Servers.FirstOrDefault(), inf);
 
-            // 循环，支持重定向
-            while (true)
-            {
-                rs = (await base.OnLogin(dic)).ToDictionary().ToNullable();
+            Logined = true;
 
-                // 注册返回
-                if (rs.ContainsKey("User"))
-                {
-                    UserName = rs["User"] + "";
-                    Password = rs["Pass"] + "";
-
-                    // 重新构造参数
-                    dic = OnPreLogin().ToDictionary();
-                }
-
-                // 检查重定向，解析目标地址，合并参数，断开当前连接，建立新连接
-                var uri = rs["Location"] + "";
-                if (!uri.IsNullOrEmpty())
-                {
-                    dic.Merge(rs, true, new String[] { "Key", "User", "Pass", "Location" });
-
-                    Key = null;
-                    SetRemote(uri);
-
-                    // 重新登录
-                    continue;
-                }
-
-                break;
-            }
-
-            return rs;
+            return Info = rs as IDictionary<String, Object>;
         }
         #endregion
 
         #region 心跳
+        /// <summary>心跳</summary>
+        /// <returns></returns>
+        public async Task<Object> PingAsync()
+        {
+            return await InvokeAsync<Object>("Ping", new { time = DateTime.Now }).ConfigureAwait(false);
+        }
+        #endregion
+
+        #region 读写
+        /// <summary>写入数据，返回整个数据区</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
+        {
+            var rs = await InvokeAsync<DataModel>("Write", new { id, start, data = data.ToHex() });
+            return rs.Data.ToHex();
+        }
+
+        /// <summary>读取对方数据</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public async Task<Byte[]> Read(String id, Int32 start, Int32 count)
+        {
+            var rs = await InvokeAsync<DataModel>("Read", new { id, start, count });
+            return rs.Data.ToHex();
+        }
+
+        public Func<String, Byte[]> GetData;
+        public Action<String, Byte[]> SetData;
+
+        /// <summary>收到写入请求</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="data"></param>
+        [Api("Write")]
+        private DataModel OnWrite(String id, Int32 start, String data)
+        {
+            var buf = GetData?.Invoke(id);
+            if (buf == null) throw new ApiException(405, "找不到设备！");
+
+            var ds = data.ToHex();
+
+            // 检查扩容
+            if (start + ds.Length > buf.Length)
+            {
+                var buf2 = new Byte[start + ds.Length];
+                buf2.Write(0, buf);
+                buf = buf2;
+            }
+            buf.Write(start, ds);
+            buf[0] = (Byte)buf.Length;
+
+            // 保存回去
+            SetData?.Invoke(id, buf);
+
+            return new DataModel { ID = id, Start = 0, Data = buf.ToHex() };
+        }
+
+        /// <summary>收到读取请求</summary>
+        /// <param name="id">设备</param>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        [Api("Read")]
+        private DataModel OnRead(String id, Int32 start, Int32 count)
+        {
+            var buf = GetData?.Invoke(id);
+            if (buf == null) throw new ApiException(405, "找不到设备！");
+
+            return new DataModel { ID = id, Start = start, Data = buf.ReadBytes(start, count).ToHex() };
+        }
         #endregion
 
         #region 业务
