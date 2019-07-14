@@ -28,9 +28,9 @@ namespace xLink.Client
         [Description("地址")]
         public String Address { get; set; } = "tcp://127.0.0.1:2233,tcp://feifan.link:2233";
 
-        /// <summary>十六进制显示</summary>
-        [Description("十六进制显示")]
-        public Boolean HexShow { get; set; }
+        ///// <summary>十六进制显示</summary>
+        //[Description("十六进制显示")]
+        //public Boolean HexShow { get; set; }
 
         /// <summary>十六进制发送</summary>
         [Description("十六进制发送")]
@@ -84,13 +84,13 @@ namespace xLink.Client
         //[Description("是否压缩，默认false")]
         //public Boolean Compressed { get; set; }
 
-        /// <summary>日志着色</summary>
-        [Description("日志着色")]
-        public Boolean ColorLog { get; set; } = true;
+        ///// <summary>日志着色</summary>
+        //[Description("日志着色")]
+        //public Boolean ColorLog { get; set; } = true;
 
-        /// <summary>扩展数据</summary>
-        [Description("扩展数据")]
-        public String Extend { get; set; } = "";
+        ///// <summary>扩展数据</summary>
+        //[Description("扩展数据")]
+        //public String Extend { get; set; } = "";
         #endregion
 
         #region 地址

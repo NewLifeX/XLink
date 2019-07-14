@@ -2,7 +2,6 @@
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
-using NewLife.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,8 +40,8 @@ namespace xLink.Client
 
             if (cfg.IsNew) "欢迎使用物联网客户端！".SpeechTip();
 
-            // 加载保存的颜色
-            UIConfig.Apply(txtReceive);
+            //// 加载保存的颜色
+            //UIConfig.Apply(txtReceive);
 
             LoadConfig();
         }
@@ -59,7 +58,7 @@ namespace xLink.Client
             mi显示接收数据.Checked = cfg.ShowReceive;
             mi显示统计信息.Checked = cfg.ShowStat;
             miHexSend.Checked = cfg.HexSend;
-            mi日志着色.Checked = cfg.ColorLog;
+            //mi日志着色.Checked = cfg.ColorLog;
 
             txtSend.Text = cfg.SendContent;
             numMutilSend.Value = cfg.SendTimes;
@@ -84,7 +83,7 @@ namespace xLink.Client
             cfg.SendTimes = (Int32)numMutilSend.Value;
             cfg.SendSleep = (Int32)numSleep.Value;
             cfg.SendUsers = (Int32)numThreads.Value;
-            cfg.ColorLog = mi日志着色.Checked;
+            //cfg.ColorLog = mi日志着色.Checked;
 
             cfg.Mode = cbMode.Text;
             cfg.AddAddresss(cbAddr.Text);
@@ -160,56 +159,6 @@ namespace xLink.Client
                 Disconnect();
         }
 
-        ///// <summary>业务日志输出</summary>
-        //ILog BizLog;
-
-        //void OnReceived(Object sender, ApiMessageEventArgs e)
-        //{
-        //    var session = sender as ISocketSession;
-        //    if (session == null)
-        //    {
-        //        var ns = sender as INetSession;
-        //        if (ns == null) return;
-        //        session = ns.Session;
-        //    }
-
-        //    if (Setting.Current.ShowReceiveString)
-        //    {
-        //        var line = e.Message.Payload.ToStr();
-        //        XTrace.WriteLine(line);
-
-        //        BizLog?.Info(line);
-        //    }
-        //}
-
-        Int32 _pColor = 0;
-        Int32 BytesOfReceived = 0;
-        Int32 BytesOfSent = 0;
-        Int32 lastReceive = 0;
-        Int32 lastSend = 0;
-        private void timer1_Tick(Object sender, EventArgs e)
-        {
-            //if (!pnlSetting.Enabled)
-            {
-                var rcount = BytesOfReceived;
-                var tcount = BytesOfSent;
-                if (rcount != lastReceive)
-                {
-                    gbReceive.Text = (gbReceive.Tag + "").Replace("0", rcount + "");
-                    lastReceive = rcount;
-                }
-                if (tcount != lastSend)
-                {
-                    gbSend.Text = (gbSend.Tag + "").Replace("0", tcount + "");
-                    lastSend = tcount;
-                }
-
-                var cfg = Setting.Current;
-                if (cfg.ColorLog) txtReceive.ColourDefault(_pColor);
-                _pColor = txtReceive.TextLength;
-            }
-        }
-
         private List<LinkClient> cs = new List<LinkClient>();
         private void btnSend_Click(Object sender, EventArgs e)
         {
@@ -217,9 +166,6 @@ namespace xLink.Client
 
             var count = (Int32)numThreads.Value;
             if (count <= cs.Count) return;
-
-            //var sc = _Client.Client.GetService<ISocketClient>();
-            //if (sc == null) return;
 
             var uri = new NetUri(cbAddr.Text);
 
@@ -230,15 +176,10 @@ namespace xLink.Client
                 {
                     var ac = new LinkClient(uri.ToString())
                     {
-                        //ac.Received += OnReceived;
-
                         UserName = cc.UserName,
                         Password = cc.Password,
                         ActionPrefix = cc.ActionPrefix
                     };
-
-                    //ac.Encrypted = cc.Encrypted;
-                    //ac.Compressed = cc.Compressed;
 
                     cs.Add(ac);
 
@@ -249,14 +190,6 @@ namespace xLink.Client
                             if (ac.Open()) break;
                             Thread.Sleep(1000);
                         }
-
-                        //// 共用统计对象
-                        //if (ac.Active)
-                        //{
-                        //    var sc2 = ac.Client.GetService<ISocketClient>();
-                        //    sc2.StatSend = sc.StatSend;
-                        //    sc2.StatReceive = sc.StatReceive;
-                        //}
                     });
                 }
             });
@@ -267,13 +200,11 @@ namespace xLink.Client
         private void mi清空_Click(Object sender, EventArgs e)
         {
             txtReceive.Clear();
-            BytesOfReceived = 0;
         }
 
         private void mi清空2_Click(Object sender, EventArgs e)
         {
             txtSend.Clear();
-            BytesOfSent = 0;
         }
 
         private void Menu_Click(Object sender, EventArgs e)
