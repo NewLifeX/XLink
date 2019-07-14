@@ -14,9 +14,6 @@ namespace xLink
     public class LinkServer : ApiServer
     {
         #region 属性
-        /// <summary>显示总会话数的时间间隔。默认60秒</summary>
-        public Int32 ShowSessionCount { get; set; }
-
         /// <summary>附加参数</summary>
         public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
         #endregion
@@ -29,7 +26,6 @@ namespace xLink
 
             StatPeriod = 60;
             ShowError = true;
-            ShowSessionCount = 60;
 
 #if DEBUG
             EncoderLog = XTrace.Log;
@@ -47,15 +43,6 @@ namespace xLink
             dic["Version"] = asmx?.Version;
             dic["Compile"] = asmx?.Compile;
         }
-
-        /// <summary>销毁</summary>
-        /// <param name="disposing"></param>
-        protected override void OnDispose(Boolean disposing)
-        {
-            base.OnDispose(disposing);
-
-            _timer.TryDispose();
-        }
         #endregion
 
         #region 方法
@@ -69,8 +56,6 @@ namespace xLink
             dic["Type"] = Name;
 
             base.Start();
-
-            if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 1000);
         }
         #endregion
 
@@ -95,15 +80,6 @@ namespace xLink
         #endregion
 
         #region 辅助
-        private TimerX _timer { get; set; }
-        void ShowCount(Object stat)
-        {
-            var svr = Server as NetServer;
-            if (svr == null) return;
-
-            if (svr.SessionCount > 0) svr.WriteLog("会话总数:{0:n0}/{1:n0}", svr.SessionCount, svr.MaxSessionCount);
-        }
-
         /// <summary>设置内部日志是否开启</summary>
         /// <param name="session">是否开启会话级日志</param>
         /// <param name="socket">是否开启Socket级日志</param>
