@@ -12,6 +12,7 @@
     <FileVersion>3.0.2019.0713</FileVersion>
     <AssemblyVersion>3.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
+    <ApplicationIcon>link.ico</ApplicationIcon>
     <OutputPath>..\BinServer</OutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
