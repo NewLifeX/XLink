@@ -5,6 +5,7 @@ using NewLife.Net;
 using NewLife.Threading;
 using System;
 using xLink.Entity;
+using xLink.Services;
 
 namespace xLink
 {
@@ -57,8 +58,8 @@ namespace xLink
             svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
 
             // 遍历注册各服务控制器
-            svr.Register<DeviceController>();
-            svr.Register<UserController>();
+            svr.Register<DeviceService>();
+            svr.Register<UserService>();
 
             if (set.EncoderDebug) svr.Encoder.Log = svr.Log;
 
