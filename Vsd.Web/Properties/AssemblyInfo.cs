@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列特性集
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("菲凡物联网平台")]
+[assembly: AssemblyTitle("文胜鼎物联网平台")]
 [assembly: AssemblyDescription("物联网平台")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("xLink.Web")]
-[assembly: AssemblyCompany("新生命开发团队")]
-[assembly: AssemblyCopyright("Copyright © 新生命开发团队 2002~2017")]
+[assembly: AssemblyProduct("Vsd.Web")]
+[assembly: AssemblyCompany("东莞文胜鼎电子科技有限公司")]
+[assembly: AssemblyCopyright("Copyright © 东莞文胜鼎电子科技有限公司 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,11 +31,9 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有这些值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用“*”:
-[assembly: AssemblyVersion("2.0.*")]
-[assembly: AssemblyFileVersion("2.0.2018.1215")]
+[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyFileVersion("1.0.2019.0714")]
 
 /*
- * v2.0.2018.1215   升级新版通信框架
- * 
- * v1.0.2017.0316   轻量版物联网平台
+ * v1.0.2019.0714   轻量版物联网平台
  */
