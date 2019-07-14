@@ -1,7 +1,6 @@
 ﻿using NewLife;
 using NewLife.Agent;
 using NewLife.Log;
-using NewLife.Net;
 using NewLife.Threading;
 using System;
 using xLink.Services;
@@ -60,9 +59,6 @@ namespace xLink
             svr.Start();
 
             Svr = svr;
-
-            // 如果是控制台调试，则在标题显示统计
-            if (!Environment.CommandLine.EndsWith(" -s")) _showTimer = new TimerX(ShowStat, null, 1000, 1000) { Async = true };
         }
 
         /// <summary>停止工作</summary>
@@ -70,19 +66,8 @@ namespace xLink
         {
             base.StopWork(reason);
 
-            _showTimer.TryDispose();
             Svr.TryDispose();
             Svr = null;
-        }
-
-        private String _Title;
-        private TimerX _showTimer;
-        private void ShowStat(Object stat)
-        {
-            if (_Title == null) _Title = Console.Title;
-
-            var ns = Svr.Server as NetServer;
-            Console.Title = "{0} {1}".F(_Title, ns.GetStat());
         }
     }
 }
