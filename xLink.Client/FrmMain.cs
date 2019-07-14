@@ -1,15 +1,14 @@
-﻿using System;
+﻿using NewLife.Log;
+using NewLife.Net;
+using NewLife.Reflection;
+using NewLife.Remoting;
+using NewLife.Threading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NewLife.Log;
-using NewLife.Net;
-using NewLife.Reflection;
-using NewLife.Remoting;
-using NewLife.Security;
-using NewLife.Threading;
 
 namespace xLink.Client
 {
@@ -108,22 +107,11 @@ namespace xLink.Client
                 Log = cfg.ShowLog ? XTrace.Log : Logger.Null,
                 EncoderLog = cfg.ShowEncoderLog ? XTrace.Log : Logger.Null
             };
-            //ac.Received += OnReceived;
             ac.UserName = cfg.UserName;
             ac.Password = cfg.Password;
             ac.ActionPrefix = mode;
 
-            //ac.Encrypted = cfg.Encrypted;
-            //ac.Compressed = cfg.Compressed;
-
             if (!ac.Open()) return;
-
-            //ac.CreateCallback = sc =>
-            //{
-            //    sc.Log = cfg.ShowLog ? XTrace.Log : Logger.Null;
-            //    sc.LogSend = cfg.ShowSend;
-            //    sc.LogReceive = cfg.ShowReceive;
-            //};
 
             "已连接服务器".SpeechTip();
 
@@ -138,7 +126,7 @@ namespace xLink.Client
 
             cfg.Save();
 
-            BizLog = TextFileLog.Create("DeviceLog");
+            //BizLog = TextFileLog.Create("DeviceLog");
         }
 
         void Disconnect()
@@ -158,8 +146,8 @@ namespace xLink.Client
             LoadConfig();
         }
 
-        TimerX _timer;
-        String _lastStat;
+        //TimerX _timer;
+        //String _lastStat;
 
         private void btnConnect_Click(Object sender, EventArgs e)
         {
@@ -172,8 +160,8 @@ namespace xLink.Client
                 Disconnect();
         }
 
-        /// <summary>业务日志输出</summary>
-        ILog BizLog;
+        ///// <summary>业务日志输出</summary>
+        //ILog BizLog;
 
         //void OnReceived(Object sender, ApiMessageEventArgs e)
         //{
@@ -318,7 +306,8 @@ namespace xLink.Client
 
             try
             {
-                var rs = await ct.LoginAsync();
+                //var rs = await ct.LoginAsync().ConfigureAwait(false);
+                var rs = await TaskEx.Run(() => ct.LoginAsync());
                 var dic = rs.ToDictionary().ToNullable();
 
                 // 登录成功，需要保存密码
