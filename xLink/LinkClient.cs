@@ -37,8 +37,6 @@ namespace xLink
         #endregion
 
         #region 构造
-        /// <summary>实例化</summary>
-        /// <param name="uri"></param>
         public LinkClient(String uri) : base(uri)
         {
             Log = XTrace.Log;
@@ -156,10 +154,7 @@ namespace xLink
             return rs.Data.ToHex();
         }
 
-        /// <summary>获取数据回调</summary>
         public Func<String, Byte[]> GetData;
-
-        /// <summary>设置数据回调</summary>
         public Action<String, Byte[]> SetData;
 
         /// <summary>收到写入请求</summary>

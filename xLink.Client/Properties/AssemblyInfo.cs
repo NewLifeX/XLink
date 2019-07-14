@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("xLink.Client")]
-[assembly: AssemblyCopyright("Copyright © 新生命团队 2017")]
+[assembly: AssemblyCopyright("Copyright © 新生命团队 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,10 +31,12 @@ using System.Runtime.InteropServices;
 //
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
-[assembly: AssemblyVersion("2.0.*")]
-[assembly: AssemblyFileVersion("2.0.2018.1215")]
+[assembly: AssemblyVersion("3.0.*")]
+[assembly: AssemblyFileVersion("3.0.2019.0714")]
 
 /*
+ * v3.0.2019.0714   抽象客户端服务端架构
+ * 
  * v2.0.2018.1215   升级新版通信框架
  * 
  * v1.0.2017.0316   轻量版物联网平台
