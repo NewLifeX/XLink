@@ -1,11 +1,12 @@
-﻿using NewLife;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using NewLife;
+using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Threading;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace xLink
 {
@@ -24,15 +25,27 @@ namespace xLink
         /// <summary>实例化令牌服务器</summary>
         public LinkServer()
         {
+            Log = XTrace.Log;
+
+            StatPeriod = 60;
+            ShowError = true;
             ShowSessionCount = 60;
+
+#if DEBUG
+            EncoderLog = XTrace.Log;
+            StatPeriod = 10;
+#endif
 
             // 初始数据
             var dic = Parameters;
             dic["OS"] = Environment.OSVersion + "";
-            dic["Agent"] = $"{Environment.UserName}_{Environment.MachineName}";
+            dic["Machine"] = Environment.MachineName;
+            dic["Agent"] = Environment.UserName;
+            dic["ProcessID"] = Process.GetCurrentProcess().Id;
 
-            var asmx = AssemblyX.Create(Assembly.GetCallingAssembly());
-            dic["Version"] = asmx.Version;
+            var asmx = AssemblyX.Entry;
+            dic["Version"] = asmx?.Version;
+            dic["Compile"] = asmx?.Compile;
         }
 
         /// <summary>销毁</summary>
@@ -49,12 +62,15 @@ namespace xLink
         /// <summary>启动</summary>
         public override void Start()
         {
-            if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 1000);
+            var svr = EnsureCreate();
+            svr.Log = Log;
 
             var dic = Parameters;
             dic["Type"] = Name;
 
             base.Start();
+
+            if (_timer == null && ShowSessionCount > 0) _timer = new TimerX(ShowCount, null, 0, ShowSessionCount * 1000);
         }
         #endregion
 
@@ -66,8 +82,7 @@ namespace xLink
         {
             if (ids.Length == 0) return 0;
 
-            var svr = Server as NetServer;
-            if (svr == null) return 0;
+            if (!(Server is NetServer svr)) return 0;
 
             foreach (var item in ids)
             {
@@ -87,6 +102,22 @@ namespace xLink
             if (svr == null) return;
 
             if (svr.SessionCount > 0) svr.WriteLog("会话总数:{0:n0}/{1:n0}", svr.SessionCount, svr.MaxSessionCount);
+        }
+
+        /// <summary>设置内部日志是否开启</summary>
+        /// <param name="session">是否开启会话级日志</param>
+        /// <param name="socket">是否开启Socket级日志</param>
+        /// <param name="encoder">是否显示编码日志</param>
+        public void SetLog(Boolean session, Boolean socket, Boolean encoder = false)
+        {
+            if (!(Server is NetServer svr)) return;
+
+            // 置空可以让其使用当前Log日志
+            svr.SessionLog = session ? null : Logger.Null;
+            svr.SocketLog = socket ? null : Logger.Null;
+
+            //if (Encoder != null) Encoder.Log = Log;
+            if (encoder) EncoderLog = Log;
         }
         #endregion
     }

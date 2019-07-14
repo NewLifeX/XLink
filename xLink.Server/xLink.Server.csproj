@@ -35,6 +35,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="LinkServer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NewLife.Core" Version="8.2.2019.706" />
     <PackageReference Include="NewLife.XCode" Version="9.13.2019.706" />
   </ItemGroup>
