@@ -24,7 +24,7 @@ namespace xLink.Server.Models
         static DeviceSession()
         {
             // 异步初始化数据
-            Task.Run(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var n = 0;
                 n = Device.Meta.Count;

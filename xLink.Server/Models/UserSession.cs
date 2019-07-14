@@ -5,8 +5,12 @@ using System.Threading.Tasks;
 using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
+using NewLife.Threading;
 using xLink.Entity;
 using xLink.Models;
+#if !NET4
+using TaskEx = System.Threading.Tasks.Task;
+#endif
 
 namespace xLink.Server.Models
 {
@@ -26,7 +30,7 @@ namespace xLink.Server.Models
         static UserSession()
         {
             // 异步初始化数据
-            Task.Run(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var n = 0;
                 n = User.Meta.Count;
@@ -147,7 +151,7 @@ namespace xLink.Server.Models
             try
             {
                 var ss = Session.AllSessions.FirstOrDefault(e => e["Current"] is DeviceSession d && d.Name.EqualIgnoreCase(id));
-                if (ss is DeviceSession ds) Task.Run(() => ds.Read(id, 0, 64));
+                if (ss is DeviceSession ds) TaskEx.Run(() => ds.Read(id, 0, 64));
             }
             catch (Exception ex)
             {

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using NewLife;
+﻿using NewLife;
 using NewLife.Agent;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
+using System;
 using xLink.Entity;
 
 namespace xLink
 {
     class Program
     {
-        static void Main(String[] args)
-        {
-            MyService.ServiceMain();
-        }
+        static void Main(String[] args) => new MyService().Main();
     }
 
     class MyService : AgentServiceBase<MyService>
@@ -25,15 +21,15 @@ namespace xLink
             ServiceName = "LinkServer";
 
             // 异步初始化数据
-            Task.Run(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
-                var set2 = XCode.Setting.Current;
-                if (set2.IsNew)
+                var set = XCode.Setting.Current;
+                if (set.IsNew)
                 {
-                    set2.Debug = false;
-                    set2.ShowSQL = false;
-                    set2.SQLiteDbPath = "../Data";
-                    set2.SaveAsync();
+                    set.Debug = false;
+                    set.ShowSQL = false;
+                    set.SQLiteDbPath = "../Data";
+                    set.SaveAsync();
                 }
             });
         }
@@ -47,46 +43,46 @@ namespace xLink
             base.StartWork(reason);
 
             // 每次上线清空一次在线表
-            _timer = new TimerX(CheckExpire, null, 0, 60000);
+            _expireTimer = new TimerX(CheckExpire, null, 0, 60_000) { Async = true };
 
             var set = Setting.Current;
 
             // 实例化服务器
-            Svr = new LinkServer
+            var svr = new LinkServer
             {
                 Name = "平台",
                 Port = set.Port,
             };
-            Svr.Log = XTrace.Log;
-            Svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
+            svr.Log = XTrace.Log;
+            svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
 
             // 遍历注册各服务控制器
-            Svr.Register<DeviceController>();
-            Svr.Register<UserController>();
+            svr.Register<DeviceController>();
+            svr.Register<UserController>();
 
-            Svr.Start();
+            if (set.EncoderDebug) svr.Encoder.Log = svr.Log;
 
-            if (set.EncoderDebug) Svr.Encoder.Log = Svr.Log;
+            svr.Start();
+
+            Svr = svr;
 
             // 如果是控制台调试，则在标题显示统计
-            if (!Environment.CommandLine.EndsWith(" -s")) _Timer = new TimerX(ShowStat, null, 1000, 1000) { Async = true };
+            if (!Environment.CommandLine.EndsWith(" -s")) _showTimer = new TimerX(ShowStat, null, 1000, 1000) { Async = true };
         }
 
-        /// <summary>
-        /// 停止工作
-        /// </summary>
+        /// <summary>停止工作</summary>
         protected override void StopWork(String reason)
         {
             base.StopWork(reason);
 
-            _timer.TryDispose();
+            _expireTimer.TryDispose();
+            _showTimer.TryDispose();
             Svr.TryDispose();
+            Svr = null;
         }
 
-        public override Boolean Work(Int32 index) => false;
-
         #region 定时删除在线
-        TimerX _timer;
+        TimerX _expireTimer;
         void CheckExpire(Object state)
         {
             var timeout = Setting.Current.SessionTimeout;
@@ -98,7 +94,7 @@ namespace xLink
         #endregion
 
         private String _Title;
-        private TimerX _Timer;
+        private TimerX _showTimer;
         private void ShowStat(Object stat)
         {
             if (_Title == null) _Title = Console.Title;
