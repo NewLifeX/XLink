@@ -23,7 +23,7 @@ namespace xLink.Services
         public String NetType { get; set; }
 
         /// <summary>当前登录用户</summary>
-        public IAuthUser Current { get; set; }
+        public IManageUser Current { get; set; }
 
         /// <summary>在线对象</summary>
         public IOnline Online { get; private set; }
@@ -42,36 +42,37 @@ namespace xLink.Services
 
         /// <summary>版本</summary>
         public String Version { get; set; }
+
+        /// <summary>内网地址</summary>
+        public String InternalUri { get; set; }
         #endregion
 
         #region 登录注册
         /// <summary>检查登录，默认检查密码MD5散列，可继承修改</summary>
         /// <param name="user">用户名</param>
         /// <param name="pass">密码</param>
+        /// <param name="parameters">扩展参数</param>
         /// <returns>返回要发给客户端的对象</returns>
-        public virtual Object CheckLogin(String user, String pass)
+        public virtual Object CheckLogin(String user, String pass, IDictionary<String, Object> parameters)
         {
             if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
 
-            var dic = ControllerContext.Current?.Parameters?.ToNullable();
-            if (dic != null)
+            var ps = parameters;
+            if (ps != null)
             {
-                Agent = dic["Agent"] + "";
-                OS = dic["OS"] + "";
-                Type = dic["Type"] + "";
-                Version = dic["Version"] + "";
+                Agent = ps["Agent"] + "";
+                OS = ps["OS"] + "";
+                Type = ps["Type"] + "";
+                Version = ps["Version"] + "";
+                NetType = ps["NetType"] + "";
+                InternalUri = ps["IP"] + "";
             }
             // 登录
             Name = user;
 
-            CheckOnline(user);
-
             var msg = "登录 {0}/{1}".F(user, pass);
-            //WriteLog(msg);
 
-            var ns = Session as NetSession;
             var flag = true;
-            var act = "Login";
             try
             {
                 // 查找并登录，找不到用户是返回空，登录失败则抛出异常
@@ -84,21 +85,14 @@ namespace xLink.Services
                 //u.SaveLogin(ns);
                 SaveLogin(u);
 
-                // 当前设备
+                // 当前用户
                 Current = u;
 
                 var olt = Online;
+                // 把前一个登录用户踢下线
                 if (olt.UserID > 0 && olt.UserID != u.ID) SaveHistory("Logout", true, "=> " + u);
                 olt.UserID = u.ID;
                 olt.SaveAsync();
-
-                // 销毁时
-                //ns.OnDisposed += (s, e) =>
-                //{
-                //    Online.Delete();
-
-                //    SaveHistory("Logout", true, null);
-                //};
 
                 return rs;
             }
@@ -110,7 +104,7 @@ namespace xLink.Services
             }
             finally
             {
-                SaveHistory(act, flag, msg);
+                SaveHistory("Login", flag, msg);
             }
         }
 
@@ -118,32 +112,26 @@ namespace xLink.Services
         /// <param name="user"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        protected abstract IAuthUser CheckUser(String user, String pass);
+        protected abstract IManageUser CheckUser(String user, String pass);
 
         /// <summary>登录或注册完成后，保存登录信息</summary>
         /// <param name="user"></param>
-        protected virtual void SaveLogin(IAuthUser user)
+        protected virtual void SaveLogin(IManageUser user)
         {
             var u = user as IMyModel;
             u.Type = Type;
             u.Version = Version;
             if (u.NickName.IsNullOrEmpty()) u.NickName = "{0}{1}".F(Agent, user.Name);
 
-            var dic = ControllerContext.Current?.Parameters?.ToNullable();
-            if (dic != null)
-            {
-                NetType = dic["NetType"] + "";
-
-                var olt = Online as IMyOnline;
-                olt.LoginTime = DateTime.Now;
-                olt.LoginCount++;
-                // 本地地址
-                olt.InternalUri = dic["ip"] + "";
-                olt.NetType = NetType;
-            }
+            var olt = Online as IMyOnline;
+            olt.LoginTime = DateTime.Now;
+            olt.LoginCount++;
+            // 本地地址
+            olt.InternalUri = InternalUri;
+            olt.NetType = NetType;
 
             var ns = Session as NetSession;
-            user.SaveLogin(ns);
+            if (user is IAuthUser au) au.SaveLogin(ns);
         }
         #endregion
 
@@ -156,7 +144,7 @@ namespace xLink.Services
             var u = Current;
 
             var olt = Online ?? CreateOnline(ns.ID);
-            olt.Name = Name;
+            olt.Name = name;
             olt.Type = Type;
             olt.SessionID = ns.ID;
             olt.UpdateTime = DateTime.Now;

@@ -12,6 +12,7 @@ namespace xLink
     /// <summary>物联服务器</summary>
     /// <remarks>
     /// 物联服务器，用于承载继承自LinkService的服务接口，并衍生出LinkSession以管理长连接状态。
+    /// 服务层是无状态架构，每次请求都会实例化新实例，LinkService每次接受新连接后，都创建新的LinkSession会话，在多次请求中共享。
     /// </remarks>
     public class LinkServer : ApiServer
     {

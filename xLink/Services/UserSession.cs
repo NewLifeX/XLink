@@ -19,11 +19,6 @@ namespace xLink.Services
     public class UserSession : LinkSession
     {
         #region 属性
-        /// <summary>当前用户</summary>
-        public User User { get; private set; }
-
-        ///// <summary>在线对象</summary>
-        //public UserOnline Online { get; private set; }
         #endregion
 
         #region 构造
@@ -47,12 +42,12 @@ namespace xLink.Services
         }
         #endregion
 
-        #region 登录注册
+        #region 登录
         /// <summary>查找用户并登录，找不到用户是返回空，登录失败则抛出异常</summary>
         /// <param name="user"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        protected override IAuthUser CheckUser(String user, String pass)
+        protected override IManageUser CheckUser(String user, String pass)
         {
             var u = User.FindByName(user);
             if (u == null)
@@ -68,8 +63,6 @@ namespace xLink.Services
 
             // 登录
             Name = user;
-
-            //WriteLog("登录 {0} => {1}", user, pass);
 
             // 验证密码
             u.CheckMD5(pass);

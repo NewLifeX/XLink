@@ -16,8 +16,6 @@ namespace xLink.Services
     public class DeviceSession : LinkSession
     {
         #region 属性
-        /// <summary>当前设备</summary>
-        public Device Device { get => Current as Device; }
         #endregion
 
         #region 构造
@@ -46,7 +44,7 @@ namespace xLink.Services
         /// <param name="user"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        protected override IAuthUser CheckUser(String user, String pass)
+        protected override IManageUser CheckUser(String user, String pass)
         {
             var u = Device.FindByName(user);
             if (u == null)
@@ -63,8 +61,6 @@ namespace xLink.Services
             // 登录
             Name = user;
 
-            //WriteLog("登录 {0} => {1}", user, pass);
-
             // 验证密码
             u.CheckMD5(pass);
 
@@ -73,7 +69,7 @@ namespace xLink.Services
 
         /// <summary>登录或注册完成后，保存登录信息</summary>
         /// <param name="user"></param>
-        protected override void SaveLogin(IAuthUser user)
+        protected override void SaveLogin(IManageUser user)
         {
             //var dv = Device;
             //if (dv != null)
@@ -228,7 +224,7 @@ namespace xLink.Services
 
         private Byte[] OnGetData(String id)
         {
-            var dv = Device;
+            var dv = Current as Device;
             if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
 
             return dv?.Data.ToHex();
@@ -236,7 +232,7 @@ namespace xLink.Services
 
         private void OnSetData(String id, Byte[] data)
         {
-            var dv = Device;
+            var dv = Current as Device;
             if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
 
             dv.Data = data.ToHex();

@@ -49,11 +49,15 @@ namespace xLink.Services
         {
             if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
 
+            var ps = ControllerContext.Current?.Parameters?.ToNullable();
             var ss = Session;
             WriteLog("登录 {0}/{1}", user, pass);
 
+            // 在线记录
+            ss.CheckOnline(user);
+
             // 注册与登录
-            var rs = ss.CheckLogin(user, pass);
+            var rs = ss.CheckLogin(user, pass, ps);
 
             // 可能是注册
             var dic = rs.ToDictionary();
