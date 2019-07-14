@@ -11,7 +11,7 @@ namespace xLink.Services
     public class LinkService<TSession> : IActionFilter where TSession : LinkSession, new()
     {
         #region 属性
-        /// <summary>会话</summary>
+        /// <summary>物联会话</summary>
         public TSession Session { get; set; }
         #endregion
 

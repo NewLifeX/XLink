@@ -13,7 +13,7 @@ namespace xLink.Services
     public abstract class LinkSession
     {
         #region 属性
-        /// <summary>会话</summary>
+        /// <summary>网络会话</summary>
         public IApiSession Session { get; set; }
 
         /// <summary>是否已登录</summary>

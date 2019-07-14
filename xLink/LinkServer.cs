@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using NewLife;
+﻿using NewLife;
 using NewLife.Log;
 using NewLife.Net;
-using NewLife.Reflection;
 using NewLife.Remoting;
-using NewLife.Threading;
+using System;
 
 namespace xLink
 {
@@ -14,8 +10,6 @@ namespace xLink
     public class LinkServer : ApiServer
     {
         #region 属性
-        /// <summary>附加参数</summary>
-        public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
         #endregion
 
         #region 构造
@@ -31,17 +25,6 @@ namespace xLink
             EncoderLog = XTrace.Log;
             StatPeriod = 10;
 #endif
-
-            // 初始数据
-            var dic = Parameters;
-            dic["OS"] = Environment.OSVersion + "";
-            dic["Machine"] = Environment.MachineName;
-            dic["Agent"] = Environment.UserName;
-            dic["ProcessID"] = Process.GetCurrentProcess().Id;
-
-            var asmx = AssemblyX.Entry;
-            dic["Version"] = asmx?.Version;
-            dic["Compile"] = asmx?.Compile;
         }
         #endregion
 
@@ -51,9 +34,6 @@ namespace xLink
         {
             var svr = EnsureCreate();
             svr.Log = Log;
-
-            var dic = Parameters;
-            dic["Type"] = Name;
 
             base.Start();
         }
