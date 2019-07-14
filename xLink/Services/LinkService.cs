@@ -6,9 +6,18 @@ using xLink.Models;
 
 namespace xLink.Services
 {
+    /// <summary>物联服务接口</summary>
+    public interface ILinkService
+    {
+        /// <summary>清理超时会话</summary>
+        /// <param name="secTimeout"></param>
+        /// <returns></returns>
+        Int32 ClearExpire(Int32 secTimeout);
+    }
+
     /// <summary>物联服务</summary>
     /// <typeparam name="TSession"></typeparam>
-    public class LinkService<TSession> : IActionFilter where TSession : LinkSession, new()
+    public class LinkService<TSession> : ILinkService, IActionFilter where TSession : LinkSession, new()
     {
         #region 属性
         /// <summary>物联会话</summary>
@@ -127,6 +136,13 @@ namespace xLink.Services
 
             return new DataModel { ID = id, Start = start, Data = buf.ReadBytes(start, count).ToHex() };
         }
+        #endregion
+
+        #region 清理超时
+        /// <summary>清理超时会话</summary>
+        /// <param name="secTimeout"></param>
+        /// <returns></returns>
+        public virtual Int32 ClearExpire(Int32 secTimeout) => 0;
         #endregion
 
         #region 异常处理

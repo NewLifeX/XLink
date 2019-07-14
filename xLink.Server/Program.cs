@@ -4,7 +4,6 @@ using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
 using System;
-using xLink.Entity;
 using xLink.Services;
 
 namespace xLink
@@ -43,9 +42,6 @@ namespace xLink
         {
             base.StartWork(reason);
 
-            // 每次上线清空一次在线表
-            _expireTimer = new TimerX(CheckExpire, null, 0, 60_000) { Async = true };
-
             var set = Setting.Current;
 
             // 实例化服务器
@@ -58,10 +54,8 @@ namespace xLink
             svr.SetLog(set.Debug, set.SocketDebug, set.EncoderDebug);
 
             // 遍历注册各服务控制器
-            svr.Register<DeviceService>();
-            svr.Register<UserService>();
-
-            if (set.EncoderDebug) svr.Encoder.Log = svr.Log;
+            svr.Add<DeviceService>();
+            svr.Add<UserService>();
 
             svr.Start();
 
@@ -76,23 +70,10 @@ namespace xLink
         {
             base.StopWork(reason);
 
-            _expireTimer.TryDispose();
             _showTimer.TryDispose();
             Svr.TryDispose();
             Svr = null;
         }
-
-        #region 定时删除在线
-        TimerX _expireTimer;
-        void CheckExpire(Object state)
-        {
-            var timeout = Setting.Current.SessionTimeout;
-
-            //if (Svr != null) Svr.ClearExpire(timeout);
-            DeviceOnline.ClearExpire(timeout);
-            UserOnline.ClearExpire(timeout);
-        }
-        #endregion
 
         private String _Title;
         private TimerX _showTimer;

@@ -17,9 +17,9 @@ namespace xLink
         [Description("端口。默认2233")]
         public Int32 Port { get; set; } = 2233;
 
-        /// <summary>会话超时时间。默认360秒</summary>
-        [Description("会话超时时间。默认360秒")]
-        public Int32 SessionTimeout { get; set; } = 360;
+        ///// <summary>会话超时时间。默认360秒</summary>
+        //[Description("会话超时时间。默认360秒")]
+        //public Int32 SessionTimeout { get; set; } = 360;
 
         /// <summary>网络日志开关。默认false</summary>
         [Description("网络日志开关。默认false")]
