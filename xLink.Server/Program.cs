@@ -28,6 +28,9 @@ namespace xLink
                     set.Debug = false;
                     set.ShowSQL = false;
                     set.SQLiteDbPath = "../Data";
+#if DEBUG
+                    set.SQLiteDbPath = "../../Data";
+#endif
                     set.SaveAsync();
                 }
             });
