@@ -7,9 +7,11 @@ namespace Vsd.Server
 {
     class VsdServer : NetServer<VsdSession>
     {
+        /// <summary>日志命令。打开后显示收发命令详情</summary>
+        public Boolean CommandLog { get; set; }
     }
 
-    class VsdSession : NetSession
+    class VsdSession : NetSession<VsdServer>
     {
         #region 主循环
         protected override void OnReceive(ReceivedEventArgs e)
@@ -24,6 +26,12 @@ namespace Vsd.Server
 
             object result = null;
             var cmd = dic["cmd"] + "";
+
+            if (Host.CommandLog)
+                WriteLog("<={0}", str.Trim());
+            else
+                WriteLog("<={0}", cmd);
+
             switch (cmd)
             {
                 case "dHeartbeat":
@@ -35,7 +43,14 @@ namespace Vsd.Server
             }
 
             // 处理结果，做出响应
-            if (result != null) Send(result.ToJson().GetBytes());
+            if (result != null)
+            {
+                var js = result.ToJson();
+
+                if (Host.CommandLog) WriteLog("=>{0}", js.Trim());
+
+                Send(js.GetBytes());
+            }
         }
         #endregion
 
@@ -46,6 +61,9 @@ namespace Vsd.Server
             var code = ps["snr"] + "";
             var ip = ps["ip"] + "";
             var name = ps["name"] + "";
+
+            // 修改日志前缀
+            if (!name.IsNullOrEmpty()) LogPrefix = name + " ";
 
             return new
             {

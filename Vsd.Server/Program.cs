@@ -53,6 +53,16 @@ namespace Vsd.Server
                 Port = set.Port,
             };
             svr.Log = XTrace.Log;
+            svr.SessionLog = svr.Log;
+
+            if (set.Debug)
+            {
+                svr.SocketLog = svr.Log;
+                //svr.LogSend = true;
+                //svr.LogReceive = true;
+
+                svr.CommandLog = true;
+            }
 
             svr.Start();
 
