@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using XCode;
 using XCode.Cache;
+using XCode.Membership;
 
 namespace Vsd.Entity
 {
@@ -23,6 +24,9 @@ namespace Vsd.Entity
         {
             var df = Meta.Factory.AdditionalFields;
             df.Add(__.PingCount);
+
+            Meta.Modules.Add<TimeModule>();
+            Meta.Modules.Add<IPModule>();
         }
         #endregion
 

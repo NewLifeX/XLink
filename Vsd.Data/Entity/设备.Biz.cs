@@ -70,7 +70,7 @@ namespace Vsd.Entity
 
         /// <summary>登录地址。IP=>Address</summary>
         [DisplayName("登录地址")]
-        public String LastLoginAddress { get { return LastLoginIP.IPToAddress(); } }
+        public String LastLoginAddress => LastLoginIP.IPToAddress();
         #endregion
 
         #region 扩展查询

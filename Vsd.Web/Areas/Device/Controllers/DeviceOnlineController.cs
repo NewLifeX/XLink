@@ -6,7 +6,7 @@ using Vsd.Entity;
 
 namespace Vsd.Device.Web.Controllers
 {
-    public class DeviceOnlineController : EntityController<DeviceOnline>
+    public class DeviceOnlineController : ReadOnlyEntityController<DeviceOnline>
     {
         static DeviceOnlineController()
         {

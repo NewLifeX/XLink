@@ -3,6 +3,7 @@ using NewLife.Serialization;
 using System;
 using System.Collections.Generic;
 using Vsd.Entity;
+using XCode.Membership;
 
 namespace Vsd.Server
 {
@@ -32,6 +33,8 @@ namespace Vsd.Server
 
             var dic = new JsonParser(str).Decode() as IDictionary<String, Object>;
             if (dic == null || dic.Count == 0) return;
+
+            ManageProvider.UserHost = Remote.Host;
 
             object result = null;
             var cmd = dic["cmd"] + "";
@@ -129,6 +132,7 @@ namespace Vsd.Server
 
             if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
 
+            dv.Logins++;
             dv.LocalIP = ip;
             dv.LastLogin = DateTime.Now;
             dv.LastLoginIP = ip;

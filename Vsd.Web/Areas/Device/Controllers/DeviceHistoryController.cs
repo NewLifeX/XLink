@@ -8,7 +8,7 @@ using Vsd.Entity;
 namespace Vsd.Device.Web.Controllers
 {
     [Description("设备操作历史")]
-    public class DeviceHistoryController : EntityController<DeviceHistory>
+    public class DeviceHistoryController : ReadOnlyEntityController<DeviceHistory>
     {
         static DeviceHistoryController()
         {

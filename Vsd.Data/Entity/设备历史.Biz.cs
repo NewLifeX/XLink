@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using XCode;
 using XCode.Cache;
+using XCode.Membership;
 
 namespace Vsd.Entity
 {
@@ -20,6 +21,9 @@ namespace Vsd.Entity
         static DeviceHistory()
         {
             Meta.Table.DataTable.InsertOnly = true;
+
+            Meta.Modules.Add<TimeModule>();
+            Meta.Modules.Add<IPModule>();
         }
         #endregion
 
