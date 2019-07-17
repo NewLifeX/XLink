@@ -45,24 +45,52 @@ namespace Vsd.Server
             else
                 WriteLog("<={0}", cmd);
 
-            switch (cmd)
+            var remark = "";
+            try
             {
-                case "dHeartbeat":
-                    result = Heartbeat(cmd, dic);
-                    break;
-                case "dRecord":
-                    result = UploadRecord(cmd, dic);
-                    break;
+                switch (cmd)
+                {
+                    case "dHeartbeat":
+                        result = Heartbeat(cmd, dic);
+                        break;
+                    case "dRecord":
+                        result = UploadRecord(cmd, dic);
+                        break;
+                }
+
+                // 处理结果，做出响应
+                if (result != null)
+                {
+                    var js = result.ToJson();
+
+                    if (Host.CommandLog) WriteLog("=>{0}", js.Trim());
+
+                    Send(js.GetBytes());
+                }
             }
-
-            // 处理结果，做出响应
-            if (result != null)
+            catch (Exception ex)
             {
-                var js = result.ToJson();
+                remark = ex.GetTrue()?.Message;
+            }
+            finally
+            {
+                if (cmd != "dHeartbeat")
+                {
+                    var dv = Device ?? new Device();
 
-                if (Host.CommandLog) WriteLog("=>{0}", js.Trim());
+                    // 写入历史
+                    var hi = new DeviceHistory
+                    {
+                        DeviceID = dv.ID,
+                        Name = dv.Name,
+                        Action = cmd,
+                        Success = result != null,
+                        CreateDeviceID = dv.ID,
+                        Remark = remark,
+                    };
 
-                Send(js.GetBytes());
+                    hi.SaveAsync();
+                }
             }
         }
 
@@ -118,7 +146,10 @@ namespace Vsd.Server
         /// <returns></returns>
         protected virtual Device Login(String code, String name, String ip)
         {
-            var dv = Device.FindByCode(code);
+            var dv = Device;
+            if (dv != null) return dv;
+
+            dv = Device.FindByCode(code);
             if (dv == null)
             {
                 dv = new Device
@@ -140,6 +171,18 @@ namespace Vsd.Server
             dv.SaveAsync();
 
             Device = dv;
+
+            // 登录历史
+            var hi = new DeviceHistory
+            {
+                DeviceID = dv.ID,
+                Name = dv.Name,
+                Action = "登录",
+                Success = true,
+                CreateDeviceID = dv.ID,
+            };
+
+            hi.SaveAsync();
 
             return dv;
         }
