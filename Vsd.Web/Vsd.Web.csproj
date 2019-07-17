@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Device\Controllers\DeviceCommandController.cs" />
+    <Compile Include="Areas\Device\Controllers\ProductController.cs" />
     <Compile Include="Areas\Device\Controllers\DeviceHistoryController.cs" />
     <Compile Include="Areas\Device\Controllers\DeviceOnlineController.cs" />
     <Compile Include="Areas\Device\Controllers\DeviceController.cs" />

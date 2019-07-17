@@ -27,11 +27,11 @@ namespace Vsd.Entity
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
         private Int32 _DeviceID;
-        /// <summary>编码</summary>
-        [DisplayName("编码")]
-        [Description("编码")]
+        /// <summary>设备</summary>
+        [DisplayName("设备")]
+        [Description("设备")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("DeviceID", "编码", "")]
+        [BindColumn("DeviceID", "设备", "")]
         public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
 
         private String _Name;
@@ -169,7 +169,7 @@ namespace Vsd.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
-            /// <summary>编码</summary>
+            /// <summary>设备</summary>
             public static readonly Field DeviceID = FindByName(__.DeviceID);
 
             /// <summary>名称</summary>
@@ -211,7 +211,7 @@ namespace Vsd.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
-            /// <summary>编码</summary>
+            /// <summary>设备</summary>
             public const String DeviceID = "DeviceID";
 
             /// <summary>名称</summary>
@@ -254,7 +254,7 @@ namespace Vsd.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
-        /// <summary>编码</summary>
+        /// <summary>设备</summary>
         Int32 DeviceID { get; set; }
 
         /// <summary>名称</summary>

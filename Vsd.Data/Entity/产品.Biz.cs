@@ -1,25 +1,8 @@
+using NewLife.Data;
+using NewLife.Security;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Xml.Serialization;
-using NewLife;
-using NewLife.Data;
-using NewLife.Log;
-using NewLife.Model;
-using NewLife.Reflection;
-using NewLife.Security;
-using NewLife.Threading;
-using NewLife.Web;
 using XCode;
-using XCode.Cache;
-using XCode.Configuration;
-using XCode.DataAccessLayer;
 using XCode.Membership;
 
 namespace Vsd.Entity
@@ -108,6 +91,25 @@ namespace Vsd.Entity
         #endregion
 
         #region 高级查询
+        /// <summary>高级查询</summary>
+        /// <param name="enable"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="key"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static IList<Product> Search(Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
+        {
+            // WhereExpression重载&和|运算符，作为And和Or的替代
+            // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段
+            var exp = SearchWhereByKeys(key, null, null);
+
+            if (enable != null) exp &= _.Enable == enable.Value;
+
+            exp &= _.UpdateTime.Between(start, end);
+
+            return FindAll(exp, param);
+        }
         #endregion
 
         #region 业务操作

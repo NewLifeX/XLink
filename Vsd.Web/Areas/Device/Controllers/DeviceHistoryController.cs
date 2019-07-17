@@ -12,6 +12,8 @@ namespace Vsd.Device.Web.Controllers
     {
         static DeviceHistoryController()
         {
+            MenuOrder = 84;
+
             var list = ListFields;
             list.RemoveField("CreateDeviceID");
             list.AddField("Success", "Remark");

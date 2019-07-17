@@ -28,11 +28,11 @@ namespace Vsd.Entity
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
         private Int32 _DeviceID;
-        /// <summary>编码</summary>
-        [DisplayName("编码")]
-        [Description("编码")]
+        /// <summary>设备</summary>
+        [DisplayName("设备")]
+        [Description("设备")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("DeviceID", "编码", "")]
+        [BindColumn("DeviceID", "设备", "")]
         public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
 
         private String _Name;
@@ -91,14 +91,6 @@ namespace Vsd.Entity
         [BindColumn("ExternalUri", "外网", "")]
         public String ExternalUri { get { return _ExternalUri; } set { if (OnPropertyChanging(__.ExternalUri, value)) { _ExternalUri = value; OnPropertyChanged(__.ExternalUri); } } }
 
-        private Int32 _LoginCount;
-        /// <summary>登录</summary>
-        [DisplayName("登录")]
-        [Description("登录")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("LoginCount", "登录", "")]
-        public Int32 LoginCount { get { return _LoginCount; } set { if (OnPropertyChanging(__.LoginCount, value)) { _LoginCount = value; OnPropertyChanged(__.LoginCount); } } }
-
         private Int32 _PingCount;
         /// <summary>心跳</summary>
         [DisplayName("心跳")]
@@ -106,14 +98,6 @@ namespace Vsd.Entity
         [DataObjectField(false, false, false, 0)]
         [BindColumn("PingCount", "心跳", "")]
         public Int32 PingCount { get { return _PingCount; } set { if (OnPropertyChanging(__.PingCount, value)) { _PingCount = value; OnPropertyChanged(__.PingCount); } } }
-
-        private DateTime _LoginTime;
-        /// <summary>登录时间</summary>
-        [DisplayName("登录时间")]
-        [Description("登录时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("LoginTime", "登录时间", "")]
-        public DateTime LoginTime { get { return _LoginTime; } set { if (OnPropertyChanging(__.LoginTime, value)) { _LoginTime = value; OnPropertyChanged(__.LoginTime); } } }
 
         private Int32 _ErrorCount;
         /// <summary>错误</summary>
@@ -175,9 +159,7 @@ namespace Vsd.Entity
                     case __.NetType : return _NetType;
                     case __.InternalUri : return _InternalUri;
                     case __.ExternalUri : return _ExternalUri;
-                    case __.LoginCount : return _LoginCount;
                     case __.PingCount : return _PingCount;
-                    case __.LoginTime : return _LoginTime;
                     case __.ErrorCount : return _ErrorCount;
                     case __.LastError : return _LastError;
                     case __.CreateTime : return _CreateTime;
@@ -199,9 +181,7 @@ namespace Vsd.Entity
                     case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
                     case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
-                    case __.LoginCount : _LoginCount = value.ToInt(); break;
                     case __.PingCount : _PingCount = value.ToInt(); break;
-                    case __.LoginTime : _LoginTime = value.ToDateTime(); break;
                     case __.ErrorCount : _ErrorCount = value.ToInt(); break;
                     case __.LastError : _LastError = Convert.ToString(value); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
@@ -220,7 +200,7 @@ namespace Vsd.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
-            /// <summary>编码</summary>
+            /// <summary>设备</summary>
             public static readonly Field DeviceID = FindByName(__.DeviceID);
 
             /// <summary>名称</summary>
@@ -244,14 +224,8 @@ namespace Vsd.Entity
             /// <summary>外网</summary>
             public static readonly Field ExternalUri = FindByName(__.ExternalUri);
 
-            /// <summary>登录</summary>
-            public static readonly Field LoginCount = FindByName(__.LoginCount);
-
             /// <summary>心跳</summary>
             public static readonly Field PingCount = FindByName(__.PingCount);
-
-            /// <summary>登录时间</summary>
-            public static readonly Field LoginTime = FindByName(__.LoginTime);
 
             /// <summary>错误</summary>
             public static readonly Field ErrorCount = FindByName(__.ErrorCount);
@@ -277,7 +251,7 @@ namespace Vsd.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
-            /// <summary>编码</summary>
+            /// <summary>设备</summary>
             public const String DeviceID = "DeviceID";
 
             /// <summary>名称</summary>
@@ -301,14 +275,8 @@ namespace Vsd.Entity
             /// <summary>外网</summary>
             public const String ExternalUri = "ExternalUri";
 
-            /// <summary>登录</summary>
-            public const String LoginCount = "LoginCount";
-
             /// <summary>心跳</summary>
             public const String PingCount = "PingCount";
-
-            /// <summary>登录时间</summary>
-            public const String LoginTime = "LoginTime";
 
             /// <summary>错误</summary>
             public const String ErrorCount = "ErrorCount";
@@ -335,7 +303,7 @@ namespace Vsd.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
-        /// <summary>编码</summary>
+        /// <summary>设备</summary>
         Int32 DeviceID { get; set; }
 
         /// <summary>名称</summary>
@@ -359,14 +327,8 @@ namespace Vsd.Entity
         /// <summary>外网</summary>
         String ExternalUri { get; set; }
 
-        /// <summary>登录</summary>
-        Int32 LoginCount { get; set; }
-
         /// <summary>心跳</summary>
         Int32 PingCount { get; set; }
-
-        /// <summary>登录时间</summary>
-        DateTime LoginTime { get; set; }
 
         /// <summary>错误</summary>
         Int32 ErrorCount { get; set; }

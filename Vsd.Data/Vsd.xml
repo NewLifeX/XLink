@@ -35,12 +35,9 @@
       <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="Version" DataType="String" Description="版本" />
       <Column Name="Data" DataType="String" Length="200" Description="数据" />
-      <Column Name="Online" DataType="Boolean" Description="在线" />
       <Column Name="Logins" DataType="Int32" Description="登录" />
       <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
       <Column Name="LastLoginIP" DataType="String" Description="最后登录IP" />
-      <Column Name="RegisterTime" DataType="DateTime" Description="注册时间" />
-      <Column Name="RegisterIP" DataType="String" Description="注册IP" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
@@ -57,7 +54,7 @@
   <Table Name="DeviceOnline" Description="设备在线" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="DeviceID" DataType="Int32" Description="编码" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="SessionID" DataType="String" Description="会话" />
       <Column Name="Version" DataType="String" Description="版本" />
@@ -65,9 +62,7 @@
       <Column Name="NetType" DataType="String" Description="网络" />
       <Column Name="InternalUri" DataType="String" Description="内网" />
       <Column Name="ExternalUri" DataType="String" Description="外网" />
-      <Column Name="LoginCount" DataType="Int32" Description="登录" />
       <Column Name="PingCount" DataType="Int32" Description="心跳" />
-      <Column Name="LoginTime" DataType="DateTime" Description="登录时间" />
       <Column Name="ErrorCount" DataType="Int32" Description="错误" />
       <Column Name="LastError" DataType="String" Description="最后错误" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
@@ -84,7 +79,7 @@
   <Table Name="DeviceHistory" Description="设备历史" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="DeviceID" DataType="Int32" Description="编码" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Version" DataType="String" Description="版本" />
       <Column Name="Type" DataType="String" Description="类型" />

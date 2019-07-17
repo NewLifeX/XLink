@@ -89,14 +89,6 @@ namespace Vsd.Entity
         [BindColumn("Data", "数据", "")]
         public String Data { get { return _Data; } set { if (OnPropertyChanging(__.Data, value)) { _Data = value; OnPropertyChanged(__.Data); } } }
 
-        private Boolean _Online;
-        /// <summary>在线</summary>
-        [DisplayName("在线")]
-        [Description("在线")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Online", "在线", "")]
-        public Boolean Online { get { return _Online; } set { if (OnPropertyChanging(__.Online, value)) { _Online = value; OnPropertyChanged(__.Online); } } }
-
         private Int32 _Logins;
         /// <summary>登录</summary>
         [DisplayName("登录")]
@@ -120,22 +112,6 @@ namespace Vsd.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("LastLoginIP", "最后登录IP", "")]
         public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
-
-        private DateTime _RegisterTime;
-        /// <summary>注册时间</summary>
-        [DisplayName("注册时间")]
-        [Description("注册时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("RegisterTime", "注册时间", "")]
-        public DateTime RegisterTime { get { return _RegisterTime; } set { if (OnPropertyChanging(__.RegisterTime, value)) { _RegisterTime = value; OnPropertyChanged(__.RegisterTime); } } }
-
-        private String _RegisterIP;
-        /// <summary>注册IP</summary>
-        [DisplayName("注册IP")]
-        [Description("注册IP")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("RegisterIP", "注册IP", "")]
-        public String RegisterIP { get { return _RegisterIP; } set { if (OnPropertyChanging(__.RegisterIP, value)) { _RegisterIP = value; OnPropertyChanged(__.RegisterIP); } } }
 
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
@@ -213,12 +189,9 @@ namespace Vsd.Entity
                     case __.Type : return _Type;
                     case __.Version : return _Version;
                     case __.Data : return _Data;
-                    case __.Online : return _Online;
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
                     case __.LastLoginIP : return _LastLoginIP;
-                    case __.RegisterTime : return _RegisterTime;
-                    case __.RegisterIP : return _RegisterIP;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -242,12 +215,9 @@ namespace Vsd.Entity
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.Data : _Data = Convert.ToString(value); break;
-                    case __.Online : _Online = value.ToBoolean(); break;
                     case __.Logins : _Logins = value.ToInt(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
-                    case __.RegisterTime : _RegisterTime = value.ToDateTime(); break;
-                    case __.RegisterIP : _RegisterIP = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -292,9 +262,6 @@ namespace Vsd.Entity
             /// <summary>数据</summary>
             public static readonly Field Data = FindByName(__.Data);
 
-            /// <summary>在线</summary>
-            public static readonly Field Online = FindByName(__.Online);
-
             /// <summary>登录</summary>
             public static readonly Field Logins = FindByName(__.Logins);
 
@@ -303,12 +270,6 @@ namespace Vsd.Entity
 
             /// <summary>最后登录IP</summary>
             public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
-
-            /// <summary>注册时间</summary>
-            public static readonly Field RegisterTime = FindByName(__.RegisterTime);
-
-            /// <summary>注册IP</summary>
-            public static readonly Field RegisterIP = FindByName(__.RegisterIP);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -364,9 +325,6 @@ namespace Vsd.Entity
             /// <summary>数据</summary>
             public const String Data = "Data";
 
-            /// <summary>在线</summary>
-            public const String Online = "Online";
-
             /// <summary>登录</summary>
             public const String Logins = "Logins";
 
@@ -375,12 +333,6 @@ namespace Vsd.Entity
 
             /// <summary>最后登录IP</summary>
             public const String LastLoginIP = "LastLoginIP";
-
-            /// <summary>注册时间</summary>
-            public const String RegisterTime = "RegisterTime";
-
-            /// <summary>注册IP</summary>
-            public const String RegisterIP = "RegisterIP";
 
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
@@ -437,9 +389,6 @@ namespace Vsd.Entity
         /// <summary>数据</summary>
         String Data { get; set; }
 
-        /// <summary>在线</summary>
-        Boolean Online { get; set; }
-
         /// <summary>登录</summary>
         Int32 Logins { get; set; }
 
@@ -448,12 +397,6 @@ namespace Vsd.Entity
 
         /// <summary>最后登录IP</summary>
         String LastLoginIP { get; set; }
-
-        /// <summary>注册时间</summary>
-        DateTime RegisterTime { get; set; }
-
-        /// <summary>注册IP</summary>
-        String RegisterIP { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }

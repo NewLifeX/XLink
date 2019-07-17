@@ -4,14 +4,13 @@
  * 时间：2017-03-31 23:16:13
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
+using NewLife.Common;
+using NewLife.Data;
+using NewLife.Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using NewLife.Common;
-using NewLife.Data;
-using NewLife.Model;
-using NewLife.Security;
 using XCode;
 using XCode.Cache;
 using XCode.Membership;
@@ -161,52 +160,12 @@ namespace Vsd.Entity
 
             Save();
         }
-
-        /// <summary>注册网关设备，默认启用网关设备</summary>
-        /// <param name="code"></param>
-        /// <param name="pass"></param>
-        public static void Register(String code, String pass)
-        {
-            if (String.IsNullOrEmpty(code)) throw new ArgumentNullException(nameof(code));
-            if (String.IsNullOrEmpty(pass)) throw new ArgumentNullException(nameof(pass));
-
-            var gw = FindByName(code);
-            if (gw != null) throw new EntityException("{0}该设备已经注册", code);
-
-            gw = new Device
-            {
-                Name = code,
-                Secret = pass,
-
-                Enable = true,
-                RegisterTime = DateTime.Now
-            };
-
-            gw.Save();
-        }
-
-        /// <summary>注册</summary>
-        /// <param name="ip"></param>
-        public void Register(String ip)
-        {
-            //if (Name == null || Password == null) return;
-
-            //Registers++;
-            RegisterTime = DateTime.Now;
-            RegisterIP = ip;
-            Save();
-        }
         #endregion
 
         #region 辅助
         /// <summary>显示友好名称</summary>
         /// <returns></returns>
-        public override String ToString()
-        {
-            //if (!NickName.IsNullOrEmpty()) return NickName;
-
-            return Name;
-        }
+        public override String ToString() => Name;
         #endregion
     }
 }

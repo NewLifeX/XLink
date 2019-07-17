@@ -2,16 +2,16 @@
 using NewLife.Web;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Vsd.Entity;
 
 namespace Vsd.Device.Web.Controllers
 {
-    [Description("设备登录后产生在线记录，一般长期在线")]
     public class DeviceOnlineController : EntityController<DeviceOnline>
     {
         static DeviceOnlineController()
         {
+            MenuOrder = 88;
+
             ListFields.RemoveField("LastError");
         }
 

@@ -8,6 +8,8 @@ using NewLife.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using XCode;
 using XCode.Cache;
 
@@ -20,35 +22,18 @@ namespace Vsd.Entity
         static DeviceOnline()
         {
             var df = Meta.Factory.AdditionalFields;
-            df.Add(__.LoginCount);
             df.Add(__.PingCount);
         }
-
-        ///// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
-        ///// <param name="isNew"></param>
-        //public override void Valid(Boolean isNew)
-        //{
-        //    // 如果没有脏数据，则不需要进行任何处理
-        //    if (!HasDirty) return;
-
-        //    // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
-        //    base.Valid(isNew);
-        //}
         #endregion
 
         #region 扩展属性
         /// <summary>设备</summary>
-        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceID)); } }
-
-        /// <summary>设备名</summary>
-        [Map(__.DeviceID, typeof(Device), "ID")]
-        public String DeviceName { get { return Device?.Name + ""; } }
+        [XmlIgnore, ScriptIgnore]
+        public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceID));
 
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]
-        public String ExternalAddress { get { return ExternalUri.IPToAddress(); } }
-
-        //Int32 IOnline.UserID { get => DeviceID; set => DeviceID = value; }
+        public String ExternalAddress => ExternalUri.IPToAddress();
         #endregion
 
         #region 扩展查询
