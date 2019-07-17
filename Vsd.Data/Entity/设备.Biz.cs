@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using XCode;
 using XCode.Cache;
 using XCode.Membership;
@@ -58,6 +60,14 @@ namespace Vsd.Entity
         #endregion
 
         #region 扩展属性
+        /// <summary>设备</summary>
+        [XmlIgnore, ScriptIgnore]
+        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductID));
+
+        /// <summary>产品</summary>
+        [Map(__.ProductID)]
+        public String ProductName => Product + "";
+
         /// <summary>登录地址。IP=>Address</summary>
         [DisplayName("登录地址")]
         public String LastLoginAddress { get { return LastLoginIP.IPToAddress(); } }

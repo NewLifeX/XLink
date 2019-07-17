@@ -62,6 +62,13 @@ namespace Vsd.Server
                 Send(js.GetBytes());
             }
         }
+
+        protected override void OnDispose(Boolean disposing)
+        {
+            base.OnDispose(disposing);
+
+            Online?.Delete();
+        }
         #endregion
 
         #region 心跳

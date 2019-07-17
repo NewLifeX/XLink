@@ -31,6 +31,10 @@ namespace Vsd.Entity
         [XmlIgnore, ScriptIgnore]
         public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceID));
 
+        /// <summary>设备</summary>
+        [Map(__.DeviceID)]
+        public String DeviceName => Device + "";
+
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]
         public String ExternalAddress => ExternalUri.IPToAddress();

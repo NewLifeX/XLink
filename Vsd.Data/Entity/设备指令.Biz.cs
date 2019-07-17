@@ -1,8 +1,8 @@
 using NewLife.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using XCode;
 using XCode.Membership;
@@ -107,16 +107,12 @@ namespace Vsd.Entity
 
         #region 扩展属性
         /// <summary>设备</summary>
-        [XmlIgnore]
-        //[ScriptIgnore]
-        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceID)); } }
+        [XmlIgnore, ScriptIgnore]
+        public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceID));
 
         /// <summary>设备</summary>
-        [XmlIgnore]
-        //[ScriptIgnore]
-        [DisplayName("设备")]
-        [Map(__.DeviceID, typeof(Device), "ID")]
-        public String DeviceName { get { return Device?.Name; } }
+        [Map(__.DeviceID)]
+        public String DeviceName => Device + "";
         #endregion
 
         #region 扩展查询
