@@ -65,14 +65,6 @@ namespace Vsd.Entity
         [BindColumn("ProductID", "产品", "")]
         public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
 
-        private String _Type;
-        /// <summary>类型</summary>
-        [DisplayName("类型")]
-        [Description("类型")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "")]
-        public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
-
         private String _Version;
         /// <summary>版本</summary>
         [DisplayName("版本")]
@@ -80,6 +72,14 @@ namespace Vsd.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
+
+        private String _LocalIP;
+        /// <summary>本地地址</summary>
+        [DisplayName("本地地址")]
+        [Description("本地地址")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("LocalIP", "本地地址", "")]
+        public String LocalIP { get { return _LocalIP; } set { if (OnPropertyChanging(__.LocalIP, value)) { _LocalIP = value; OnPropertyChanged(__.LocalIP); } } }
 
         private String _Data;
         /// <summary>数据</summary>
@@ -186,8 +186,8 @@ namespace Vsd.Entity
                     case __.Secret : return _Secret;
                     case __.Enable : return _Enable;
                     case __.ProductID : return _ProductID;
-                    case __.Type : return _Type;
                     case __.Version : return _Version;
+                    case __.LocalIP : return _LocalIP;
                     case __.Data : return _Data;
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
@@ -212,8 +212,8 @@ namespace Vsd.Entity
                     case __.Secret : _Secret = Convert.ToString(value); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
                     case __.ProductID : _ProductID = value.ToInt(); break;
-                    case __.Type : _Type = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
+                    case __.LocalIP : _LocalIP = Convert.ToString(value); break;
                     case __.Data : _Data = Convert.ToString(value); break;
                     case __.Logins : _Logins = value.ToInt(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
@@ -253,11 +253,11 @@ namespace Vsd.Entity
             /// <summary>产品</summary>
             public static readonly Field ProductID = FindByName(__.ProductID);
 
-            /// <summary>类型</summary>
-            public static readonly Field Type = FindByName(__.Type);
-
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
+
+            /// <summary>本地地址</summary>
+            public static readonly Field LocalIP = FindByName(__.LocalIP);
 
             /// <summary>数据</summary>
             public static readonly Field Data = FindByName(__.Data);
@@ -316,11 +316,11 @@ namespace Vsd.Entity
             /// <summary>产品</summary>
             public const String ProductID = "ProductID";
 
-            /// <summary>类型</summary>
-            public const String Type = "Type";
-
             /// <summary>版本</summary>
             public const String Version = "Version";
+
+            /// <summary>本地地址</summary>
+            public const String LocalIP = "LocalIP";
 
             /// <summary>数据</summary>
             public const String Data = "Data";
@@ -380,11 +380,11 @@ namespace Vsd.Entity
         /// <summary>产品</summary>
         Int32 ProductID { get; set; }
 
-        /// <summary>类型</summary>
-        String Type { get; set; }
-
         /// <summary>版本</summary>
         String Version { get; set; }
+
+        /// <summary>本地地址</summary>
+        String LocalIP { get; set; }
 
         /// <summary>数据</summary>
         String Data { get; set; }

@@ -73,7 +73,7 @@ namespace Vsd.Server
             var name = ps["name"] + "";
 
             // 登录
-            var dv = Login(code, name);
+            var dv = Login(code, name, ip);
 
             // 在线
             var olt = CheckOnline();
@@ -101,7 +101,12 @@ namespace Vsd.Server
             };
         }
 
-        protected virtual Device Login(String code, String name)
+        /// <summary>登录</summary>
+        /// <param name="code"></param>
+        /// <param name="name"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        protected virtual Device Login(String code, String name, String ip)
         {
             var dv = Device.FindByCode(code);
             if (dv == null)
@@ -115,6 +120,12 @@ namespace Vsd.Server
                 dv.Insert();
             }
 
+            if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
+
+            dv.LocalIP = ip;
+            dv.LastLogin = DateTime.Now;
+            dv.LastLoginIP = ip;
+
             dv.SaveAsync();
 
             Device = dv;
@@ -122,6 +133,8 @@ namespace Vsd.Server
             return dv;
         }
 
+        /// <summary>检查在线</summary>
+        /// <returns></returns>
         protected virtual DeviceOnline CheckOnline()
         {
             var olt = Online;

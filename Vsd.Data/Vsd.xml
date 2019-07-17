@@ -32,8 +32,8 @@
       <Column Name="Secret" DataType="String" Description="密钥" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="ProductID" DataType="Int32" Description="产品" />
-      <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="Version" DataType="String" Description="版本" />
+      <Column Name="LocalIP" DataType="String" Description="本地地址" />
       <Column Name="Data" DataType="String" Length="200" Description="数据" />
       <Column Name="Logins" DataType="Int32" Description="登录" />
       <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />

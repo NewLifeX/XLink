@@ -113,7 +113,7 @@ namespace Vsd.Entity
             // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段
             var exp = SearchWhereByKeys(key, null, null);
 
-            if (!type.IsNullOrEmpty()) exp &= _.Type == type;
+            //if (!type.IsNullOrEmpty()) exp &= _.Type == type;
             if (enable != null) exp &= _.Enable == enable.Value;
 
             //exp &= _.CreateTime.Between(start, end);
@@ -124,15 +124,6 @@ namespace Vsd.Entity
         #endregion
 
         #region 扩展操作
-        /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<Device> TypeCache = new FieldCache<Device>(_.Type);
-
-        /// <summary>获取所有类别名称</summary>
-        /// <returns></returns>
-        public static IDictionary<String, String> FindAllTypeName()
-        {
-            return TypeCache.FindAllName();
-        }
         #endregion
 
         #region 业务
