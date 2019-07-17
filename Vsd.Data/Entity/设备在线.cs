@@ -11,7 +11,7 @@ namespace Vsd.Entity
     [Serializable]
     [DataObject]
     [Description("设备在线")]
-    [BindIndex("IX_DeviceOnline_SessionID", false, "SessionID")]
+    [BindIndex("IU_DeviceOnline_SessionID", true, "SessionID")]
     [BindIndex("IX_DeviceOnline_DeviceID", false, "DeviceID")]
     [BindIndex("IX_DeviceOnline_Name", false, "Name")]
     [BindIndex("IX_DeviceOnline_Type", false, "Type")]
@@ -43,6 +43,14 @@ namespace Vsd.Entity
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
+        private String _SessionID;
+        /// <summary>会话</summary>
+        [DisplayName("会话")]
+        [Description("会话")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("SessionID", "会话", "")]
+        public String SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
+
         private String _Version;
         /// <summary>版本</summary>
         [DisplayName("版本")]
@@ -66,14 +74,6 @@ namespace Vsd.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("NetType", "网络", "")]
         public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
-
-        private Int32 _SessionID;
-        /// <summary>会话</summary>
-        [DisplayName("会话")]
-        [Description("会话")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("SessionID", "会话", "")]
-        public Int32 SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
 
         private String _InternalUri;
         /// <summary>内网</summary>
@@ -169,10 +169,10 @@ namespace Vsd.Entity
                     case __.ID : return _ID;
                     case __.DeviceID : return _DeviceID;
                     case __.Name : return _Name;
+                    case __.SessionID : return _SessionID;
                     case __.Version : return _Version;
                     case __.Type : return _Type;
                     case __.NetType : return _NetType;
-                    case __.SessionID : return _SessionID;
                     case __.InternalUri : return _InternalUri;
                     case __.ExternalUri : return _ExternalUri;
                     case __.LoginCount : return _LoginCount;
@@ -193,10 +193,10 @@ namespace Vsd.Entity
                     case __.ID : _ID = value.ToInt(); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
+                    case __.SessionID : _SessionID = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.Type : _Type = Convert.ToString(value); break;
                     case __.NetType : _NetType = Convert.ToString(value); break;
-                    case __.SessionID : _SessionID = value.ToInt(); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
                     case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
                     case __.LoginCount : _LoginCount = value.ToInt(); break;
@@ -226,6 +226,9 @@ namespace Vsd.Entity
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
 
+            /// <summary>会话</summary>
+            public static readonly Field SessionID = FindByName(__.SessionID);
+
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
 
@@ -234,9 +237,6 @@ namespace Vsd.Entity
 
             /// <summary>网络</summary>
             public static readonly Field NetType = FindByName(__.NetType);
-
-            /// <summary>会话</summary>
-            public static readonly Field SessionID = FindByName(__.SessionID);
 
             /// <summary>内网</summary>
             public static readonly Field InternalUri = FindByName(__.InternalUri);
@@ -283,6 +283,9 @@ namespace Vsd.Entity
             /// <summary>名称</summary>
             public const String Name = "Name";
 
+            /// <summary>会话</summary>
+            public const String SessionID = "SessionID";
+
             /// <summary>版本</summary>
             public const String Version = "Version";
 
@@ -291,9 +294,6 @@ namespace Vsd.Entity
 
             /// <summary>网络</summary>
             public const String NetType = "NetType";
-
-            /// <summary>会话</summary>
-            public const String SessionID = "SessionID";
 
             /// <summary>内网</summary>
             public const String InternalUri = "InternalUri";
@@ -341,6 +341,9 @@ namespace Vsd.Entity
         /// <summary>名称</summary>
         String Name { get; set; }
 
+        /// <summary>会话</summary>
+        String SessionID { get; set; }
+
         /// <summary>版本</summary>
         String Version { get; set; }
 
@@ -349,9 +352,6 @@ namespace Vsd.Entity
 
         /// <summary>网络</summary>
         String NetType { get; set; }
-
-        /// <summary>会话</summary>
-        Int32 SessionID { get; set; }
 
         /// <summary>内网</summary>
         String InternalUri { get; set; }

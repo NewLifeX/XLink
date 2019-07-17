@@ -11,7 +11,6 @@ namespace Vsd.Entity
     [Serializable]
     [DataObject]
     [Description("设备")]
-    [BindIndex("IU_Device_Name", true, "Name")]
     [BindIndex("IU_Device_Code", true, "Code")]
     [BindIndex("IX_Device_ProductID", false, "ProductID")]
     [BindTable("Device", Description = "设备", ConnName = "Vsd", DbType = DatabaseType.SqlServer)]
@@ -42,13 +41,13 @@ namespace Vsd.Entity
         [BindColumn("Code", "编码", "")]
         public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
 
-        private String _Password;
-        /// <summary>密码</summary>
-        [DisplayName("密码")]
-        [Description("密码")]
+        private String _Secret;
+        /// <summary>密钥</summary>
+        [DisplayName("密钥")]
+        [Description("密钥")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Password", "密码", "")]
-        public String Password { get { return _Password; } set { if (OnPropertyChanging(__.Password, value)) { _Password = value; OnPropertyChanged(__.Password); } } }
+        [BindColumn("Secret", "密钥", "")]
+        public String Secret { get { return _Secret; } set { if (OnPropertyChanging(__.Secret, value)) { _Secret = value; OnPropertyChanged(__.Secret); } } }
 
         private Boolean _Enable;
         /// <summary>启用</summary>
@@ -208,7 +207,7 @@ namespace Vsd.Entity
                     case __.ID : return _ID;
                     case __.Name : return _Name;
                     case __.Code : return _Code;
-                    case __.Password : return _Password;
+                    case __.Secret : return _Secret;
                     case __.Enable : return _Enable;
                     case __.ProductID : return _ProductID;
                     case __.Type : return _Type;
@@ -237,7 +236,7 @@ namespace Vsd.Entity
                     case __.ID : _ID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Code : _Code = Convert.ToString(value); break;
-                    case __.Password : _Password = Convert.ToString(value); break;
+                    case __.Secret : _Secret = Convert.ToString(value); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
                     case __.ProductID : _ProductID = value.ToInt(); break;
                     case __.Type : _Type = Convert.ToString(value); break;
@@ -275,8 +274,8 @@ namespace Vsd.Entity
             /// <summary>编码</summary>
             public static readonly Field Code = FindByName(__.Code);
 
-            /// <summary>密码</summary>
-            public static readonly Field Password = FindByName(__.Password);
+            /// <summary>密钥</summary>
+            public static readonly Field Secret = FindByName(__.Secret);
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
@@ -347,8 +346,8 @@ namespace Vsd.Entity
             /// <summary>编码</summary>
             public const String Code = "Code";
 
-            /// <summary>密码</summary>
-            public const String Password = "Password";
+            /// <summary>密钥</summary>
+            public const String Secret = "Secret";
 
             /// <summary>启用</summary>
             public const String Enable = "Enable";
@@ -420,8 +419,8 @@ namespace Vsd.Entity
         /// <summary>编码</summary>
         String Code { get; set; }
 
-        /// <summary>密码</summary>
-        String Password { get; set; }
+        /// <summary>密钥</summary>
+        String Secret { get; set; }
 
         /// <summary>启用</summary>
         Boolean Enable { get; set; }

@@ -11,6 +11,7 @@ using System.Linq;
 using NewLife.Common;
 using NewLife.Data;
 using NewLife.Model;
+using NewLife.Security;
 using XCode;
 using XCode.Cache;
 using XCode.Membership;
@@ -44,17 +45,12 @@ namespace Vsd.Entity
             // 如果没有脏数据，则不需要进行任何处理
             if (!HasDirty) return;
 
-            if (Name.IsNullOrEmpty()) throw new ArgumentNullException(__.Name, _.Name.DisplayName + "不能为空！");
-            if (Password.IsNullOrEmpty()) throw new ArgumentNullException(__.Password, _.Password.DisplayName + "不能为空！");
-            //if (Password.Length != 16 && Password.Length != 32) throw new ArgumentOutOfRangeException(__.Password, _.Password.DisplayName + "非法！");
-            //if (Name.Length < 8) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最短8个字符！" + Name);
-            //if (Name.Length > 16) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最长16个字符！" + Name);
-
-            //// 修正显示名
-            //if (!NickName.IsNullOrEmpty() && NickName.Length > 16) NickName = NickName.Substring(0, 16);
-
-            // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
-            base.Valid(isNew);
+            if (isNew)
+            {
+                // 自动生成产品证书密钥
+                if (Code.IsNullOrEmpty()) Code = Rand.NextString(4);
+                if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(8);
+            }
         }
         #endregion
 
@@ -88,16 +84,19 @@ namespace Vsd.Entity
             return Find(__.Name, name);
         }
 
-        ///// <summary>根据唯一编码查找</summary>
-        ///// <param name="code">唯一编码</param>
-        ///// <returns></returns>
-        //[DataObjectMethod(DataObjectMethodType.Select, false)]
-        //public static Device FindByCode(String code)
-        //{
-        //    if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
+        /// <summary>根据名称查找</summary>
+        /// <param name="code">名称</param>
+        /// <returns>实体对象</returns>
+        public static Device FindByCode(String code)
+        {
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.Code == code);
 
-        //    return Find(__.Code, code);
-        //}
+            // 单对象缓存
+            return Meta.SingleCache.GetItemWithSlaveKey(code) as Device;
+
+            //return Find(_.Code == code);
+        }
         #endregion
 
         #region 高级查询
@@ -149,11 +148,11 @@ namespace Vsd.Entity
             if (!Enable) throw new EntityException("账号{0}被禁用！", Name);
 
             // 数据库为空密码，任何密码均可登录
-            var buf = salt.RC4(Password.GetBytes());
+            var buf = salt.RC4(Secret.GetBytes());
             if (!pass.EqualIgnoreCase(buf.ToHex()))
             {
                 var err = "密码不正确！";
-                if (SysConfig.Current.Develop) err = "{0} DB:{1}!=Biz:{2}".F(err, Password, pass);
+                if (SysConfig.Current.Develop) err = "{0} DB:{1}!=Biz:{2}".F(err, Secret, pass);
                 throw new EntityException(err);
             }
 
@@ -177,7 +176,7 @@ namespace Vsd.Entity
             gw = new Device
             {
                 Name = code,
-                Password = pass,
+                Secret = pass,
 
                 Enable = true,
                 RegisterTime = DateTime.Now

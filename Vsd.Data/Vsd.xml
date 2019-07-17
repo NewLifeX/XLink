@@ -21,7 +21,6 @@
       <Column Name="Description" DataType="String" Length="500" Description="描述" />
     </Columns>
     <Indexes>
-      <Index Columns="Name" Unique="True" />
       <Index Columns="Code" Unique="True" />
     </Indexes>
   </Table>
@@ -30,7 +29,7 @@
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Code" DataType="String" Description="编码" />
-      <Column Name="Password" DataType="String" Description="密码" />
+      <Column Name="Secret" DataType="String" Description="密钥" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="ProductID" DataType="Int32" Description="产品" />
       <Column Name="Type" DataType="String" Description="类型" />
@@ -51,7 +50,6 @@
       <Column Name="Description" DataType="String" Length="500" Description="描述" />
     </Columns>
     <Indexes>
-      <Index Columns="Name" Unique="True" />
       <Index Columns="Code" Unique="True" />
       <Index Columns="ProductID" />
     </Indexes>
@@ -61,10 +59,10 @@
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="DeviceID" DataType="Int32" Description="编码" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="SessionID" DataType="String" Description="会话" />
       <Column Name="Version" DataType="String" Description="版本" />
       <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="NetType" DataType="String" Description="网络" />
-      <Column Name="SessionID" DataType="Int32" Description="会话" />
       <Column Name="InternalUri" DataType="String" Description="内网" />
       <Column Name="ExternalUri" DataType="String" Description="外网" />
       <Column Name="LoginCount" DataType="Int32" Description="登录" />
@@ -77,7 +75,7 @@
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
     </Columns>
     <Indexes>
-      <Index Columns="SessionID" />
+      <Index Columns="SessionID" Unique="True" />
       <Index Columns="DeviceID" />
       <Index Columns="Name" />
       <Index Columns="Type" />

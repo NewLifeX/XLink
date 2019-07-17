@@ -2,6 +2,7 @@
 using NewLife.Serialization;
 using System;
 using System.Collections.Generic;
+using Vsd.Entity;
 
 namespace Vsd.Server
 {
@@ -13,6 +14,14 @@ namespace Vsd.Server
 
     class VsdSession : NetSession<VsdServer>
     {
+        #region 属性
+        /// <summary>当前登录设备</summary>
+        public Device Device { get; set; }
+
+        /// <summary>当前在线对象</summary>
+        public DeviceOnline Online { get; set; }
+        #endregion
+
         #region 主循环
         protected override void OnReceive(ReceivedEventArgs e)
         {
@@ -27,6 +36,7 @@ namespace Vsd.Server
             object result = null;
             var cmd = dic["cmd"] + "";
 
+            // 输出日志
             if (Host.CommandLog)
                 WriteLog("<={0}", str.Trim());
             else
@@ -62,6 +72,14 @@ namespace Vsd.Server
             var ip = ps["ip"] + "";
             var name = ps["name"] + "";
 
+            // 登录
+            var dv = Login(code, name);
+
+            // 在线
+            var olt = CheckOnline();
+            olt.PingCount++;
+            olt.SaveAsync();
+
             // 修改日志前缀
             if (!name.IsNullOrEmpty()) LogPrefix = name + " ";
 
@@ -81,6 +99,57 @@ namespace Vsd.Server
                 terminalParity = "none",
                 terminalStopbit = 1,
             };
+        }
+
+        protected virtual Device Login(String code, String name)
+        {
+            var dv = Device.FindByCode(code);
+            if (dv == null)
+            {
+                dv = new Device
+                {
+                    Name = name,
+                    Code = code,
+                    Enable = true,
+                };
+                dv.Insert();
+            }
+
+            dv.SaveAsync();
+
+            Device = dv;
+
+            return dv;
+        }
+
+        protected virtual DeviceOnline CheckOnline()
+        {
+            var olt = Online;
+            if (olt == null)
+            {
+                var uri = Remote.EndPoint + "";
+                olt = DeviceOnline.FindBySessionID(uri);
+                if (olt == null)
+                {
+                    olt = new DeviceOnline
+                    {
+                        SessionID = uri,
+                    };
+
+                    var dv = Device;
+                    if (dv != null)
+                    {
+                        olt.Name = dv + "";
+                        olt.DeviceID = dv.ID;
+                    }
+
+                    olt.Insert();
+                }
+
+                Online = olt;
+            }
+
+            return olt;
         }
         #endregion
 

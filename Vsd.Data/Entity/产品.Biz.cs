@@ -41,8 +41,8 @@ namespace Vsd.Entity
 
             // 单对象缓存
             var sc = Meta.SingleCache;
-            sc.FindSlaveKeyMethod = k => Find(__.Name, k);
-            sc.GetSlaveKeyMethod = e => e.Name;
+            sc.FindSlaveKeyMethod = k => Find(__.Code, k);
+            sc.GetSlaveKeyMethod = e => e.Code;
         }
 
         /// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -89,10 +89,21 @@ namespace Vsd.Entity
             // 实体缓存
             if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.Name == name);
 
-            // 单对象缓存
-            //return Meta.SingleCache.GetItemWithSlaveKey(name) as Product;
-
             return Find(_.Name == name);
+        }
+
+        /// <summary>根据名称查找</summary>
+        /// <param name="code">名称</param>
+        /// <returns>实体对象</returns>
+        public static Product FindByCode(String code)
+        {
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.Code == code);
+
+            // 单对象缓存
+            return Meta.SingleCache.GetItemWithSlaveKey(code) as Product;
+
+            //return Find(_.Code == code);
         }
         #endregion
 

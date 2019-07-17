@@ -11,7 +11,6 @@ namespace Vsd.Entity
     [Serializable]
     [DataObject]
     [Description("产品")]
-    [BindIndex("IU_Product_Name", true, "Name")]
     [BindIndex("IU_Product_Code", true, "Code")]
     [BindTable("Product", Description = "产品", ConnName = "Vsd", DbType = DatabaseType.SqlServer)]
     public partial class Product : IProduct

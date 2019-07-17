@@ -63,7 +63,7 @@ namespace Vsd.Entity
         /// <summary>根据会话查找</summary>
         /// <param name="sessionid">会话</param>
         /// <returns></returns>
-        public static DeviceOnline FindBySessionID(Int32 sessionid)
+        public static DeviceOnline FindBySessionID(String sessionid)
         {
             //if (Meta.Count >= 1000)
             return Find(__.SessionID, sessionid);
