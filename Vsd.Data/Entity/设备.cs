@@ -81,6 +81,30 @@ namespace Vsd.Entity
         [BindColumn("LocalIP", "本地地址", "")]
         public String LocalIP { get { return _LocalIP; } set { if (OnPropertyChanging(__.LocalIP, value)) { _LocalIP = value; OnPropertyChanged(__.LocalIP); } } }
 
+        private Int32 _HeartInterval;
+        /// <summary>心跳间隔。默认60秒</summary>
+        [DisplayName("心跳间隔")]
+        [Description("心跳间隔。默认60秒")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("HeartInterval", "心跳间隔。默认60秒", "")]
+        public Int32 HeartInterval { get { return _HeartInterval; } set { if (OnPropertyChanging(__.HeartInterval, value)) { _HeartInterval = value; OnPropertyChanged(__.HeartInterval); } } }
+
+        private Int32 _KeepAliveTime;
+        /// <summary>在线间隔。默认10秒</summary>
+        [DisplayName("在线间隔")]
+        [Description("在线间隔。默认10秒")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("KeepAliveTime", "在线间隔。默认10秒", "")]
+        public Int32 KeepAliveTime { get { return _KeepAliveTime; } set { if (OnPropertyChanging(__.KeepAliveTime, value)) { _KeepAliveTime = value; OnPropertyChanged(__.KeepAliveTime); } } }
+
+        private String _ResetTime;
+        /// <summary>重启时间。默认24:00:00不启用</summary>
+        [DisplayName("重启时间")]
+        [Description("重启时间。默认24:00:00不启用")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("ResetTime", "重启时间。默认24:00:00不启用", "")]
+        public String ResetTime { get { return _ResetTime; } set { if (OnPropertyChanging(__.ResetTime, value)) { _ResetTime = value; OnPropertyChanged(__.ResetTime); } } }
+
         private String _Data;
         /// <summary>数据</summary>
         [DisplayName("数据")]
@@ -188,6 +212,9 @@ namespace Vsd.Entity
                     case __.ProductID : return _ProductID;
                     case __.Version : return _Version;
                     case __.LocalIP : return _LocalIP;
+                    case __.HeartInterval : return _HeartInterval;
+                    case __.KeepAliveTime : return _KeepAliveTime;
+                    case __.ResetTime : return _ResetTime;
                     case __.Data : return _Data;
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
@@ -214,6 +241,9 @@ namespace Vsd.Entity
                     case __.ProductID : _ProductID = value.ToInt(); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.LocalIP : _LocalIP = Convert.ToString(value); break;
+                    case __.HeartInterval : _HeartInterval = value.ToInt(); break;
+                    case __.KeepAliveTime : _KeepAliveTime = value.ToInt(); break;
+                    case __.ResetTime : _ResetTime = Convert.ToString(value); break;
                     case __.Data : _Data = Convert.ToString(value); break;
                     case __.Logins : _Logins = value.ToInt(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
@@ -258,6 +288,15 @@ namespace Vsd.Entity
 
             /// <summary>本地地址</summary>
             public static readonly Field LocalIP = FindByName(__.LocalIP);
+
+            /// <summary>心跳间隔。默认60秒</summary>
+            public static readonly Field HeartInterval = FindByName(__.HeartInterval);
+
+            /// <summary>在线间隔。默认10秒</summary>
+            public static readonly Field KeepAliveTime = FindByName(__.KeepAliveTime);
+
+            /// <summary>重启时间。默认24:00:00不启用</summary>
+            public static readonly Field ResetTime = FindByName(__.ResetTime);
 
             /// <summary>数据</summary>
             public static readonly Field Data = FindByName(__.Data);
@@ -322,6 +361,15 @@ namespace Vsd.Entity
             /// <summary>本地地址</summary>
             public const String LocalIP = "LocalIP";
 
+            /// <summary>心跳间隔。默认60秒</summary>
+            public const String HeartInterval = "HeartInterval";
+
+            /// <summary>在线间隔。默认10秒</summary>
+            public const String KeepAliveTime = "KeepAliveTime";
+
+            /// <summary>重启时间。默认24:00:00不启用</summary>
+            public const String ResetTime = "ResetTime";
+
             /// <summary>数据</summary>
             public const String Data = "Data";
 
@@ -385,6 +433,15 @@ namespace Vsd.Entity
 
         /// <summary>本地地址</summary>
         String LocalIP { get; set; }
+
+        /// <summary>心跳间隔。默认60秒</summary>
+        Int32 HeartInterval { get; set; }
+
+        /// <summary>在线间隔。默认10秒</summary>
+        Int32 KeepAliveTime { get; set; }
+
+        /// <summary>重启时间。默认24:00:00不启用</summary>
+        String ResetTime { get; set; }
 
         /// <summary>数据</summary>
         String Data { get; set; }

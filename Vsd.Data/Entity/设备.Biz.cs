@@ -50,6 +50,10 @@ namespace Vsd.Entity
                 if (Code.IsNullOrEmpty()) Code = Rand.NextString(4);
                 if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(8);
             }
+
+            if (HeartInterval <= 0) HeartInterval = 60;
+            if (KeepAliveTime <= 0) KeepAliveTime = 10;
+            if (ResetTime.IsNullOrEmpty()) ResetTime = "24:00:00";
         }
         #endregion
 

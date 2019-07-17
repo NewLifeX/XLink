@@ -90,10 +90,10 @@ namespace Vsd.Server
                 ip,
                 name,
                 time = DateTime.Now.ToFullString(),
-                heartInterval = 60,
-                keepAliveTime = 10,
+                heartInterval = dv.HeartInterval,
+                keepAliveTime = dv.KeepAliveTime,
                 loraID = 0,
-                resetTime = TimeSpan.FromDays(1).Subtract(TimeSpan.FromSeconds(1)).ToString(),
+                resetTime = dv.ResetTime,
                 terminalMode = 1,
                 terminalBaud = 115200,
                 terminalParity = "none",
@@ -138,29 +138,33 @@ namespace Vsd.Server
         protected virtual DeviceOnline CheckOnline()
         {
             var olt = Online;
+            if (olt != null) return olt;
+
+            var uri = Remote.EndPoint + "";
+            olt = DeviceOnline.FindBySessionID(uri);
             if (olt == null)
             {
-                var uri = Remote.EndPoint + "";
-                olt = DeviceOnline.FindBySessionID(uri);
-                if (olt == null)
+                olt = new DeviceOnline
                 {
-                    olt = new DeviceOnline
-                    {
-                        SessionID = uri,
-                    };
+                    SessionID = uri,
+                };
 
-                    var dv = Device;
-                    if (dv != null)
-                    {
-                        olt.Name = dv + "";
-                        olt.DeviceID = dv.ID;
-                    }
-
-                    olt.Insert();
-                }
-
-                Online = olt;
+                olt.Insert();
             }
+
+            var dv = Device;
+            if (dv != null)
+            {
+                olt.Name = dv + "";
+                olt.DeviceID = dv.ID;
+            }
+
+            olt.InternalUri = dv.LocalIP;
+            olt.ExternalUri = Remote + "";
+
+            olt.SaveAsync();
+
+            Online = olt;
 
             return olt;
         }
