@@ -36,8 +36,8 @@ namespace WiFi.Server
 
             // 登录在线
             var host = Check(rd.HostMAC, null, DeviceKinds.Host);
-            var route = Check(rd.RouteMAC, null, DeviceKinds.Route);
-            var olt = Check(rd.DeviceMAC, rd.Remark, DeviceKinds.Device);
+            var route = Check(rd.RouteMAC, rd.Remark, DeviceKinds.Route);
+            var olt = Check(rd.DeviceMAC, null, DeviceKinds.Device);
 
             if (olt != null)
             {
