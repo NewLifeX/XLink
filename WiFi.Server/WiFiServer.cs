@@ -83,7 +83,7 @@ namespace WiFi.Server
             var olt = GetOnline(mac);
             if (olt == null)
             {
-                var ip = Remote?.Host;
+                var ip = Remote?.EndPoint.Address + "";
                 var dv = Login(mac, name, ip, kind);
                 olt = CreateOnline(mac, dv);
             }
@@ -133,8 +133,9 @@ namespace WiFi.Server
 
             }
 
+            var ip = Remote?.EndPoint.Address + "";
             rd.CreateTime = DateTime.Now;
-            rd.CreateIP = Remote?.Host;
+            rd.CreateIP = ip;
 
             return rd;
         }
@@ -207,6 +208,7 @@ namespace WiFi.Server
         #region 历史
         protected virtual DeviceHistory WriteHistory(String action, IDevice dv)
         {
+            var ip = Remote?.EndPoint.Address + "";
             var hi = new DeviceHistory
             {
                 DeviceID = dv.ID,
@@ -216,7 +218,7 @@ namespace WiFi.Server
                 CreateDeviceID = dv.ID,
 
                 CreateTime = DateTime.Now,
-                CreateIP = Remote?.Host,
+                CreateIP = ip,
             };
 
             hi.SaveAsync();
