@@ -65,7 +65,7 @@ namespace WiFi.Server
             }
 
             // 更新路由器名称
-            if (route != null)
+            if (route != null && !rd.Remark.IsNullOrEmpty())
             {
                 route.Name = rd.Remark;
 
