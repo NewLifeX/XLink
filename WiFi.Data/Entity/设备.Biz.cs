@@ -53,6 +53,20 @@ namespace WiFi.Entity
         #endregion
 
         #region 扩展属性
+        /// <summary>最后主机</summary>
+        public Device LastHost => Extends.Get(nameof(LastHost), k => Device.FindByID(LastHostID));
+
+        /// <summary>最后主机</summary>
+        [Map(__.LastHostID)]
+        public String LastHostName => LastHost + "";
+
+        /// <summary>最后路由</summary>
+        public Device LastRoute => Extends.Get(nameof(LastRoute), k => Device.FindByID(LastRouteID));
+
+        /// <summary>最后路由</summary>
+        [Map(__.LastRouteID)]
+        public String LastRouteName => LastRoute + "";
+
         /// <summary>最后地址。IP=>Address</summary>
         [DisplayName("最后地址")]
         public String LastLoginAddress => LastLoginIP.IPToAddress();

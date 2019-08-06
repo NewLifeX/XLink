@@ -36,6 +36,20 @@ namespace WiFi.Entity
         /// <summary>设备</summary>
         [Map(__.DeviceID)]
         public String DeviceName => Device + "";
+
+        /// <summary>最后主机</summary>
+        public Device Host => Extends.Get(nameof(Host), k => Device.FindByID(HostID));
+
+        /// <summary>最后主机</summary>
+        [Map(__.HostID)]
+        public String HostName => Host + "";
+
+        /// <summary>最后路由</summary>
+        public Device Route => Extends.Get(nameof(Route), k => Device.FindByID(RouteID));
+
+        /// <summary>最后路由</summary>
+        [Map(__.RouteID)]
+        public String RouteName => Route + "";
         #endregion
 
         #region 扩展查询

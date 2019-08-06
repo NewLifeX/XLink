@@ -23,7 +23,15 @@ namespace WiFi.Server
 
             if (Host.CommandLog) WriteLog(str);
 
-            Process(str);
+            //Process(str);
+            var ss = str.Split("\r", "\n");
+            if (ss != null && ss.Length > 0)
+            {
+                foreach (var item in ss)
+                {
+                    Process(item);
+                }
+            }
         }
 
         public void Process(String data)
