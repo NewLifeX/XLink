@@ -63,6 +63,19 @@ namespace WiFi.Server
                     dv.LastRSSI = rd.Rssi;
                 }
             }
+
+            // 更新路由器名称
+            if (route != null)
+            {
+                route.Name = rd.Remark;
+
+                var dv = route.Device;
+                if (dv != null)
+                {
+                    dv.Name = rd.Remark;
+                    dv.SaveAsync();
+                }
+            }
         }
 
         protected virtual DeviceOnline Check(String mac, String name, DeviceKinds kind)
@@ -149,7 +162,10 @@ namespace WiFi.Server
 
             if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
 
+            dv.Name = name;
             dv.Kind = kind;
+
+            dv.Logins++;
             dv.LastLogin = DateTime.Now;
             dv.LastLoginIP = ip;
 

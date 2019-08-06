@@ -56,6 +56,14 @@ namespace WiFi.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
+        private Int32 _Logins;
+        /// <summary>登录次数</summary>
+        [DisplayName("登录次数")]
+        [Description("登录次数")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Logins", "登录次数", "")]
+        public Int32 Logins { get { return _Logins; } set { if (OnPropertyChanging(__.Logins, value)) { _Logins = value; OnPropertyChanged(__.Logins); } } }
+
         private DateTime _LastLogin;
         /// <summary>最后登录</summary>
         [DisplayName("最后登录")]
@@ -168,6 +176,7 @@ namespace WiFi.Entity
                     case __.Code : return _Code;
                     case __.Kind : return _Kind;
                     case __.Enable : return _Enable;
+                    case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
                     case __.LastLoginIP : return _LastLoginIP;
                     case __.LastHostID : return _LastHostID;
@@ -192,6 +201,7 @@ namespace WiFi.Entity
                     case __.Code : _Code = Convert.ToString(value); break;
                     case __.Kind : _Kind = (DeviceKinds)value.ToInt(); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
+                    case __.Logins : _Logins = value.ToInt(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
                     case __.LastHostID : _LastHostID = value.ToInt(); break;
@@ -228,6 +238,9 @@ namespace WiFi.Entity
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
+
+            /// <summary>登录次数</summary>
+            public static readonly Field Logins = FindByName(__.Logins);
 
             /// <summary>最后登录</summary>
             public static readonly Field LastLogin = FindByName(__.LastLogin);
@@ -286,6 +299,9 @@ namespace WiFi.Entity
             /// <summary>启用</summary>
             public const String Enable = "Enable";
 
+            /// <summary>登录次数</summary>
+            public const String Logins = "Logins";
+
             /// <summary>最后登录</summary>
             public const String LastLogin = "LastLogin";
 
@@ -343,6 +359,9 @@ namespace WiFi.Entity
 
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
+
+        /// <summary>登录次数</summary>
+        Int32 Logins { get; set; }
 
         /// <summary>最后登录</summary>
         DateTime LastLogin { get; set; }

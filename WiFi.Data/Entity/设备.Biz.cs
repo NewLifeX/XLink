@@ -33,6 +33,9 @@ namespace WiFi.Entity
         #region 对象操作
         static Device()
         {
+            var df = Meta.Factory.AdditionalFields;
+            df.Add(__.Logins);
+
             var sc = Meta.SingleCache;
             sc.FindSlaveKeyMethod = e => Find(__.Name, e);
             sc.GetSlaveKeyMethod = e => e.Name;
