@@ -12,6 +12,7 @@ namespace WiFi.Device.Web.Controllers
         {
             MenuOrder = 88;
 
+            ListFields.RemoveField("SessionID");
             ListFields.RemoveField("LastError");
         }
 
