@@ -7,7 +7,6 @@
 using NewLife.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using XCode;
 using XCode.Cache;
 using XCode.Membership;

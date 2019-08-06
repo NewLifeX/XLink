@@ -12,7 +12,7 @@
             <div class="pull-right form-group">
                 <div class="form-group">
                     <label for="kind" class="control-label">类型：</label>
-                    @Html.ForDropDownList("Type", DeviceOnline.FindAllTypeName(), Request["Type"], "全部", true)
+                    @Html.ForDropDownList("Kind", System.EnumHelper.GetDescriptions(typeof(DeviceKinds)), Request["Kind"], "全部", true)
                 </div>
                 <div class="form-group">
                     <label for="dtStart" class="control-label">登录时间：</label>

@@ -40,13 +40,13 @@ namespace WiFi.Entity
         [BindColumn("Code", "编码。MAC", "")]
         public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
 
-        private Int32 _Kind;
-        /// <summary>类型。1路由，2设备</summary>
+        private DeviceKinds _Kind;
+        /// <summary>类型。1设备，2路由，3主机</summary>
         [DisplayName("类型")]
-        [Description("类型。1路由，2设备")]
+        [Description("类型。1设备，2路由，3主机")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Kind", "类型。1路由，2设备", "")]
-        public Int32 Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
+        [BindColumn("Kind", "类型。1设备，2路由，3主机", "")]
+        public DeviceKinds Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
 
         private Boolean _Enable;
         /// <summary>启用</summary>
@@ -190,7 +190,7 @@ namespace WiFi.Entity
                     case __.ID : _ID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Code : _Code = Convert.ToString(value); break;
-                    case __.Kind : _Kind = value.ToInt(); break;
+                    case __.Kind : _Kind = (DeviceKinds)value.ToInt(); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
@@ -223,7 +223,7 @@ namespace WiFi.Entity
             /// <summary>编码。MAC</summary>
             public static readonly Field Code = FindByName(__.Code);
 
-            /// <summary>类型。1路由，2设备</summary>
+            /// <summary>类型。1设备，2路由，3主机</summary>
             public static readonly Field Kind = FindByName(__.Kind);
 
             /// <summary>启用</summary>
@@ -280,7 +280,7 @@ namespace WiFi.Entity
             /// <summary>编码。MAC</summary>
             public const String Code = "Code";
 
-            /// <summary>类型。1路由，2设备</summary>
+            /// <summary>类型。1设备，2路由，3主机</summary>
             public const String Kind = "Kind";
 
             /// <summary>启用</summary>
@@ -338,8 +338,8 @@ namespace WiFi.Entity
         /// <summary>编码。MAC</summary>
         String Code { get; set; }
 
-        /// <summary>类型。1路由，2设备</summary>
-        Int32 Kind { get; set; }
+        /// <summary>类型。1设备，2路由，3主机</summary>
+        DeviceKinds Kind { get; set; }
 
         /// <summary>启用</summary>
         Boolean Enable { get; set; }

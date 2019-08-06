@@ -4,21 +4,29 @@
  * 时间：2017-03-31 23:16:13
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
-using NewLife.Common;
 using NewLife.Data;
-using NewLife.Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Web.Script.Serialization;
-using System.Xml.Serialization;
 using XCode;
-using XCode.Cache;
 using XCode.Membership;
 
 namespace WiFi.Entity
 {
+    /// <summary>设备种类</summary>
+    public enum DeviceKinds
+    {
+        /// <summary>终端设备</summary>
+        Device = 1,
+
+        /// <summary>路由</summary>
+        Route = 2,
+
+        /// <summary>主机</summary>
+        Host = 3,
+    }
+
     /// <summary>设备</summary>
     public partial class Device : Entity<Device>
     {

@@ -97,8 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Areas\WiFi\Controllers\DeviceCommandController.cs" />
-    <Compile Include="Areas\WiFi\Controllers\ProductController.cs" />
+    <Compile Include="Areas\WiFi\Controllers\RawDataController.cs" />
     <Compile Include="Areas\WiFi\Controllers\DeviceHistoryController.cs" />
     <Compile Include="Areas\WiFi\Controllers\DeviceOnlineController.cs" />
     <Compile Include="Areas\WiFi\Controllers\DeviceController.cs" />

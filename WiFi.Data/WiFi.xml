@@ -5,7 +5,7 @@
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Code" DataType="String" Description="编码。MAC" />
-      <Column Name="Kind" DataType="Int32" Description="类型。1路由，2设备" />
+      <Column Name="Kind" DataType="Int32" Description="类型。1设备，2路由，3主机" Type="DeviceKinds" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
       <Column Name="LastLoginIP" DataType="String" Description="最后IP。最后的公网IP地址" />
@@ -32,7 +32,7 @@
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="HostID" DataType="Int32" Description="主机" />
       <Column Name="RouteID" DataType="Int32" Description="路由" />
-      <Column Name="Kind" DataType="Int32" Description="类型。1路由，2设备" />
+      <Column Name="Kind" DataType="Int32" Description="类型。1设备，2路由，3主机" Type="DeviceKinds" />
       <Column Name="Total" DataType="Int32" Description="次数" />
       <Column Name="Rssi" DataType="Int32" Description="信号强度" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />

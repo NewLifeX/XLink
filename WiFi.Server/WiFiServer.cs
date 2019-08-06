@@ -35,9 +35,9 @@ namespace WiFi.Server
             rd.SaveAsync();
 
             // 登录在线
-            var host = Check(rd.HostMAC, null);
-            var route = Check(rd.RouteMAC, null);
-            var olt = Check(rd.DeviceMAC, rd.Remark);
+            var host = Check(rd.HostMAC, null, DeviceKinds.Host);
+            var route = Check(rd.RouteMAC, null, DeviceKinds.Route);
+            var olt = Check(rd.DeviceMAC, rd.Remark, DeviceKinds.Device);
 
             if (olt != null)
             {
@@ -57,15 +57,16 @@ namespace WiFi.Server
             }
         }
 
-        protected virtual DeviceOnline Check(String mac, String name)
+        protected virtual DeviceOnline Check(String mac, String name, DeviceKinds kind)
         {
             var olt = GetOnline(mac);
             if (olt == null)
             {
                 var ip = Remote?.Host;
-                var dv = Login(mac, name, ip);
+                var dv = Login(mac, name, ip, kind);
                 olt = CreateOnline(mac, dv);
             }
+            olt.Kind = kind;
             olt.Total++;
             olt.SaveAsync(5_000);
 
@@ -124,7 +125,7 @@ namespace WiFi.Server
         /// <param name="name"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        protected virtual Device Login(String code, String name, String ip)
+        protected virtual Device Login(String code, String name, String ip, DeviceKinds kind)
         {
             var dv = Device.FindByCode(code);
             if (dv == null)
@@ -140,6 +141,7 @@ namespace WiFi.Server
 
             if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
 
+            dv.Kind = kind;
             dv.LastLogin = DateTime.Now;
             dv.LastLoginIP = ip;
 

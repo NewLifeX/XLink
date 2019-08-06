@@ -123,7 +123,7 @@ WriteLiteral("                    ");
 
             
             #line 15 "..\..\Areas\WiFi\Views\DeviceOnline\_List_Toolbar.cshtml"
-               Write(Html.ForDropDownList("Type", DeviceOnline.FindAllTypeName(), Request["Type"], "全部", true));
+               Write(Html.ForDropDownList("Kind", System.EnumHelper.GetDescriptions(typeof(DeviceKinds)), Request["Kind"], "全部", true));
 
             
             #line default
@@ -156,14 +156,14 @@ WriteLiteral(" name=\"dtStart\"");
 
 WriteLiteral(" id=\"dtStart\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1004), Tuple.Create("\"", 1031)
+WriteAttribute("value", Tuple.Create(" value=\"", 1028), Tuple.Create("\"", 1055)
             
             #line 21 "..\..\Areas\WiFi\Views\DeviceOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1012), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
+, Tuple.Create(Tuple.Create("", 1036), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
             
             #line default
             #line hidden
-, 1012), false)
+, 1036), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -198,14 +198,14 @@ WriteLiteral(" name=\"dtEnd\"");
 
 WriteLiteral(" id=\"dtEnd\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1458), Tuple.Create("\"", 1483)
+WriteAttribute("value", Tuple.Create(" value=\"", 1482), Tuple.Create("\"", 1507)
             
             #line 28 "..\..\Areas\WiFi\Views\DeviceOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1466), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
+, Tuple.Create(Tuple.Create("", 1490), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
             
             #line default
             #line hidden
-, 1466), false)
+, 1490), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -232,14 +232,14 @@ WriteLiteral(" type=\"search\"");
 
 WriteLiteral(" id=\"q\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1844), Tuple.Create("\"", 1865)
+WriteAttribute("value", Tuple.Create(" value=\"", 1868), Tuple.Create("\"", 1889)
             
             #line 35 "..\..\Areas\WiFi\Views\DeviceOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1852), Tuple.Create<System.Object, System.Int32>(Request["q"]
+, Tuple.Create(Tuple.Create("", 1876), Tuple.Create<System.Object, System.Int32>(Request["q"]
             
             #line default
             #line hidden
-, 1852), false)
+, 1876), false)
 );
 
 WriteLiteral(" class=\"form-control\"");

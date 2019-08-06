@@ -65,13 +65,13 @@ namespace WiFi.Entity
         [BindColumn("RouteID", "路由", "")]
         public Int32 RouteID { get { return _RouteID; } set { if (OnPropertyChanging(__.RouteID, value)) { _RouteID = value; OnPropertyChanged(__.RouteID); } } }
 
-        private Int32 _Kind;
-        /// <summary>类型。1路由，2设备</summary>
+        private DeviceKinds _Kind;
+        /// <summary>类型。1设备，2路由，3主机</summary>
         [DisplayName("类型")]
-        [Description("类型。1路由，2设备")]
+        [Description("类型。1设备，2路由，3主机")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Kind", "类型。1路由，2设备", "")]
-        public Int32 Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
+        [BindColumn("Kind", "类型。1设备，2路由，3主机", "")]
+        public DeviceKinds Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
 
         private Int32 _Total;
         /// <summary>次数</summary>
@@ -149,7 +149,7 @@ namespace WiFi.Entity
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.HostID : _HostID = value.ToInt(); break;
                     case __.RouteID : _RouteID = value.ToInt(); break;
-                    case __.Kind : _Kind = value.ToInt(); break;
+                    case __.Kind : _Kind = (DeviceKinds)value.ToInt(); break;
                     case __.Total : _Total = value.ToInt(); break;
                     case __.Rssi : _Rssi = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
@@ -183,7 +183,7 @@ namespace WiFi.Entity
             /// <summary>路由</summary>
             public static readonly Field RouteID = FindByName(__.RouteID);
 
-            /// <summary>类型。1路由，2设备</summary>
+            /// <summary>类型。1设备，2路由，3主机</summary>
             public static readonly Field Kind = FindByName(__.Kind);
 
             /// <summary>次数</summary>
@@ -225,7 +225,7 @@ namespace WiFi.Entity
             /// <summary>路由</summary>
             public const String RouteID = "RouteID";
 
-            /// <summary>类型。1路由，2设备</summary>
+            /// <summary>类型。1设备，2路由，3主机</summary>
             public const String Kind = "Kind";
 
             /// <summary>次数</summary>
@@ -268,8 +268,8 @@ namespace WiFi.Entity
         /// <summary>路由</summary>
         Int32 RouteID { get; set; }
 
-        /// <summary>类型。1路由，2设备</summary>
-        Int32 Kind { get; set; }
+        /// <summary>类型。1设备，2路由，3主机</summary>
+        DeviceKinds Kind { get; set; }
 
         /// <summary>次数</summary>
         Int32 Total { get; set; }
