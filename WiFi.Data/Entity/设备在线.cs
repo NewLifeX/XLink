@@ -13,9 +13,7 @@ namespace WiFi.Entity
     [Description("设备在线")]
     [BindIndex("IU_DeviceOnline_SessionID", true, "SessionID")]
     [BindIndex("IX_DeviceOnline_DeviceID", false, "DeviceID")]
-    [BindIndex("IX_DeviceOnline_Name", false, "Name")]
-    [BindIndex("IX_DeviceOnline_Type", false, "Type")]
-    [BindTable("DeviceOnline", Description = "设备在线", ConnName = "WiFi", DbType = DatabaseType.SqlServer)]
+    [BindTable("DeviceOnline", Description = "设备在线", ConnName = "WiFi", DbType = DatabaseType.None)]
     public partial class DeviceOnline : IDeviceOnline
     {
         #region 属性
@@ -26,6 +24,14 @@ namespace WiFi.Entity
         [DataObjectField(true, true, false, 0)]
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
+
+        private String _SessionID;
+        /// <summary>会话</summary>
+        [DisplayName("会话")]
+        [Description("会话")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("SessionID", "会话", "")]
+        public String SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
 
         private Int32 _DeviceID;
         /// <summary>设备</summary>
@@ -43,77 +49,29 @@ namespace WiFi.Entity
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
-        private String _SessionID;
-        /// <summary>会话</summary>
-        [DisplayName("会话")]
-        [Description("会话")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("SessionID", "会话", "")]
-        public String SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
+        private Int32 _HostID;
+        /// <summary>主机</summary>
+        [DisplayName("主机")]
+        [Description("主机")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("HostID", "主机", "")]
+        public Int32 HostID { get { return _HostID; } set { if (OnPropertyChanging(__.HostID, value)) { _HostID = value; OnPropertyChanged(__.HostID); } } }
 
-        private String _Version;
-        /// <summary>版本</summary>
-        [DisplayName("版本")]
-        [Description("版本")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本", "")]
-        public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
+        private Int32 _RouteID;
+        /// <summary>路由</summary>
+        [DisplayName("路由")]
+        [Description("路由")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("RouteID", "路由", "")]
+        public Int32 RouteID { get { return _RouteID; } set { if (OnPropertyChanging(__.RouteID, value)) { _RouteID = value; OnPropertyChanged(__.RouteID); } } }
 
-        private String _Type;
-        /// <summary>类型</summary>
+        private Int32 _Kind;
+        /// <summary>类型。1路由，2设备</summary>
         [DisplayName("类型")]
-        [Description("类型")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "")]
-        public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
-
-        private String _NetType;
-        /// <summary>网络</summary>
-        [DisplayName("网络")]
-        [Description("网络")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "")]
-        public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
-
-        private String _InternalUri;
-        /// <summary>内网</summary>
-        [DisplayName("内网")]
-        [Description("内网")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("InternalUri", "内网", "")]
-        public String InternalUri { get { return _InternalUri; } set { if (OnPropertyChanging(__.InternalUri, value)) { _InternalUri = value; OnPropertyChanged(__.InternalUri); } } }
-
-        private String _ExternalUri;
-        /// <summary>外网</summary>
-        [DisplayName("外网")]
-        [Description("外网")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("ExternalUri", "外网", "")]
-        public String ExternalUri { get { return _ExternalUri; } set { if (OnPropertyChanging(__.ExternalUri, value)) { _ExternalUri = value; OnPropertyChanged(__.ExternalUri); } } }
-
-        private Int32 _PingCount;
-        /// <summary>心跳</summary>
-        [DisplayName("心跳")]
-        [Description("心跳")]
+        [Description("类型。1路由，2设备")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("PingCount", "心跳", "")]
-        public Int32 PingCount { get { return _PingCount; } set { if (OnPropertyChanging(__.PingCount, value)) { _PingCount = value; OnPropertyChanged(__.PingCount); } } }
-
-        private Int32 _ErrorCount;
-        /// <summary>错误</summary>
-        [DisplayName("错误")]
-        [Description("错误")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("ErrorCount", "错误", "")]
-        public Int32 ErrorCount { get { return _ErrorCount; } set { if (OnPropertyChanging(__.ErrorCount, value)) { _ErrorCount = value; OnPropertyChanged(__.ErrorCount); } } }
-
-        private String _LastError;
-        /// <summary>最后错误</summary>
-        [DisplayName("最后错误")]
-        [Description("最后错误")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("LastError", "最后错误", "")]
-        public String LastError { get { return _LastError; } set { if (OnPropertyChanging(__.LastError, value)) { _LastError = value; OnPropertyChanged(__.LastError); } } }
+        [BindColumn("Kind", "类型。1路由，2设备", "")]
+        public Int32 Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
 
         private DateTime _CreateTime;
         /// <summary>创建时间</summary>
@@ -151,17 +109,12 @@ namespace WiFi.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
+                    case __.SessionID : return _SessionID;
                     case __.DeviceID : return _DeviceID;
                     case __.Name : return _Name;
-                    case __.SessionID : return _SessionID;
-                    case __.Version : return _Version;
-                    case __.Type : return _Type;
-                    case __.NetType : return _NetType;
-                    case __.InternalUri : return _InternalUri;
-                    case __.ExternalUri : return _ExternalUri;
-                    case __.PingCount : return _PingCount;
-                    case __.ErrorCount : return _ErrorCount;
-                    case __.LastError : return _LastError;
+                    case __.HostID : return _HostID;
+                    case __.RouteID : return _RouteID;
+                    case __.Kind : return _Kind;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
                     case __.UpdateTime : return _UpdateTime;
@@ -173,17 +126,12 @@ namespace WiFi.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
+                    case __.SessionID : _SessionID = Convert.ToString(value); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
-                    case __.SessionID : _SessionID = Convert.ToString(value); break;
-                    case __.Version : _Version = Convert.ToString(value); break;
-                    case __.Type : _Type = Convert.ToString(value); break;
-                    case __.NetType : _NetType = Convert.ToString(value); break;
-                    case __.InternalUri : _InternalUri = Convert.ToString(value); break;
-                    case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
-                    case __.PingCount : _PingCount = value.ToInt(); break;
-                    case __.ErrorCount : _ErrorCount = value.ToInt(); break;
-                    case __.LastError : _LastError = Convert.ToString(value); break;
+                    case __.HostID : _HostID = value.ToInt(); break;
+                    case __.RouteID : _RouteID = value.ToInt(); break;
+                    case __.Kind : _Kind = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
@@ -200,38 +148,23 @@ namespace WiFi.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
+            /// <summary>会话</summary>
+            public static readonly Field SessionID = FindByName(__.SessionID);
+
             /// <summary>设备</summary>
             public static readonly Field DeviceID = FindByName(__.DeviceID);
 
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
 
-            /// <summary>会话</summary>
-            public static readonly Field SessionID = FindByName(__.SessionID);
+            /// <summary>主机</summary>
+            public static readonly Field HostID = FindByName(__.HostID);
 
-            /// <summary>版本</summary>
-            public static readonly Field Version = FindByName(__.Version);
+            /// <summary>路由</summary>
+            public static readonly Field RouteID = FindByName(__.RouteID);
 
-            /// <summary>类型</summary>
-            public static readonly Field Type = FindByName(__.Type);
-
-            /// <summary>网络</summary>
-            public static readonly Field NetType = FindByName(__.NetType);
-
-            /// <summary>内网</summary>
-            public static readonly Field InternalUri = FindByName(__.InternalUri);
-
-            /// <summary>外网</summary>
-            public static readonly Field ExternalUri = FindByName(__.ExternalUri);
-
-            /// <summary>心跳</summary>
-            public static readonly Field PingCount = FindByName(__.PingCount);
-
-            /// <summary>错误</summary>
-            public static readonly Field ErrorCount = FindByName(__.ErrorCount);
-
-            /// <summary>最后错误</summary>
-            public static readonly Field LastError = FindByName(__.LastError);
+            /// <summary>类型。1路由，2设备</summary>
+            public static readonly Field Kind = FindByName(__.Kind);
 
             /// <summary>创建时间</summary>
             public static readonly Field CreateTime = FindByName(__.CreateTime);
@@ -251,38 +184,23 @@ namespace WiFi.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
+            /// <summary>会话</summary>
+            public const String SessionID = "SessionID";
+
             /// <summary>设备</summary>
             public const String DeviceID = "DeviceID";
 
             /// <summary>名称</summary>
             public const String Name = "Name";
 
-            /// <summary>会话</summary>
-            public const String SessionID = "SessionID";
+            /// <summary>主机</summary>
+            public const String HostID = "HostID";
 
-            /// <summary>版本</summary>
-            public const String Version = "Version";
+            /// <summary>路由</summary>
+            public const String RouteID = "RouteID";
 
-            /// <summary>类型</summary>
-            public const String Type = "Type";
-
-            /// <summary>网络</summary>
-            public const String NetType = "NetType";
-
-            /// <summary>内网</summary>
-            public const String InternalUri = "InternalUri";
-
-            /// <summary>外网</summary>
-            public const String ExternalUri = "ExternalUri";
-
-            /// <summary>心跳</summary>
-            public const String PingCount = "PingCount";
-
-            /// <summary>错误</summary>
-            public const String ErrorCount = "ErrorCount";
-
-            /// <summary>最后错误</summary>
-            public const String LastError = "LastError";
+            /// <summary>类型。1路由，2设备</summary>
+            public const String Kind = "Kind";
 
             /// <summary>创建时间</summary>
             public const String CreateTime = "CreateTime";
@@ -303,38 +221,23 @@ namespace WiFi.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
+        /// <summary>会话</summary>
+        String SessionID { get; set; }
+
         /// <summary>设备</summary>
         Int32 DeviceID { get; set; }
 
         /// <summary>名称</summary>
         String Name { get; set; }
 
-        /// <summary>会话</summary>
-        String SessionID { get; set; }
+        /// <summary>主机</summary>
+        Int32 HostID { get; set; }
 
-        /// <summary>版本</summary>
-        String Version { get; set; }
+        /// <summary>路由</summary>
+        Int32 RouteID { get; set; }
 
-        /// <summary>类型</summary>
-        String Type { get; set; }
-
-        /// <summary>网络</summary>
-        String NetType { get; set; }
-
-        /// <summary>内网</summary>
-        String InternalUri { get; set; }
-
-        /// <summary>外网</summary>
-        String ExternalUri { get; set; }
-
-        /// <summary>心跳</summary>
-        Int32 PingCount { get; set; }
-
-        /// <summary>错误</summary>
-        Int32 ErrorCount { get; set; }
-
-        /// <summary>最后错误</summary>
-        String LastError { get; set; }
+        /// <summary>类型。1路由，2设备</summary>
+        Int32 Kind { get; set; }
 
         /// <summary>创建时间</summary>
         DateTime CreateTime { get; set; }

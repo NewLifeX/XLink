@@ -12,8 +12,7 @@ namespace WiFi.Entity
     [DataObject]
     [Description("设备")]
     [BindIndex("IU_Device_Code", true, "Code")]
-    [BindIndex("IX_Device_ProductID", false, "ProductID")]
-    [BindTable("Device", Description = "设备", ConnName = "WiFi", DbType = DatabaseType.SqlServer)]
+    [BindTable("Device", Description = "设备", ConnName = "WiFi", DbType = DatabaseType.None)]
     public partial class Device : IDevice
     {
         #region 属性
@@ -34,20 +33,20 @@ namespace WiFi.Entity
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
         private String _Code;
-        /// <summary>编码</summary>
+        /// <summary>编码。MAC</summary>
         [DisplayName("编码")]
-        [Description("编码")]
+        [Description("编码。MAC")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Code", "编码", "")]
+        [BindColumn("Code", "编码。MAC", "")]
         public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
 
-        private String _Secret;
-        /// <summary>密钥</summary>
-        [DisplayName("密钥")]
-        [Description("密钥")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Secret", "密钥", "")]
-        public String Secret { get { return _Secret; } set { if (OnPropertyChanging(__.Secret, value)) { _Secret = value; OnPropertyChanged(__.Secret); } } }
+        private Int32 _Kind;
+        /// <summary>类型。1路由，2设备</summary>
+        [DisplayName("类型")]
+        [Description("类型。1路由，2设备")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Kind", "类型。1路由，2设备", "")]
+        public Int32 Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
 
         private Boolean _Enable;
         /// <summary>启用</summary>
@@ -57,85 +56,29 @@ namespace WiFi.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
-        private Int32 _ProductID;
-        /// <summary>产品</summary>
-        [DisplayName("产品")]
-        [Description("产品")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("ProductID", "产品", "")]
-        public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
-
-        private String _Version;
-        /// <summary>版本</summary>
-        [DisplayName("版本")]
-        [Description("版本")]
+        private String _LastIP;
+        /// <summary>最后IP。最后的公网IP地址</summary>
+        [DisplayName("最后IP")]
+        [Description("最后IP。最后的公网IP地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本", "")]
-        public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
+        [BindColumn("LastIP", "最后IP。最后的公网IP地址", "")]
+        public String LastIP { get { return _LastIP; } set { if (OnPropertyChanging(__.LastIP, value)) { _LastIP = value; OnPropertyChanged(__.LastIP); } } }
 
-        private String _LocalIP;
-        /// <summary>本地地址</summary>
-        [DisplayName("本地地址")]
-        [Description("本地地址")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("LocalIP", "本地地址", "")]
-        public String LocalIP { get { return _LocalIP; } set { if (OnPropertyChanging(__.LocalIP, value)) { _LocalIP = value; OnPropertyChanged(__.LocalIP); } } }
-
-        private Int32 _HeartInterval;
-        /// <summary>心跳间隔。默认60秒</summary>
-        [DisplayName("心跳间隔")]
-        [Description("心跳间隔。默认60秒")]
+        private Int32 _LastHostID;
+        /// <summary>最后主机</summary>
+        [DisplayName("最后主机")]
+        [Description("最后主机")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("HeartInterval", "心跳间隔。默认60秒", "")]
-        public Int32 HeartInterval { get { return _HeartInterval; } set { if (OnPropertyChanging(__.HeartInterval, value)) { _HeartInterval = value; OnPropertyChanged(__.HeartInterval); } } }
+        [BindColumn("LastHostID", "最后主机", "")]
+        public Int32 LastHostID { get { return _LastHostID; } set { if (OnPropertyChanging(__.LastHostID, value)) { _LastHostID = value; OnPropertyChanged(__.LastHostID); } } }
 
-        private Int32 _KeepAliveTime;
-        /// <summary>在线间隔。默认10秒</summary>
-        [DisplayName("在线间隔")]
-        [Description("在线间隔。默认10秒")]
+        private Int32 _LastRouteID;
+        /// <summary>最后路由</summary>
+        [DisplayName("最后路由")]
+        [Description("最后路由")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("KeepAliveTime", "在线间隔。默认10秒", "")]
-        public Int32 KeepAliveTime { get { return _KeepAliveTime; } set { if (OnPropertyChanging(__.KeepAliveTime, value)) { _KeepAliveTime = value; OnPropertyChanged(__.KeepAliveTime); } } }
-
-        private String _ResetTime;
-        /// <summary>重启时间。默认24:00:00不启用</summary>
-        [DisplayName("重启时间")]
-        [Description("重启时间。默认24:00:00不启用")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("ResetTime", "重启时间。默认24:00:00不启用", "")]
-        public String ResetTime { get { return _ResetTime; } set { if (OnPropertyChanging(__.ResetTime, value)) { _ResetTime = value; OnPropertyChanged(__.ResetTime); } } }
-
-        private String _Data;
-        /// <summary>数据</summary>
-        [DisplayName("数据")]
-        [Description("数据")]
-        [DataObjectField(false, false, true, 200)]
-        [BindColumn("Data", "数据", "")]
-        public String Data { get { return _Data; } set { if (OnPropertyChanging(__.Data, value)) { _Data = value; OnPropertyChanged(__.Data); } } }
-
-        private Int32 _Logins;
-        /// <summary>登录</summary>
-        [DisplayName("登录")]
-        [Description("登录")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Logins", "登录", "")]
-        public Int32 Logins { get { return _Logins; } set { if (OnPropertyChanging(__.Logins, value)) { _Logins = value; OnPropertyChanged(__.Logins); } } }
-
-        private DateTime _LastLogin;
-        /// <summary>最后登录</summary>
-        [DisplayName("最后登录")]
-        [Description("最后登录")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("LastLogin", "最后登录", "")]
-        public DateTime LastLogin { get { return _LastLogin; } set { if (OnPropertyChanging(__.LastLogin, value)) { _LastLogin = value; OnPropertyChanged(__.LastLogin); } } }
-
-        private String _LastLoginIP;
-        /// <summary>最后登录IP</summary>
-        [DisplayName("最后登录IP")]
-        [Description("最后登录IP")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("LastLoginIP", "最后登录IP", "")]
-        public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
+        [BindColumn("LastRouteID", "最后路由", "")]
+        public Int32 LastRouteID { get { return _LastRouteID; } set { if (OnPropertyChanging(__.LastRouteID, value)) { _LastRouteID = value; OnPropertyChanged(__.LastRouteID); } } }
 
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
@@ -207,18 +150,11 @@ namespace WiFi.Entity
                     case __.ID : return _ID;
                     case __.Name : return _Name;
                     case __.Code : return _Code;
-                    case __.Secret : return _Secret;
+                    case __.Kind : return _Kind;
                     case __.Enable : return _Enable;
-                    case __.ProductID : return _ProductID;
-                    case __.Version : return _Version;
-                    case __.LocalIP : return _LocalIP;
-                    case __.HeartInterval : return _HeartInterval;
-                    case __.KeepAliveTime : return _KeepAliveTime;
-                    case __.ResetTime : return _ResetTime;
-                    case __.Data : return _Data;
-                    case __.Logins : return _Logins;
-                    case __.LastLogin : return _LastLogin;
-                    case __.LastLoginIP : return _LastLoginIP;
+                    case __.LastIP : return _LastIP;
+                    case __.LastHostID : return _LastHostID;
+                    case __.LastRouteID : return _LastRouteID;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -236,18 +172,11 @@ namespace WiFi.Entity
                     case __.ID : _ID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Code : _Code = Convert.ToString(value); break;
-                    case __.Secret : _Secret = Convert.ToString(value); break;
+                    case __.Kind : _Kind = value.ToInt(); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
-                    case __.ProductID : _ProductID = value.ToInt(); break;
-                    case __.Version : _Version = Convert.ToString(value); break;
-                    case __.LocalIP : _LocalIP = Convert.ToString(value); break;
-                    case __.HeartInterval : _HeartInterval = value.ToInt(); break;
-                    case __.KeepAliveTime : _KeepAliveTime = value.ToInt(); break;
-                    case __.ResetTime : _ResetTime = Convert.ToString(value); break;
-                    case __.Data : _Data = Convert.ToString(value); break;
-                    case __.Logins : _Logins = value.ToInt(); break;
-                    case __.LastLogin : _LastLogin = value.ToDateTime(); break;
-                    case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
+                    case __.LastIP : _LastIP = Convert.ToString(value); break;
+                    case __.LastHostID : _LastHostID = value.ToInt(); break;
+                    case __.LastRouteID : _LastRouteID = value.ToInt(); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -271,44 +200,23 @@ namespace WiFi.Entity
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
 
-            /// <summary>编码</summary>
+            /// <summary>编码。MAC</summary>
             public static readonly Field Code = FindByName(__.Code);
 
-            /// <summary>密钥</summary>
-            public static readonly Field Secret = FindByName(__.Secret);
+            /// <summary>类型。1路由，2设备</summary>
+            public static readonly Field Kind = FindByName(__.Kind);
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
-            /// <summary>产品</summary>
-            public static readonly Field ProductID = FindByName(__.ProductID);
+            /// <summary>最后IP。最后的公网IP地址</summary>
+            public static readonly Field LastIP = FindByName(__.LastIP);
 
-            /// <summary>版本</summary>
-            public static readonly Field Version = FindByName(__.Version);
+            /// <summary>最后主机</summary>
+            public static readonly Field LastHostID = FindByName(__.LastHostID);
 
-            /// <summary>本地地址</summary>
-            public static readonly Field LocalIP = FindByName(__.LocalIP);
-
-            /// <summary>心跳间隔。默认60秒</summary>
-            public static readonly Field HeartInterval = FindByName(__.HeartInterval);
-
-            /// <summary>在线间隔。默认10秒</summary>
-            public static readonly Field KeepAliveTime = FindByName(__.KeepAliveTime);
-
-            /// <summary>重启时间。默认24:00:00不启用</summary>
-            public static readonly Field ResetTime = FindByName(__.ResetTime);
-
-            /// <summary>数据</summary>
-            public static readonly Field Data = FindByName(__.Data);
-
-            /// <summary>登录</summary>
-            public static readonly Field Logins = FindByName(__.Logins);
-
-            /// <summary>最后登录</summary>
-            public static readonly Field LastLogin = FindByName(__.LastLogin);
-
-            /// <summary>最后登录IP</summary>
-            public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
+            /// <summary>最后路由</summary>
+            public static readonly Field LastRouteID = FindByName(__.LastRouteID);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -343,44 +251,23 @@ namespace WiFi.Entity
             /// <summary>名称</summary>
             public const String Name = "Name";
 
-            /// <summary>编码</summary>
+            /// <summary>编码。MAC</summary>
             public const String Code = "Code";
 
-            /// <summary>密钥</summary>
-            public const String Secret = "Secret";
+            /// <summary>类型。1路由，2设备</summary>
+            public const String Kind = "Kind";
 
             /// <summary>启用</summary>
             public const String Enable = "Enable";
 
-            /// <summary>产品</summary>
-            public const String ProductID = "ProductID";
+            /// <summary>最后IP。最后的公网IP地址</summary>
+            public const String LastIP = "LastIP";
 
-            /// <summary>版本</summary>
-            public const String Version = "Version";
+            /// <summary>最后主机</summary>
+            public const String LastHostID = "LastHostID";
 
-            /// <summary>本地地址</summary>
-            public const String LocalIP = "LocalIP";
-
-            /// <summary>心跳间隔。默认60秒</summary>
-            public const String HeartInterval = "HeartInterval";
-
-            /// <summary>在线间隔。默认10秒</summary>
-            public const String KeepAliveTime = "KeepAliveTime";
-
-            /// <summary>重启时间。默认24:00:00不启用</summary>
-            public const String ResetTime = "ResetTime";
-
-            /// <summary>数据</summary>
-            public const String Data = "Data";
-
-            /// <summary>登录</summary>
-            public const String Logins = "Logins";
-
-            /// <summary>最后登录</summary>
-            public const String LastLogin = "LastLogin";
-
-            /// <summary>最后登录IP</summary>
-            public const String LastLoginIP = "LastLoginIP";
+            /// <summary>最后路由</summary>
+            public const String LastRouteID = "LastRouteID";
 
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
@@ -416,44 +303,23 @@ namespace WiFi.Entity
         /// <summary>名称</summary>
         String Name { get; set; }
 
-        /// <summary>编码</summary>
+        /// <summary>编码。MAC</summary>
         String Code { get; set; }
 
-        /// <summary>密钥</summary>
-        String Secret { get; set; }
+        /// <summary>类型。1路由，2设备</summary>
+        Int32 Kind { get; set; }
 
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
 
-        /// <summary>产品</summary>
-        Int32 ProductID { get; set; }
+        /// <summary>最后IP。最后的公网IP地址</summary>
+        String LastIP { get; set; }
 
-        /// <summary>版本</summary>
-        String Version { get; set; }
+        /// <summary>最后主机</summary>
+        Int32 LastHostID { get; set; }
 
-        /// <summary>本地地址</summary>
-        String LocalIP { get; set; }
-
-        /// <summary>心跳间隔。默认60秒</summary>
-        Int32 HeartInterval { get; set; }
-
-        /// <summary>在线间隔。默认10秒</summary>
-        Int32 KeepAliveTime { get; set; }
-
-        /// <summary>重启时间。默认24:00:00不启用</summary>
-        String ResetTime { get; set; }
-
-        /// <summary>数据</summary>
-        String Data { get; set; }
-
-        /// <summary>登录</summary>
-        Int32 Logins { get; set; }
-
-        /// <summary>最后登录</summary>
-        DateTime LastLogin { get; set; }
-
-        /// <summary>最后登录IP</summary>
-        String LastLoginIP { get; set; }
+        /// <summary>最后路由</summary>
+        Int32 LastRouteID { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }

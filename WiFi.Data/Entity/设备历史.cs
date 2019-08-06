@@ -14,7 +14,7 @@ namespace WiFi.Entity
     [BindIndex("IX_DeviceHistory_DeviceID", false, "DeviceID")]
     [BindIndex("IX_DeviceHistory_Name", false, "Name")]
     [BindIndex("IX_DeviceHistory_Type", false, "Type")]
-    [BindTable("DeviceHistory", Description = "设备历史", ConnName = "WiFi", DbType = DatabaseType.SqlServer)]
+    [BindTable("DeviceHistory", Description = "设备历史", ConnName = "WiFi", DbType = DatabaseType.None)]
     public partial class DeviceHistory : IDeviceHistory
     {
         #region 属性
