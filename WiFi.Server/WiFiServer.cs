@@ -1,6 +1,7 @@
 ﻿using NewLife.Net;
 using System;
 using WiFi.Entity;
+using XCode.Membership;
 
 namespace WiFi.Server
 {
@@ -20,6 +21,8 @@ namespace WiFi.Server
         {
             var str = e.Packet.ToStr().Trim();
             if (str.IsNullOrEmpty()) return;
+
+            ManageProvider.UserHost = Remote?.EndPoint.Address + "";
 
             if (Host.CommandLog) WriteLog(str);
 
