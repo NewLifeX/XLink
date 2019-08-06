@@ -1,4 +1,6 @@
-﻿using NewLife.Net;
+﻿using NewLife;
+using NewLife.Net;
+using NewLife.Threading;
 using System;
 using WiFi.Entity;
 using XCode.Membership;
@@ -9,6 +11,30 @@ namespace WiFi.Server
     {
         /// <summary>日志命令。打开后显示收发命令详情</summary>
         public Boolean CommandLog { get; set; }
+
+        private TimerX _timer;
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            _timer = new TimerX(s => ClearExpire(10 * 60), null, 10_000, 10_000);
+        }
+
+        protected override void OnStop()
+        {
+            _timer.TryDispose();
+            _timer = null;
+
+            base.OnStop();
+        }
+
+        #region 清理超时
+        /// <summary>清理超时会话</summary>
+        /// <param name="secTimeout"></param>
+        /// <returns></returns>
+        public Int32 ClearExpire(Int32 secTimeout) => DeviceOnline.ClearExpire(secTimeout).Count;
+        #endregion
     }
 
     class WiFiSession : NetSession<WiFiServer>
