@@ -154,6 +154,9 @@ namespace WiFi.Server
                 rd.Channel = ss[5].ToInt();
                 rd.Rssi = ss[6].ToInt();
 
+                // 抛弃路由器发出的数据
+                if (ss.Length >= 10 && ss[9] == "0") return null;
+
                 //rd.Remark = ss.Last();
                 if (ss.Length >= 11) rd.Remark = ss[10];
             }
