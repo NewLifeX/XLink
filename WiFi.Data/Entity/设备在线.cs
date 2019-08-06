@@ -73,6 +73,14 @@ namespace WiFi.Entity
         [BindColumn("Kind", "类型。1路由，2设备", "")]
         public Int32 Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
 
+        private Int32 _Total;
+        /// <summary>次数</summary>
+        [DisplayName("次数")]
+        [Description("次数")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Total", "次数", "")]
+        public Int32 Total { get { return _Total; } set { if (OnPropertyChanging(__.Total, value)) { _Total = value; OnPropertyChanged(__.Total); } } }
+
         private DateTime _CreateTime;
         /// <summary>创建时间</summary>
         [DisplayName("创建时间")]
@@ -115,6 +123,7 @@ namespace WiFi.Entity
                     case __.HostID : return _HostID;
                     case __.RouteID : return _RouteID;
                     case __.Kind : return _Kind;
+                    case __.Total : return _Total;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
                     case __.UpdateTime : return _UpdateTime;
@@ -132,6 +141,7 @@ namespace WiFi.Entity
                     case __.HostID : _HostID = value.ToInt(); break;
                     case __.RouteID : _RouteID = value.ToInt(); break;
                     case __.Kind : _Kind = value.ToInt(); break;
+                    case __.Total : _Total = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
@@ -165,6 +175,9 @@ namespace WiFi.Entity
 
             /// <summary>类型。1路由，2设备</summary>
             public static readonly Field Kind = FindByName(__.Kind);
+
+            /// <summary>次数</summary>
+            public static readonly Field Total = FindByName(__.Total);
 
             /// <summary>创建时间</summary>
             public static readonly Field CreateTime = FindByName(__.CreateTime);
@@ -202,6 +215,9 @@ namespace WiFi.Entity
             /// <summary>类型。1路由，2设备</summary>
             public const String Kind = "Kind";
 
+            /// <summary>次数</summary>
+            public const String Total = "Total";
+
             /// <summary>创建时间</summary>
             public const String CreateTime = "CreateTime";
 
@@ -238,6 +254,9 @@ namespace WiFi.Entity
 
         /// <summary>类型。1路由，2设备</summary>
         Int32 Kind { get; set; }
+
+        /// <summary>次数</summary>
+        Int32 Total { get; set; }
 
         /// <summary>创建时间</summary>
         DateTime CreateTime { get; set; }

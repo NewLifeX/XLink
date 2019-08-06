@@ -13,9 +13,9 @@ namespace WiFi.Server
         [Description("调试开关。默认true")]
         public Boolean Debug { get; set; } = true;
 
-        /// <summary>端口。默认2234</summary>
-        [Description("端口。默认2234")]
-        public Int32 Port { get; set; } = 2234;
+        /// <summary>端口。默认6000</summary>
+        [Description("端口。默认6000")]
+        public Int32 Port { get; set; } = 6000;
 
         /// <summary>网络日志开关。默认false</summary>
         [Description("网络日志开关。默认false")]

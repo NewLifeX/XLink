@@ -2,6 +2,7 @@
 using NewLife.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using WiFi.Entity;
 using XCode.Membership;
 
@@ -16,129 +17,114 @@ namespace WiFi.Server
     class WiFiSession : NetSession<WiFiServer>
     {
         #region 属性
-        /// <summary>当前登录设备</summary>
-        public Device Device { get; set; }
+        ///// <summary>当前登录设备</summary>
+        //public Device Device { get; set; }
 
-        /// <summary>当前在线对象</summary>
-        public DeviceOnline Online { get; set; }
+        ///// <summary>当前在线对象</summary>
+        //public DeviceOnline Online { get; set; }
         #endregion
 
         #region 主循环
         protected override void OnReceive(ReceivedEventArgs e)
         {
-            //base.OnReceive(e);
-
             var str = e.Packet.ToStr();
             if (str.IsNullOrEmpty()) return;
 
-            var dic = new JsonParser(str).Decode() as IDictionary<String, Object>;
-            if (dic == null || dic.Count == 0) return;
+            Process(str);
+        }
 
-            ManageProvider.UserHost = Remote.Host;
+        public void Process(String data)
+        {
+            var rd = Parse(data);
+            if (rd == null) return;
 
-            object result = null;
-            var cmd = dic["cmd"] + "";
+            // 入库
+            rd.SaveAsync();
 
-            // 输出日志
-            if (Host.CommandLog)
-                WriteLog("<={0}", str.Trim());
-            else
-                WriteLog("<={0}", cmd);
+            // 登录在线
+            var host = Check(rd.HostMAC, null);
+            var route = Check(rd.RouteMAC, null);
+            var olt = Check(rd.DeviceMAC, rd.Remark);
 
-            var remark = "";
-            try
+            if (olt != null)
             {
-                switch (cmd)
+                if (host != null)
                 {
-                    case "dHeartbeat":
-                        result = Heartbeat(cmd, dic);
-                        break;
-                    case "dRecord":
-                        result = UploadRecord(cmd, dic);
-                        break;
+                    olt.HostID = host.DeviceID;
+                    var dv = olt.Device;
+                    if (dv != null) dv.LastHostID = host.DeviceID;
                 }
-
-                // 处理结果，做出响应
-                if (result != null)
+                if (route != null)
                 {
-                    var js = result.ToJson();
-
-                    if (Host.CommandLog) WriteLog("=>{0}", js.Trim());
-
-                    Send(js.GetBytes());
+                    olt.RouteID = route.DeviceID;
+                    var dv = olt.Device;
+                    if (dv != null) dv.LastRouteID = route.DeviceID;
                 }
             }
-            catch (Exception ex)
-            {
-                remark = ex.GetTrue()?.Message;
-            }
-            finally
-            {
-                if (cmd != "dHeartbeat")
-                {
-                    var dv = Device ?? new Device();
+        }
 
-                    // 写入历史
-                    var hi = new DeviceHistory
-                    {
-                        DeviceID = dv.ID,
-                        Name = dv.Name,
-                        Action = cmd,
-                        Success = result != null,
-                        CreateDeviceID = dv.ID,
-                        Remark = remark,
-                    };
-
-                    hi.SaveAsync();
-                }
+        protected virtual DeviceOnline Check(String mac, String name)
+        {
+            var olt = GetOnline(mac);
+            if (olt == null)
+            {
+                var ip = Remote?.Host;
+                var dv = Login(mac, name, ip);
+                olt = CreateOnline(mac, dv);
             }
+            olt.Total++;
+            olt.SaveAsync(5_000);
+
+            return olt;
         }
 
         protected override void OnDispose(Boolean disposing)
         {
             base.OnDispose(disposing);
 
-            Online?.Delete();
+            //Online?.Delete();
         }
         #endregion
 
-        #region 心跳
-        public virtual Object Heartbeat(String cmd, IDictionary<String, Object> parameters)
+        #region 解析
+        public virtual RawData Parse(String str)
         {
-            var ps = parameters;
-            var code = ps["snr"] + "";
-            var ip = ps["ip"] + "";
-            var name = ps["name"] + "";
+            str = str.Trim();
+            if (str.IsNullOrEmpty()) return null;
 
-            // 登录
-            var dv = Login(code, name, ip);
+            var ss = str.Split('|', ' ');
+            if (ss == null || ss.Length < 6) return null;
 
-            // 在线
-            var olt = CheckOnline();
-            olt.PingCount++;
-            olt.SaveAsync();
+            var rd = new RawData();
 
-            // 修改日志前缀
-            if (!name.IsNullOrEmpty()) LogPrefix = name + " ";
-
-            return new
+            // TZ-007
+            if (ss[2].Length >= 6)
             {
-                cmd,
-                snr = code,
-                ip,
-                name,
-                time = DateTime.Now.ToFullString(),
-                heartInterval = dv.HeartInterval,
-                keepAliveTime = dv.KeepAliveTime,
-                loraID = 0,
-                resetTime = dv.ResetTime,
-                terminalMode = 1,
-                terminalBaud = 115200,
-                terminalParity = "none",
-                terminalStopbit = 1,
-            };
-        }
+                // B4:E6:2D:09:62:ED|78:DA:07:85:86:7E|70:AF:6A:78:45:0A|01|09|2|-73|0|0|0|FeiFan
+                rd.HostMAC = ss[0];
+                rd.DeviceMAC = ss[1];
+                rd.RouteMAC = ss[2];
+                rd.FrameType = ss[3].ToInt();
+                rd.FrameType2 = ss[4].ToInt();
+                rd.Channel = ss[5].ToInt();
+                rd.Rssi = ss[6].ToInt();
 
+                //rd.Remark = ss.Last();
+                if (ss.Length >= 11) rd.Remark = ss[10];
+            }
+            else
+            {
+
+            }
+
+            rd.CreateTime = DateTime.Now;
+            rd.CreateIP = Remote?.Host;
+
+            return rd;
+        }
+        #endregion
+
+        #region 在线
         /// <summary>登录</summary>
         /// <param name="code"></param>
         /// <param name="name"></param>
@@ -146,10 +132,7 @@ namespace WiFi.Server
         /// <returns></returns>
         protected virtual Device Login(String code, String name, String ip)
         {
-            var dv = Device;
-            if (dv != null) return dv;
-
-            dv = Device.FindByCode(code);
+            var dv = Device.FindByCode(code);
             if (dv == null)
             {
                 dv = new Device
@@ -163,111 +146,62 @@ namespace WiFi.Server
 
             if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
 
-            dv.Logins++;
-            dv.LocalIP = ip;
             dv.LastLogin = DateTime.Now;
             dv.LastLoginIP = ip;
 
             dv.SaveAsync();
 
-            Device = dv;
+            //Device = dv;
 
             // 登录历史
-            var hi = new DeviceHistory
-            {
-                DeviceID = dv.ID,
-                Name = dv.Name,
-                Action = "登录",
-                Success = true,
-                CreateDeviceID = dv.ID,
-            };
-
-            hi.SaveAsync();
+            WriteHistory("登录", dv);
 
             return dv;
         }
 
+        protected virtual DeviceOnline GetOnline(String mac)
+        {
+            var sid = $"{mac}@{Remote.EndPoint}";
+            return DeviceOnline.FindBySessionID(sid);
+        }
+
         /// <summary>检查在线</summary>
         /// <returns></returns>
-        protected virtual DeviceOnline CheckOnline()
+        protected virtual DeviceOnline CreateOnline(String mac, IDevice dv)
         {
-            var olt = Online;
-            if (olt != null) return olt;
-
-            var uri = Remote.EndPoint + "";
-            olt = DeviceOnline.FindBySessionID(uri);
-            if (olt == null)
+            var sid = $"{mac}@{Remote.EndPoint}";
+            var olt = new DeviceOnline
             {
-                olt = new DeviceOnline
-                {
-                    SessionID = uri,
-                };
+                SessionID = sid,
+                DeviceID = dv.ID,
+                Name = dv + "",
+                Kind = dv.Kind,
+            };
 
-                olt.Insert();
-            }
-
-            var dv = Device;
-            if (dv != null)
-            {
-                olt.Name = dv + "";
-                olt.DeviceID = dv.ID;
-            }
-
-            olt.InternalUri = dv.LocalIP;
-            olt.ExternalUri = Remote + "";
-
-            olt.SaveAsync();
-
-            Online = olt;
+            olt.Insert();
 
             return olt;
         }
         #endregion
 
-        #region 下发数据
-        public virtual void DownloadData()
+        #region 历史
+        protected virtual DeviceHistory WriteHistory(String action, IDevice dv)
         {
-
-        }
-        #endregion
-
-        #region 下发脚本
-        public virtual void DownloadScript()
-        {
-
-        }
-        #endregion
-
-        #region 上传记录
-        public virtual Object UploadRecord(String cmd, IDictionary<String, Object> parameters)
-        {
-            var ps = parameters;
-            var code = ps["snr"] + "";
-            var ip = ps["ip"] + "";
-            var seq = ps["seq"].ToInt();
-
-            // 记录集合
-            var records = ps["records"] as IList<Object>;
-            if (records != null && records.Count > 0)
+            var hi = new DeviceHistory
             {
-                foreach (var item in records)
-                {
-                    // 解析记录，数据是base64编码
-                    var time = ps["date"].ToDateTime();
-                    var data = (ps["record"] + "").ToBase64();
-                    var s = ps["seq"].ToInt();
-                    var name = ps["name"] + "";
-                }
-            }
+                DeviceID = dv.ID,
+                Name = dv.Name,
+                Action = action,
+                Success = true,
+                CreateDeviceID = dv.ID,
 
-            return new
-            {
-                cmd,
-                snr = code,
-                ip,
-                seq,
-                rsq = "pk",
+                CreateTime = DateTime.Now,
+                CreateIP = Remote?.Host,
             };
+
+            hi.SaveAsync();
+
+            return hi;
         }
         #endregion
     }

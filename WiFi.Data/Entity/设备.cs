@@ -56,13 +56,21 @@ namespace WiFi.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
-        private String _LastIP;
+        private DateTime _LastLogin;
+        /// <summary>最后登录</summary>
+        [DisplayName("最后登录")]
+        [Description("最后登录")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("LastLogin", "最后登录", "")]
+        public DateTime LastLogin { get { return _LastLogin; } set { if (OnPropertyChanging(__.LastLogin, value)) { _LastLogin = value; OnPropertyChanged(__.LastLogin); } } }
+
+        private String _LastLoginIP;
         /// <summary>最后IP。最后的公网IP地址</summary>
         [DisplayName("最后IP")]
         [Description("最后IP。最后的公网IP地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("LastIP", "最后IP。最后的公网IP地址", "")]
-        public String LastIP { get { return _LastIP; } set { if (OnPropertyChanging(__.LastIP, value)) { _LastIP = value; OnPropertyChanged(__.LastIP); } } }
+        [BindColumn("LastLoginIP", "最后IP。最后的公网IP地址", "")]
+        public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
 
         private Int32 _LastHostID;
         /// <summary>最后主机</summary>
@@ -152,7 +160,8 @@ namespace WiFi.Entity
                     case __.Code : return _Code;
                     case __.Kind : return _Kind;
                     case __.Enable : return _Enable;
-                    case __.LastIP : return _LastIP;
+                    case __.LastLogin : return _LastLogin;
+                    case __.LastLoginIP : return _LastLoginIP;
                     case __.LastHostID : return _LastHostID;
                     case __.LastRouteID : return _LastRouteID;
                     case __.CreateUserID : return _CreateUserID;
@@ -174,7 +183,8 @@ namespace WiFi.Entity
                     case __.Code : _Code = Convert.ToString(value); break;
                     case __.Kind : _Kind = value.ToInt(); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
-                    case __.LastIP : _LastIP = Convert.ToString(value); break;
+                    case __.LastLogin : _LastLogin = value.ToDateTime(); break;
+                    case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
                     case __.LastHostID : _LastHostID = value.ToInt(); break;
                     case __.LastRouteID : _LastRouteID = value.ToInt(); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
@@ -209,8 +219,11 @@ namespace WiFi.Entity
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
+            /// <summary>最后登录</summary>
+            public static readonly Field LastLogin = FindByName(__.LastLogin);
+
             /// <summary>最后IP。最后的公网IP地址</summary>
-            public static readonly Field LastIP = FindByName(__.LastIP);
+            public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
 
             /// <summary>最后主机</summary>
             public static readonly Field LastHostID = FindByName(__.LastHostID);
@@ -260,8 +273,11 @@ namespace WiFi.Entity
             /// <summary>启用</summary>
             public const String Enable = "Enable";
 
+            /// <summary>最后登录</summary>
+            public const String LastLogin = "LastLogin";
+
             /// <summary>最后IP。最后的公网IP地址</summary>
-            public const String LastIP = "LastIP";
+            public const String LastLoginIP = "LastLoginIP";
 
             /// <summary>最后主机</summary>
             public const String LastHostID = "LastHostID";
@@ -312,8 +328,11 @@ namespace WiFi.Entity
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
 
+        /// <summary>最后登录</summary>
+        DateTime LastLogin { get; set; }
+
         /// <summary>最后IP。最后的公网IP地址</summary>
-        String LastIP { get; set; }
+        String LastLoginIP { get; set; }
 
         /// <summary>最后主机</summary>
         Int32 LastHostID { get; set; }

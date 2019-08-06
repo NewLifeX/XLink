@@ -25,10 +25,6 @@ namespace WiFi.Entity
         #region 对象操作
         static Device()
         {
-            var df = Meta.Factory.AdditionalFields;
-            df.Add(__.Logins);
-            //df.Add(__.Registers);
-
             var sc = Meta.SingleCache;
             sc.FindSlaveKeyMethod = e => Find(__.Name, e);
             sc.GetSlaveKeyMethod = e => e.Name;
@@ -45,31 +41,12 @@ namespace WiFi.Entity
         {
             // 如果没有脏数据，则不需要进行任何处理
             if (!HasDirty) return;
-
-            if (isNew)
-            {
-                // 自动生成产品证书密钥
-                if (Code.IsNullOrEmpty()) Code = Rand.NextString(4);
-                if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(8);
-            }
-
-            if (HeartInterval <= 0) HeartInterval = 60;
-            if (KeepAliveTime <= 0) KeepAliveTime = 10;
-            if (ResetTime.IsNullOrEmpty()) ResetTime = "24:00:00";
         }
         #endregion
 
         #region 扩展属性
-        /// <summary>设备</summary>
-        [XmlIgnore, ScriptIgnore]
-        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductID));
-
-        /// <summary>产品</summary>
-        [Map(__.ProductID)]
-        public String ProductName => Product + "";
-
-        /// <summary>登录地址。IP=>Address</summary>
-        [DisplayName("登录地址")]
+        /// <summary>最后地址。IP=>Address</summary>
+        [DisplayName("最后地址")]
         public String LastLoginAddress => LastLoginIP.IPToAddress();
         #endregion
 
@@ -141,30 +118,6 @@ namespace WiFi.Entity
         #endregion
 
         #region 业务
-        /// <summary>登录</summary>
-        /// <param name="pass"></param>
-        /// <param name="salt"></param>
-        public void Login(String pass, Byte[] salt)
-        {
-            if (String.IsNullOrEmpty(pass)) throw new ArgumentNullException(nameof(pass));
-            if (salt == null || salt.Length == 0) throw new ArgumentNullException(nameof(salt));
-
-            if (!Enable) throw new EntityException("账号{0}被禁用！", Name);
-
-            // 数据库为空密码，任何密码均可登录
-            var buf = salt.RC4(Secret.GetBytes());
-            if (!pass.EqualIgnoreCase(buf.ToHex()))
-            {
-                var err = "密码不正确！";
-                if (SysConfig.Current.Develop) err = "{0} DB:{1}!=Biz:{2}".F(err, Secret, pass);
-                throw new EntityException(err);
-            }
-
-            Logins++;
-            LastLogin = DateTime.Now;
-
-            Save();
-        }
         #endregion
 
         #region 辅助

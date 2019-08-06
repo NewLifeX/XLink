@@ -7,7 +7,8 @@
       <Column Name="Code" DataType="String" Description="编码。MAC" />
       <Column Name="Kind" DataType="Int32" Description="类型。1路由，2设备" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="LastIP" DataType="String" Description="最后IP。最后的公网IP地址" />
+      <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
+      <Column Name="LastLoginIP" DataType="String" Description="最后IP。最后的公网IP地址" />
       <Column Name="LastHostID" DataType="Int32" Description="最后主机" />
       <Column Name="LastRouteID" DataType="Int32" Description="最后路由" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
@@ -31,6 +32,7 @@
       <Column Name="HostID" DataType="Int32" Description="主机" />
       <Column Name="RouteID" DataType="Int32" Description="路由" />
       <Column Name="Kind" DataType="Int32" Description="类型。1路由，2设备" />
+      <Column Name="Total" DataType="Int32" Description="次数" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
