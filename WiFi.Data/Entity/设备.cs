@@ -88,6 +88,14 @@ namespace WiFi.Entity
         [BindColumn("LastRouteID", "最后路由", "")]
         public Int32 LastRouteID { get { return _LastRouteID; } set { if (OnPropertyChanging(__.LastRouteID, value)) { _LastRouteID = value; OnPropertyChanged(__.LastRouteID); } } }
 
+        private Int32 _LastRSSI;
+        /// <summary>信号强度</summary>
+        [DisplayName("信号强度")]
+        [Description("信号强度")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("LastRSSI", "信号强度", "")]
+        public Int32 LastRSSI { get { return _LastRSSI; } set { if (OnPropertyChanging(__.LastRSSI, value)) { _LastRSSI = value; OnPropertyChanged(__.LastRSSI); } } }
+
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
         [DisplayName("创建者")]
@@ -164,6 +172,7 @@ namespace WiFi.Entity
                     case __.LastLoginIP : return _LastLoginIP;
                     case __.LastHostID : return _LastHostID;
                     case __.LastRouteID : return _LastRouteID;
+                    case __.LastRSSI : return _LastRSSI;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -187,6 +196,7 @@ namespace WiFi.Entity
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
                     case __.LastHostID : _LastHostID = value.ToInt(); break;
                     case __.LastRouteID : _LastRouteID = value.ToInt(); break;
+                    case __.LastRSSI : _LastRSSI = value.ToInt(); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -230,6 +240,9 @@ namespace WiFi.Entity
 
             /// <summary>最后路由</summary>
             public static readonly Field LastRouteID = FindByName(__.LastRouteID);
+
+            /// <summary>信号强度</summary>
+            public static readonly Field LastRSSI = FindByName(__.LastRSSI);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -285,6 +298,9 @@ namespace WiFi.Entity
             /// <summary>最后路由</summary>
             public const String LastRouteID = "LastRouteID";
 
+            /// <summary>信号强度</summary>
+            public const String LastRSSI = "LastRSSI";
+
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
 
@@ -339,6 +355,9 @@ namespace WiFi.Entity
 
         /// <summary>最后路由</summary>
         Int32 LastRouteID { get; set; }
+
+        /// <summary>信号强度</summary>
+        Int32 LastRSSI { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }

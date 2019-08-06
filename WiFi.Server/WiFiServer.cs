@@ -1,10 +1,6 @@
 ﻿using NewLife.Net;
-using NewLife.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using WiFi.Entity;
-using XCode.Membership;
 
 namespace WiFi.Server
 {
@@ -17,18 +13,15 @@ namespace WiFi.Server
     class WiFiSession : NetSession<WiFiServer>
     {
         #region 属性
-        ///// <summary>当前登录设备</summary>
-        //public Device Device { get; set; }
-
-        ///// <summary>当前在线对象</summary>
-        //public DeviceOnline Online { get; set; }
         #endregion
 
         #region 主循环
         protected override void OnReceive(ReceivedEventArgs e)
         {
-            var str = e.Packet.ToStr();
+            var str = e.Packet.ToStr().Trim();
             if (str.IsNullOrEmpty()) return;
+
+            if (Host.CommandLog) WriteLog(str);
 
             Process(str);
         }
@@ -48,17 +41,18 @@ namespace WiFi.Server
 
             if (olt != null)
             {
-                if (host != null)
+                olt.Rssi = rd.Rssi;
+
+                if (host != null) olt.HostID = host.DeviceID;
+                if (route != null) olt.RouteID = route.DeviceID;
+
+                // 设备属性
+                var dv = olt.Device;
+                if (dv != null)
                 {
-                    olt.HostID = host.DeviceID;
-                    var dv = olt.Device;
-                    if (dv != null) dv.LastHostID = host.DeviceID;
-                }
-                if (route != null)
-                {
-                    olt.RouteID = route.DeviceID;
-                    var dv = olt.Device;
-                    if (dv != null) dv.LastRouteID = route.DeviceID;
+                    dv.LastHostID = host.DeviceID;
+                    dv.LastRouteID = route.DeviceID;
+                    dv.LastRSSI = rd.Rssi;
                 }
             }
         }

@@ -81,6 +81,14 @@ namespace WiFi.Entity
         [BindColumn("Total", "次数", "")]
         public Int32 Total { get { return _Total; } set { if (OnPropertyChanging(__.Total, value)) { _Total = value; OnPropertyChanged(__.Total); } } }
 
+        private Int32 _Rssi;
+        /// <summary>信号强度</summary>
+        [DisplayName("信号强度")]
+        [Description("信号强度")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Rssi", "信号强度", "")]
+        public Int32 Rssi { get { return _Rssi; } set { if (OnPropertyChanging(__.Rssi, value)) { _Rssi = value; OnPropertyChanged(__.Rssi); } } }
+
         private DateTime _CreateTime;
         /// <summary>创建时间</summary>
         [DisplayName("创建时间")]
@@ -124,6 +132,7 @@ namespace WiFi.Entity
                     case __.RouteID : return _RouteID;
                     case __.Kind : return _Kind;
                     case __.Total : return _Total;
+                    case __.Rssi : return _Rssi;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
                     case __.UpdateTime : return _UpdateTime;
@@ -142,6 +151,7 @@ namespace WiFi.Entity
                     case __.RouteID : _RouteID = value.ToInt(); break;
                     case __.Kind : _Kind = value.ToInt(); break;
                     case __.Total : _Total = value.ToInt(); break;
+                    case __.Rssi : _Rssi = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
@@ -178,6 +188,9 @@ namespace WiFi.Entity
 
             /// <summary>次数</summary>
             public static readonly Field Total = FindByName(__.Total);
+
+            /// <summary>信号强度</summary>
+            public static readonly Field Rssi = FindByName(__.Rssi);
 
             /// <summary>创建时间</summary>
             public static readonly Field CreateTime = FindByName(__.CreateTime);
@@ -218,6 +231,9 @@ namespace WiFi.Entity
             /// <summary>次数</summary>
             public const String Total = "Total";
 
+            /// <summary>信号强度</summary>
+            public const String Rssi = "Rssi";
+
             /// <summary>创建时间</summary>
             public const String CreateTime = "CreateTime";
 
@@ -257,6 +273,9 @@ namespace WiFi.Entity
 
         /// <summary>次数</summary>
         Int32 Total { get; set; }
+
+        /// <summary>信号强度</summary>
+        Int32 Rssi { get; set; }
 
         /// <summary>创建时间</summary>
         DateTime CreateTime { get; set; }
