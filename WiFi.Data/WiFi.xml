@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tables Version="9.12.7126.42295" Output="Entity" NameSpace="WiFi.Entity" ConnName="WiFi" BaseClass="Entity">
+  <Table Name="Product" Description="产品" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Kind" DataType="String" Description="节点类型" />
+      <Column Name="Category" DataType="String" Description="分类" />
+      <Column Name="DataFormat" DataType="String" Description="数据格式" />
+      <Column Name="Code" DataType="String" Description="编码" />
+      <Column Name="Secret" DataType="String" Description="密钥" />
+      <Column Name="NetworkProtocol" DataType="String" Description="网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它" />
+      <Column Name="Status" DataType="Int32" Description="状态。0测试1发布" />
+      <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+      <Column Name="Description" DataType="String" Length="500" Description="描述" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Code" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="Device" Description="设备" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Code" DataType="String" Description="编码" />
+      <Column Name="Secret" DataType="String" Description="密钥" />
+      <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="ProductID" DataType="Int32" Description="产品" />
+      <Column Name="Version" DataType="String" Description="版本" />
+      <Column Name="LocalIP" DataType="String" Description="本地地址" />
+      <Column Name="HeartInterval" DataType="Int32" Description="心跳间隔。默认60秒" />
+      <Column Name="KeepAliveTime" DataType="Int32" Description="在线间隔。默认10秒" />
+      <Column Name="ResetTime" DataType="String" Description="重启时间。默认24:00:00不启用" />
+      <Column Name="Data" DataType="String" Length="200" Description="数据" />
+      <Column Name="Logins" DataType="Int32" Description="登录" />
+      <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
+      <Column Name="LastLoginIP" DataType="String" Description="最后登录IP" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+      <Column Name="Description" DataType="String" Length="500" Description="描述" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Code" Unique="True" />
+      <Index Columns="ProductID" />
+    </Indexes>
+  </Table>
+  <Table Name="DeviceOnline" Description="设备在线" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="SessionID" DataType="String" Description="会话" />
+      <Column Name="Version" DataType="String" Description="版本" />
+      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="NetType" DataType="String" Description="网络" />
+      <Column Name="InternalUri" DataType="String" Description="内网" />
+      <Column Name="ExternalUri" DataType="String" Description="外网" />
+      <Column Name="PingCount" DataType="Int32" Description="心跳" />
+      <Column Name="ErrorCount" DataType="Int32" Description="错误" />
+      <Column Name="LastError" DataType="String" Description="最后错误" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+    </Columns>
+    <Indexes>
+      <Index Columns="SessionID" Unique="True" />
+      <Index Columns="DeviceID" />
+      <Index Columns="Name" />
+      <Index Columns="Type" />
+    </Indexes>
+  </Table>
+  <Table Name="DeviceHistory" Description="设备历史" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Version" DataType="String" Description="版本" />
+      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="NetType" DataType="String" Description="网络" />
+      <Column Name="Action" DataType="String" Description="操作" />
+      <Column Name="Success" DataType="Boolean" Description="成功" />
+      <Column Name="CreateDeviceID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="Remark" ColumnName="Content" DataType="String" Length="500" Description="内容" />
+    </Columns>
+    <Indexes>
+      <Index Columns="DeviceID" />
+      <Index Columns="Name" />
+      <Index Columns="Type" />
+    </Indexes>
+  </Table>
+  <Table Name="DeviceCommand" Description="设备指令" DbType="SqlServer">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
+      <Column Name="Command" DataType="String" Master="True" Description="命令" />
+      <Column Name="Argument" DataType="String" Description="参数" />
+      <Column Name="StartTime" DataType="DateTime" Description="开始时间" />
+      <Column Name="EndTime" DataType="DateTime" Description="结束时间" />
+      <Column Name="Status" DataType="Int32" Description="状态" Type="CommandStatus" />
+      <Column Name="Message" DataType="String" Length="200" Description="内容" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Command" />
+    </Indexes>
+  </Table>
+</Tables>
