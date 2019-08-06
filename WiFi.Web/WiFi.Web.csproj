@@ -101,17 +101,22 @@
     <Compile Include="Areas\WiFi\Controllers\DeviceHistoryController.cs" />
     <Compile Include="Areas\WiFi\Controllers\DeviceOnlineController.cs" />
     <Compile Include="Areas\WiFi\Controllers\DeviceController.cs" />
+    <Compile Include="Areas\WiFi\Views\DeviceHistory\_List_Search.generated.cs">
+      <DependentUpon>_List_Search.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\WiFi\Views\DeviceOnline\_List_Search.generated.cs">
+      <DependentUpon>_List_Search.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\WiFi\Views\Device\_List_Search.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_List_Search.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Areas\WiFi\WiFiAreaRegistration.cs" />
-    <Compile Include="Areas\WiFi\Views\DeviceHistory\_List_Toolbar.generated.cs">
-      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Areas\WiFi\Views\DeviceOnline\_List_Toolbar.generated.cs">
-      <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -132,15 +137,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\WiFi\Views\DeviceHistory\_List_Toolbar.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\WiFi\Views\DeviceOnline\_List_Toolbar.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Areas\WiFi\Views\Web.config" />
+    <Content Include="Areas\WiFi\Views\Device\_List_Search.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Search.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\WiFi\Views\DeviceOnline\_List_Search.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Search.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\WiFi\Views\DeviceHistory\_List_Search.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Search.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Front.pubxml" />
   </ItemGroup>
   <ItemGroup>
