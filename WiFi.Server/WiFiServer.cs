@@ -18,7 +18,7 @@ namespace WiFi.Server
         {
             base.OnStart();
 
-            _timer = new TimerX(s => ClearExpire(10 * 60), null, 10_000, 10_000);
+            _timer = new TimerX(s => ClearExpire(10 * 60), null, 10_000, 10_000) { Async = true };
         }
 
         protected override void OnStop()
