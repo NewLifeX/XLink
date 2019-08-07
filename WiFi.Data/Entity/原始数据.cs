@@ -80,6 +80,14 @@ namespace WiFi.Entity
         [BindColumn("Rssi", "信号强度", "")]
         public Int32 Rssi { get { return _Rssi; } set { if (OnPropertyChanging(__.Rssi, value)) { _Rssi = value; OnPropertyChanged(__.Rssi); } } }
 
+        private Double _Distance;
+        /// <summary>距离。设备到主机的距离，单位米</summary>
+        [DisplayName("距离")]
+        [Description("距离。设备到主机的距离，单位米")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Distance", "距离。设备到主机的距离，单位米", "")]
+        public Double Distance { get { return _Distance; } set { if (OnPropertyChanging(__.Distance, value)) { _Distance = value; OnPropertyChanged(__.Distance); } } }
+
         private String _Remark;
         /// <summary>内容</summary>
         [DisplayName("内容")]
@@ -123,6 +131,7 @@ namespace WiFi.Entity
                     case __.FrameType2 : return _FrameType2;
                     case __.Channel : return _Channel;
                     case __.Rssi : return _Rssi;
+                    case __.Distance : return _Distance;
                     case __.Remark : return _Remark;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -141,6 +150,7 @@ namespace WiFi.Entity
                     case __.FrameType2 : _FrameType2 = value.ToInt(); break;
                     case __.Channel : _Channel = value.ToInt(); break;
                     case __.Rssi : _Rssi = value.ToInt(); break;
+                    case __.Distance : _Distance = value.ToDouble(); break;
                     case __.Remark : _Remark = Convert.ToString(value); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -177,6 +187,9 @@ namespace WiFi.Entity
 
             /// <summary>信号强度</summary>
             public static readonly Field Rssi = FindByName(__.Rssi);
+
+            /// <summary>距离。设备到主机的距离，单位米</summary>
+            public static readonly Field Distance = FindByName(__.Distance);
 
             /// <summary>内容</summary>
             public static readonly Field Remark = FindByName(__.Remark);
@@ -217,6 +230,9 @@ namespace WiFi.Entity
             /// <summary>信号强度</summary>
             public const String Rssi = "Rssi";
 
+            /// <summary>距离。设备到主机的距离，单位米</summary>
+            public const String Distance = "Distance";
+
             /// <summary>内容</summary>
             public const String Remark = "Remark";
 
@@ -256,6 +272,9 @@ namespace WiFi.Entity
 
         /// <summary>信号强度</summary>
         Int32 Rssi { get; set; }
+
+        /// <summary>距离。设备到主机的距离，单位米</summary>
+        Double Distance { get; set; }
 
         /// <summary>内容</summary>
         String Remark { get; set; }

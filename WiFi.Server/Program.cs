@@ -34,6 +34,8 @@ namespace WiFi.Server
                     set.SaveAsync();
                 }
             });
+
+            AddMenu('t', "数据测试", Test);
         }
 
         /// <summary>服务器</summary>
@@ -76,6 +78,13 @@ namespace WiFi.Server
 
             Svr.TryDispose();
             Svr = null;
+        }
+
+        private void Test()
+        {
+            var rssi = -95;
+            var d = WiFiSession.GetDistance(rssi);
+            Console.WriteLine("{0}，{1:n2}", rssi, d);
         }
     }
 }

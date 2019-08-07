@@ -13,6 +13,7 @@
       <Column Name="LastHostID" DataType="Int32" Description="最后主机" />
       <Column Name="LastRouteID" DataType="Int32" Description="最后路由" />
       <Column Name="LastRSSI" DataType="Int32" Description="信号强度" />
+      <Column Name="LastDistance" DataType="Double" Description="距离。设备到主机的距离，单位米" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
@@ -36,6 +37,7 @@
       <Column Name="Kind" DataType="Int32" Description="类型。1设备，2路由，3主机" Type="DeviceKinds" />
       <Column Name="Total" DataType="Int32" Description="次数" />
       <Column Name="Rssi" DataType="Int32" Description="信号强度" />
+      <Column Name="Distance" DataType="Double" Description="距离。设备到主机的距离，单位米" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
@@ -76,6 +78,7 @@
       <Column Name="FrameType2" DataType="Int32" Description="子类型" />
       <Column Name="Channel" DataType="Int32" Description="信道" />
       <Column Name="Rssi" DataType="Int32" Description="信号强度" />
+      <Column Name="Distance" DataType="Double" Description="距离。设备到主机的距离，单位米" />
       <Column Name="Remark" DataType="String" Description="内容" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />

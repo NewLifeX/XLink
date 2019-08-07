@@ -33,7 +33,10 @@ namespace WiFi.Server
         /// <summary>清理超时会话</summary>
         /// <param name="secTimeout"></param>
         /// <returns></returns>
-        public Int32 ClearExpire(Int32 secTimeout) => DeviceOnline.ClearExpire(secTimeout).Count;
+        public Int32 ClearExpire(Int32 secTimeout)
+        {
+            return DeviceOnline.ClearExpire(secTimeout).Count;
+        }
         #endregion
     }
 
@@ -79,6 +82,7 @@ namespace WiFi.Server
             if (olt != null)
             {
                 olt.Rssi = rd.Rssi;
+                olt.Distance = rd.Distance;
 
                 if (host != null) olt.HostID = host.DeviceID;
                 if (route != null) olt.RouteID = route.DeviceID;
@@ -90,6 +94,7 @@ namespace WiFi.Server
                     dv.LastHostID = host.DeviceID;
                     dv.LastRouteID = route.DeviceID;
                     dv.LastRSSI = rd.Rssi;
+                    dv.LastDistance = rd.Distance;
                 }
             }
 
@@ -164,6 +169,9 @@ namespace WiFi.Server
             {
 
             }
+
+            // 计算距离
+            rd.Distance = GetDistance(rd.Rssi);
 
             var ip = Remote?.EndPoint.Address + "";
             rd.CreateTime = DateTime.Now;
@@ -256,6 +264,15 @@ namespace WiFi.Server
             hi.SaveAsync();
 
             return hi;
+        }
+        #endregion
+
+        #region 距离计算
+        public static Double GetDistance(Int32 rssi, Double xs = 3.3)
+        {
+            rssi = Math.Abs(rssi);
+            var power = (rssi - 60) / (10 * xs);
+            return Math.Pow(10, power);
         }
         #endregion
     }
