@@ -184,10 +184,13 @@ namespace WiFi.Server
 
                 //// 抛弃路由器发出的数据
                 //if (ss.Length >= 10 && ss[9] == "0") return null;
-                if (ss.Length >= 8 + 1) rd.IsRoute = ss[8] == "0";
+                //if (ss.Length >= 9 + 1) rd.IsRoute = ss[9] == "1";
 
                 //rd.Remark = ss.Last();
                 if (ss.Length >= 10 + 1) rd.Remark = ss[10];
+
+                // 手机发给路由的有名称
+                if (!rd.Remark.IsNullOrEmpty()) rd.IsRoute = true;
             }
             else
             {
