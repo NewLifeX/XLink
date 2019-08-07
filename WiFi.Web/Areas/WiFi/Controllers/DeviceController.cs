@@ -2,6 +2,7 @@
 using NewLife.Web;
 using System;
 using System.Collections.Generic;
+using WiFi.Entity;
 using DeviceX = WiFi.Entity.Device;
 
 namespace WiFi.Device.Web.Controllers
@@ -23,10 +24,10 @@ namespace WiFi.Device.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<DeviceX> Search(Pager p)
         {
-            Boolean? flag = null;
-            if (!p["enable"].IsNullOrEmpty()) flag = p["enable"].ToBoolean();
+            var kind = (DeviceKinds)p["kind"].ToInt();
+            var enable = p["enable"]?.ToBoolean();
 
-            return DeviceX.Search(p["type"], flag, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            return DeviceX.Search(kind, enable, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

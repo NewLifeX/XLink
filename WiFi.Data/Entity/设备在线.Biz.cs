@@ -79,25 +79,25 @@ namespace WiFi.Entity
         /// <param name="start">开始时间</param>
         /// <param name="end">结束时间</param>
         /// <param name="key">关键字</param>
-        /// <param name="param">分页排序参数，同时返回满足条件的总记录数</param>
+        /// <param name="page">分页排序参数，同时返回满足条件的总记录数</param>
         /// <returns>实体集</returns>
-        public static IList<DeviceOnline> Search(Int32 kind, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<DeviceOnline> Search(DeviceKinds kind, DateTime start, DateTime end, String key, PageParameter page)
         {
             // 修改DeviceID排序为名称
             //param = new PageParameter(param);
-            if (param.Sort.EqualIgnoreCase(__.DeviceID)) param.Sort = __.Name;
+            if (page.Sort.EqualIgnoreCase(__.DeviceID)) page.Sort = __.Name;
 
-            var list = Search(kind, start, end, key, param, false);
+            var list = Search(kind, start, end, key, page, false);
             // 如果结果为0，并且有key，则使用扩展查询，对内网外网地址进行模糊查询
-            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(kind, start, end, key, param, true);
+            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(kind, start, end, key, page, true);
 
             // 换回来，避免影响生成升序降序
-            if (param.Sort.EqualIgnoreCase(__.Name)) param.Sort = __.DeviceID;
+            if (page.Sort.EqualIgnoreCase(__.Name)) page.Sort = __.DeviceID;
 
             return list;
         }
 
-        private static IList<DeviceOnline> Search(Int32 kind, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        private static IList<DeviceOnline> Search(DeviceKinds kind, DateTime start, DateTime end, String key, PageParameter page, Boolean ext)
         {
             var exp = new WhereExpression();
 
@@ -113,7 +113,7 @@ namespace WiFi.Entity
                     exp &= _.Name.StartsWith(key);
             }
 
-            return FindAll(exp, param);
+            return FindAll(exp, page);
         }
         #endregion
 

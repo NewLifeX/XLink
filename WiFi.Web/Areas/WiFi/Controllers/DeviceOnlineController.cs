@@ -21,7 +21,9 @@ namespace WiFi.Device.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<DeviceOnline> Search(Pager p)
         {
-            return DeviceOnline.Search(p["Kind"].ToInt(), p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            var kind = (DeviceKinds)p["kind"].ToInt();
+
+            return DeviceOnline.Search(kind, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

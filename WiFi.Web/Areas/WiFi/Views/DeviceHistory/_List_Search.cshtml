@@ -12,14 +12,10 @@
     dic.Add(0, "失败");
 }
 <div class="form-group">
-    <label for="type" class="control-label">类型：</label>
-    @Html.ForDropDownList("type", DeviceHistory.FindAllTypeName(), Request["type"], "全部", true)
-</div>
-<div class="form-group">
     <label for="action" class="control-label">操作：</label>
     @Html.ForDropDownList("action", DeviceHistory.FindAllActionName(), Request["action"], "全部", true)
 </div>
 <div class="form-group">
     <label for="result" class="control-label">结果：</label>
-    @Html.ForDropDownList("result", dic, Request["result"], "全部", true)
+    @Html.ForDropDownList("success", dic, Request["success"], "全部", true)
 </div>

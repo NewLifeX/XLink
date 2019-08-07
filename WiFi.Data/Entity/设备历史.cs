@@ -13,7 +13,6 @@ namespace WiFi.Entity
     [Description("设备历史")]
     [BindIndex("IX_DeviceHistory_DeviceID", false, "DeviceID")]
     [BindIndex("IX_DeviceHistory_Name", false, "Name")]
-    [BindIndex("IX_DeviceHistory_Type", false, "Type")]
     [BindTable("DeviceHistory", Description = "设备历史", ConnName = "WiFi", DbType = DatabaseType.None)]
     public partial class DeviceHistory : IDeviceHistory
     {
@@ -41,30 +40,6 @@ namespace WiFi.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
-
-        private String _Version;
-        /// <summary>版本</summary>
-        [DisplayName("版本")]
-        [Description("版本")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本", "")]
-        public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
-
-        private String _Type;
-        /// <summary>类型</summary>
-        [DisplayName("类型")]
-        [Description("类型")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "")]
-        public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
-
-        private String _NetType;
-        /// <summary>网络</summary>
-        [DisplayName("网络")]
-        [Description("网络")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "")]
-        public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
 
         private String _Action;
         /// <summary>操作</summary>
@@ -128,9 +103,6 @@ namespace WiFi.Entity
                     case __.ID : return _ID;
                     case __.DeviceID : return _DeviceID;
                     case __.Name : return _Name;
-                    case __.Version : return _Version;
-                    case __.Type : return _Type;
-                    case __.NetType : return _NetType;
                     case __.Action : return _Action;
                     case __.Success : return _Success;
                     case __.CreateDeviceID : return _CreateDeviceID;
@@ -147,9 +119,6 @@ namespace WiFi.Entity
                     case __.ID : _ID = value.ToInt(); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
-                    case __.Version : _Version = Convert.ToString(value); break;
-                    case __.Type : _Type = Convert.ToString(value); break;
-                    case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.Action : _Action = Convert.ToString(value); break;
                     case __.Success : _Success = value.ToBoolean(); break;
                     case __.CreateDeviceID : _CreateDeviceID = value.ToInt(); break;
@@ -174,15 +143,6 @@ namespace WiFi.Entity
 
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
-
-            /// <summary>版本</summary>
-            public static readonly Field Version = FindByName(__.Version);
-
-            /// <summary>类型</summary>
-            public static readonly Field Type = FindByName(__.Type);
-
-            /// <summary>网络</summary>
-            public static readonly Field NetType = FindByName(__.NetType);
 
             /// <summary>操作</summary>
             public static readonly Field Action = FindByName(__.Action);
@@ -217,15 +177,6 @@ namespace WiFi.Entity
             /// <summary>名称</summary>
             public const String Name = "Name";
 
-            /// <summary>版本</summary>
-            public const String Version = "Version";
-
-            /// <summary>类型</summary>
-            public const String Type = "Type";
-
-            /// <summary>网络</summary>
-            public const String NetType = "NetType";
-
             /// <summary>操作</summary>
             public const String Action = "Action";
 
@@ -259,15 +210,6 @@ namespace WiFi.Entity
 
         /// <summary>名称</summary>
         String Name { get; set; }
-
-        /// <summary>版本</summary>
-        String Version { get; set; }
-
-        /// <summary>类型</summary>
-        String Type { get; set; }
-
-        /// <summary>网络</summary>
-        String NetType { get; set; }
 
         /// <summary>操作</summary>
         String Action { get; set; }

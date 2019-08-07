@@ -87,27 +87,6 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n    <label");
 
-WriteLiteral(" for=\"type\"");
-
-WriteLiteral(" class=\"control-label\"");
-
-WriteLiteral(">类型：</label>\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 16 "..\..\Areas\WiFi\Views\DeviceHistory\_List_Search.cshtml"
-Write(Html.ForDropDownList("type", DeviceHistory.FindAllTypeName(), Request["type"], "全部", true));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n</div>\r\n<div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n    <label");
-
 WriteLiteral(" for=\"action\"");
 
 WriteLiteral(" class=\"control-label\"");
@@ -117,7 +96,7 @@ WriteLiteral(">操作：</label>\r\n");
 WriteLiteral("    ");
 
             
-            #line 20 "..\..\Areas\WiFi\Views\DeviceHistory\_List_Search.cshtml"
+            #line 16 "..\..\Areas\WiFi\Views\DeviceHistory\_List_Search.cshtml"
 Write(Html.ForDropDownList("action", DeviceHistory.FindAllActionName(), Request["action"], "全部", true));
 
             
@@ -138,8 +117,8 @@ WriteLiteral(">结果：</label>\r\n");
 WriteLiteral("    ");
 
             
-            #line 24 "..\..\Areas\WiFi\Views\DeviceHistory\_List_Search.cshtml"
-Write(Html.ForDropDownList("result", dic, Request["result"], "全部", true));
+            #line 20 "..\..\Areas\WiFi\Views\DeviceHistory\_List_Search.cshtml"
+Write(Html.ForDropDownList("success", dic, Request["success"], "全部", true));
 
             
             #line default

@@ -24,7 +24,11 @@ namespace WiFi.Device.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<DeviceHistory> Search(Pager p)
         {
-            return DeviceHistory.Search(p["TokenID"].ToInt(-1), p["type"], p["action"], p["result"].ToInt(-1), p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            var deviceid = p["DeviceID"].ToInt();
+            var action = p["action"];
+            var success = p["success"]?.ToBoolean();
+
+            return DeviceHistory.Search(deviceid, action, success, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

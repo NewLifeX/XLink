@@ -93,7 +93,7 @@ WriteLiteral("    ");
 
             
             #line 12 "..\..\Areas\WiFi\Views\Device\_List_Search.cshtml"
-Write(Html.ForDropDownList("Kind", System.EnumHelper.GetDescriptions(typeof(DeviceKinds)), Request["Kind"], "全部", true));
+Write(Html.ForDropDownList("Kind", System.EnumHelper.GetDescriptions(typeof(DeviceKinds)), page["Kind"], "全部", true));
 
             
             #line default

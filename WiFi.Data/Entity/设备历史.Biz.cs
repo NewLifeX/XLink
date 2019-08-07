@@ -40,35 +40,31 @@ namespace WiFi.Entity
 
         #region 高级查询
         /// <summary>高级搜索</summary>
-        /// <param name="userid"></param>
+        /// <param name="deviceid"></param>
         /// <param name="type"></param>
         /// <param name="action"></param>
-        /// <param name="result"></param>
+        /// <param name="success"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="key"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static IList<DeviceHistory> Search(Int32 userid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<DeviceHistory> Search(Int32 deviceid, String action, Boolean? success, DateTime start, DateTime end, String key, PageParameter param)
         {
-            var list = Search(userid, type, action, result, start, end, key, param, false);
+            var list = Search(deviceid, action, success, start, end, key, param, false);
             // 如果结果为0，并且有key，则使用扩展查询，对内网外网地址进行模糊查询
-            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(userid, type, action, result, start, end, key, param, true);
+            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(deviceid, action, success, start, end, key, param, true);
 
             return list;
         }
 
-        private static IList<DeviceHistory> Search(Int32 tokenid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        private static IList<DeviceHistory> Search(Int32 deviceid, String action, Boolean? success, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
         {
             var exp = new WhereExpression();
 
-            if (tokenid >= 0) exp &= _.DeviceID == tokenid;
-            if (!type.IsNullOrEmpty()) exp &= _.Type == type;
+            if (deviceid >= 0) exp &= _.DeviceID == deviceid;
             if (!action.IsNullOrEmpty()) exp &= _.Action == action;
-            if (result == 0)
-                exp &= _.Success == false;
-            else if (result == 1)
-                exp &= _.Success == true;
+            if (success != null) exp &= _.Success == success;
 
             exp &= _.CreateTime.Between(start, end);
 
@@ -86,24 +82,11 @@ namespace WiFi.Entity
 
         #region 扩展操作
         /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<DeviceHistory> TypeCache = new FieldCache<DeviceHistory>(_.Type);
-
-        /// <summary>获取所有类别名称</summary>
-        /// <returns></returns>
-        public static IDictionary<String, String> FindAllTypeName()
-        {
-            return TypeCache.FindAllName();
-        }
-
-        /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
         static FieldCache<DeviceHistory> ActionCache = new FieldCache<DeviceHistory>(_.Action);
 
         /// <summary>获取所有类别名称</summary>
         /// <returns></returns>
-        public static IDictionary<String, String> FindAllActionName()
-        {
-            return ActionCache.FindAllName();
-        }
+        public static IDictionary<String, String> FindAllActionName() => ActionCache.FindAllName();
         #endregion
 
         #region 业务

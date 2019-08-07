@@ -119,26 +119,26 @@ namespace WiFi.Entity
 
         #region 高级查询
         /// <summary>高级查询</summary>
-        /// <param name="type"></param>
+        /// <param name="kind"></param>
         /// <param name="enable"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="key"></param>
-        /// <param name="param"></param>
+        /// <param name="page"></param>
         /// <returns></returns>
-        public static IList<Device> Search(String type, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<Device> Search(DeviceKinds kind, Boolean? enable, DateTime start, DateTime end, String key, PageParameter page)
         {
-            // WhereExpression重载&和|运算符，作为And和Or的替代
-            // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段
-            var exp = SearchWhereByKeys(key, null, null);
+            var exp = new WhereExpression();
 
-            //if (!type.IsNullOrEmpty()) exp &= _.Type == type;
+            if (kind > 0) exp &= _.Kind == kind;
             if (enable != null) exp &= _.Enable == enable.Value;
 
             //exp &= _.CreateTime.Between(start, end);
             exp &= _.LastLogin.Between(start, end);
 
-            return FindAll(exp, param);
+            if (!key.IsNullOrEmpty()) exp &= SearchWhereByKeys(key);
+
+            return FindAll(exp, page);
         }
         #endregion
 

@@ -9,5 +9,5 @@
 }
 <div class="form-group">
     <label for="kind" class="control-label">类型：</label>
-    @Html.ForDropDownList("Kind", System.EnumHelper.GetDescriptions(typeof(DeviceKinds)), Request["Kind"], "全部", true)
+    @Html.ForDropDownList("Kind", System.EnumHelper.GetDescriptions(typeof(DeviceKinds)), page["Kind"], "全部", true)
 </div>
