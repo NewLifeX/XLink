@@ -71,9 +71,6 @@ namespace WiFi.Server
             var rd = Parse(data);
             if (rd == null) return;
 
-            // 入库
-            rd.SaveAsync();
-
             // 登录在线
             var host = Check(rd.HostMAC, null, DeviceKinds.Host);
             var route = Check(rd.RouteMAC, rd.Remark, DeviceKinds.Route);
@@ -110,6 +107,23 @@ namespace WiFi.Server
                     dv.SaveAsync();
                 }
             }
+
+            // 计算距离
+            var pa = 60;
+            var pn = 3.3;
+            if (host != null)
+            {
+                var dv = host.Device;
+                if (dv != null)
+                {
+                    if (dv.ParameterA > 0) pa = dv.ParameterA;
+                    if (dv.ParameterN > 0.01) pn = dv.ParameterN;
+                }
+            }
+            rd.Distance = GetDistance(rd.Rssi, pa, pn);
+
+            // 入库
+            rd.SaveAsync();
         }
 
         protected virtual DeviceOnline Check(String mac, String name, DeviceKinds kind)
@@ -170,8 +184,8 @@ namespace WiFi.Server
 
             }
 
-            // 计算距离
-            rd.Distance = GetDistance(rd.Rssi);
+            //// 计算距离
+            //rd.Distance = GetDistance(rd.Rssi);
 
             var ip = Remote?.EndPoint.Address + "";
             rd.CreateTime = DateTime.Now;
@@ -268,10 +282,10 @@ namespace WiFi.Server
         #endregion
 
         #region 距离计算
-        public static Double GetDistance(Int32 rssi, Double xs = 3.3)
+        public static Double GetDistance(Int32 rssi, Int32 pa = 60, Double pn = 3.3)
         {
             rssi = Math.Abs(rssi);
-            var power = (rssi - 60) / (10 * xs);
+            var power = (rssi - pa) / (10 * pn);
             return Math.Pow(10, power);
         }
         #endregion

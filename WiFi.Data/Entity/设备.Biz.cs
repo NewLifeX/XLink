@@ -52,6 +52,9 @@ namespace WiFi.Entity
         {
             // 如果没有脏数据，则不需要进行任何处理
             if (!HasDirty) return;
+
+            if (ParameterA <= 0) ParameterA = 60;
+            if (ParameterN < 0.01) ParameterN = 3.3;
         }
         #endregion
 
@@ -148,7 +151,7 @@ namespace WiFi.Entity
         #region 辅助
         /// <summary>显示友好名称</summary>
         /// <returns></returns>
-        public override String ToString() => Name;
+        public override String ToString() => Name.IsNullOrEmpty() ? Code : Name;
         #endregion
     }
 }

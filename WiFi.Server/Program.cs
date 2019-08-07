@@ -82,9 +82,13 @@ namespace WiFi.Server
 
         private void Test()
         {
-            var rssi = -95;
-            var d = WiFiSession.GetDistance(rssi);
-            Console.WriteLine("{0}，{1:n2}", rssi, d);
+            for (int i = 0; i < 100; i++)
+            {
+                //var rssi = -95;
+                var rssi = -i;
+                var d = WiFiSession.GetDistance(rssi);
+                Console.WriteLine("{0}，{1:n2}", rssi, d);
+            }
         }
     }
 }

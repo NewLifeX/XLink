@@ -7,13 +7,15 @@
       <Column Name="Code" DataType="String" Description="编码。MAC" />
       <Column Name="Kind" DataType="Int32" Description="类型。1设备，2路由，3主机" Type="DeviceKinds" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="Logins" DataType="Int32" Description="登录次数" />
-      <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
-      <Column Name="LastLoginIP" DataType="String" Description="最后IP。最后的公网IP地址" />
       <Column Name="LastHostID" DataType="Int32" Description="最后主机" />
       <Column Name="LastRouteID" DataType="Int32" Description="最后路由" />
       <Column Name="LastRSSI" DataType="Int32" Description="信号强度" />
       <Column Name="LastDistance" DataType="Double" Description="距离。设备到主机的距离，单位米" />
+      <Column Name="ParameterA" DataType="Int32" Description="基准系统。距离1米时信号强度，默认60" />
+      <Column Name="ParameterN" DataType="Double" Description="衰减系数。视环境而定，默认3.3" />
+      <Column Name="Logins" DataType="Int32" Description="登录次数" />
+      <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
+      <Column Name="LastLoginIP" DataType="String" Description="最后IP。最后的公网IP地址" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />

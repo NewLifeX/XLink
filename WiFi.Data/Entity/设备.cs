@@ -56,30 +56,6 @@ namespace WiFi.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
-        private Int32 _Logins;
-        /// <summary>登录次数</summary>
-        [DisplayName("登录次数")]
-        [Description("登录次数")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Logins", "登录次数", "")]
-        public Int32 Logins { get { return _Logins; } set { if (OnPropertyChanging(__.Logins, value)) { _Logins = value; OnPropertyChanged(__.Logins); } } }
-
-        private DateTime _LastLogin;
-        /// <summary>最后登录</summary>
-        [DisplayName("最后登录")]
-        [Description("最后登录")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("LastLogin", "最后登录", "")]
-        public DateTime LastLogin { get { return _LastLogin; } set { if (OnPropertyChanging(__.LastLogin, value)) { _LastLogin = value; OnPropertyChanged(__.LastLogin); } } }
-
-        private String _LastLoginIP;
-        /// <summary>最后IP。最后的公网IP地址</summary>
-        [DisplayName("最后IP")]
-        [Description("最后IP。最后的公网IP地址")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("LastLoginIP", "最后IP。最后的公网IP地址", "")]
-        public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
-
         private Int32 _LastHostID;
         /// <summary>最后主机</summary>
         [DisplayName("最后主机")]
@@ -111,6 +87,46 @@ namespace WiFi.Entity
         [DataObjectField(false, false, false, 0)]
         [BindColumn("LastDistance", "距离。设备到主机的距离，单位米", "")]
         public Double LastDistance { get { return _LastDistance; } set { if (OnPropertyChanging(__.LastDistance, value)) { _LastDistance = value; OnPropertyChanged(__.LastDistance); } } }
+
+        private Int32 _ParameterA;
+        /// <summary>基准系统。距离1米时信号强度，默认60</summary>
+        [DisplayName("基准系统")]
+        [Description("基准系统。距离1米时信号强度，默认60")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("ParameterA", "基准系统。距离1米时信号强度，默认60", "")]
+        public Int32 ParameterA { get { return _ParameterA; } set { if (OnPropertyChanging(__.ParameterA, value)) { _ParameterA = value; OnPropertyChanged(__.ParameterA); } } }
+
+        private Double _ParameterN;
+        /// <summary>衰减系数。视环境而定，默认3.3</summary>
+        [DisplayName("衰减系数")]
+        [Description("衰减系数。视环境而定，默认3.3")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("ParameterN", "衰减系数。视环境而定，默认3.3", "")]
+        public Double ParameterN { get { return _ParameterN; } set { if (OnPropertyChanging(__.ParameterN, value)) { _ParameterN = value; OnPropertyChanged(__.ParameterN); } } }
+
+        private Int32 _Logins;
+        /// <summary>登录次数</summary>
+        [DisplayName("登录次数")]
+        [Description("登录次数")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Logins", "登录次数", "")]
+        public Int32 Logins { get { return _Logins; } set { if (OnPropertyChanging(__.Logins, value)) { _Logins = value; OnPropertyChanged(__.Logins); } } }
+
+        private DateTime _LastLogin;
+        /// <summary>最后登录</summary>
+        [DisplayName("最后登录")]
+        [Description("最后登录")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("LastLogin", "最后登录", "")]
+        public DateTime LastLogin { get { return _LastLogin; } set { if (OnPropertyChanging(__.LastLogin, value)) { _LastLogin = value; OnPropertyChanged(__.LastLogin); } } }
+
+        private String _LastLoginIP;
+        /// <summary>最后IP。最后的公网IP地址</summary>
+        [DisplayName("最后IP")]
+        [Description("最后IP。最后的公网IP地址")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("LastLoginIP", "最后IP。最后的公网IP地址", "")]
+        public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
 
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
@@ -184,13 +200,15 @@ namespace WiFi.Entity
                     case __.Code : return _Code;
                     case __.Kind : return _Kind;
                     case __.Enable : return _Enable;
-                    case __.Logins : return _Logins;
-                    case __.LastLogin : return _LastLogin;
-                    case __.LastLoginIP : return _LastLoginIP;
                     case __.LastHostID : return _LastHostID;
                     case __.LastRouteID : return _LastRouteID;
                     case __.LastRSSI : return _LastRSSI;
                     case __.LastDistance : return _LastDistance;
+                    case __.ParameterA : return _ParameterA;
+                    case __.ParameterN : return _ParameterN;
+                    case __.Logins : return _Logins;
+                    case __.LastLogin : return _LastLogin;
+                    case __.LastLoginIP : return _LastLoginIP;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -210,13 +228,15 @@ namespace WiFi.Entity
                     case __.Code : _Code = Convert.ToString(value); break;
                     case __.Kind : _Kind = (DeviceKinds)value.ToInt(); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
-                    case __.Logins : _Logins = value.ToInt(); break;
-                    case __.LastLogin : _LastLogin = value.ToDateTime(); break;
-                    case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
                     case __.LastHostID : _LastHostID = value.ToInt(); break;
                     case __.LastRouteID : _LastRouteID = value.ToInt(); break;
                     case __.LastRSSI : _LastRSSI = value.ToInt(); break;
                     case __.LastDistance : _LastDistance = value.ToDouble(); break;
+                    case __.ParameterA : _ParameterA = value.ToInt(); break;
+                    case __.ParameterN : _ParameterN = value.ToDouble(); break;
+                    case __.Logins : _Logins = value.ToInt(); break;
+                    case __.LastLogin : _LastLogin = value.ToDateTime(); break;
+                    case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -249,15 +269,6 @@ namespace WiFi.Entity
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
-            /// <summary>登录次数</summary>
-            public static readonly Field Logins = FindByName(__.Logins);
-
-            /// <summary>最后登录</summary>
-            public static readonly Field LastLogin = FindByName(__.LastLogin);
-
-            /// <summary>最后IP。最后的公网IP地址</summary>
-            public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
-
             /// <summary>最后主机</summary>
             public static readonly Field LastHostID = FindByName(__.LastHostID);
 
@@ -269,6 +280,21 @@ namespace WiFi.Entity
 
             /// <summary>距离。设备到主机的距离，单位米</summary>
             public static readonly Field LastDistance = FindByName(__.LastDistance);
+
+            /// <summary>基准系统。距离1米时信号强度，默认60</summary>
+            public static readonly Field ParameterA = FindByName(__.ParameterA);
+
+            /// <summary>衰减系数。视环境而定，默认3.3</summary>
+            public static readonly Field ParameterN = FindByName(__.ParameterN);
+
+            /// <summary>登录次数</summary>
+            public static readonly Field Logins = FindByName(__.Logins);
+
+            /// <summary>最后登录</summary>
+            public static readonly Field LastLogin = FindByName(__.LastLogin);
+
+            /// <summary>最后IP。最后的公网IP地址</summary>
+            public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -312,15 +338,6 @@ namespace WiFi.Entity
             /// <summary>启用</summary>
             public const String Enable = "Enable";
 
-            /// <summary>登录次数</summary>
-            public const String Logins = "Logins";
-
-            /// <summary>最后登录</summary>
-            public const String LastLogin = "LastLogin";
-
-            /// <summary>最后IP。最后的公网IP地址</summary>
-            public const String LastLoginIP = "LastLoginIP";
-
             /// <summary>最后主机</summary>
             public const String LastHostID = "LastHostID";
 
@@ -332,6 +349,21 @@ namespace WiFi.Entity
 
             /// <summary>距离。设备到主机的距离，单位米</summary>
             public const String LastDistance = "LastDistance";
+
+            /// <summary>基准系统。距离1米时信号强度，默认60</summary>
+            public const String ParameterA = "ParameterA";
+
+            /// <summary>衰减系数。视环境而定，默认3.3</summary>
+            public const String ParameterN = "ParameterN";
+
+            /// <summary>登录次数</summary>
+            public const String Logins = "Logins";
+
+            /// <summary>最后登录</summary>
+            public const String LastLogin = "LastLogin";
+
+            /// <summary>最后IP。最后的公网IP地址</summary>
+            public const String LastLoginIP = "LastLoginIP";
 
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
@@ -376,15 +408,6 @@ namespace WiFi.Entity
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
 
-        /// <summary>登录次数</summary>
-        Int32 Logins { get; set; }
-
-        /// <summary>最后登录</summary>
-        DateTime LastLogin { get; set; }
-
-        /// <summary>最后IP。最后的公网IP地址</summary>
-        String LastLoginIP { get; set; }
-
         /// <summary>最后主机</summary>
         Int32 LastHostID { get; set; }
 
@@ -396,6 +419,21 @@ namespace WiFi.Entity
 
         /// <summary>距离。设备到主机的距离，单位米</summary>
         Double LastDistance { get; set; }
+
+        /// <summary>基准系统。距离1米时信号强度，默认60</summary>
+        Int32 ParameterA { get; set; }
+
+        /// <summary>衰减系数。视环境而定，默认3.3</summary>
+        Double ParameterN { get; set; }
+
+        /// <summary>登录次数</summary>
+        Int32 Logins { get; set; }
+
+        /// <summary>最后登录</summary>
+        DateTime LastLogin { get; set; }
+
+        /// <summary>最后IP。最后的公网IP地址</summary>
+        String LastLoginIP { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }
