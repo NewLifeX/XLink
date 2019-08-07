@@ -12,6 +12,7 @@ namespace WiFi.Entity
     [DataObject]
     [Description("原始数据")]
     [BindIndex("IX_RawData_CreateTime", false, "CreateTime")]
+    [BindIndex("IX_RawData_DeviceID_CreateTime", false, "DeviceID,CreateTime")]
     [BindTable("RawData", Description = "原始数据", ConnName = "WiFi", DbType = DatabaseType.None)]
     public partial class RawData : IRawData
     {
@@ -24,29 +25,37 @@ namespace WiFi.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
-        private String _HostMAC;
-        /// <summary>主机</summary>
-        [DisplayName("主机")]
-        [Description("主机")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("HostMAC", "主机", "")]
-        public String HostMAC { get { return _HostMAC; } set { if (OnPropertyChanging(__.HostMAC, value)) { _HostMAC = value; OnPropertyChanged(__.HostMAC); } } }
-
-        private String _DeviceMAC;
+        private Int32 _DeviceID;
         /// <summary>设备</summary>
         [DisplayName("设备")]
         [Description("设备")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("DeviceID", "设备", "")]
+        public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
+
+        private String _DeviceMAC;
+        /// <summary>设备MAC</summary>
+        [DisplayName("设备MAC")]
+        [Description("设备MAC")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("DeviceMAC", "设备", "")]
+        [BindColumn("DeviceMAC", "设备MAC", "")]
         public String DeviceMAC { get { return _DeviceMAC; } set { if (OnPropertyChanging(__.DeviceMAC, value)) { _DeviceMAC = value; OnPropertyChanged(__.DeviceMAC); } } }
 
         private String _RouteMAC;
-        /// <summary>路由</summary>
-        [DisplayName("路由")]
-        [Description("路由")]
+        /// <summary>路由MAC</summary>
+        [DisplayName("路由MAC")]
+        [Description("路由MAC")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("RouteMAC", "路由", "")]
+        [BindColumn("RouteMAC", "路由MAC", "")]
         public String RouteMAC { get { return _RouteMAC; } set { if (OnPropertyChanging(__.RouteMAC, value)) { _RouteMAC = value; OnPropertyChanged(__.RouteMAC); } } }
+
+        private String _HostMAC;
+        /// <summary>主机MAC</summary>
+        [DisplayName("主机MAC")]
+        [Description("主机MAC")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("HostMAC", "主机MAC", "")]
+        public String HostMAC { get { return _HostMAC; } set { if (OnPropertyChanging(__.HostMAC, value)) { _HostMAC = value; OnPropertyChanged(__.HostMAC); } } }
 
         private Int32 _FrameType;
         /// <summary>帧类型</summary>
@@ -88,6 +97,22 @@ namespace WiFi.Entity
         [BindColumn("Distance", "距离。设备到主机的距离，单位米", "")]
         public Double Distance { get { return _Distance; } set { if (OnPropertyChanging(__.Distance, value)) { _Distance = value; OnPropertyChanged(__.Distance); } } }
 
+        private Boolean _PowerSave;
+        /// <summary>省电。发射设备是否处于省电模式</summary>
+        [DisplayName("省电")]
+        [Description("省电。发射设备是否处于省电模式")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("PowerSave", "省电。发射设备是否处于省电模式", "")]
+        public Boolean PowerSave { get { return _PowerSave; } set { if (OnPropertyChanging(__.PowerSave, value)) { _PowerSave = value; OnPropertyChanged(__.PowerSave); } } }
+
+        private Boolean _IsRoute;
+        /// <summary>路由。是否由路由发出的信号</summary>
+        [DisplayName("路由")]
+        [Description("路由。是否由路由发出的信号")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("IsRoute", "路由。是否由路由发出的信号", "")]
+        public Boolean IsRoute { get { return _IsRoute; } set { if (OnPropertyChanging(__.IsRoute, value)) { _IsRoute = value; OnPropertyChanged(__.IsRoute); } } }
+
         private String _Remark;
         /// <summary>内容</summary>
         [DisplayName("内容")]
@@ -124,14 +149,17 @@ namespace WiFi.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
-                    case __.HostMAC : return _HostMAC;
+                    case __.DeviceID : return _DeviceID;
                     case __.DeviceMAC : return _DeviceMAC;
                     case __.RouteMAC : return _RouteMAC;
+                    case __.HostMAC : return _HostMAC;
                     case __.FrameType : return _FrameType;
                     case __.FrameType2 : return _FrameType2;
                     case __.Channel : return _Channel;
                     case __.Rssi : return _Rssi;
                     case __.Distance : return _Distance;
+                    case __.PowerSave : return _PowerSave;
+                    case __.IsRoute : return _IsRoute;
                     case __.Remark : return _Remark;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -143,14 +171,17 @@ namespace WiFi.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
-                    case __.HostMAC : _HostMAC = Convert.ToString(value); break;
+                    case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.DeviceMAC : _DeviceMAC = Convert.ToString(value); break;
                     case __.RouteMAC : _RouteMAC = Convert.ToString(value); break;
+                    case __.HostMAC : _HostMAC = Convert.ToString(value); break;
                     case __.FrameType : _FrameType = value.ToInt(); break;
                     case __.FrameType2 : _FrameType2 = value.ToInt(); break;
                     case __.Channel : _Channel = value.ToInt(); break;
                     case __.Rssi : _Rssi = value.ToInt(); break;
                     case __.Distance : _Distance = value.ToDouble(); break;
+                    case __.PowerSave : _PowerSave = value.ToBoolean(); break;
+                    case __.IsRoute : _IsRoute = value.ToBoolean(); break;
                     case __.Remark : _Remark = Convert.ToString(value); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -167,14 +198,17 @@ namespace WiFi.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
-            /// <summary>主机</summary>
-            public static readonly Field HostMAC = FindByName(__.HostMAC);
-
             /// <summary>设备</summary>
+            public static readonly Field DeviceID = FindByName(__.DeviceID);
+
+            /// <summary>设备MAC</summary>
             public static readonly Field DeviceMAC = FindByName(__.DeviceMAC);
 
-            /// <summary>路由</summary>
+            /// <summary>路由MAC</summary>
             public static readonly Field RouteMAC = FindByName(__.RouteMAC);
+
+            /// <summary>主机MAC</summary>
+            public static readonly Field HostMAC = FindByName(__.HostMAC);
 
             /// <summary>帧类型</summary>
             public static readonly Field FrameType = FindByName(__.FrameType);
@@ -190,6 +224,12 @@ namespace WiFi.Entity
 
             /// <summary>距离。设备到主机的距离，单位米</summary>
             public static readonly Field Distance = FindByName(__.Distance);
+
+            /// <summary>省电。发射设备是否处于省电模式</summary>
+            public static readonly Field PowerSave = FindByName(__.PowerSave);
+
+            /// <summary>路由。是否由路由发出的信号</summary>
+            public static readonly Field IsRoute = FindByName(__.IsRoute);
 
             /// <summary>内容</summary>
             public static readonly Field Remark = FindByName(__.Remark);
@@ -209,14 +249,17 @@ namespace WiFi.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
-            /// <summary>主机</summary>
-            public const String HostMAC = "HostMAC";
-
             /// <summary>设备</summary>
+            public const String DeviceID = "DeviceID";
+
+            /// <summary>设备MAC</summary>
             public const String DeviceMAC = "DeviceMAC";
 
-            /// <summary>路由</summary>
+            /// <summary>路由MAC</summary>
             public const String RouteMAC = "RouteMAC";
+
+            /// <summary>主机MAC</summary>
+            public const String HostMAC = "HostMAC";
 
             /// <summary>帧类型</summary>
             public const String FrameType = "FrameType";
@@ -232,6 +275,12 @@ namespace WiFi.Entity
 
             /// <summary>距离。设备到主机的距离，单位米</summary>
             public const String Distance = "Distance";
+
+            /// <summary>省电。发射设备是否处于省电模式</summary>
+            public const String PowerSave = "PowerSave";
+
+            /// <summary>路由。是否由路由发出的信号</summary>
+            public const String IsRoute = "IsRoute";
 
             /// <summary>内容</summary>
             public const String Remark = "Remark";
@@ -252,14 +301,17 @@ namespace WiFi.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
-        /// <summary>主机</summary>
-        String HostMAC { get; set; }
-
         /// <summary>设备</summary>
+        Int32 DeviceID { get; set; }
+
+        /// <summary>设备MAC</summary>
         String DeviceMAC { get; set; }
 
-        /// <summary>路由</summary>
+        /// <summary>路由MAC</summary>
         String RouteMAC { get; set; }
+
+        /// <summary>主机MAC</summary>
+        String HostMAC { get; set; }
 
         /// <summary>帧类型</summary>
         Int32 FrameType { get; set; }
@@ -275,6 +327,12 @@ namespace WiFi.Entity
 
         /// <summary>距离。设备到主机的距离，单位米</summary>
         Double Distance { get; set; }
+
+        /// <summary>省电。发射设备是否处于省电模式</summary>
+        Boolean PowerSave { get; set; }
+
+        /// <summary>路由。是否由路由发出的信号</summary>
+        Boolean IsRoute { get; set; }
 
         /// <summary>内容</summary>
         String Remark { get; set; }

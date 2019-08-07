@@ -73,20 +73,24 @@
   <Table Name="RawData" Description="原始数据">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="HostMAC" DataType="String" Description="主机" />
-      <Column Name="DeviceMAC" DataType="String" Description="设备" />
-      <Column Name="RouteMAC" DataType="String" Description="路由" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
+      <Column Name="DeviceMAC" DataType="String" Description="设备MAC" />
+      <Column Name="RouteMAC" DataType="String" Description="路由MAC" />
+      <Column Name="HostMAC" DataType="String" Description="主机MAC" />
       <Column Name="FrameType" DataType="Int32" Description="帧类型" />
       <Column Name="FrameType2" DataType="Int32" Description="子类型" />
       <Column Name="Channel" DataType="Int32" Description="信道" />
       <Column Name="Rssi" DataType="Int32" Description="信号强度" />
       <Column Name="Distance" DataType="Double" Description="距离。设备到主机的距离，单位米" />
+      <Column Name="PowerSave" DataType="Boolean" Description="省电。发射设备是否处于省电模式" />
+      <Column Name="IsRoute" DataType="Boolean" Description="路由。是否由路由发出的信号" />
       <Column Name="Remark" DataType="String" Description="内容" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
     </Columns>
     <Indexes>
       <Index Columns="CreateTime" />
+      <Index Columns="DeviceID,CreateTime" />
     </Indexes>
   </Table>
 </Tables>

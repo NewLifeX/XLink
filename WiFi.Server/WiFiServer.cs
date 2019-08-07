@@ -173,11 +173,14 @@ namespace WiFi.Server
                 rd.Channel = ss[5].ToInt();
                 rd.Rssi = ss[6].ToInt();
 
-                // 抛弃路由器发出的数据
-                if (ss.Length >= 10 && ss[9] == "0") return null;
+                if (ss.Length >= 7 + 1) rd.PowerSave = ss[7] == "1";
+
+                //// 抛弃路由器发出的数据
+                //if (ss.Length >= 10 && ss[9] == "0") return null;
+                if (ss.Length >= 8 + 1) rd.IsRoute = ss[8] == "0";
 
                 //rd.Remark = ss.Last();
-                if (ss.Length >= 11) rd.Remark = ss[10];
+                if (ss.Length >= 10 + 1) rd.Remark = ss[10];
             }
             else
             {
