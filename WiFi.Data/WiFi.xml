@@ -11,7 +11,7 @@
       <Column Name="LastRouteID" DataType="Int32" Description="最后路由" />
       <Column Name="LastRSSI" DataType="Int32" Description="信号强度" />
       <Column Name="LastDistance" DataType="Double" Description="距离。设备到主机的距离，单位米" />
-      <Column Name="ParameterA" DataType="Int32" Description="基准系统。距离1米时信号强度，默认60" />
+      <Column Name="ParameterA" DataType="Int32" Description="基准强度。距离1米时信号强度，默认60" />
       <Column Name="ParameterN" DataType="Double" Description="衰减系数。视环境而定，默认3.3" />
       <Column Name="Logins" DataType="Int32" Description="登录次数" />
       <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />

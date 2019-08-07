@@ -1,4 +1,6 @@
+using NewLife.Data;
 using System;
+using System.Collections.Generic;
 using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using XCode;
@@ -103,6 +105,25 @@ namespace WiFi.Entity
         #endregion
 
         #region 高级查询
+        /// <summary>高级搜索</summary>
+        /// <param name="deviceid"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="key"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public static IList<RawData> Search(Int32 deviceid, DateTime start, DateTime end, String key, PageParameter page)
+        {
+            var exp = new WhereExpression();
+
+            if (deviceid >= 0) exp &= _.DeviceID == deviceid;
+
+            exp &= _.CreateTime.Between(start, end);
+
+            if (!key.IsNullOrEmpty()) exp &= (_.DeviceMAC == key | _.RouteMAC == key | _.HostMAC == key);
+
+            return FindAll(exp, page);
+        }
         #endregion
 
         #region 业务操作

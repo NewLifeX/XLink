@@ -41,24 +41,23 @@ namespace WiFi.Entity
         #region 高级查询
         /// <summary>高级搜索</summary>
         /// <param name="deviceid"></param>
-        /// <param name="type"></param>
         /// <param name="action"></param>
         /// <param name="success"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="key"></param>
-        /// <param name="param"></param>
+        /// <param name="page"></param>
         /// <returns></returns>
-        public static IList<DeviceHistory> Search(Int32 deviceid, String action, Boolean? success, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<DeviceHistory> Search(Int32 deviceid, String action, Boolean? success, DateTime start, DateTime end, String key, PageParameter page)
         {
-            var list = Search(deviceid, action, success, start, end, key, param, false);
+            var list = Search(deviceid, action, success, start, end, key, page, false);
             // 如果结果为0，并且有key，则使用扩展查询，对内网外网地址进行模糊查询
-            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(deviceid, action, success, start, end, key, param, true);
+            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(deviceid, action, success, start, end, key, page, true);
 
             return list;
         }
 
-        private static IList<DeviceHistory> Search(Int32 deviceid, String action, Boolean? success, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        private static IList<DeviceHistory> Search(Int32 deviceid, String action, Boolean? success, DateTime start, DateTime end, String key, PageParameter page, Boolean ext)
         {
             var exp = new WhereExpression();
 
@@ -76,7 +75,7 @@ namespace WiFi.Entity
                     exp &= _.Name.StartsWith(key);
             }
 
-            return FindAll(exp, param);
+            return FindAll(exp, page);
         }
         #endregion
 

@@ -89,11 +89,11 @@ namespace WiFi.Entity
         public Double LastDistance { get { return _LastDistance; } set { if (OnPropertyChanging(__.LastDistance, value)) { _LastDistance = value; OnPropertyChanged(__.LastDistance); } } }
 
         private Int32 _ParameterA;
-        /// <summary>基准系统。距离1米时信号强度，默认60</summary>
-        [DisplayName("基准系统")]
-        [Description("基准系统。距离1米时信号强度，默认60")]
+        /// <summary>基准强度。距离1米时信号强度，默认60</summary>
+        [DisplayName("基准强度")]
+        [Description("基准强度。距离1米时信号强度，默认60")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("ParameterA", "基准系统。距离1米时信号强度，默认60", "")]
+        [BindColumn("ParameterA", "基准强度。距离1米时信号强度，默认60", "")]
         public Int32 ParameterA { get { return _ParameterA; } set { if (OnPropertyChanging(__.ParameterA, value)) { _ParameterA = value; OnPropertyChanged(__.ParameterA); } } }
 
         private Double _ParameterN;
@@ -281,7 +281,7 @@ namespace WiFi.Entity
             /// <summary>距离。设备到主机的距离，单位米</summary>
             public static readonly Field LastDistance = FindByName(__.LastDistance);
 
-            /// <summary>基准系统。距离1米时信号强度，默认60</summary>
+            /// <summary>基准强度。距离1米时信号强度，默认60</summary>
             public static readonly Field ParameterA = FindByName(__.ParameterA);
 
             /// <summary>衰减系数。视环境而定，默认3.3</summary>
@@ -350,7 +350,7 @@ namespace WiFi.Entity
             /// <summary>距离。设备到主机的距离，单位米</summary>
             public const String LastDistance = "LastDistance";
 
-            /// <summary>基准系统。距离1米时信号强度，默认60</summary>
+            /// <summary>基准强度。距离1米时信号强度，默认60</summary>
             public const String ParameterA = "ParameterA";
 
             /// <summary>衰减系数。视环境而定，默认3.3</summary>
@@ -420,7 +420,7 @@ namespace WiFi.Entity
         /// <summary>距离。设备到主机的距离，单位米</summary>
         Double LastDistance { get; set; }
 
-        /// <summary>基准系统。距离1米时信号强度，默认60</summary>
+        /// <summary>基准强度。距离1米时信号强度，默认60</summary>
         Int32 ParameterA { get; set; }
 
         /// <summary>衰减系数。视环境而定，默认3.3</summary>

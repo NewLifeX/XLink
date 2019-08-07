@@ -24,7 +24,7 @@ namespace WiFi.Device.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<DeviceHistory> Search(Pager p)
         {
-            var deviceid = p["DeviceID"].ToInt();
+            var deviceid = p["DeviceID"].ToInt(-1);
             var action = p["action"];
             var success = p["success"]?.ToBoolean();
 

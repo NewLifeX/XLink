@@ -11,7 +11,7 @@ namespace WiFi.Entity
     [Serializable]
     [DataObject]
     [Description("设备历史")]
-    [BindIndex("IX_DeviceHistory_DeviceID", false, "DeviceID")]
+    [BindIndex("IX_DeviceHistory_DeviceID_CreateTime", false, "DeviceID,CreateTime")]
     [BindIndex("IX_DeviceHistory_Name", false, "Name")]
     [BindTable("DeviceHistory", Description = "设备历史", ConnName = "WiFi", DbType = DatabaseType.None)]
     public partial class DeviceHistory : IDeviceHistory
