@@ -92,6 +92,8 @@ namespace WiFi.Server
                     dv.LastRouteID = route.DeviceID;
                     dv.LastRSSI = rd.Rssi;
                     dv.LastDistance = rd.Distance;
+
+                    rd.DeviceID = dv.ID;
                 }
             }
 

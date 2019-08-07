@@ -1,4 +1,6 @@
 using System;
+using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using XCode;
 using XCode.Membership;
 
@@ -73,6 +75,13 @@ namespace WiFi.Entity
         #endregion
 
         #region 扩展属性
+        /// <summary>设备</summary>
+        [XmlIgnore, ScriptIgnore]
+        public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceID));
+
+        /// <summary>设备</summary>
+        [Map(__.DeviceID)]
+        public String DeviceName => Device + "";
         #endregion
 
         #region 扩展查询
