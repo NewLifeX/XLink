@@ -73,42 +73,8 @@ namespace WiFi.Server
 
             // 登录在线
             var host = Check(rd.HostMAC, null, DeviceKinds.Host);
-            var route = Check(rd.RouteMAC, rd.Remark, DeviceKinds.Route);
-            var olt = Check(rd.DeviceMAC, null, DeviceKinds.Device);
-
-            if (olt != null)
-            {
-                olt.Rssi = rd.Rssi;
-                olt.Distance = rd.Distance;
-
-                if (host != null) olt.HostID = host.DeviceID;
-                if (route != null) olt.RouteID = route.DeviceID;
-
-                // 设备属性
-                var dv = olt.Device;
-                if (dv != null)
-                {
-                    dv.LastHostID = host.DeviceID;
-                    dv.LastRouteID = route.DeviceID;
-                    dv.LastRSSI = rd.Rssi;
-                    dv.LastDistance = rd.Distance;
-
-                    rd.DeviceID = dv.ID;
-                }
-            }
-
-            // 更新路由器名称
-            if (route != null && !rd.Remark.IsNullOrEmpty())
-            {
-                route.Name = rd.Remark;
-
-                var dv = route.Device;
-                if (dv != null)
-                {
-                    dv.Name = rd.Remark;
-                    dv.SaveAsync();
-                }
-            }
+            var dest = Check(rd.RouteMAC, rd.Remark, rd.IsRoute ? DeviceKinds.Device : DeviceKinds.Route);
+            var src = Check(rd.DeviceMAC, null, rd.IsRoute ? DeviceKinds.Route : DeviceKinds.Device);
 
             // 计算距离
             var pa = 60;
@@ -123,6 +89,45 @@ namespace WiFi.Server
                 }
             }
             rd.Distance = GetDistance(rd.Rssi, pa, pn);
+
+            // 设备状态
+            if (src != null)
+            {
+                src.Rssi = rd.Rssi;
+                src.Distance = rd.Distance;
+
+                if (host != null) src.HostID = host.DeviceID;
+                if (dest != null) src.RouteID = dest.DeviceID;
+
+                src.SaveAsync();
+
+                // 设备属性
+                var dv = src.Device;
+                if (dv != null)
+                {
+                    dv.LastHostID = host.DeviceID;
+                    dv.LastRouteID = dest.DeviceID;
+                    dv.LastRSSI = rd.Rssi;
+                    dv.LastDistance = rd.Distance;
+                    dv.SaveAsync();
+
+                    rd.DeviceID = dv.ID;
+                }
+            }
+
+            // 更新路由器名称
+            if (dest != null && !rd.Remark.IsNullOrEmpty())
+            {
+                dest.Name = rd.Remark;
+                dest.SaveAsync();
+
+                var dv = dest.Device;
+                if (dv != null)
+                {
+                    dv.Name = rd.Remark;
+                    dv.SaveAsync();
+                }
+            }
 
             // 入库
             rd.SaveAsync();
