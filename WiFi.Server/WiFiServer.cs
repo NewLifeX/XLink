@@ -189,8 +189,8 @@ namespace WiFi.Server
                 //rd.Remark = ss.Last();
                 if (ss.Length >= 10 + 1) rd.Remark = ss[10];
 
-                // 手机发给路由的有名称
-                if (!rd.Remark.IsNullOrEmpty()) rd.IsRoute = true;
+                // 手机发给路由的有名称，路由发给手机没名称
+                if (rd.Remark.IsNullOrEmpty()) rd.IsRoute = true;
             }
             else
             {
