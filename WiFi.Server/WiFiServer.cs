@@ -212,7 +212,15 @@ namespace WiFi.Server
             var dv = Device.GetOrAdd(code);
             if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
 
-            if (!name.IsNullOrEmpty()) dv.Name = name;
+            if (!name.IsNullOrEmpty())
+            {
+                // 路由直接覆盖，其它只能在没有时填充
+                if (kind == DeviceKinds.Route)
+                    dv.Name = name;
+                else if (dv.Name.IsNullOrEmpty())
+                    dv.Name = name;
+            }
+
             dv.Kind = kind;
 
             dv.Logins++;
