@@ -212,7 +212,7 @@ namespace WiFi.Server
             var dv = Device.GetOrAdd(code);
             if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
 
-            dv.Name = name;
+            if (!name.IsNullOrEmpty()) dv.Name = name;
             dv.Kind = kind;
 
             dv.Logins++;
