@@ -115,6 +115,23 @@ namespace WiFi.Entity
 
             //return Find(_.Code == code);
         }
+
+        /// <summary>根据名称查找</summary>
+        /// <param name="code">名称</param>
+        /// <param name="cache">是否走缓存</param>
+        /// <returns>实体对象</returns>
+        public static Device FindByCode(String code, Boolean cache)
+        {
+            if (!cache) return Find(_.Code == code);
+
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.Code == code);
+
+            // 单对象缓存
+            return Meta.SingleCache.GetItemWithSlaveKey(code) as Device;
+
+            //return Find(_.Code == code);
+        }
         #endregion
 
         #region 高级查询
@@ -146,6 +163,11 @@ namespace WiFi.Entity
         #endregion
 
         #region 业务
+        //public static Device GetOrAdd(String code) => GetOrAdd(code, (k, c) => Find(_.Code == k), k => new Device { Code = k, Enable = true });
+        /// <summary>根据编码查询或添加</summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static Device GetOrAdd(String code) => GetOrAdd(code, FindByCode, k => new Device { Code = k, Enable = true });
         #endregion
 
         #region 辅助

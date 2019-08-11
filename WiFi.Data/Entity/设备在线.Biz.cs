@@ -25,6 +25,10 @@ namespace WiFi.Entity
 
             Meta.Modules.Add<TimeModule>();
             Meta.Modules.Add<IPModule>();
+
+            var sc = Meta.SingleCache;
+            sc.FindSlaveKeyMethod = k => Find(_.SessionID == k);
+            sc.GetSlaveKeyMethod = e => e.SessionID;
         }
         #endregion
 
@@ -67,9 +71,27 @@ namespace WiFi.Entity
         public static DeviceOnline FindBySessionID(String sessionid)
         {
             //if (Meta.Count >= 1000)
-            return Find(__.SessionID, sessionid);
+            //return Find(__.SessionID, sessionid);
             //else // 实体缓存
             //    return Meta.Cache.Entities.FirstOrDefault(e => e.SessionID == sessionid);
+
+            return Meta.SingleCache.GetItemWithSlaveKey(sessionid) as DeviceOnline;
+        }
+
+        /// <summary>根据会话查找</summary>
+        /// <param name="sessionid">会话</param>
+        /// <param name="cache">是否走缓存</param>
+        /// <returns></returns>
+        public static DeviceOnline FindBySessionID(String sessionid, Boolean cache)
+        {
+            if (!cache) return Find(_.SessionID == sessionid);
+
+            //if (Meta.Count >= 1000)
+            //return Find(__.SessionID, sessionid);
+            //else // 实体缓存
+            //    return Meta.Cache.Entities.FirstOrDefault(e => e.SessionID == sessionid);
+
+            return Meta.SingleCache.GetItemWithSlaveKey(sessionid) as DeviceOnline;
         }
         #endregion
 
@@ -121,6 +143,11 @@ namespace WiFi.Entity
         #endregion
 
         #region 业务
+        /// <summary>根据编码查询或添加</summary>
+        /// <param name="sessionid"></param>
+        /// <returns></returns>
+        public static DeviceOnline GetOrAdd(String sessionid) => GetOrAdd(sessionid, FindBySessionID, k => new DeviceOnline { SessionID = k });
+
         /// <summary>删除过期，指定过期时间</summary>
         /// <param name="secTimeout">超时时间，秒</param>
         /// <returns></returns>

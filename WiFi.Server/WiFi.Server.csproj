@@ -7,8 +7,8 @@
     <Description>采集并存储用户WiFi数据</Description>
     <Company>新生命开发团队</Company>
     <Copyright>版权所有(C) 新生命开发团队 2019</Copyright>
-    <Version>1.0.2019.0806</Version>
-    <FileVersion>1.0.2019.0806</FileVersion>
+    <Version>1.0.2019.0811</Version>
+    <FileVersion>1.0.2019.0811</FileVersion>
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>link.ico</ApplicationIcon>

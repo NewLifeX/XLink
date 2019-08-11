@@ -148,13 +148,6 @@ namespace WiFi.Server
 
             return olt;
         }
-
-        protected override void OnDispose(Boolean disposing)
-        {
-            base.OnDispose(disposing);
-
-            //Online?.Delete();
-        }
         #endregion
 
         #region 解析
@@ -216,18 +209,7 @@ namespace WiFi.Server
         /// <returns></returns>
         protected virtual Device Login(String code, String name, String ip, DeviceKinds kind)
         {
-            var dv = Device.FindByCode(code);
-            if (dv == null)
-            {
-                dv = new Device
-                {
-                    Name = name,
-                    Code = code,
-                    Enable = true,
-                };
-                dv.Insert();
-            }
-
+            var dv = Device.GetOrAdd(code);
             if (!dv.Enable) throw new Exception($"[{dv.Name}/{dv.Code}]禁止登录");
 
             dv.Name = name;
@@ -258,15 +240,20 @@ namespace WiFi.Server
         protected virtual DeviceOnline CreateOnline(String mac, IDevice dv)
         {
             var sid = $"{mac}@{Remote.EndPoint}";
-            var olt = new DeviceOnline
-            {
-                SessionID = sid,
-                DeviceID = dv.ID,
-                Name = dv + "",
-                Kind = dv.Kind,
-            };
+            //var olt = new DeviceOnline
+            //{
+            //    SessionID = sid,
+            //    DeviceID = dv.ID,
+            //    Name = dv + "",
+            //    Kind = dv.Kind,
+            //};
+            var olt = DeviceOnline.GetOrAdd(sid);
+            olt.DeviceID = dv.ID;
+            olt.Name = dv + "";
+            olt.Kind = dv.Kind;
 
-            olt.Insert();
+            //olt.Insert();
+            olt.SaveAsync();
 
             return olt;
         }
