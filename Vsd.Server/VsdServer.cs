@@ -1,4 +1,6 @@
-﻿using NewLife.Net;
+﻿using NewLife.Data;
+using NewLife.Http;
+using NewLife.Net;
 using NewLife.Serialization;
 using System;
 using System.Collections.Generic;
@@ -26,11 +28,24 @@ namespace Vsd.Server
         #region 主循环
         protected override void OnReceive(ReceivedEventArgs e)
         {
-            //base.OnReceive(e);
+            var pk = e.Packet;
+            if (pk == null || pk.Total < 4) return;
 
-            var str = e.Packet.ToStr();
+            if (pk[0] == 'G' && pk[1] == 'E' && pk[2] == 'T' ||
+                pk[0] == 'P' && pk[1] == 'O' && pk[2] == 'S' && pk[3] == 'T')
+            {
+                ProcessHttp(pk);
+                return;
+            }
+
+            var str = pk.ToStr().Trim();
             if (str.IsNullOrEmpty()) return;
 
+            Process(str);
+        }
+
+        public void Process(String str)
+        {
             var dic = new JsonParser(str).Decode() as IDictionary<String, Object>;
             if (dic == null || dic.Count == 0) return;
 
@@ -92,6 +107,29 @@ namespace Vsd.Server
                     hi.SaveAsync();
                 }
             }
+        }
+
+        private HttpEncoder _Encoder = new HttpEncoder();
+        public void ProcessHttp(Packet pk)
+        {
+            var msg = new HttpMessage();
+            msg.Read(pk);
+
+            if (!_Encoder.Decode(msg, out var action, out var code, out var body)) return;
+
+            WriteLog("{0} {1}", action, body.ToStr());
+
+            Object result = null;
+            switch (action)
+            {
+                case "pull":
+                    result = Pull(msg, action, body.ToStr());
+                    break;
+            }
+
+            //if (result == null) result = "";
+            var rs = _Encoder.CreateResponse(msg, action, code, result);
+            Session.Send(rs.ToPacket());
         }
 
         protected override void OnDispose(Boolean disposing)
@@ -267,6 +305,17 @@ namespace Vsd.Server
                 ip,
                 seq,
                 rsq = "pk",
+            };
+        }
+        #endregion
+
+        #region 长拉
+        public Object Pull(HttpMessage msg, String action, String value)
+        {
+            return new
+            {
+                action,
+                value
             };
         }
         #endregion
