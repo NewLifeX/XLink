@@ -327,21 +327,29 @@ namespace Vsd.Server
             var ps = value.SplitAsDictionary("=", "&");
             var code = ps["snr"] + "";
             var timeout = ps["timeout"].ToInt();
+            var count = ps["count"].ToInt();
+
+            if (count <= 0) count = 10;
 
             var dv = Device.FindByCode(code);
             if (dv == null) dv = Login(code, null, null);
 
             // 轮询指令表
             var end = DateTime.Now.AddSeconds(timeout);
+            var first = true;
             do
             {
-                var list = DeviceCommand.GetCommands(dv.ID, 0, 10);
+                var list = DeviceCommand.GetCommands(dv.ID, 0, count);
                 if (list.Count > 0)
                 {
+                    WriteLog("[{0}]长拉取得命令[{1}]", dv, list.Count);
+
                     // 改变状态
                     foreach (var item in list)
                     {
                         item.Status = CommandStatus.完成;
+                        item.UpdateTime = DateTime.Now;
+                        item.UpdateIP = Remote.Address + "";
                     }
                     list.Save();
 
@@ -355,6 +363,9 @@ namespace Vsd.Server
                         e.UpdateTime,
                     });
                 }
+
+                if (first) WriteLog("[{0}]长拉等待……", dv);
+                first = false;
 
                 Thread.Sleep(500);
             } while (DateTime.Now < end);
