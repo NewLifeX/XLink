@@ -4,6 +4,8 @@ using NewLife.Net;
 using NewLife.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Vsd.Entity;
 using XCode.Membership;
 
@@ -120,11 +122,20 @@ namespace Vsd.Server
             WriteLog("{0} {1}", action, body.ToStr());
 
             Object result = null;
-            switch (action)
+            code = 200;
+            try
             {
-                case "pull":
-                    result = Pull(msg, action, body.ToStr());
-                    break;
+                switch (action)
+                {
+                    case "pull":
+                        result = Pull(msg, action, body.ToStr());
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                code = 500;
+                result = ex.GetTrue().Message;
             }
 
             //if (result == null) result = "";
@@ -204,7 +215,7 @@ namespace Vsd.Server
             dv.Logins++;
             dv.LocalIP = ip;
             dv.LastLogin = DateTime.Now;
-            dv.LastLoginIP = ip;
+            dv.LastLoginIP = Remote.Address + "";
 
             dv.SaveAsync();
 
@@ -312,11 +323,32 @@ namespace Vsd.Server
         #region 长拉
         public Object Pull(HttpMessage msg, String action, String value)
         {
-            return new
+            var ps = value.SplitAsDictionary("=", "&");
+            var code = ps["snr"] + "";
+            var timeout = ps["timeout"].ToInt();
+
+            var dv = Device.FindByCode(code);
+            if (dv == null) dv = Login(code, null, null);
+
+            // 轮询指令表
+            var end = DateTime.Now.AddSeconds(timeout);
+            do
             {
-                action,
-                value
-            };
+                var list = DeviceCommand.GetCommands(dv.ID, 0, 10);
+                if (list.Count > 0)
+                {
+                    return list.Select(e => new
+                    {
+                        e.Command,
+                        e.Argument,
+                        e.Message,
+                    });
+                }
+
+                Thread.Sleep(500);
+            } while (DateTime.Now < end);
+
+            return null;
         }
         #endregion
     }

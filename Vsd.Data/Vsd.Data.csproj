@@ -35,6 +35,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Config\**" />
+    <EmbeddedResource Remove="Config\**" />
+    <None Remove="Config\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="DeviceSession.cs" />
     <Compile Remove="LinkSession.cs" />
     <Compile Remove="UserSession.cs" />
