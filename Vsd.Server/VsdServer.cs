@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Vsd.Entity;
+using XCode;
 using XCode.Membership;
 
 namespace Vsd.Server
@@ -337,11 +338,21 @@ namespace Vsd.Server
                 var list = DeviceCommand.GetCommands(dv.ID, 0, 10);
                 if (list.Count > 0)
                 {
+                    // 改变状态
+                    foreach (var item in list)
+                    {
+                        item.Status = CommandStatus.完成;
+                    }
+                    list.Save();
+
                     return list.Select(e => new
                     {
+                        dv.Code,
                         e.Command,
                         e.Argument,
                         e.Message,
+                        e.CreateTime,
+                        e.UpdateTime,
                     });
                 }
 
