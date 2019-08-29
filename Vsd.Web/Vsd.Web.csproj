@@ -102,6 +102,11 @@
     <Compile Include="Areas\Device\Controllers\DeviceHistoryController.cs" />
     <Compile Include="Areas\Device\Controllers\DeviceOnlineController.cs" />
     <Compile Include="Areas\Device\Controllers\DeviceController.cs" />
+    <Compile Include="Areas\Device\Views\DeviceCommand\_List_Toolbar_Batch.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_List_Toolbar_Batch.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Device\VsdAreaRegistration.cs" />
     <Compile Include="Areas\Device\Views\DeviceHistory\_List_Toolbar.generated.cs">
       <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
@@ -142,6 +147,10 @@
       <LastGenOutput>_List_Toolbar.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\Device\Views\Web.config" />
+    <Content Include="Areas\Device\Views\DeviceCommand\_List_Toolbar_Batch.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_List_Toolbar_Batch.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\Front.pubxml" />
   </ItemGroup>
   <ItemGroup>
