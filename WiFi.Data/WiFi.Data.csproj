@@ -9,7 +9,6 @@
     <FileVersion>1.0.2019.0811</FileVersion>
     <AssemblyVersion>1.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <DocumentationFile>$(OutputPath)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
@@ -32,21 +31,6 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Config\**" />
-    <Compile Remove="Log\**" />
-    <EmbeddedResource Remove="Config\**" />
-    <EmbeddedResource Remove="Log\**" />
-    <None Remove="Config\**" />
-    <None Remove="Log\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="DeviceSession.cs" />
-    <Compile Remove="LinkSession.cs" />
-    <Compile Remove="UserSession.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NewLife.Core" Version="8.2.2019.706" />
