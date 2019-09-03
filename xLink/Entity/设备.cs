@@ -13,7 +13,7 @@ namespace xLink.Entity
     [Description("设备")]
     [BindIndex("IU_Device_Name", true, "Name")]
     [BindIndex("IX_Device_Type", false, "Type")]
-    [BindTable("Device", Description = "设备", ConnName = "Device", DbType = DatabaseType.SqlServer)]
+    [BindTable("Device", Description = "设备", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
     public partial class Device : IDevice
     {
         #region 属性

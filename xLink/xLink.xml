@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables Version="9.12.7126.42295" Output="Entity" NameSpace="xLink.Entity" ConnName="" BaseClass="Entity">
-  <Table Name="Product" Description="产品" ConnName="Device" DbType="SqlServer">
+<Tables Version="9.12.7126.42295" Output="Entity" NameSpace="xLink.Entity" ConnName="xLink" BaseClass="Entity">
+  <Table Name="Product" Description="产品" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
@@ -25,7 +25,7 @@
       <Index Columns="Key" Unique="True" />
     </Indexes>
   </Table>
-  <Table Name="Device" Description="设备" ConnName="Device" DbType="SqlServer">
+  <Table Name="Device" Description="设备" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称。登录用户名" />
@@ -55,7 +55,7 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
-  <Table Name="DeviceOnline" Description="设备在线" ConnName="Device" DbType="SqlServer">
+  <Table Name="DeviceOnline" Description="设备在线" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="DeviceID" DataType="Int32" Description="编码" />
@@ -82,7 +82,7 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
-  <Table Name="DeviceHistory" Description="设备历史" ConnName="Device" DbType="SqlServer">
+  <Table Name="DeviceHistory" Description="设备历史" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="DeviceID" DataType="Int32" Description="编码" />
@@ -103,7 +103,7 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
-  <Table Name="DeviceCommand" Description="设备指令" ConnName="Device" DbType="SqlServer">
+  <Table Name="DeviceCommand" Description="设备指令" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="DeviceID" DataType="Int32" Description="设备" />
@@ -124,7 +124,7 @@
       <Index Columns="Command" />
     </Indexes>
   </Table>
-  <Table Name="User" Description="用户" ConnName="User" DbType="SqlServer">
+  <Table Name="User" Description="用户" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称。登录用户名" />
@@ -155,7 +155,7 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
-  <Table Name="UserOnline" Description="用户在线" ConnName="User" DbType="SqlServer">
+  <Table Name="UserOnline" Description="用户在线" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="UserID" DataType="Int32" Description="编码" />
@@ -182,7 +182,7 @@
       <Index Columns="Type" />
     </Indexes>
   </Table>
-  <Table Name="UserHistory" Description="用户历史" ConnName="User" DbType="SqlServer">
+  <Table Name="UserHistory" Description="用户历史" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="UserID" DataType="Int32" Description="编码" />
