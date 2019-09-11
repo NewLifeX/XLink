@@ -11,10 +11,8 @@ namespace xLink.Entity
     [Serializable]
     [DataObject]
     [Description("设备在线")]
-    [BindIndex("IX_DeviceOnline_SessionID", false, "SessionID")]
+    [BindIndex("IU_DeviceOnline_SessionID", true, "SessionID")]
     [BindIndex("IX_DeviceOnline_DeviceID", false, "DeviceID")]
-    [BindIndex("IX_DeviceOnline_Name", false, "Name")]
-    [BindIndex("IX_DeviceOnline_Type", false, "Type")]
     [BindTable("DeviceOnline", Description = "设备在线", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
     public partial class DeviceOnline : IDeviceOnline
     {
@@ -26,6 +24,14 @@ namespace xLink.Entity
         [DataObjectField(true, true, false, 0)]
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
+
+        private Int32 _ProductID;
+        /// <summary>产品</summary>
+        [DisplayName("产品")]
+        [Description("产品")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("ProductID", "产品", "")]
+        public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
 
         private Int32 _DeviceID;
         /// <summary>编码</summary>
@@ -50,14 +56,6 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
-
-        private String _Type;
-        /// <summary>类型</summary>
-        [DisplayName("类型")]
-        [Description("类型")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "")]
-        public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
 
         private String _NetType;
         /// <summary>网络</summary>
@@ -167,10 +165,10 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
+                    case __.ProductID : return _ProductID;
                     case __.DeviceID : return _DeviceID;
                     case __.Name : return _Name;
                     case __.Version : return _Version;
-                    case __.Type : return _Type;
                     case __.NetType : return _NetType;
                     case __.SessionID : return _SessionID;
                     case __.InternalUri : return _InternalUri;
@@ -191,10 +189,10 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
+                    case __.ProductID : _ProductID = value.ToInt(); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
-                    case __.Type : _Type = Convert.ToString(value); break;
                     case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.SessionID : _SessionID = value.ToInt(); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
@@ -220,6 +218,9 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
+            /// <summary>产品</summary>
+            public static readonly Field ProductID = FindByName(__.ProductID);
+
             /// <summary>编码</summary>
             public static readonly Field DeviceID = FindByName(__.DeviceID);
 
@@ -228,9 +229,6 @@ namespace xLink.Entity
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
-
-            /// <summary>类型</summary>
-            public static readonly Field Type = FindByName(__.Type);
 
             /// <summary>网络</summary>
             public static readonly Field NetType = FindByName(__.NetType);
@@ -277,6 +275,9 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
+            /// <summary>产品</summary>
+            public const String ProductID = "ProductID";
+
             /// <summary>编码</summary>
             public const String DeviceID = "DeviceID";
 
@@ -285,9 +286,6 @@ namespace xLink.Entity
 
             /// <summary>版本</summary>
             public const String Version = "Version";
-
-            /// <summary>类型</summary>
-            public const String Type = "Type";
 
             /// <summary>网络</summary>
             public const String NetType = "NetType";
@@ -335,6 +333,9 @@ namespace xLink.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
+        /// <summary>产品</summary>
+        Int32 ProductID { get; set; }
+
         /// <summary>编码</summary>
         Int32 DeviceID { get; set; }
 
@@ -343,9 +344,6 @@ namespace xLink.Entity
 
         /// <summary>版本</summary>
         String Version { get; set; }
-
-        /// <summary>类型</summary>
-        String Type { get; set; }
 
         /// <summary>网络</summary>
         String NetType { get; set; }

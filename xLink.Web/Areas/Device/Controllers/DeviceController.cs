@@ -24,10 +24,10 @@ namespace xLink.Device.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<DeviceX> Search(Pager p)
         {
-            Boolean? flag = null;
-            if (!p["enable"].IsNullOrEmpty()) flag = p["enable"].ToBoolean();
+            var productId = p["productId"].ToInt(-1);
+            var flag = p["enable"]?.ToBoolean();
 
-            return DeviceX.Search(p["type"], flag, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            return DeviceX.Search(productId, flag, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

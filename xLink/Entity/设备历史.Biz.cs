@@ -16,7 +16,7 @@ using xLink.Models;
 namespace xLink.Entity
 {
     /// <summary>设备历史</summary>
-    public partial class DeviceHistory : Entity<DeviceHistory>, IMyHistory
+    public partial class DeviceHistory : Entity<DeviceHistory>, IHistory
     {
         #region 对象操作
         static DeviceHistory()
@@ -56,8 +56,7 @@ namespace xLink.Entity
 
         #region 高级查询
         /// <summary>高级搜索</summary>
-        /// <param name="userid"></param>
-        /// <param name="type"></param>
+        /// <param name="deviceId"></param>
         /// <param name="action"></param>
         /// <param name="result"></param>
         /// <param name="start"></param>
@@ -65,21 +64,12 @@ namespace xLink.Entity
         /// <param name="key"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static IList<DeviceHistory> Search(Int32 userid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param)
-        {
-            var list = Search(userid, type, action, result, start, end, key, param, false);
-            // 如果结果为0，并且有key，则使用扩展查询，对内网外网地址进行模糊查询
-            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(userid, type, action, result, start, end, key, param, true);
-
-            return list;
-        }
-
-        private static IList<DeviceHistory> Search(Int32 tokenid, String type, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        public static IList<DeviceHistory> Search(Int32 deviceId, String action, Int32 result, DateTime start, DateTime end, String key, PageParameter param)
         {
             var exp = new WhereExpression();
 
-            if (tokenid >= 0) exp &= _.DeviceID == tokenid;
-            if (!type.IsNullOrEmpty()) exp &= _.Type == type;
+            if (deviceId >= 0) exp &= _.DeviceID == deviceId;
+            //if (!type.IsNullOrEmpty()) exp &= _.Type == type;
             if (!action.IsNullOrEmpty()) exp &= _.Action == action;
             if (result == 0)
                 exp &= _.Success == false;
@@ -89,28 +79,13 @@ namespace xLink.Entity
             exp &= _.CreateTime.Between(start, end);
 
             if (!key.IsNullOrEmpty())
-            {
-                if (ext)
-                    exp &= (_.Name.Contains(key) | _.Remark.Contains(key) | _.CreateIP.Contains(key));
-                else
-                    exp &= _.Name.StartsWith(key);
-            }
+                exp &= (_.Name.Contains(key) | _.Remark.Contains(key) | _.CreateIP.Contains(key));
 
             return FindAll(exp, param);
         }
         #endregion
 
         #region 扩展操作
-        /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<DeviceHistory> TypeCache = new FieldCache<DeviceHistory>(_.Type);
-
-        /// <summary>获取所有类别名称</summary>
-        /// <returns></returns>
-        public static IDictionary<String, String> FindAllTypeName()
-        {
-            return TypeCache.FindAllName();
-        }
-
         /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
         static FieldCache<DeviceHistory> ActionCache = new FieldCache<DeviceHistory>(_.Action);
 

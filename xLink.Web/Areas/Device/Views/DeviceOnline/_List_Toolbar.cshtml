@@ -10,10 +10,10 @@
     <div class="form-inline clear-fix">
         <form action="@Url.Action("index")@Html.Raw("?" + page.GetBaseUrl(false, true, true))" method="post" role="form">
             <div class="pull-right form-group">
-                <div class="form-group">
+                @*<div class="form-group">
                     <label for="kind" class="control-label">类型：</label>
                     @Html.ForDropDownList("Type", DeviceOnline.FindAllTypeName(), Request["Type"], "全部", true)
-                </div>
+                </div>*@
                 <div class="form-group">
                     <label for="dtStart" class="control-label">登录时间：</label>
                     <div class="input-group">

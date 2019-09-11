@@ -22,7 +22,9 @@ namespace xLink.User.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<UserHistory> Search(Pager p)
         {
-            return UserHistory.Search(p["TokenID"].ToInt(-1), p["type"], p["action"], p["result"].ToInt(-1), p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            var userId = p["userId"].ToInt(-1);
+
+            return UserHistory.Search(userId, p["action"], p["result"].ToInt(-1), p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

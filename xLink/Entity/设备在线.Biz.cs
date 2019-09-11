@@ -16,7 +16,7 @@ using xLink.Models;
 namespace xLink.Entity
 {
     /// <summary>设备在线</summary>
-    public partial class DeviceOnline : Entity<DeviceOnline>, IMyOnline
+    public partial class DeviceOnline : Entity<DeviceOnline>, IOnline
     {
         #region 对象操作
         static DeviceOnline()
@@ -76,58 +76,28 @@ namespace xLink.Entity
 
         #region 高级查询
         /// <summary>查询满足条件的记录集，分页、排序</summary>
-        /// <param name="type">类型</param>
+        /// <param name="productId">类型</param>
         /// <param name="start">开始时间</param>
         /// <param name="end">结束时间</param>
         /// <param name="key">关键字</param>
         /// <param name="param">分页排序参数，同时返回满足条件的总记录数</param>
         /// <returns>实体集</returns>
-        public static IList<DeviceOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param)
-        {
-            // 修改DeviceID排序为名称
-            //param = new PageParameter(param);
-            if (param.Sort.EqualIgnoreCase(__.DeviceID)) param.Sort = __.Name;
-
-            var list = Search(type, start, end, key, param, false);
-            // 如果结果为0，并且有key，则使用扩展查询，对内网外网地址进行模糊查询
-            if (list.Count == 0 && !key.IsNullOrEmpty()) list = Search(type, start, end, key, param, true);
-
-            // 换回来，避免影响生成升序降序
-            if (param.Sort.EqualIgnoreCase(__.Name)) param.Sort = __.DeviceID;
-
-            return list;
-        }
-
-        private static IList<DeviceOnline> Search(String type, DateTime start, DateTime end, String key, PageParameter param, Boolean ext)
+        public static IList<DeviceOnline> Search(Int32 productId, DateTime start, DateTime end, String key, PageParameter param)
         {
             var exp = new WhereExpression();
 
-            if (!type.IsNullOrEmpty()) exp &= _.Type == type;
+            if (productId >= 0) exp &= _.ProductID == productId;
 
             exp &= _.CreateTime.Between(start, end);
 
             if (!key.IsNullOrEmpty())
-            {
-                if (ext)
-                    exp &= (_.Name.Contains(key) | _.InternalUri.Contains(key) | _.ExternalUri.Contains(key));
-                else
-                    exp &= _.Name.StartsWith(key);
-            }
+                exp &= (_.Name.Contains(key) | _.InternalUri.Contains(key) | _.ExternalUri.Contains(key));
 
             return FindAll(exp, param);
         }
         #endregion
 
         #region 扩展操作
-        /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<DeviceOnline> TypeCache = new FieldCache<DeviceOnline>(_.Type);
-
-        /// <summary>获取所有类别名称</summary>
-        /// <returns></returns>
-        public static IDictionary<String, String> FindAllTypeName()
-        {
-            return TypeCache.FindAllName();
-        }
         #endregion
 
         #region 业务

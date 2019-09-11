@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using NewLife.Model;
 using NewLife.Net;
+using NewLife.Security;
 using NewLife.Serialization;
 using NewLife.Threading;
 using xLink.Entity;
@@ -34,8 +35,8 @@ namespace xLink.Services
         /// <summary>实例化</summary>
         public DeviceSession()
         {
-            GetData = OnGetData;
-            SetData = OnSetData;
+            //GetData = OnGetData;
+            //SetData = OnSetData;
         }
         #endregion
 
@@ -49,10 +50,12 @@ namespace xLink.Services
             var u = Device.FindByName(user);
             if (u == null)
             {
+                if (pass.IsNullOrEmpty()) pass = Rand.NextString(8);
+
                 u = new Device
                 {
                     Name = user,
-                    Password = pass.MD5(),
+                    Secret = pass,
                     Enable = true
                 };
                 u.SaveRegister(Session as INetSession);
@@ -62,7 +65,8 @@ namespace xLink.Services
             Name = user;
 
             // 验证密码
-            u.CheckMD5(pass);
+            //u.CheckMD5(pass);
+            u.CheckEqual(pass);
 
             return u;
         }
@@ -222,22 +226,22 @@ namespace xLink.Services
             }
         }
 
-        private Byte[] OnGetData(String id)
-        {
-            var dv = Current as Device;
-            if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
+        //private Byte[] OnGetData(String id)
+        //{
+        //    var dv = Current as Device;
+        //    if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
 
-            return dv?.Data.ToHex();
-        }
+        //    return dv?.Data.ToHex();
+        //}
 
-        private void OnSetData(String id, Byte[] data)
-        {
-            var dv = Current as Device;
-            if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
+        //private void OnSetData(String id, Byte[] data)
+        //{
+        //    var dv = Current as Device;
+        //    if (!id.IsNullOrEmpty() && !id.EqualIgnoreCase(dv.Name)) dv = Device.FindByName(id);
 
-            dv.Data = data.ToHex();
-            dv.SaveAsync();
-        }
+        //    dv.Data = data.ToHex();
+        //    dv.SaveAsync();
+        //}
         #endregion
     }
 }

@@ -22,7 +22,9 @@ namespace xLink.Device.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<DeviceHistory> Search(Pager p)
         {
-            return DeviceHistory.Search(p["TokenID"].ToInt(-1), p["type"], p["action"], p["result"].ToInt(-1), p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            var deviceId = p["deviceId"].ToInt(-1);
+
+            return DeviceHistory.Search(deviceId, p["action"], p["result"].ToInt(-1), p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

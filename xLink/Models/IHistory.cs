@@ -12,8 +12,8 @@ namespace xLink.Models
         /// <summary>名称</summary>
         String Name { get; set; }
 
-        /// <summary>类型</summary>
-        String Type { get; set; }
+        ///// <summary>类型</summary>
+        //String Type { get; set; }
 
         /// <summary>操作</summary>
         String Action { get; set; }

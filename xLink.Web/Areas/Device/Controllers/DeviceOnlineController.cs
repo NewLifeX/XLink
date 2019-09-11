@@ -20,7 +20,9 @@ namespace xLink.Device.Web.Controllers
         /// <returns></returns>
         protected override IEnumerable<DeviceOnline> Search(Pager p)
         {
-            return DeviceOnline.Search(p["Type"], p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
+            var productId = p["productId"].ToInt(-1);
+
+            return DeviceOnline.Search(productId, p["dtStart"].ToDateTime(), p["dtEnd"].ToDateTime(), p["Q"], p);
         }
     }
 }

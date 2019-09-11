@@ -37,8 +37,8 @@ namespace xLink.Services
         /// <summary>实例化</summary>
         public UserSession()
         {
-            GetData = OnGetData;
-            SetData = OnSetData;
+            //GetData = OnGetData;
+            //SetData = OnSetData;
         }
         #endregion
 
@@ -169,22 +169,22 @@ namespace xLink.Services
             throw new NotSupportedException("不支持向用户端发起读取请求");
         }
 
-        private Byte[] OnGetData(String id)
-        {
-            var dv = Device.FindByName(id);
-            if (dv == null) throw new ApiException(405, "找不到设备！");
+        //private Byte[] OnGetData(String id)
+        //{
+        //    var dv = Device.FindByName(id);
+        //    if (dv == null) throw new ApiException(405, "找不到设备！");
 
-            return dv?.Data.ToHex();
-        }
+        //    return dv?.Data.ToHex();
+        //}
 
-        private void OnSetData(String id, Byte[] data)
-        {
-            var dv = Device.FindByName(id);
-            if (dv == null) throw new ApiException(405, "找不到设备！");
+        //private void OnSetData(String id, Byte[] data)
+        //{
+        //    var dv = Device.FindByName(id);
+        //    if (dv == null) throw new ApiException(405, "找不到设备！");
 
-            dv.Data = data.ToHex();
-            dv.SaveAsync();
-        }
+        //    dv.Data = data.ToHex();
+        //    dv.SaveAsync();
+        //}
         #endregion
     }
 }

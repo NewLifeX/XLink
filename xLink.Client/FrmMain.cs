@@ -238,7 +238,7 @@ namespace xLink.Client
             try
             {
                 //var rs = await ct.LoginAsync().ConfigureAwait(false);
-                var rs = await TaskEx.Run(() => ct.LoginAsync());
+                var rs = await Task.Run(() => ct.LoginAsync());
                 var dic = rs.ToDictionary().ToNullable();
 
                 // 登录成功，需要保存密码

@@ -18,7 +18,7 @@ using XCode.Membership;
 namespace xLink.Entity
 {
     /// <summary>设备</summary>
-    public partial class Device : Entity<Device>, IMyModel, IAuthUser
+    public partial class Device : Entity<Device>, IAuthUser
     {
         #region 对象操作
         static Device()
@@ -45,13 +45,13 @@ namespace xLink.Entity
             if (!HasDirty) return;
 
             if (Name.IsNullOrEmpty()) throw new ArgumentNullException(__.Name, _.Name.DisplayName + "不能为空！");
-            if (Password.IsNullOrEmpty()) throw new ArgumentNullException(__.Password, _.Password.DisplayName + "不能为空！");
+            //if (Password.IsNullOrEmpty()) throw new ArgumentNullException(__.Password, _.Password.DisplayName + "不能为空！");
             //if (Password.Length != 16 && Password.Length != 32) throw new ArgumentOutOfRangeException(__.Password, _.Password.DisplayName + "非法！");
             //if (Name.Length < 8) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最短8个字符！" + Name);
             //if (Name.Length > 16) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最长16个字符！" + Name);
 
-            // 修正显示名
-            if (!NickName.IsNullOrEmpty() && NickName.Length > 16) NickName = NickName.Substring(0, 16);
+            //// 修正显示名
+            //if (!NickName.IsNullOrEmpty() && NickName.Length > 16) NickName = NickName.Substring(0, 16);
 
             // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
             base.Valid(isNew);
@@ -62,6 +62,11 @@ namespace xLink.Entity
         /// <summary>登录地址。IP=>Address</summary>
         [DisplayName("登录地址")]
         public String LastLoginAddress { get { return LastLoginIP.IPToAddress(); } }
+
+        String IManageUser.Name { get => Code; set => Code = value; }
+        String IManageUser.NickName { get => Name; set => Name = value; }
+        String IAuthUser.Password { get => Secret; set => Secret = value; }
+        Boolean IAuthUser.Online { get; set; }
         #endregion
 
         #region 扩展查询
@@ -102,20 +107,20 @@ namespace xLink.Entity
 
         #region 高级查询
         /// <summary>高级查询</summary>
-        /// <param name="type"></param>
+        /// <param name="productId"></param>
         /// <param name="enable"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <param name="key"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public static IList<Device> Search(String type, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
+        public static IList<Device> Search(Int32 productId, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
         {
             // WhereExpression重载&和|运算符，作为And和Or的替代
             // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段
             var exp = SearchWhereByKeys(key, null, null);
 
-            if (!type.IsNullOrEmpty()) exp &= _.Type == type;
+            if (productId >= 0) exp &= _.ProductID == productId;
             if (enable != null) exp &= _.Enable == enable.Value;
 
             //exp &= _.CreateTime.Between(start, end);
@@ -126,88 +131,15 @@ namespace xLink.Entity
         #endregion
 
         #region 扩展操作
-        /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<Device> TypeCache = new FieldCache<Device>(_.Type);
-
-        /// <summary>获取所有类别名称</summary>
-        /// <returns></returns>
-        public static IDictionary<String, String> FindAllTypeName()
-        {
-            return TypeCache.FindAllName();
-        }
         #endregion
 
         #region 业务
-        /// <summary>登录</summary>
-        /// <param name="pass"></param>
-        /// <param name="salt"></param>
-        public void Login(String pass, Byte[] salt)
-        {
-            if (String.IsNullOrEmpty(pass)) throw new ArgumentNullException(nameof(pass));
-            if (salt == null || salt.Length == 0) throw new ArgumentNullException(nameof(salt));
-
-            if (!Enable) throw new EntityException("账号{0}被禁用！", Name);
-
-            // 数据库为空密码，任何密码均可登录
-            var buf = salt.RC4(Password.GetBytes());
-            if (!pass.EqualIgnoreCase(buf.ToHex()))
-            {
-                var err = "密码不正确！";
-                if (SysConfig.Current.Develop) err = "{0} DB:{1}!=Biz:{2}".F(err, Password, pass);
-                throw new EntityException(err);
-            }
-
-            Logins++;
-            LastLogin = DateTime.Now;
-
-            Save();
-        }
-
-        /// <summary>注册网关设备，默认启用网关设备</summary>
-        /// <param name="code"></param>
-        /// <param name="pass"></param>
-        public static void Register(String code, String pass)
-        {
-            if (String.IsNullOrEmpty(code)) throw new ArgumentNullException(nameof(code));
-            if (String.IsNullOrEmpty(pass)) throw new ArgumentNullException(nameof(pass));
-
-            var gw = FindByName(code);
-            if (gw != null) throw new EntityException("{0}该设备已经注册", code);
-
-            gw = new Device
-            {
-                Name = code,
-                Password = pass,
-
-                Enable = true,
-                RegisterTime = DateTime.Now
-            };
-
-            gw.Save();
-        }
-
-        /// <summary>注册</summary>
-        /// <param name="ip"></param>
-        public void Register(String ip)
-        {
-            //if (Name == null || Password == null) return;
-
-            //Registers++;
-            RegisterTime = DateTime.Now;
-            RegisterIP = ip;
-            Save();
-        }
         #endregion
 
         #region 辅助
         /// <summary>显示友好名称</summary>
         /// <returns></returns>
-        public override String ToString()
-        {
-            if (!NickName.IsNullOrEmpty()) return NickName;
-
-            return Name;
-        }
+        public override String ToString() => Name ?? Code;
         #endregion
     }
 }

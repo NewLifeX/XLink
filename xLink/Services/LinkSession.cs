@@ -31,20 +31,20 @@ namespace xLink.Services
         /// <summary>名称</summary>
         public String Name { get; set; }
 
-        /// <summary>平台</summary>
-        public String Agent { get; set; }
+        ///// <summary>平台</summary>
+        //public String Agent { get; set; }
 
-        /// <summary>系统</summary>
-        public String OS { get; set; }
+        ///// <summary>系统</summary>
+        //public String OS { get; set; }
 
-        /// <summary>类型</summary>
-        public String Type { get; set; }
+        ///// <summary>类型</summary>
+        //public String Type { get; set; }
 
         /// <summary>版本</summary>
         public String Version { get; set; }
 
-        /// <summary>内网地址</summary>
-        public String InternalUri { get; set; }
+        ///// <summary>内网地址</summary>
+        //public String InternalUri { get; set; }
         #endregion
 
         #region 登录注册
@@ -60,12 +60,12 @@ namespace xLink.Services
             var ps = parameters;
             if (ps != null)
             {
-                Agent = ps["Agent"] + "";
-                OS = ps["OS"] + "";
-                Type = ps["Type"] + "";
+                //Agent = ps["Agent"] + "";
+                //OS = ps["OS"] + "";
+                //Type = ps["Type"] + "";
                 Version = ps["Version"] + "";
                 NetType = ps["NetType"] + "";
-                InternalUri = ps["IP"] + "";
+                //InternalUri = ps["IP"] + "";
             }
             // 登录
             Name = user;
@@ -118,17 +118,17 @@ namespace xLink.Services
         /// <param name="user"></param>
         protected virtual void SaveLogin(IManageUser user)
         {
-            var u = user as IMyModel;
-            u.Type = Type;
-            u.Version = Version;
-            if (u.NickName.IsNullOrEmpty()) u.NickName = "{0}{1}".F(Agent, user.Name);
+            //var u = user as IMyModel;
+            //u.Type = Type;
+            //u.Version = Version;
+            //if (u.NickName.IsNullOrEmpty()) u.NickName = "{0}{1}".F(Agent, user.Name);
 
-            var olt = Online as IMyOnline;
-            olt.LoginTime = DateTime.Now;
-            olt.LoginCount++;
-            // 本地地址
-            olt.InternalUri = InternalUri;
-            olt.NetType = NetType;
+            //var olt = Online as IMyOnline;
+            //olt.LoginTime = DateTime.Now;
+            //olt.LoginCount++;
+            //// 本地地址
+            //olt.InternalUri = InternalUri;
+            //olt.NetType = NetType;
 
             var ns = Session as NetSession;
             if (user is IAuthUser au) au.SaveLogin(ns);
@@ -145,7 +145,7 @@ namespace xLink.Services
 
             var olt = Online ?? CreateOnline(ns.ID);
             olt.Name = name;
-            olt.Type = Type;
+            //olt.Type = Type;
             olt.SessionID = ns.ID;
             olt.UpdateTime = DateTime.Now;
 
@@ -178,7 +178,7 @@ namespace xLink.Services
         {
             var hi = CreateHistory();
             hi.Name = Name;
-            hi.Type = Type;
+            //hi.Type = Type;
 
             var u = Current;
             var ot = Online;

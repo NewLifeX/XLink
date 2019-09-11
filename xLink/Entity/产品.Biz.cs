@@ -55,7 +55,7 @@ namespace xLink.Entity
             if (isNew)
             {
                 // 自动生成产品证书密钥
-                if (Key.IsNullOrEmpty()) Key = Rand.NextString(4);
+                if (Code.IsNullOrEmpty()) Code = Rand.NextString(4);
                 if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(8);
             }
         }

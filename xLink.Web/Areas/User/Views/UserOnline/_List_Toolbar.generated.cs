@@ -107,28 +107,9 @@ WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"pull-right form-group\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                ");
 
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <label");
-
-WriteLiteral(" for=\"kind\"");
-
-WriteLiteral(" class=\"control-label\"");
-
-WriteLiteral(">类型：</label>\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 15 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-               Write(Html.ForDropDownList("Type", xLink.Entity.UserOnline.FindAllTypeName(), Request["Type"], "全部", true));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </div>\r\n                <div");
+WriteLiteral("\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -156,14 +137,14 @@ WriteLiteral(" name=\"dtStart\"");
 
 WriteLiteral(" id=\"dtStart\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1016), Tuple.Create("\"", 1043)
+WriteAttribute("value", Tuple.Create(" value=\"", 1020), Tuple.Create("\"", 1047)
             
             #line 21 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1024), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
+, Tuple.Create(Tuple.Create("", 1028), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
             
             #line default
             #line hidden
-, 1024), false)
+, 1028), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -198,14 +179,14 @@ WriteLiteral(" name=\"dtEnd\"");
 
 WriteLiteral(" id=\"dtEnd\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1470), Tuple.Create("\"", 1495)
+WriteAttribute("value", Tuple.Create(" value=\"", 1474), Tuple.Create("\"", 1499)
             
             #line 28 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1478), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
+, Tuple.Create(Tuple.Create("", 1482), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
             
             #line default
             #line hidden
-, 1478), false)
+, 1482), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -232,14 +213,14 @@ WriteLiteral(" type=\"search\"");
 
 WriteLiteral(" id=\"q\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1856), Tuple.Create("\"", 1877)
+WriteAttribute("value", Tuple.Create(" value=\"", 1860), Tuple.Create("\"", 1881)
             
             #line 35 "..\..\Areas\User\Views\UserOnline\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1864), Tuple.Create<System.Object, System.Int32>(Request["q"]
+, Tuple.Create(Tuple.Create("", 1868), Tuple.Create<System.Object, System.Int32>(Request["q"]
             
             #line default
             #line hidden
-, 1864), false)
+, 1868), false)
 );
 
 WriteLiteral(" class=\"form-control\"");

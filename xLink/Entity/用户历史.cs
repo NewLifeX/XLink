@@ -13,7 +13,6 @@ namespace xLink.Entity
     [Description("用户历史")]
     [BindIndex("IX_UserHistory_UserID", false, "UserID")]
     [BindIndex("IX_UserHistory_Name", false, "Name")]
-    [BindIndex("IX_UserHistory_Type", false, "Type")]
     [BindTable("UserHistory", Description = "用户历史", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
     public partial class UserHistory : IUserHistory
     {
@@ -49,14 +48,6 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
-
-        private String _Type;
-        /// <summary>类型</summary>
-        [DisplayName("类型")]
-        [Description("类型")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Type", "类型", "")]
-        public String Type { get { return _Type; } set { if (OnPropertyChanging(__.Type, value)) { _Type = value; OnPropertyChanged(__.Type); } } }
 
         private String _NetType;
         /// <summary>网络</summary>
@@ -129,7 +120,6 @@ namespace xLink.Entity
                     case __.UserID : return _UserID;
                     case __.Name : return _Name;
                     case __.Version : return _Version;
-                    case __.Type : return _Type;
                     case __.NetType : return _NetType;
                     case __.Action : return _Action;
                     case __.Success : return _Success;
@@ -148,7 +138,6 @@ namespace xLink.Entity
                     case __.UserID : _UserID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
-                    case __.Type : _Type = Convert.ToString(value); break;
                     case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.Action : _Action = Convert.ToString(value); break;
                     case __.Success : _Success = value.ToBoolean(); break;
@@ -177,9 +166,6 @@ namespace xLink.Entity
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
-
-            /// <summary>类型</summary>
-            public static readonly Field Type = FindByName(__.Type);
 
             /// <summary>网络</summary>
             public static readonly Field NetType = FindByName(__.NetType);
@@ -220,9 +206,6 @@ namespace xLink.Entity
             /// <summary>版本</summary>
             public const String Version = "Version";
 
-            /// <summary>类型</summary>
-            public const String Type = "Type";
-
             /// <summary>网络</summary>
             public const String NetType = "NetType";
 
@@ -262,9 +245,6 @@ namespace xLink.Entity
 
         /// <summary>版本</summary>
         String Version { get; set; }
-
-        /// <summary>类型</summary>
-        String Type { get; set; }
 
         /// <summary>网络</summary>
         String NetType { get; set; }

@@ -111,28 +111,9 @@ WriteLiteral(">\n            <div");
 
 WriteLiteral(" class=\"pull-right form-group\"");
 
-WriteLiteral(">\n                <div");
+WriteLiteral(">\n                ");
 
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\n                    <label");
-
-WriteLiteral(" for=\"type\"");
-
-WriteLiteral(" class=\"control-label\"");
-
-WriteLiteral(">类型：</label>\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 19 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-               Write(Html.ForDropDownList("type", DeviceHistory.FindAllTypeName(), Request["type"], "全部", true));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\n                </div>\n                <div");
+WriteLiteral("\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -202,14 +183,14 @@ WriteLiteral(" name=\"dtStart\"");
 
 WriteLiteral(" id=\"dtStart\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1558), Tuple.Create("\"", 1585)
+WriteAttribute("value", Tuple.Create(" value=\"", 1562), Tuple.Create("\"", 1589)
             
             #line 33 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 1566), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
+, Tuple.Create(Tuple.Create("", 1570), Tuple.Create<System.Object, System.Int32>(Request["dtStart"]
             
             #line default
             #line hidden
-, 1566), false)
+, 1570), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -244,14 +225,14 @@ WriteLiteral(" name=\"dtEnd\"");
 
 WriteLiteral(" id=\"dtEnd\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2005), Tuple.Create("\"", 2030)
+WriteAttribute("value", Tuple.Create(" value=\"", 2009), Tuple.Create("\"", 2034)
             
             #line 40 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 2013), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
+, Tuple.Create(Tuple.Create("", 2017), Tuple.Create<System.Object, System.Int32>(Request["dtEnd"]
             
             #line default
             #line hidden
-, 2013), false)
+, 2017), false)
 );
 
 WriteLiteral(" dateformat=\"yyyy-MM-dd\"");
@@ -268,14 +249,14 @@ WriteLiteral(" type=\"hidden\"");
 
 WriteLiteral(" name=\"TokenID\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2253), Tuple.Create("\"", 2277)
+WriteAttribute("value", Tuple.Create(" value=\"", 2257), Tuple.Create("\"", 2281)
             
             #line 44 "..\..\Areas\Device\Views\DeviceHistory\_List_Toolbar.cshtml"
-, Tuple.Create(Tuple.Create("", 2261), Tuple.Create<System.Object, System.Int32>(page["TokenID"]
+, Tuple.Create(Tuple.Create("", 2265), Tuple.Create<System.Object, System.Int32>(page["TokenID"]
             
             #line default
             #line hidden
-, 2261), false)
+, 2265), false)
 );
 
 WriteLiteral(" />\n");

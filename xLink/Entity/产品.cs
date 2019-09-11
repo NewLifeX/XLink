@@ -11,8 +11,8 @@ namespace xLink.Entity
     [Serializable]
     [DataObject]
     [Description("产品")]
-    [BindIndex("IU_Product_Name", true, "Name")]
-    [BindIndex("IU_Product_Key", true, "Key")]
+    [BindIndex("IU_Product_Code", true, "Code")]
+    [BindIndex("IX_Product_Kind", false, "Kind")]
     [BindTable("Product", Description = "产品", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
     public partial class Product : IProduct
     {
@@ -32,6 +32,22 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
+
+        private String _Code;
+        /// <summary>编码</summary>
+        [DisplayName("编码")]
+        [Description("编码")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Code", "编码", "")]
+        public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
+
+        private String _Secret;
+        /// <summary>密钥</summary>
+        [DisplayName("密钥")]
+        [Description("密钥")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Secret", "密钥", "")]
+        public String Secret { get { return _Secret; } set { if (OnPropertyChanging(__.Secret, value)) { _Secret = value; OnPropertyChanged(__.Secret); } } }
 
         private String _Kind;
         /// <summary>节点类型</summary>
@@ -56,22 +72,6 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("DataFormat", "数据格式", "")]
         public String DataFormat { get { return _DataFormat; } set { if (OnPropertyChanging(__.DataFormat, value)) { _DataFormat = value; OnPropertyChanged(__.DataFormat); } } }
-
-        private String _Key;
-        /// <summary>编码</summary>
-        [DisplayName("编码")]
-        [Description("编码")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Key", "编码", "")]
-        public String Key { get { return _Key; } set { if (OnPropertyChanging(__.Key, value)) { _Key = value; OnPropertyChanged(__.Key); } } }
-
-        private String _Secret;
-        /// <summary>密钥</summary>
-        [DisplayName("密钥")]
-        [Description("密钥")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Secret", "密钥", "")]
-        public String Secret { get { return _Secret; } set { if (OnPropertyChanging(__.Secret, value)) { _Secret = value; OnPropertyChanged(__.Secret); } } }
 
         private String _NetworkProtocol;
         /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
@@ -166,11 +166,11 @@ namespace xLink.Entity
                 {
                     case __.ID : return _ID;
                     case __.Name : return _Name;
+                    case __.Code : return _Code;
+                    case __.Secret : return _Secret;
                     case __.Kind : return _Kind;
                     case __.Category : return _Category;
                     case __.DataFormat : return _DataFormat;
-                    case __.Key : return _Key;
-                    case __.Secret : return _Secret;
                     case __.NetworkProtocol : return _NetworkProtocol;
                     case __.Status : return _Status;
                     case __.Enable : return _Enable;
@@ -190,11 +190,11 @@ namespace xLink.Entity
                 {
                     case __.ID : _ID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
+                    case __.Code : _Code = Convert.ToString(value); break;
+                    case __.Secret : _Secret = Convert.ToString(value); break;
                     case __.Kind : _Kind = Convert.ToString(value); break;
                     case __.Category : _Category = Convert.ToString(value); break;
                     case __.DataFormat : _DataFormat = Convert.ToString(value); break;
-                    case __.Key : _Key = Convert.ToString(value); break;
-                    case __.Secret : _Secret = Convert.ToString(value); break;
                     case __.NetworkProtocol : _NetworkProtocol = Convert.ToString(value); break;
                     case __.Status : _Status = value.ToInt(); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
@@ -221,6 +221,12 @@ namespace xLink.Entity
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
 
+            /// <summary>编码</summary>
+            public static readonly Field Code = FindByName(__.Code);
+
+            /// <summary>密钥</summary>
+            public static readonly Field Secret = FindByName(__.Secret);
+
             /// <summary>节点类型</summary>
             public static readonly Field Kind = FindByName(__.Kind);
 
@@ -229,12 +235,6 @@ namespace xLink.Entity
 
             /// <summary>数据格式</summary>
             public static readonly Field DataFormat = FindByName(__.DataFormat);
-
-            /// <summary>编码</summary>
-            public static readonly Field Key = FindByName(__.Key);
-
-            /// <summary>密钥</summary>
-            public static readonly Field Secret = FindByName(__.Secret);
 
             /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
             public static readonly Field NetworkProtocol = FindByName(__.NetworkProtocol);
@@ -278,6 +278,12 @@ namespace xLink.Entity
             /// <summary>名称</summary>
             public const String Name = "Name";
 
+            /// <summary>编码</summary>
+            public const String Code = "Code";
+
+            /// <summary>密钥</summary>
+            public const String Secret = "Secret";
+
             /// <summary>节点类型</summary>
             public const String Kind = "Kind";
 
@@ -286,12 +292,6 @@ namespace xLink.Entity
 
             /// <summary>数据格式</summary>
             public const String DataFormat = "DataFormat";
-
-            /// <summary>编码</summary>
-            public const String Key = "Key";
-
-            /// <summary>密钥</summary>
-            public const String Secret = "Secret";
 
             /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
             public const String NetworkProtocol = "NetworkProtocol";
@@ -336,6 +336,12 @@ namespace xLink.Entity
         /// <summary>名称</summary>
         String Name { get; set; }
 
+        /// <summary>编码</summary>
+        String Code { get; set; }
+
+        /// <summary>密钥</summary>
+        String Secret { get; set; }
+
         /// <summary>节点类型</summary>
         String Kind { get; set; }
 
@@ -344,12 +350,6 @@ namespace xLink.Entity
 
         /// <summary>数据格式</summary>
         String DataFormat { get; set; }
-
-        /// <summary>编码</summary>
-        String Key { get; set; }
-
-        /// <summary>密钥</summary>
-        String Secret { get; set; }
 
         /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
         String NetworkProtocol { get; set; }

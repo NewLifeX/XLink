@@ -4,11 +4,11 @@
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Code" DataType="String" Description="编码" />
+      <Column Name="Secret" DataType="String" Description="密钥" />
       <Column Name="Kind" DataType="String" Description="节点类型" />
       <Column Name="Category" DataType="String" Description="分类" />
       <Column Name="DataFormat" DataType="String" Description="数据格式" />
-      <Column Name="Key" DataType="String" Description="编码" />
-      <Column Name="Secret" DataType="String" Description="密钥" />
       <Column Name="NetworkProtocol" DataType="String" Description="网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它" />
       <Column Name="Status" DataType="Int32" Description="状态。0测试1发布" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
@@ -21,22 +21,38 @@
       <Column Name="Description" DataType="String" Length="500" Description="描述" />
     </Columns>
     <Indexes>
-      <Index Columns="Name" Unique="True" />
-      <Index Columns="Key" Unique="True" />
+      <Index Columns="Code" Unique="True" />
+      <Index Columns="Kind" />
     </Indexes>
   </Table>
   <Table Name="Device" Description="设备" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
-      <Column Name="Name" DataType="String" Master="True" Description="名称。登录用户名" />
-      <Column Name="Password" DataType="String" Description="密码" />
-      <Column Name="NickName" DataType="String" Master="True" Description="昵称" />
-      <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="ProductID" DataType="Int32" Description="产品" />
-      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Code" DataType="String" Description="编码" />
+      <Column Name="Secret" DataType="String" Description="密钥" />
+      <Column Name="Enable" DataType="Boolean" Description="启用" />
       <Column Name="Version" DataType="String" Description="版本" />
-      <Column Name="Data" DataType="String" Length="200" Description="数据" />
-      <Column Name="Online" DataType="Boolean" Description="在线" />
+      <Column Name="CompileTime" DataType="DateTime" Description="编译时间" />
+      <Column Name="OS" DataType="String" Description="操作系统" />
+      <Column Name="MachineName" DataType="String" Description="机器名称" />
+      <Column Name="UserName" DataType="String" Description="用户名称" />
+      <Column Name="Cpu" DataType="Int32" Description="CPU" />
+      <Column Name="Memory" DataType="Int32" Description="内存。单位M" />
+      <Column Name="Processor" DataType="String" Length="200" Description="处理器" />
+      <Column Name="CpuID" DataType="String" Description="CPU标识" />
+      <Column Name="Uuid" DataType="String" Description="唯一标识" />
+      <Column Name="MachineGuid" DataType="String" Description="机器标识" />
+      <Column Name="MACs" DataType="String" Description="网卡" />
+      <Column Name="COMs" DataType="String" Description="串口" />
+      <Column Name="InstallPath" DataType="String" Length="200" Description="安装路径" />
+      <Column Name="Runtime" DataType="String" Description="运行时。.Net版本" />
+      <Column Name="ProvinceID" DataType="Int32" Description="省份" />
+      <Column Name="CityID" DataType="Int32" Description="城市" />
+      <Column Name="Longitude" DataType="Double" Description="经度" />
+      <Column Name="Latitude" DataType="Double" Description="纬度" />
+      <Column Name="Address" DataType="String" Length="200" Description="地址" />
       <Column Name="Logins" DataType="Int32" Description="登录" />
       <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
       <Column Name="LastLoginIP" DataType="String" Description="最后登录IP" />
@@ -51,17 +67,17 @@
       <Column Name="Description" DataType="String" Length="500" Description="描述" />
     </Columns>
     <Indexes>
-      <Index Columns="Name" Unique="True" />
-      <Index Columns="Type" />
+      <Index Columns="Code" Unique="True" />
+      <Index Columns="ProductID" />
     </Indexes>
   </Table>
   <Table Name="DeviceOnline" Description="设备在线" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="ProductID" DataType="Int32" Description="产品" />
       <Column Name="DeviceID" DataType="Int32" Description="编码" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Version" DataType="String" Description="版本" />
-      <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="NetType" DataType="String" Description="网络" />
       <Column Name="SessionID" DataType="Int32" Description="会话" />
       <Column Name="InternalUri" DataType="String" Description="内网" />
@@ -76,10 +92,8 @@
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
     </Columns>
     <Indexes>
-      <Index Columns="SessionID" />
+      <Index Columns="SessionID" Unique="True" />
       <Index Columns="DeviceID" />
-      <Index Columns="Name" />
-      <Index Columns="Type" />
     </Indexes>
   </Table>
   <Table Name="DeviceHistory" Description="设备历史" DbType="SqlServer">
@@ -88,7 +102,6 @@
       <Column Name="DeviceID" DataType="Int32" Description="编码" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Version" DataType="String" Description="版本" />
-      <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="NetType" DataType="String" Description="网络" />
       <Column Name="Action" DataType="String" Description="操作" />
       <Column Name="Success" DataType="Boolean" Description="成功" />
@@ -100,7 +113,6 @@
     <Indexes>
       <Index Columns="DeviceID" />
       <Index Columns="Name" />
-      <Index Columns="Type" />
     </Indexes>
   </Table>
   <Table Name="DeviceCommand" Description="设备指令" DbType="SqlServer">
@@ -161,7 +173,6 @@
       <Column Name="UserID" DataType="Int32" Description="编码" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Version" DataType="String" Description="版本" />
-      <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="NetType" DataType="String" Description="网络" />
       <Column Name="SessionID" DataType="Int32" Description="会话" />
       <Column Name="InternalUri" DataType="String" Description="内网" />
@@ -179,7 +190,6 @@
       <Index Columns="SessionID" />
       <Index Columns="UserID" />
       <Index Columns="Name" />
-      <Index Columns="Type" />
     </Indexes>
   </Table>
   <Table Name="UserHistory" Description="用户历史" DbType="SqlServer">
@@ -188,7 +198,6 @@
       <Column Name="UserID" DataType="Int32" Description="编码" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Version" DataType="String" Description="版本" />
-      <Column Name="Type" DataType="String" Description="类型" />
       <Column Name="NetType" DataType="String" Description="网络" />
       <Column Name="Action" DataType="String" Description="操作" />
       <Column Name="Success" DataType="Boolean" Description="成功" />
@@ -200,7 +209,6 @@
     <Indexes>
       <Index Columns="UserID" />
       <Index Columns="Name" />
-      <Index Columns="Type" />
     </Indexes>
   </Table>
 </Tables>
