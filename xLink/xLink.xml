@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables Version="9.12.7126.42295" Output="Entity" NameSpace="xLink.Entity" ConnName="xLink" BaseClass="Entity">
+<Tables Version="9.14.7173.39578" Output="Entity" NameSpace="xLink.Entity" ConnName="xLink" BaseClass="Entity">
   <Table Name="Product" Description="产品" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
@@ -36,6 +36,7 @@
       <Column Name="Version" DataType="String" Description="版本" />
       <Column Name="CompileTime" DataType="DateTime" Description="编译时间" />
       <Column Name="OS" DataType="String" Description="操作系统" />
+      <Column Name="OSVersion" DataType="String" Description="系统版本" />
       <Column Name="MachineName" DataType="String" Description="机器名称" />
       <Column Name="UserName" DataType="String" Description="用户名称" />
       <Column Name="Cpu" DataType="Int32" Description="CPU" />
@@ -74,12 +75,18 @@
   <Table Name="DeviceOnline" Description="设备在线" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="SessionID" DataType="Int32" Description="会话" />
       <Column Name="ProductID" DataType="Int32" Description="产品" />
       <Column Name="DeviceID" DataType="Int32" Description="编码" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="Version" DataType="String" Description="版本" />
+      <Column Name="CompileTime" DataType="DateTime" Description="编译时间" />
       <Column Name="NetType" DataType="String" Description="网络" />
-      <Column Name="SessionID" DataType="Int32" Description="会话" />
+      <Column Name="Memory" DataType="Int32" Description="内存。单位M" />
+      <Column Name="AvailableMemory" DataType="Int32" Description="可用内存。单位M" />
+      <Column Name="CpuRate" DataType="Double" Description="CPU率。占用率" />
+      <Column Name="Delay" DataType="Int32" Description="延迟。网络延迟，单位ms" />
+      <Column Name="Offset" DataType="Int32" Description="偏移。客户端时间减服务端时间，单位ms" />
       <Column Name="InternalUri" DataType="String" Description="内网" />
       <Column Name="ExternalUri" DataType="String" Description="外网" />
       <Column Name="LoginCount" DataType="Int32" Description="登录" />

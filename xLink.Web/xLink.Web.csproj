@@ -126,11 +126,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Build.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Build.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -138,11 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Content Include="Entity\Build.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Build.cs</LastGenOutput>
-    </Content>
-    <Content Include="Entity\Model.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">

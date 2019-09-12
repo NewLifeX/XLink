@@ -89,6 +89,14 @@ namespace xLink.Entity
         [BindColumn("OS", "操作系统", "")]
         public String OS { get { return _OS; } set { if (OnPropertyChanging(__.OS, value)) { _OS = value; OnPropertyChanged(__.OS); } } }
 
+        private String _OSVersion;
+        /// <summary>系统版本</summary>
+        [DisplayName("系统版本")]
+        [Description("系统版本")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("OSVersion", "系统版本", "")]
+        public String OSVersion { get { return _OSVersion; } set { if (OnPropertyChanging(__.OSVersion, value)) { _OSVersion = value; OnPropertyChanged(__.OSVersion); } } }
+
         private String _MachineName;
         /// <summary>机器名称</summary>
         [DisplayName("机器名称")]
@@ -341,6 +349,7 @@ namespace xLink.Entity
                     case __.Version : return _Version;
                     case __.CompileTime : return _CompileTime;
                     case __.OS : return _OS;
+                    case __.OSVersion : return _OSVersion;
                     case __.MachineName : return _MachineName;
                     case __.UserName : return _UserName;
                     case __.Cpu : return _Cpu;
@@ -386,6 +395,7 @@ namespace xLink.Entity
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.CompileTime : _CompileTime = value.ToDateTime(); break;
                     case __.OS : _OS = Convert.ToString(value); break;
+                    case __.OSVersion : _OSVersion = Convert.ToString(value); break;
                     case __.MachineName : _MachineName = Convert.ToString(value); break;
                     case __.UserName : _UserName = Convert.ToString(value); break;
                     case __.Cpu : _Cpu = value.ToInt(); break;
@@ -451,6 +461,9 @@ namespace xLink.Entity
 
             /// <summary>操作系统</summary>
             public static readonly Field OS = FindByName(__.OS);
+
+            /// <summary>系统版本</summary>
+            public static readonly Field OSVersion = FindByName(__.OSVersion);
 
             /// <summary>机器名称</summary>
             public static readonly Field MachineName = FindByName(__.MachineName);
@@ -572,6 +585,9 @@ namespace xLink.Entity
             /// <summary>操作系统</summary>
             public const String OS = "OS";
 
+            /// <summary>系统版本</summary>
+            public const String OSVersion = "OSVersion";
+
             /// <summary>机器名称</summary>
             public const String MachineName = "MachineName";
 
@@ -692,6 +708,9 @@ namespace xLink.Entity
 
         /// <summary>操作系统</summary>
         String OS { get; set; }
+
+        /// <summary>系统版本</summary>
+        String OSVersion { get; set; }
 
         /// <summary>机器名称</summary>
         String MachineName { get; set; }

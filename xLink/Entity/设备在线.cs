@@ -25,6 +25,14 @@ namespace xLink.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
+        private Int32 _SessionID;
+        /// <summary>会话</summary>
+        [DisplayName("会话")]
+        [Description("会话")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("SessionID", "会话", "")]
+        public Int32 SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
+
         private Int32 _ProductID;
         /// <summary>产品</summary>
         [DisplayName("产品")]
@@ -57,6 +65,14 @@ namespace xLink.Entity
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
+        private DateTime _CompileTime;
+        /// <summary>编译时间</summary>
+        [DisplayName("编译时间")]
+        [Description("编译时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("CompileTime", "编译时间", "")]
+        public DateTime CompileTime { get { return _CompileTime; } set { if (OnPropertyChanging(__.CompileTime, value)) { _CompileTime = value; OnPropertyChanged(__.CompileTime); } } }
+
         private String _NetType;
         /// <summary>网络</summary>
         [DisplayName("网络")]
@@ -65,13 +81,45 @@ namespace xLink.Entity
         [BindColumn("NetType", "网络", "")]
         public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
 
-        private Int32 _SessionID;
-        /// <summary>会话</summary>
-        [DisplayName("会话")]
-        [Description("会话")]
+        private Int32 _Memory;
+        /// <summary>内存。单位M</summary>
+        [DisplayName("内存")]
+        [Description("内存。单位M")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("SessionID", "会话", "")]
-        public Int32 SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
+        [BindColumn("Memory", "内存。单位M", "")]
+        public Int32 Memory { get { return _Memory; } set { if (OnPropertyChanging(__.Memory, value)) { _Memory = value; OnPropertyChanged(__.Memory); } } }
+
+        private Int32 _AvailableMemory;
+        /// <summary>可用内存。单位M</summary>
+        [DisplayName("可用内存")]
+        [Description("可用内存。单位M")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("AvailableMemory", "可用内存。单位M", "")]
+        public Int32 AvailableMemory { get { return _AvailableMemory; } set { if (OnPropertyChanging(__.AvailableMemory, value)) { _AvailableMemory = value; OnPropertyChanged(__.AvailableMemory); } } }
+
+        private Double _CpuRate;
+        /// <summary>CPU率。占用率</summary>
+        [DisplayName("CPU率")]
+        [Description("CPU率。占用率")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("CpuRate", "CPU率。占用率", "")]
+        public Double CpuRate { get { return _CpuRate; } set { if (OnPropertyChanging(__.CpuRate, value)) { _CpuRate = value; OnPropertyChanged(__.CpuRate); } } }
+
+        private Int32 _Delay;
+        /// <summary>延迟。网络延迟，单位ms</summary>
+        [DisplayName("延迟")]
+        [Description("延迟。网络延迟，单位ms")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Delay", "延迟。网络延迟，单位ms", "")]
+        public Int32 Delay { get { return _Delay; } set { if (OnPropertyChanging(__.Delay, value)) { _Delay = value; OnPropertyChanged(__.Delay); } } }
+
+        private Int32 _Offset;
+        /// <summary>偏移。客户端时间减服务端时间，单位ms</summary>
+        [DisplayName("偏移")]
+        [Description("偏移。客户端时间减服务端时间，单位ms")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Offset", "偏移。客户端时间减服务端时间，单位ms", "")]
+        public Int32 Offset { get { return _Offset; } set { if (OnPropertyChanging(__.Offset, value)) { _Offset = value; OnPropertyChanged(__.Offset); } } }
 
         private String _InternalUri;
         /// <summary>内网</summary>
@@ -165,12 +213,18 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
+                    case __.SessionID : return _SessionID;
                     case __.ProductID : return _ProductID;
                     case __.DeviceID : return _DeviceID;
                     case __.Name : return _Name;
                     case __.Version : return _Version;
+                    case __.CompileTime : return _CompileTime;
                     case __.NetType : return _NetType;
-                    case __.SessionID : return _SessionID;
+                    case __.Memory : return _Memory;
+                    case __.AvailableMemory : return _AvailableMemory;
+                    case __.CpuRate : return _CpuRate;
+                    case __.Delay : return _Delay;
+                    case __.Offset : return _Offset;
                     case __.InternalUri : return _InternalUri;
                     case __.ExternalUri : return _ExternalUri;
                     case __.LoginCount : return _LoginCount;
@@ -189,12 +243,18 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
+                    case __.SessionID : _SessionID = value.ToInt(); break;
                     case __.ProductID : _ProductID = value.ToInt(); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
+                    case __.CompileTime : _CompileTime = value.ToDateTime(); break;
                     case __.NetType : _NetType = Convert.ToString(value); break;
-                    case __.SessionID : _SessionID = value.ToInt(); break;
+                    case __.Memory : _Memory = value.ToInt(); break;
+                    case __.AvailableMemory : _AvailableMemory = value.ToInt(); break;
+                    case __.CpuRate : _CpuRate = value.ToDouble(); break;
+                    case __.Delay : _Delay = value.ToInt(); break;
+                    case __.Offset : _Offset = value.ToInt(); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
                     case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
                     case __.LoginCount : _LoginCount = value.ToInt(); break;
@@ -218,6 +278,9 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
+            /// <summary>会话</summary>
+            public static readonly Field SessionID = FindByName(__.SessionID);
+
             /// <summary>产品</summary>
             public static readonly Field ProductID = FindByName(__.ProductID);
 
@@ -230,11 +293,26 @@ namespace xLink.Entity
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
 
+            /// <summary>编译时间</summary>
+            public static readonly Field CompileTime = FindByName(__.CompileTime);
+
             /// <summary>网络</summary>
             public static readonly Field NetType = FindByName(__.NetType);
 
-            /// <summary>会话</summary>
-            public static readonly Field SessionID = FindByName(__.SessionID);
+            /// <summary>内存。单位M</summary>
+            public static readonly Field Memory = FindByName(__.Memory);
+
+            /// <summary>可用内存。单位M</summary>
+            public static readonly Field AvailableMemory = FindByName(__.AvailableMemory);
+
+            /// <summary>CPU率。占用率</summary>
+            public static readonly Field CpuRate = FindByName(__.CpuRate);
+
+            /// <summary>延迟。网络延迟，单位ms</summary>
+            public static readonly Field Delay = FindByName(__.Delay);
+
+            /// <summary>偏移。客户端时间减服务端时间，单位ms</summary>
+            public static readonly Field Offset = FindByName(__.Offset);
 
             /// <summary>内网</summary>
             public static readonly Field InternalUri = FindByName(__.InternalUri);
@@ -275,6 +353,9 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
+            /// <summary>会话</summary>
+            public const String SessionID = "SessionID";
+
             /// <summary>产品</summary>
             public const String ProductID = "ProductID";
 
@@ -287,11 +368,26 @@ namespace xLink.Entity
             /// <summary>版本</summary>
             public const String Version = "Version";
 
+            /// <summary>编译时间</summary>
+            public const String CompileTime = "CompileTime";
+
             /// <summary>网络</summary>
             public const String NetType = "NetType";
 
-            /// <summary>会话</summary>
-            public const String SessionID = "SessionID";
+            /// <summary>内存。单位M</summary>
+            public const String Memory = "Memory";
+
+            /// <summary>可用内存。单位M</summary>
+            public const String AvailableMemory = "AvailableMemory";
+
+            /// <summary>CPU率。占用率</summary>
+            public const String CpuRate = "CpuRate";
+
+            /// <summary>延迟。网络延迟，单位ms</summary>
+            public const String Delay = "Delay";
+
+            /// <summary>偏移。客户端时间减服务端时间，单位ms</summary>
+            public const String Offset = "Offset";
 
             /// <summary>内网</summary>
             public const String InternalUri = "InternalUri";
@@ -333,6 +429,9 @@ namespace xLink.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
+        /// <summary>会话</summary>
+        Int32 SessionID { get; set; }
+
         /// <summary>产品</summary>
         Int32 ProductID { get; set; }
 
@@ -345,11 +444,26 @@ namespace xLink.Entity
         /// <summary>版本</summary>
         String Version { get; set; }
 
+        /// <summary>编译时间</summary>
+        DateTime CompileTime { get; set; }
+
         /// <summary>网络</summary>
         String NetType { get; set; }
 
-        /// <summary>会话</summary>
-        Int32 SessionID { get; set; }
+        /// <summary>内存。单位M</summary>
+        Int32 Memory { get; set; }
+
+        /// <summary>可用内存。单位M</summary>
+        Int32 AvailableMemory { get; set; }
+
+        /// <summary>CPU率。占用率</summary>
+        Double CpuRate { get; set; }
+
+        /// <summary>延迟。网络延迟，单位ms</summary>
+        Int32 Delay { get; set; }
+
+        /// <summary>偏移。客户端时间减服务端时间，单位ms</summary>
+        Int32 Offset { get; set; }
 
         /// <summary>内网</summary>
         String InternalUri { get; set; }
