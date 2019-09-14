@@ -59,6 +59,13 @@ namespace xLink.Entity
         #endregion
 
         #region 扩展属性
+        /// <summary>产品</summary>
+        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductID));
+
+        /// <summary>产品名</summary>
+        [Map(__.ProductID, typeof(Product), "ID")]
+        public String ProductName => Product + "";
+
         /// <summary>登录地址。IP=>Address</summary>
         [DisplayName("登录地址")]
         public String LastLoginAddress { get { return LastLoginIP.IPToAddress(); } }

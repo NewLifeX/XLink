@@ -55,9 +55,22 @@ namespace xLink.Entity
             if (isNew)
             {
                 // 自动生成产品证书密钥
-                if (Code.IsNullOrEmpty()) Code = Rand.NextString(4);
-                if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(8);
+                if (Code.IsNullOrEmpty()) Code = Rand.NextString(8);
+                if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(16);
             }
+        }
+
+        /// <summary>初始化</summary>
+        protected override void InitData()
+        {
+            if (Meta.Count > 0) return;
+
+            var entity = new Product
+            {
+                Name = "默认",
+                Enable = true,
+            };
+            entity.Insert();
         }
         #endregion
 

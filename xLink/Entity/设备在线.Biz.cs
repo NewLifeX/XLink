@@ -34,12 +34,19 @@ namespace xLink.Entity
         #endregion
 
         #region 扩展属性
+        /// <summary>产品</summary>
+        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductID));
+
+        /// <summary>产品名</summary>
+        [Map(__.ProductID)]
+        public String ProductName => Product + "";
+
         /// <summary>设备</summary>
         public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceID));
 
         /// <summary>设备名</summary>
         [Map(__.DeviceID)]
-        public String DeviceName => Device?.Name + "";
+        public String DeviceName => Device + "";
 
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]

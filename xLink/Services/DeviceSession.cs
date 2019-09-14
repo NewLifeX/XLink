@@ -77,7 +77,12 @@ namespace xLink.Services
         /// <param name="ps">附加参数</param>
         protected override void SaveLogin(IManageUser user, IDictionary<String, Object> ps)
         {
-            if (user is Device dv) Fill(dv, ps);
+            if (user is Device dv)
+            {
+                Fill(dv, ps);
+
+                if (Online is DeviceOnline olt) olt.ProductID = dv.ProductID;
+            }
 
             //var dv = Device;
             //if (dv != null)
