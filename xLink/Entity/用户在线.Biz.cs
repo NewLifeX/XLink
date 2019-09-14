@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using XCode;
 using XCode.Cache;
+using XCode.Membership;
 using xLink.Models;
 
 namespace xLink.Entity
@@ -23,31 +24,27 @@ namespace xLink.Entity
             var df = Meta.Factory.AdditionalFields;
             df.Add(__.LoginCount);
             df.Add(__.PingCount);
+
+            Meta.Modules.Add<TimeModule>();
+            Meta.Modules.Add<IPModule>();
+
+            var sc = Meta.SingleCache;
+            sc.FindSlaveKeyMethod = k => Find(_.SessionID == k);
+            sc.GetSlaveKeyMethod = e => e.SessionID;
         }
-
-        ///// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
-        ///// <param name="isNew"></param>
-        //public override void Valid(Boolean isNew)
-        //{
-        //    // 如果没有脏数据，则不需要进行任何处理
-        //    if (!HasDirty) return;
-
-        //    // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
-        //    base.Valid(isNew);
-        //}
         #endregion
 
         #region 扩展属性
         /// <summary>用户</summary>
-        public User User { get { return Extends.Get(nameof(User), k => User.FindByID(UserID)); } }
+        public User User => Extends.Get(nameof(User), k => User.FindByID(UserID));
 
         /// <summary>用户名</summary>
-        [Map(__.UserID, typeof(User), "ID")]
-        public String UserName { get { return User + ""; } }
+        [Map(__.UserID)]
+        public String UserName => User + "";
 
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]
-        public String ExternalAddress { get { return ExternalUri.IPToAddress(); } }
+        public String ExternalAddress => ExternalUri.IPToAddress();
         #endregion
 
         #region 扩展查询
