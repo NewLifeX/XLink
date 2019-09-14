@@ -33,20 +33,9 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Controllers\**" />
-    <Compile Remove="Models\**" />
-    <EmbeddedResource Remove="Controllers\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <None Remove="Controllers\**" />
-    <None Remove="Models\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="LinkServer.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NewLife.Core" Version="8.3.2019.822" />

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using NewLife.Model;
+﻿using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
-using xLink.Entity;
+using NewLife.Serialization;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using xLink.Models;
 
 namespace xLink.Services
@@ -13,6 +13,9 @@ namespace xLink.Services
     public abstract class LinkSession
     {
         #region 属性
+        /// <summary>名称</summary>
+        public String Name { get; set; }
+
         /// <summary>网络会话</summary>
         public IApiSession Session { get; set; }
 
@@ -26,25 +29,10 @@ namespace xLink.Services
         public IManageUser Current { get; set; }
 
         /// <summary>在线对象</summary>
-        public IOnline Online { get; private set; }
-
-        /// <summary>名称</summary>
-        public String Name { get; set; }
-
-        ///// <summary>平台</summary>
-        //public String Agent { get; set; }
-
-        ///// <summary>系统</summary>
-        //public String OS { get; set; }
-
-        ///// <summary>类型</summary>
-        //public String Type { get; set; }
+        public IOnline Online { get; set; }
 
         /// <summary>版本</summary>
         public String Version { get; set; }
-
-        ///// <summary>内网地址</summary>
-        //public String InternalUri { get; set; }
         #endregion
 
         #region 登录注册
@@ -60,12 +48,8 @@ namespace xLink.Services
             var ps = parameters;
             if (ps != null)
             {
-                //Agent = ps["Agent"] + "";
-                //OS = ps["OS"] + "";
-                //Type = ps["Type"] + "";
                 Version = ps["Version"] + "";
                 NetType = ps["NetType"] + "";
-                //InternalUri = ps["IP"] + "";
             }
             // 登录
             Name = user;
@@ -76,14 +60,14 @@ namespace xLink.Services
             try
             {
                 // 查找并登录，找不到用户是返回空，登录失败则抛出异常
-                var u = CheckUser(user, pass);
+                var u = CheckUser(user, pass, ps);
                 if (u == null) throw Error(3, user + " 不存在");
                 if (!u.Enable) throw Error(4, user + " 已被禁用");
 
                 var rs = new { Name = u + "" };
 
                 //u.SaveLogin(ns);
-                SaveLogin(u);
+                SaveLogin(u, ps);
 
                 // 当前用户
                 Current = u;
@@ -104,19 +88,21 @@ namespace xLink.Services
             }
             finally
             {
-                SaveHistory("Login", flag, msg);
+                SaveHistory("Login", flag, msg + " " + ps.ToJson());
             }
         }
 
         /// <summary>查找用户并登录，找不到用户是返回空，登录失败则抛出异常</summary>
         /// <param name="user"></param>
         /// <param name="pass"></param>
+        /// <param name="ps">附加参数</param>
         /// <returns></returns>
-        protected abstract IManageUser CheckUser(String user, String pass);
+        protected abstract IManageUser CheckUser(String user, String pass, IDictionary<String, Object> ps);
 
         /// <summary>登录或注册完成后，保存登录信息</summary>
         /// <param name="user"></param>
-        protected virtual void SaveLogin(IManageUser user)
+        /// <param name="ps">附加参数</param>
+        protected virtual void SaveLogin(IManageUser user, IDictionary<String, Object> ps)
         {
             //var u = user as IMyModel;
             //u.Type = Type;
@@ -138,7 +124,8 @@ namespace xLink.Services
         #region 心跳历史
         /// <summary>更新在线信息，登录前、心跳时 调用</summary>
         /// <param name="name"></param>
-        public virtual void CheckOnline(String name)
+        /// <param name="ps">附加参数</param>
+        public virtual void CheckOnline(String name, IDictionary<String, Object> ps)
         {
             var ns = Session as NetSession;
             var u = Current;

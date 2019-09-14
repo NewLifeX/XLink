@@ -135,6 +135,7 @@ namespace xLink
 
                 InstallPath = ".".GetFullPath(),
                 Runtime = Environment.Version + "",
+                LocalIP = NetHelper.MyIP() + "",
 
                 Time = DateTime.Now,
             };

@@ -88,6 +88,7 @@
       <Column Name="CpuRate" DataType="Double" Description="CPU率" />
       <Column Name="Delay" DataType="Int32" Description="延迟。网络延迟，单位ms" />
       <Column Name="Offset" DataType="Int32" Description="偏移。客户端时间减服务端时间，单位s" />
+      <Column Name="LocalTime" DataType="DateTime" Description="本地时间" />
       <Column Name="MACs" DataType="String" Description="网卡" />
       <Column Name="COMs" DataType="String" Description="串口" />
       <Column Name="Processes" DataType="String" Length="2000" Description="进程列表" />

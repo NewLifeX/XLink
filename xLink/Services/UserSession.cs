@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,8 +47,9 @@ namespace xLink.Services
         /// <summary>查找用户并登录，找不到用户是返回空，登录失败则抛出异常</summary>
         /// <param name="user"></param>
         /// <param name="pass"></param>
+        /// <param name="ps">附加参数</param>
         /// <returns></returns>
-        protected override IManageUser CheckUser(String user, String pass)
+        protected override IManageUser CheckUser(String user, String pass, IDictionary<String, Object> ps)
         {
             var u = User.FindByName(user);
             if (u == null)

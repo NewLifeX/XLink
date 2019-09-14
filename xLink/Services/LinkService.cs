@@ -54,7 +54,7 @@ namespace xLink.Services
             WriteLog("登录 {0}/{1}", user, pass);
 
             // 在线记录
-            ss.CheckOnline(user);
+            ss.CheckOnline(user, ps);
 
             // 注册与登录
             var rs = ss.CheckLogin(user, pass, ps);
@@ -77,10 +77,11 @@ namespace xLink.Services
         [Api(nameof(Ping))]
         public virtual Object Ping()
         {
+            var ps = ControllerContext.Current?.Parameters?.ToNullable();
             var ss = Session;
             WriteLog("心跳 ");
 
-            ss.CheckOnline(ss.Current + "");
+            ss.CheckOnline(ss.Current + "", ps);
 
             var now = DateTime.Now;
 

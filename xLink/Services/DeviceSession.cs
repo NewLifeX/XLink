@@ -44,8 +44,9 @@ namespace xLink.Services
         /// <summary>查找用户并登录，找不到用户是返回空，登录失败则抛出异常</summary>
         /// <param name="user"></param>
         /// <param name="pass"></param>
+        /// <param name="ps">附加参数</param>
         /// <returns></returns>
-        protected override IManageUser CheckUser(String user, String pass)
+        protected override IManageUser CheckUser(String user, String pass, IDictionary<String, Object> ps)
         {
             var u = Device.FindByName(user);
             if (u == null)
@@ -73,8 +74,11 @@ namespace xLink.Services
 
         /// <summary>登录或注册完成后，保存登录信息</summary>
         /// <param name="user"></param>
-        protected override void SaveLogin(IManageUser user)
+        /// <param name="ps">附加参数</param>
+        protected override void SaveLogin(IManageUser user, IDictionary<String, Object> ps)
         {
+            if (user is Device dv) Fill(dv, ps);
+
             //var dv = Device;
             //if (dv != null)
             //{
@@ -86,23 +90,116 @@ namespace xLink.Services
 
             // 检查下发指令
             TimerX.Delay(CheckCommand, 100);
-            // 读取信息
-            TimerX.Delay(async s =>
-            {
-                try
-                {
-                    var rs = await Session.InvokeAsync<Object>("GetServer");
-                    var dic = rs.ToDictionary();
-                    WriteLog("Server={0}", dic["Server"]);
-                }
-                catch { }
-            }, 1000);
+            //// 读取信息
+            //TimerX.Delay(async s =>
+            //{
+            //    try
+            //    {
+            //        var rs = await Session.InvokeAsync<Object>("GetServer");
+            //        var dic = rs.ToDictionary();
+            //        WriteLog("Server={0}", dic["Server"]);
+            //    }
+            //    catch { }
+            //}, 1000);
 
-            base.SaveLogin(user);
+            base.SaveLogin(user, ps);
+        }
+
+        private void Fill(Device dv, IDictionary<String, Object> ps)
+        {
+            var os = ps["os"] + "";
+            if (os.IsNullOrEmpty()) os = ps["osName"] + "";
+            var osVersion = ps["osVersion"] + "";
+            var version = ps["version"] + "";
+            var compile = ps["compile"].ToDateTime();
+
+            if (!os.IsNullOrEmpty()) dv.OS = os;
+            if (!osVersion.IsNullOrEmpty()) dv.OSVersion = osVersion;
+            if (!version.IsNullOrEmpty()) dv.Version = version;
+            if (compile.Year > 2000) dv.CompileTime = compile;
+
+            var str = ps["MachineName"] + "";
+            if (!str.IsNullOrEmpty()) dv.MachineName = str;
+
+            str = ps["UserName"] + "";
+            if (!str.IsNullOrEmpty()) dv.UserName = str;
+
+            str = ps["Processor"] + "";
+            if (!str.IsNullOrEmpty()) dv.Processor = str;
+
+            str = ps["CpuID"] + "";
+            if (!str.IsNullOrEmpty()) dv.CpuID = str;
+
+            str = ps["UUID"] + "";
+            if (!str.IsNullOrEmpty()) dv.Uuid = str;
+
+            str = ps["MachineGuid"] + "";
+            if (!str.IsNullOrEmpty()) dv.MachineGuid = str;
+
+            var n = ps["CPU"].ToInt();
+            if (n > 0) dv.Cpu = n;
+
+            var m = ps["Memory"].ToLong();
+            if (m > 0) dv.Memory = (Int32)(m / 1024 / 1024);
+
+            str = ps["MACs"] + "";
+            if (!str.IsNullOrEmpty()) dv.MACs = str;
+
+            str = ps["COMs"] + "";
+            if (!str.IsNullOrEmpty()) dv.COMs = str;
+
+            str = ps["InstallPath"] + "";
+            if (!str.IsNullOrEmpty()) dv.InstallPath = str;
+
+            str = ps["Runtime"] + "";
+            if (!str.IsNullOrEmpty()) dv.Runtime = str;
+        }
+
+        private void Fill(DeviceOnline olt, IDictionary<String, Object> ps)
+        {
+            var m = ps["AvailableMemory"].ToLong();
+            if (m > 0) olt.AvailableMemory = (Int32)(m / 1024 / 1024);
+
+            var d = ps["CpuRate"].ToDouble();
+            if (d > 0) olt.CpuRate = d;
+
+            var n = ps["Delay"].ToInt();
+            if (n > 0) olt.Delay = n;
+
+            var dt = ps["Time"].ToDateTime();
+            if (dt.Year > 2000)
+            {
+                olt.LocalTime = dt;
+                olt.Offset = (Int32)Math.Round((dt - DateTime.Now).TotalSeconds);
+            }
+
+            var str = ps["Processes"] + "";
+            if (!str.IsNullOrEmpty()) olt.Processes = str;
+
+            str = ps["MACs"] + "";
+            if (!str.IsNullOrEmpty()) olt.MACs = str;
+
+            str = ps["COMs"] + "";
+            if (!str.IsNullOrEmpty()) olt.COMs = str;
         }
         #endregion
 
         #region 操作历史
+        /// <summary>更新在线信息，登录前、心跳时 调用</summary>
+        /// <param name="name"></param>
+        /// <param name="ps">附加参数</param>
+        public override void CheckOnline(String name, IDictionary<String, Object> ps)
+        {
+            var ns = Session as NetSession;
+
+            var olt = Online ?? CreateOnline(ns.ID);
+            if (olt is DeviceOnline dolt) Fill(dolt, ps);
+
+            Online = olt;
+
+            base.CheckOnline(name, ps);
+        }
+
         /// <summary>创建在线</summary>
         /// <param name="sessionid"></param>
         /// <returns></returns>

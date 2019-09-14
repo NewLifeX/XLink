@@ -67,10 +67,10 @@ namespace xLink
         /// <summary>停止工作</summary>
         protected override void StopWork(String reason)
         {
-            base.StopWork(reason);
-
             Svr.TryDispose();
             Svr = null;
+
+            base.StopWork(reason);
         }
     }
 }

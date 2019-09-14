@@ -145,6 +145,14 @@ namespace xLink.Entity
         [BindColumn("Offset", "偏移。客户端时间减服务端时间，单位s", "")]
         public Int32 Offset { get { return _Offset; } set { if (OnPropertyChanging(__.Offset, value)) { _Offset = value; OnPropertyChanged(__.Offset); } } }
 
+        private DateTime _LocalTime;
+        /// <summary>本地时间</summary>
+        [DisplayName("本地时间")]
+        [Description("本地时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("LocalTime", "本地时间", "")]
+        public DateTime LocalTime { get { return _LocalTime; } set { if (OnPropertyChanging(__.LocalTime, value)) { _LocalTime = value; OnPropertyChanged(__.LocalTime); } } }
+
         private String _MACs;
         /// <summary>网卡</summary>
         [DisplayName("网卡")]
@@ -220,6 +228,7 @@ namespace xLink.Entity
                     case __.CpuRate : return _CpuRate;
                     case __.Delay : return _Delay;
                     case __.Offset : return _Offset;
+                    case __.LocalTime : return _LocalTime;
                     case __.MACs : return _MACs;
                     case __.COMs : return _COMs;
                     case __.Processes : return _Processes;
@@ -249,6 +258,7 @@ namespace xLink.Entity
                     case __.CpuRate : _CpuRate = value.ToDouble(); break;
                     case __.Delay : _Delay = value.ToInt(); break;
                     case __.Offset : _Offset = value.ToInt(); break;
+                    case __.LocalTime : _LocalTime = value.ToDateTime(); break;
                     case __.MACs : _MACs = Convert.ToString(value); break;
                     case __.COMs : _COMs = Convert.ToString(value); break;
                     case __.Processes : _Processes = Convert.ToString(value); break;
@@ -312,6 +322,9 @@ namespace xLink.Entity
 
             /// <summary>偏移。客户端时间减服务端时间，单位s</summary>
             public static readonly Field Offset = FindByName(__.Offset);
+
+            /// <summary>本地时间</summary>
+            public static readonly Field LocalTime = FindByName(__.LocalTime);
 
             /// <summary>网卡</summary>
             public static readonly Field MACs = FindByName(__.MACs);
@@ -385,6 +398,9 @@ namespace xLink.Entity
             /// <summary>偏移。客户端时间减服务端时间，单位s</summary>
             public const String Offset = "Offset";
 
+            /// <summary>本地时间</summary>
+            public const String LocalTime = "LocalTime";
+
             /// <summary>网卡</summary>
             public const String MACs = "MACs";
 
@@ -457,6 +473,9 @@ namespace xLink.Entity
 
         /// <summary>偏移。客户端时间减服务端时间，单位s</summary>
         Int32 Offset { get; set; }
+
+        /// <summary>本地时间</summary>
+        DateTime LocalTime { get; set; }
 
         /// <summary>网卡</summary>
         String MACs { get; set; }
