@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\xLink\LinkClient.cs">
+      <Link>LinkClient.cs</Link>
+    </Compile>
     <Compile Include="..\xLink\Models\DataModel.cs">
       <Link>Models\DataModel.cs</Link>
     </Compile>
@@ -111,12 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="link.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\xLink\xLink.csproj">
-      <Project>{8df06706-ad6e-4f75-99a8-3f610f0fbe7c}</Project>
-      <Name>xLink</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
