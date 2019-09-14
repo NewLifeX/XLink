@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using NewLife;
 using NewLife.Model;
 using NewLife.Net;
 using NewLife.Security;
@@ -48,18 +49,24 @@ namespace xLink.Services
         /// <returns></returns>
         protected override IManageUser CheckUser(String user, String pass, IDictionary<String, Object> ps)
         {
-            var u = Device.FindByName(user);
+            var u = Device.FindByCode(user);
             if (u == null)
             {
-                if (pass.IsNullOrEmpty()) pass = Rand.NextString(8);
+                if (pass.IsNullOrEmpty()) pass = Rand.NextString(16);
 
+                var ns = Session as INetSession;
                 u = new Device
                 {
-                    Name = user,
+                    Code = user,
                     Secret = pass,
-                    Enable = true
+                    Enable = true,
+
+                    CreateIP = ns?.Remote.Address + "",
+                    CreateTime = DateTime.Now,
                 };
-                u.SaveRegister(Session as INetSession);
+                //u.SaveRegister(Session as INetSession);
+
+                u.Insert();
             }
 
             // 登录
@@ -67,7 +74,8 @@ namespace xLink.Services
 
             // 验证密码
             //u.CheckMD5(pass);
-            u.CheckEqual(pass);
+            //u.CheckEqual(pass);
+            if (u.Secret.MD5() != pass) throw new XException("密码错误！");
 
             return u;
         }
@@ -82,6 +90,14 @@ namespace xLink.Services
                 Fill(dv, ps);
 
                 if (Online is DeviceOnline olt) olt.ProductID = dv.ProductID;
+
+                var ns = Session as INetSession;
+
+                dv.Logins++;
+                dv.LastLoginIP = ns.Remote.Address + "";
+                dv.LastLogin = DateTime.Now;
+
+                dv.Save();
             }
 
             //var dv = Device;

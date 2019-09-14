@@ -18,7 +18,7 @@ using XCode.Membership;
 namespace xLink.Entity
 {
     /// <summary>设备</summary>
-    public partial class Device : Entity<Device>, IAuthUser
+    public partial class Device : Entity<Device>, IManageUser/*, IAuthUser*/
     {
         #region 对象操作
         static Device()
@@ -27,14 +27,14 @@ namespace xLink.Entity
             df.Add(__.Logins);
             //df.Add(__.Registers);
 
+            Meta.Modules.Add<UserModule>();
+            Meta.Modules.Add<TimeModule>();
+            Meta.Modules.Add<IPModule>();
+
             var sc = Meta.SingleCache;
             sc.FindSlaveKeyMethod = e => Find(__.Name, e);
             sc.GetSlaveKeyMethod = e => e.Name;
             sc.SlaveKeyIgnoreCase = false;
-
-            Meta.Modules.Add<UserModule>();
-            Meta.Modules.Add<TimeModule>();
-            Meta.Modules.Add<IPModule>();
         }
 
         /// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -72,17 +72,16 @@ namespace xLink.Entity
 
         String IManageUser.Name { get => Code; set => Code = value; }
         String IManageUser.NickName { get => Name; set => Name = value; }
-        String IAuthUser.Password { get => Secret; set => Secret = value; }
-        Boolean IAuthUser.Online { get; set; }
-        String IAuthUser.RegisterIP { get => CreateIP; set => CreateIP = value; }
-        DateTime IAuthUser.RegisterTime { get => CreateTime; set => CreateTime = value; }
+        //String IAuthUser.Password { get => Secret; set => Secret = value; }
+        //Boolean IAuthUser.Online { get; set; }
+        //String IAuthUser.RegisterIP { get => CreateIP; set => CreateIP = value; }
+        //DateTime IAuthUser.RegisterTime { get => CreateTime; set => CreateTime = value; }
         #endregion
 
         #region 扩展查询
         /// <summary>根据编号查找</summary>
         /// <param name="id">编号</param>
         /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static Device FindByID(Int32 id)
         {
             if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.ID == id);
@@ -94,7 +93,6 @@ namespace xLink.Entity
         /// <summary>根据名称。登录用户名查找</summary>
         /// <param name="name">名称。登录用户名</param>
         /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public static Device FindByName(String name)
         {
             if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Name == name);
@@ -102,16 +100,17 @@ namespace xLink.Entity
             return Find(__.Name, name);
         }
 
-        ///// <summary>根据唯一编码查找</summary>
-        ///// <param name="code">唯一编码</param>
-        ///// <returns></returns>
-        //[DataObjectMethod(DataObjectMethodType.Select, false)]
-        //public static Device FindByCode(String code)
-        //{
-        //    if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
+        /// <summary>根据唯一编码查找</summary>
+        /// <param name="code">唯一编码</param>
+        /// <returns></returns>
+        public static Device FindByCode(String code)
+        {
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
 
-        //    return Find(__.Code, code);
-        //}
+            //return Find(__.Code, code);
+
+            return Meta.SingleCache.GetItemWithSlaveKey(code) as Device;
+        }
         #endregion
 
         #region 高级查询

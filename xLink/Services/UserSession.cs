@@ -113,7 +113,7 @@ namespace xLink.Services
             var err = "";
             try
             {
-                var dv = Device.FindByName(id);
+                var dv = Device.FindByCode(id);
                 if (dv == null) throw new ApiException(405, "找不到设备！");
 
                 var ss = Session.AllSessions.FirstOrDefault(e => e["Current"] is DeviceSession d && d.Name.EqualIgnoreCase(id));
