@@ -1,7 +1,13 @@
-﻿using NewLife.Remoting;
+﻿using NewLife.Log;
+using NewLife.Model;
+using NewLife.Net;
+using NewLife.Remoting;
+using NewLife.Serialization;
+using NewLife.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using XCode;
 using xLink.Models;
 
 namespace xLink.Services
@@ -16,26 +22,56 @@ namespace xLink.Services
     }
 
     /// <summary>物联服务</summary>
-    /// <typeparam name="TSession"></typeparam>
-    public class LinkService<TSession> : ILinkService, IActionFilter where TSession : LinkSession, new()
+    public abstract class LinkService : ILinkService, IActionFilter, IApi
     {
         #region 属性
-        /// <summary>物联会话</summary>
-        public TSession Session { get; set; }
+        /// <summary>接口会话</summary>
+        public IApiSession Session { get; set; }
+
+        /// <summary>当前用户</summary>
+        public IManageUser Current { get; set; }
+
+        /// <summary>在线对象</summary>
+        public IOnline Online { get; set; }
+
+        /// <summary>请求参数</summary>
+        private IDictionary<String, Object> Parameters { get; set; }
         #endregion
 
         #region 执行拦截
         void IActionFilter.OnActionExecuting(ControllerContext filterContext)
         {
-            var ss = filterContext.Session;
-            Session = ss["Current"] as TSession ?? new TSession();
-            Session.Session = ss;
+            Parameters = filterContext.Parameters;
+
+            var act = filterContext.ActionName;
+            if (act == nameof(Login) || act.EndsWith("/" + nameof(Login))) return;
+
+            var ns = Session as INetSession;
+            if (Session["Current"] is IManageUser user)
+                Current = user;
+            else
+                throw new ApiException(401, "{0}未登录！不能执行{1}".F(ns.Remote, act));
+
+            Online = Session["Online"] as IOnline;
         }
 
         void IActionFilter.OnActionExecuted(ControllerContext filterContext)
         {
-            var ss = filterContext.Session;
-            ss["Current"] = Session;
+            Session["Current"] = Current;
+            Session["Online"] = Online;
+
+            if (filterContext.Exception != null && !filterContext.ExceptionHandled)
+            {
+                // 显示错误
+                var ex = filterContext.Exception;
+                if (ex != null)
+                {
+                    if (ex is ApiException)
+                        XTrace.Log.Error(ex.Message);
+                    else
+                        XTrace.WriteException(ex);
+                }
+            }
         }
         #endregion
 
@@ -49,25 +85,57 @@ namespace xLink.Services
         {
             if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
 
-            var ps = ControllerContext.Current?.Parameters?.ToNullable();
-            var ss = Session;
-            WriteLog("登录 {0}/{1}", user, pass);
+            var ps = Parameters;
 
             // 在线记录
-            ss.CheckOnline(user, ps);
+            CheckOnline(user, ps);
 
-            // 注册与登录
-            var rs = ss.CheckLogin(user, pass, ps);
+            // 登录
+            var msg = "登录 {0}/{1}".F(user, pass);
 
-            // 可能是注册
-            var dic = rs.ToDictionary();
-            if (dic.ContainsKey(nameof(user))) user = dic[nameof(user)] + "";
-            //if (dic.ContainsKey(nameof(pass))) pass = dic[nameof(pass)] + "";
+            var flag = true;
+            try
+            {
+                // 查找并登录，找不到用户是返回空，登录失败则抛出异常
+                var u = CheckUser(user, pass, ps);
+                if (u == null) throw Error(3, user + " 不存在");
+                if (!u.Enable) throw Error(4, user + " 已被禁用");
 
-            // 登录会话
-            ss.Logined = true;
+                var rs = SaveLogin(u, ps);
 
-            return dic;
+                // 当前用户
+                Current = u;
+
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                msg += " " + ex?.GetTrue()?.Message;
+                flag = false;
+                throw;
+            }
+            finally
+            {
+                SaveHistory("Login", flag, msg + " " + ps.ToJson());
+            }
+        }
+
+        /// <summary>查找用户并登录，找不到用户是返回空，登录失败则抛出异常</summary>
+        /// <param name="user"></param>
+        /// <param name="pass"></param>
+        /// <param name="ps">附加参数</param>
+        /// <returns></returns>
+        protected abstract IManageUser CheckUser(String user, String pass, IDictionary<String, Object> ps);
+
+        /// <summary>登录或注册完成后，保存登录信息</summary>
+        /// <param name="user"></param>
+        /// <param name="ps">附加参数</param>
+        protected virtual Object SaveLogin(IManageUser user, IDictionary<String, Object> ps)
+        {
+            var ns = Session as NetSession;
+            if (user is IAuthUser au) au.SaveLogin(ns);
+
+            return new { Name = user + "" };
         }
         #endregion
 
@@ -77,11 +145,9 @@ namespace xLink.Services
         [Api(nameof(Ping))]
         public virtual Object Ping()
         {
-            var ps = ControllerContext.Current?.Parameters?.ToNullable();
-            var ss = Session;
-            WriteLog("心跳 ");
+            var ps = Parameters;
 
-            ss.CheckOnline(ss.Current + "", ps);
+            CheckOnline(Current + "", ps);
 
             var now = DateTime.Now;
 
@@ -92,55 +158,41 @@ namespace xLink.Services
 
             return dic;
         }
-        #endregion
 
-        #region 读写
-        /// <summary>获取数据回调</summary>
-        public Func<String, Byte[]> GetData;
-
-        /// <summary>设置数据回调</summary>
-        public Action<String, Byte[]> SetData;
-
-        /// <summary>收到写入请求</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="data"></param>
-        [Api("Write")]
-        public virtual DataModel OnWrite(String id, Int32 start, String data)
+        /// <summary>更新在线信息，登录前、心跳时 调用</summary>
+        /// <param name="name"></param>
+        /// <param name="ps">附加参数</param>
+        protected virtual void CheckOnline(String name, IDictionary<String, Object> ps)
         {
-            var buf = GetData?.Invoke(id);
-            if (buf == null) throw new ApiException(405, "找不到设备！");
+            var ns = Session as NetSession;
+            var sid = ns.Remote.EndPoint + "";
 
-            var ds = data.ToHex();
+            var olt = Online ?? CreateOnline(sid);
+            olt.Name = name;
+            olt.SessionID = sid;
+            olt.UpdateTime = DateTime.Now;
 
-            // 检查扩容
-            if (start + ds.Length > buf.Length)
+            var user = Current;
+            if (user != null)
             {
-                var buf2 = new Byte[start + ds.Length];
-                buf2.Write(0, buf);
-                buf = buf2;
+                olt.UserID = user.ID;
+                if (olt.Name.IsNullOrEmpty()) olt.Name = user + "";
             }
-            buf.Write(start, ds);
-            buf[0] = (Byte)buf.Length;
+            olt.SaveAsync();
 
-            // 保存回去
-            SetData?.Invoke(id, buf);
-
-            return new DataModel { ID = id, Start = 0, Data = buf.ToHex() };
+            Online = olt;
         }
 
-        /// <summary>收到读取请求</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="count"></param>
-        [Api("Read")]
-        public virtual DataModel OnRead(String id, Int32 start, Int32 count)
-        {
-            var buf = GetData?.Invoke(id);
-            if (buf == null) throw new ApiException(405, "找不到设备！");
+        /// <summary>创建在线</summary>
+        /// <param name="sessionid"></param>
+        /// <returns></returns>
+        protected abstract IOnline CreateOnline(String sessionid);
 
-            return new DataModel { ID = id, Start = start, Data = buf.ReadBytes(start, count).ToHex() };
-        }
+        /// <summary>保存令牌操作历史</summary>
+        /// <param name="action"></param>
+        /// <param name="success"></param>
+        /// <param name="content"></param>
+        protected virtual void SaveHistory(String action, Boolean success, String content) { }
         #endregion
 
         #region 清理超时
@@ -178,7 +230,7 @@ namespace xLink.Services
         /// <param name="args"></param>
         protected void WriteLog(String format, params Object[] args)
         {
-            var ns = Session as LinkSession;
+            var ns = Session as NetSession;
             ns?.WriteLog(format, args);
         }
         #endregion
