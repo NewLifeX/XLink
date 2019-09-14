@@ -67,6 +67,8 @@ namespace xLink.Entity
         String IManageUser.NickName { get => Name; set => Name = value; }
         String IAuthUser.Password { get => Secret; set => Secret = value; }
         Boolean IAuthUser.Online { get; set; }
+        String IAuthUser.RegisterIP { get => CreateIP; set => CreateIP = value; }
+        DateTime IAuthUser.RegisterTime { get => CreateTime; set => CreateTime = value; }
         #endregion
 
         #region 扩展查询
@@ -116,15 +118,12 @@ namespace xLink.Entity
         /// <returns></returns>
         public static IList<Device> Search(Int32 productId, Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
         {
-            // WhereExpression重载&和|运算符，作为And和Or的替代
-            // SearchWhereByKeys系列方法用于构建针对字符串字段的模糊搜索，第二个参数可指定要搜索的字段
             var exp = SearchWhereByKeys(key, null, null);
 
             if (productId >= 0) exp &= _.ProductID == productId;
             if (enable != null) exp &= _.Enable == enable.Value;
 
-            //exp &= _.CreateTime.Between(start, end);
-            exp &= _.LastLogin.Between(start, end);
+            exp &= _.UpdateTime.Between(start, end);
 
             return FindAll(exp, param);
         }

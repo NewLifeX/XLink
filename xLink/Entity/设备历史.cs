@@ -11,8 +11,8 @@ namespace xLink.Entity
     [Serializable]
     [DataObject]
     [Description("设备历史")]
-    [BindIndex("IX_DeviceHistory_DeviceID", false, "DeviceID")]
-    [BindIndex("IX_DeviceHistory_Name", false, "Name")]
+    [BindIndex("IX_DeviceHistory_DeviceID_Action", false, "DeviceID,Action")]
+    [BindIndex("IX_DeviceHistory_CreateTime", false, "CreateTime")]
     [BindTable("DeviceHistory", Description = "设备历史", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
     public partial class DeviceHistory : IDeviceHistory
     {
@@ -41,22 +41,6 @@ namespace xLink.Entity
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
-        private String _Version;
-        /// <summary>版本</summary>
-        [DisplayName("版本")]
-        [Description("版本")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本", "")]
-        public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
-
-        private String _NetType;
-        /// <summary>网络</summary>
-        [DisplayName("网络")]
-        [Description("网络")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "")]
-        public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
-
         private String _Action;
         /// <summary>操作</summary>
         [DisplayName("操作")]
@@ -72,6 +56,30 @@ namespace xLink.Entity
         [DataObjectField(false, false, false, 0)]
         [BindColumn("Success", "成功", "")]
         public Boolean Success { get { return _Success; } set { if (OnPropertyChanging(__.Success, value)) { _Success = value; OnPropertyChanged(__.Success); } } }
+
+        private String _NetType;
+        /// <summary>网络</summary>
+        [DisplayName("网络")]
+        [Description("网络")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("NetType", "网络", "")]
+        public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
+
+        private String _Version;
+        /// <summary>版本</summary>
+        [DisplayName("版本")]
+        [Description("版本")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Version", "版本", "")]
+        public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
+
+        private DateTime _CompileTime;
+        /// <summary>编译时间</summary>
+        [DisplayName("编译时间")]
+        [Description("编译时间")]
+        [DataObjectField(false, false, true, 0)]
+        [BindColumn("CompileTime", "编译时间", "")]
+        public DateTime CompileTime { get { return _CompileTime; } set { if (OnPropertyChanging(__.CompileTime, value)) { _CompileTime = value; OnPropertyChanged(__.CompileTime); } } }
 
         private Int32 _CreateDeviceID;
         /// <summary>创建者</summary>
@@ -119,10 +127,11 @@ namespace xLink.Entity
                     case __.ID : return _ID;
                     case __.DeviceID : return _DeviceID;
                     case __.Name : return _Name;
-                    case __.Version : return _Version;
-                    case __.NetType : return _NetType;
                     case __.Action : return _Action;
                     case __.Success : return _Success;
+                    case __.NetType : return _NetType;
+                    case __.Version : return _Version;
+                    case __.CompileTime : return _CompileTime;
                     case __.CreateDeviceID : return _CreateDeviceID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -137,10 +146,11 @@ namespace xLink.Entity
                     case __.ID : _ID = value.ToInt(); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
-                    case __.Version : _Version = Convert.ToString(value); break;
-                    case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.Action : _Action = Convert.ToString(value); break;
                     case __.Success : _Success = value.ToBoolean(); break;
+                    case __.NetType : _NetType = Convert.ToString(value); break;
+                    case __.Version : _Version = Convert.ToString(value); break;
+                    case __.CompileTime : _CompileTime = value.ToDateTime(); break;
                     case __.CreateDeviceID : _CreateDeviceID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -164,17 +174,20 @@ namespace xLink.Entity
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
 
-            /// <summary>版本</summary>
-            public static readonly Field Version = FindByName(__.Version);
-
-            /// <summary>网络</summary>
-            public static readonly Field NetType = FindByName(__.NetType);
-
             /// <summary>操作</summary>
             public static readonly Field Action = FindByName(__.Action);
 
             /// <summary>成功</summary>
             public static readonly Field Success = FindByName(__.Success);
+
+            /// <summary>网络</summary>
+            public static readonly Field NetType = FindByName(__.NetType);
+
+            /// <summary>版本</summary>
+            public static readonly Field Version = FindByName(__.Version);
+
+            /// <summary>编译时间</summary>
+            public static readonly Field CompileTime = FindByName(__.CompileTime);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateDeviceID = FindByName(__.CreateDeviceID);
@@ -203,17 +216,20 @@ namespace xLink.Entity
             /// <summary>名称</summary>
             public const String Name = "Name";
 
-            /// <summary>版本</summary>
-            public const String Version = "Version";
-
-            /// <summary>网络</summary>
-            public const String NetType = "NetType";
-
             /// <summary>操作</summary>
             public const String Action = "Action";
 
             /// <summary>成功</summary>
             public const String Success = "Success";
+
+            /// <summary>网络</summary>
+            public const String NetType = "NetType";
+
+            /// <summary>版本</summary>
+            public const String Version = "Version";
+
+            /// <summary>编译时间</summary>
+            public const String CompileTime = "CompileTime";
 
             /// <summary>创建者</summary>
             public const String CreateDeviceID = "CreateDeviceID";
@@ -243,17 +259,20 @@ namespace xLink.Entity
         /// <summary>名称</summary>
         String Name { get; set; }
 
-        /// <summary>版本</summary>
-        String Version { get; set; }
-
-        /// <summary>网络</summary>
-        String NetType { get; set; }
-
         /// <summary>操作</summary>
         String Action { get; set; }
 
         /// <summary>成功</summary>
         Boolean Success { get; set; }
+
+        /// <summary>网络</summary>
+        String NetType { get; set; }
+
+        /// <summary>版本</summary>
+        String Version { get; set; }
+
+        /// <summary>编译时间</summary>
+        DateTime CompileTime { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateDeviceID { get; set; }

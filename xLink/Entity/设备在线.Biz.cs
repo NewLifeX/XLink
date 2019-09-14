@@ -4,13 +4,11 @@
  * 时间：2017-03-31 22:14:32
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
+using NewLife.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using NewLife.Data;
-using NewLife.Model;
 using XCode;
-using XCode.Cache;
 using xLink.Models;
 
 namespace xLink.Entity
@@ -22,7 +20,7 @@ namespace xLink.Entity
         static DeviceOnline()
         {
             var df = Meta.Factory.AdditionalFields;
-            df.Add(__.LoginCount);
+            //df.Add(__.LoginCount);
             df.Add(__.PingCount);
         }
 

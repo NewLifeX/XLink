@@ -89,6 +89,14 @@ namespace xLink.Entity
         [BindColumn("OS", "操作系统", "")]
         public String OS { get { return _OS; } set { if (OnPropertyChanging(__.OS, value)) { _OS = value; OnPropertyChanged(__.OS); } } }
 
+        private String _OSVersion;
+        /// <summary>系统版本</summary>
+        [DisplayName("系统版本")]
+        [Description("系统版本")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("OSVersion", "系统版本", "")]
+        public String OSVersion { get { return _OSVersion; } set { if (OnPropertyChanging(__.OSVersion, value)) { _OSVersion = value; OnPropertyChanged(__.OSVersion); } } }
+
         private String _MachineName;
         /// <summary>机器名称</summary>
         [DisplayName("机器名称")]
@@ -249,22 +257,6 @@ namespace xLink.Entity
         [BindColumn("LastLoginIP", "最后登录IP", "")]
         public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
 
-        private DateTime _RegisterTime;
-        /// <summary>注册时间</summary>
-        [DisplayName("注册时间")]
-        [Description("注册时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("RegisterTime", "注册时间", "")]
-        public DateTime RegisterTime { get { return _RegisterTime; } set { if (OnPropertyChanging(__.RegisterTime, value)) { _RegisterTime = value; OnPropertyChanged(__.RegisterTime); } } }
-
-        private String _RegisterIP;
-        /// <summary>注册IP</summary>
-        [DisplayName("注册IP")]
-        [Description("注册IP")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("RegisterIP", "注册IP", "")]
-        public String RegisterIP { get { return _RegisterIP; } set { if (OnPropertyChanging(__.RegisterIP, value)) { _RegisterIP = value; OnPropertyChanged(__.RegisterIP); } } }
-
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
         [DisplayName("创建者")]
@@ -341,6 +333,7 @@ namespace xLink.Entity
                     case __.Version : return _Version;
                     case __.CompileTime : return _CompileTime;
                     case __.OS : return _OS;
+                    case __.OSVersion : return _OSVersion;
                     case __.MachineName : return _MachineName;
                     case __.UserName : return _UserName;
                     case __.Cpu : return _Cpu;
@@ -361,8 +354,6 @@ namespace xLink.Entity
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
                     case __.LastLoginIP : return _LastLoginIP;
-                    case __.RegisterTime : return _RegisterTime;
-                    case __.RegisterIP : return _RegisterIP;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
@@ -386,6 +377,7 @@ namespace xLink.Entity
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.CompileTime : _CompileTime = value.ToDateTime(); break;
                     case __.OS : _OS = Convert.ToString(value); break;
+                    case __.OSVersion : _OSVersion = Convert.ToString(value); break;
                     case __.MachineName : _MachineName = Convert.ToString(value); break;
                     case __.UserName : _UserName = Convert.ToString(value); break;
                     case __.Cpu : _Cpu = value.ToInt(); break;
@@ -406,8 +398,6 @@ namespace xLink.Entity
                     case __.Logins : _Logins = value.ToInt(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
-                    case __.RegisterTime : _RegisterTime = value.ToDateTime(); break;
-                    case __.RegisterIP : _RegisterIP = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
@@ -451,6 +441,9 @@ namespace xLink.Entity
 
             /// <summary>操作系统</summary>
             public static readonly Field OS = FindByName(__.OS);
+
+            /// <summary>系统版本</summary>
+            public static readonly Field OSVersion = FindByName(__.OSVersion);
 
             /// <summary>机器名称</summary>
             public static readonly Field MachineName = FindByName(__.MachineName);
@@ -512,12 +505,6 @@ namespace xLink.Entity
             /// <summary>最后登录IP</summary>
             public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
 
-            /// <summary>注册时间</summary>
-            public static readonly Field RegisterTime = FindByName(__.RegisterTime);
-
-            /// <summary>注册IP</summary>
-            public static readonly Field RegisterIP = FindByName(__.RegisterIP);
-
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
 
@@ -571,6 +558,9 @@ namespace xLink.Entity
 
             /// <summary>操作系统</summary>
             public const String OS = "OS";
+
+            /// <summary>系统版本</summary>
+            public const String OSVersion = "OSVersion";
 
             /// <summary>机器名称</summary>
             public const String MachineName = "MachineName";
@@ -632,12 +622,6 @@ namespace xLink.Entity
             /// <summary>最后登录IP</summary>
             public const String LastLoginIP = "LastLoginIP";
 
-            /// <summary>注册时间</summary>
-            public const String RegisterTime = "RegisterTime";
-
-            /// <summary>注册IP</summary>
-            public const String RegisterIP = "RegisterIP";
-
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
 
@@ -692,6 +676,9 @@ namespace xLink.Entity
 
         /// <summary>操作系统</summary>
         String OS { get; set; }
+
+        /// <summary>系统版本</summary>
+        String OSVersion { get; set; }
 
         /// <summary>机器名称</summary>
         String MachineName { get; set; }
@@ -752,12 +739,6 @@ namespace xLink.Entity
 
         /// <summary>最后登录IP</summary>
         String LastLoginIP { get; set; }
-
-        /// <summary>注册时间</summary>
-        DateTime RegisterTime { get; set; }
-
-        /// <summary>注册IP</summary>
-        String RegisterIP { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }

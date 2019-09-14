@@ -97,6 +97,23 @@ namespace xLink.Entity
         #endregion
 
         #region 高级查询
+        /// <summary>高级查询</summary>
+        /// <param name="enable"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="key"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static IList<Product> Search(Boolean? enable, DateTime start, DateTime end, String key, PageParameter param)
+        {
+            var exp = SearchWhereByKeys(key, null, null);
+
+            if (enable != null) exp &= _.Enable == enable.Value;
+
+            exp &= _.UpdateTime.Between(start, end);
+
+            return FindAll(exp, param);
+        }
         #endregion
 
         #region 业务操作
