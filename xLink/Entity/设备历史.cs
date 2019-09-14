@@ -57,14 +57,6 @@ namespace xLink.Entity
         [BindColumn("Success", "成功", "")]
         public Boolean Success { get { return _Success; } set { if (OnPropertyChanging(__.Success, value)) { _Success = value; OnPropertyChanged(__.Success); } } }
 
-        private String _NetType;
-        /// <summary>网络</summary>
-        [DisplayName("网络")]
-        [Description("网络")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "")]
-        public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
-
         private String _Version;
         /// <summary>版本</summary>
         [DisplayName("版本")]
@@ -129,7 +121,6 @@ namespace xLink.Entity
                     case __.Name : return _Name;
                     case __.Action : return _Action;
                     case __.Success : return _Success;
-                    case __.NetType : return _NetType;
                     case __.Version : return _Version;
                     case __.CompileTime : return _CompileTime;
                     case __.CreateDeviceID : return _CreateDeviceID;
@@ -148,7 +139,6 @@ namespace xLink.Entity
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Action : _Action = Convert.ToString(value); break;
                     case __.Success : _Success = value.ToBoolean(); break;
-                    case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.CompileTime : _CompileTime = value.ToDateTime(); break;
                     case __.CreateDeviceID : _CreateDeviceID = value.ToInt(); break;
@@ -179,9 +169,6 @@ namespace xLink.Entity
 
             /// <summary>成功</summary>
             public static readonly Field Success = FindByName(__.Success);
-
-            /// <summary>网络</summary>
-            public static readonly Field NetType = FindByName(__.NetType);
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
@@ -222,9 +209,6 @@ namespace xLink.Entity
             /// <summary>成功</summary>
             public const String Success = "Success";
 
-            /// <summary>网络</summary>
-            public const String NetType = "NetType";
-
             /// <summary>版本</summary>
             public const String Version = "Version";
 
@@ -264,9 +248,6 @@ namespace xLink.Entity
 
         /// <summary>成功</summary>
         Boolean Success { get; set; }
-
-        /// <summary>网络</summary>
-        String NetType { get; set; }
 
         /// <summary>版本</summary>
         String Version { get; set; }

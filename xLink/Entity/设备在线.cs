@@ -57,14 +57,6 @@ namespace xLink.Entity
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
-        private String _NetType;
-        /// <summary>网络</summary>
-        [DisplayName("网络")]
-        [Description("网络")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "")]
-        public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
-
         private String _InternalUri;
         /// <summary>内网</summary>
         [DisplayName("内网")]
@@ -217,7 +209,6 @@ namespace xLink.Entity
                     case __.ProductID : return _ProductID;
                     case __.DeviceID : return _DeviceID;
                     case __.Name : return _Name;
-                    case __.NetType : return _NetType;
                     case __.InternalUri : return _InternalUri;
                     case __.ExternalUri : return _ExternalUri;
                     case __.PingCount : return _PingCount;
@@ -247,7 +238,6 @@ namespace xLink.Entity
                     case __.ProductID : _ProductID = value.ToInt(); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
-                    case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
                     case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
                     case __.PingCount : _PingCount = value.ToInt(); break;
@@ -289,9 +279,6 @@ namespace xLink.Entity
 
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
-
-            /// <summary>网络</summary>
-            public static readonly Field NetType = FindByName(__.NetType);
 
             /// <summary>内网</summary>
             public static readonly Field InternalUri = FindByName(__.InternalUri);
@@ -365,9 +352,6 @@ namespace xLink.Entity
             /// <summary>名称</summary>
             public const String Name = "Name";
 
-            /// <summary>网络</summary>
-            public const String NetType = "NetType";
-
             /// <summary>内网</summary>
             public const String InternalUri = "InternalUri";
 
@@ -440,9 +424,6 @@ namespace xLink.Entity
 
         /// <summary>名称</summary>
         String Name { get; set; }
-
-        /// <summary>网络</summary>
-        String NetType { get; set; }
 
         /// <summary>内网</summary>
         String InternalUri { get; set; }

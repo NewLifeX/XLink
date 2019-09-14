@@ -50,14 +50,6 @@ namespace xLink.Entity
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
-        private String _NetType;
-        /// <summary>网络</summary>
-        [DisplayName("网络")]
-        [Description("网络")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetType", "网络", "")]
-        public String NetType { get { return _NetType; } set { if (OnPropertyChanging(__.NetType, value)) { _NetType = value; OnPropertyChanged(__.NetType); } } }
-
         private Int32 _SessionID;
         /// <summary>会话</summary>
         [DisplayName("会话")]
@@ -161,7 +153,6 @@ namespace xLink.Entity
                     case __.UserID : return _UserID;
                     case __.Name : return _Name;
                     case __.Version : return _Version;
-                    case __.NetType : return _NetType;
                     case __.SessionID : return _SessionID;
                     case __.InternalUri : return _InternalUri;
                     case __.ExternalUri : return _ExternalUri;
@@ -184,7 +175,6 @@ namespace xLink.Entity
                     case __.UserID : _UserID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
-                    case __.NetType : _NetType = Convert.ToString(value); break;
                     case __.SessionID : _SessionID = value.ToInt(); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
                     case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
@@ -217,9 +207,6 @@ namespace xLink.Entity
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
-
-            /// <summary>网络</summary>
-            public static readonly Field NetType = FindByName(__.NetType);
 
             /// <summary>会话</summary>
             public static readonly Field SessionID = FindByName(__.SessionID);
@@ -272,9 +259,6 @@ namespace xLink.Entity
             /// <summary>版本</summary>
             public const String Version = "Version";
 
-            /// <summary>网络</summary>
-            public const String NetType = "NetType";
-
             /// <summary>会话</summary>
             public const String SessionID = "SessionID";
 
@@ -326,9 +310,6 @@ namespace xLink.Entity
 
         /// <summary>版本</summary>
         String Version { get; set; }
-
-        /// <summary>网络</summary>
-        String NetType { get; set; }
 
         /// <summary>会话</summary>
         Int32 SessionID { get; set; }

@@ -95,7 +95,7 @@ namespace xLink.Services
             var hi = new UserHistory
             {
                 Version = Version,
-                NetType = NetType
+                //NetType = NetType
             };
 
             return hi;

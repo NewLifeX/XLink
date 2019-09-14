@@ -22,9 +22,6 @@ namespace xLink.Services
         /// <summary>是否已登录</summary>
         public Boolean Logined { get; set; }
 
-        /// <summary>网络类型</summary>
-        public String NetType { get; set; }
-
         /// <summary>当前登录用户</summary>
         public IManageUser Current { get; set; }
 
@@ -49,7 +46,7 @@ namespace xLink.Services
             if (ps != null)
             {
                 Version = ps["Version"] + "";
-                NetType = ps["NetType"] + "";
+                //NetType = ps["NetType"] + "";
             }
             // 登录
             Name = user;

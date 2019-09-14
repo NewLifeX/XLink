@@ -222,7 +222,7 @@ namespace xLink.Services
             {
                 Version = Version,
                 Name = Current + "",
-                NetType = NetType
+                //NetType = NetType
             };
 
             return hi;
