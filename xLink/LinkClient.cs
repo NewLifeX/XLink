@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using NewLife.Log;
+﻿using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Serialization;
-using xLink.Models;
+using NewLife.Threading;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using xLink.Common;
 
 namespace xLink
 {
@@ -26,17 +28,19 @@ namespace xLink
         /// <summary>动作前缀</summary>
         public String ActionPrefix { get; set; }
 
-        /// <summary>附加参数</summary>
-        public IDictionary<String, Object> Parameters { get; set; } = new Dictionary<String, Object>();
-
         /// <summary>已登录</summary>
         public Boolean Logined { get; set; }
 
         /// <summary>最后一次登录成功后的消息</summary>
         public IDictionary<String, Object> Info { get; private set; }
+
+        /// <summary>请求到服务端并返回的延迟时间</summary>
+        public TimeSpan Delay { get; set; }
         #endregion
 
         #region 构造
+        /// <summary>实例化</summary>
+        /// <param name="uri"></param>
         public LinkClient(String uri) : base(uri)
         {
             Log = XTrace.Log;
@@ -48,21 +52,6 @@ namespace xLink
             EncoderLog = XTrace.Log;
             StatPeriod = 10;
 #endif
-
-            // 初始数据
-            var dic = Parameters;
-            dic["OS"] = Environment.OSVersion + "";
-            dic["Machine"] = Environment.MachineName;
-            dic["Agent"] = Environment.UserName;
-            dic["ProcessID"] = Process.GetCurrentProcess().Id;
-
-            var asmx = AssemblyX.Entry;
-            dic["Version"] = asmx?.Version;
-            dic["Compile"] = asmx?.Compile;
-
-            // 注册当前类所有接口
-            Manager.Register(this, null);
-            //Register(this, nameof(OnWrite));
         }
         #endregion
 
@@ -97,8 +86,6 @@ namespace xLink
             if (user.IsNullOrEmpty()) throw new ArgumentNullException(nameof(user), "用户名不能为空！");
             //if (pass.IsNullOrEmpty()) throw new ArgumentNullException(nameof(pass), "密码不能为空！");
 
-            var asmx = AssemblyX.Entry;
-
             var arg = new
             {
                 user,
@@ -107,95 +94,109 @@ namespace xLink
 
             // 克隆一份，避免修改原始数据
             var dic = arg.ToDictionary();
-            dic.Merge(Parameters, false);
+            dic.Merge(GetLoginInfo(), false);
 
             var act = "Login";
             if (!ActionPrefix.IsNullOrEmpty()) act = ActionPrefix + "/" + act;
 
             var rs = await base.InvokeWithClientAsync<Object>(client, act, dic);
             var inf = rs.ToJson();
-            if (Setting.Current.Debug) XTrace.WriteLine("登录{0}成功！{1}", Servers.FirstOrDefault(), inf);
+            XTrace.WriteLine("登录{0}成功！{1}", Servers.FirstOrDefault(), inf);
 
             Logined = true;
 
-            return Info = rs as IDictionary<String, Object>;
+            Info = rs as IDictionary<String, Object>;
+
+            if (_timer == null) _timer = new TimerX(DoPing, null, 10_000, 30_000);
+
+            return rs;
+        }
+
+        /// <summary>获取登录附加信息</summary>
+        /// <returns></returns>
+        protected virtual Object GetLoginInfo()
+        {
+            var asm = AssemblyX.Entry;
+
+            var ext = new
+            {
+                asm.Version,
+                asm.Compile,
+
+                OSName = Environment.OSVersion.Platform + "",
+                OSVersion = Environment.OSVersion.VersionString,
+
+                Environment.MachineName,
+                Environment.UserName,
+
+                CPU = Environment.ProcessorCount,
+
+                Macs = MachineHelper.GetMacs().Join(",", e => e.ToHex("-")),
+
+                InstallPath = ".".GetFullPath(),
+                Runtime = Environment.Version + "",
+
+                Time = DateTime.Now,
+            };
+
+            return ext;
         }
         #endregion
 
         #region 心跳
+        private TimerX _timer;
+        private void DoPing(Object state) => PingAsync().Wait();
+
         /// <summary>心跳</summary>
         /// <returns></returns>
         public async Task<Object> PingAsync()
         {
-            return await InvokeAsync<Object>("Ping", new { time = DateTime.Now }).ConfigureAwait(false);
-        }
-        #endregion
+            // 获取需要携带的心跳信息
+            var ext = GetPingInfo();
 
-        #region 读写
-        /// <summary>写入数据，返回整个数据区</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public async Task<Byte[]> Write(String id, Int32 start, params Byte[] data)
-        {
-            var rs = await InvokeAsync<DataModel>("Write", new { id, start, data = data.ToHex() });
-            return rs.Data.ToHex();
-        }
+            // 执行心跳
+            var rs = await InvokeAsync<Object>("Ping", ext).ConfigureAwait(false);
 
-        /// <summary>读取对方数据</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        public async Task<Byte[]> Read(String id, Int32 start, Int32 count)
-        {
-            var rs = await InvokeAsync<DataModel>("Read", new { id, start, count });
-            return rs.Data.ToHex();
-        }
-
-        public Func<String, Byte[]> GetData;
-        public Action<String, Byte[]> SetData;
-
-        /// <summary>收到写入请求</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="data"></param>
-        [Api("Write")]
-        private DataModel OnWrite(String id, Int32 start, String data)
-        {
-            var buf = GetData?.Invoke(id);
-            if (buf == null) throw new ApiException(405, "找不到设备！");
-
-            var ds = data.ToHex();
-
-            // 检查扩容
-            if (start + ds.Length > buf.Length)
+            // 获取响应中的Time，乃请求时送过去的本地时间，用于计算延迟
+            if (rs is IDictionary<String, Object> dic && dic.TryGetValue("Time", out var obj))
             {
-                var buf2 = new Byte[start + ds.Length];
-                buf2.Write(0, buf);
-                buf = buf2;
+                var dt = obj.ToDateTime();
+                if (dt.Year > 2000)
+                {
+                    // 计算延迟
+                    Delay = DateTime.Now - dt;
+                }
             }
-            buf.Write(start, ds);
-            buf[0] = (Byte)buf.Length;
 
-            // 保存回去
-            SetData?.Invoke(id, buf);
-
-            return new DataModel { ID = id, Start = 0, Data = buf.ToHex() };
+            return rs;
         }
 
-        /// <summary>收到读取请求</summary>
-        /// <param name="id">设备</param>
-        /// <param name="start"></param>
-        /// <param name="count"></param>
-        [Api("Read")]
-        private DataModel OnRead(String id, Int32 start, Int32 count)
+        /// <summary>心跳前获取附加信息</summary>
+        /// <returns></returns>
+        protected virtual Object GetPingInfo()
         {
-            var buf = GetData?.Invoke(id);
-            if (buf == null) throw new ApiException(405, "找不到设备！");
+            var asm = AssemblyX.Entry;
 
-            return new DataModel { ID = id, Start = start, Data = buf.ReadBytes(start, count).ToHex() };
+            var pcs = new List<Process>();
+            foreach (var item in Process.GetProcesses().OrderBy(e => e.SessionId).ThenBy(e => e.ProcessName))
+            {
+                var name = item.ProcessName;
+                if (name.EqualIgnoreCase("svchost", "dllhost", "conhost")) continue;
+
+                pcs.Add(item);
+            }
+
+            var ext = new
+            {
+                Macs = MachineHelper.GetMacs().Join(",", e => e.ToHex("-")),
+
+                Processes = pcs.Join(",", e => e.ProcessName),
+
+                Time = DateTime.Now,
+                Delay = (Int32)Delay.TotalMilliseconds,
+            };
+
+            return ext;
         }
         #endregion
 

@@ -38,9 +38,11 @@
     <ApplicationIcon>link.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,8 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\xLink\Common\MachineHelper.cs">
+      <Link>Common\MachineHelper.cs</Link>
+    </Compile>
     <Compile Include="..\xLink\LinkClient.cs">
-      <Link>LinkClient.cs</Link>
+      <Link>Clients\LinkClient.cs</Link>
     </Compile>
     <Compile Include="..\xLink\Models\DataModel.cs">
       <Link>Models\DataModel.cs</Link>
@@ -76,6 +81,8 @@
     <Compile Include="FrmUser.Designer.cs">
       <DependentUpon>FrmUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\DeviceClient.cs" />
+    <Compile Include="Common\MachineInfo.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
