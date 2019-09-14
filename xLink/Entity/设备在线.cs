@@ -25,13 +25,13 @@ namespace xLink.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
-        private Int32 _SessionID;
+        private String _SessionID;
         /// <summary>会话</summary>
         [DisplayName("会话")]
         [Description("会话")]
-        [DataObjectField(false, false, false, 0)]
+        [DataObjectField(false, false, true, 50)]
         [BindColumn("SessionID", "会话", "")]
-        public Int32 SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
+        public String SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
 
         private Int32 _ProductID;
         /// <summary>产品</summary>
@@ -234,7 +234,7 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
-                    case __.SessionID : _SessionID = value.ToInt(); break;
+                    case __.SessionID : _SessionID = Convert.ToString(value); break;
                     case __.ProductID : _ProductID = value.ToInt(); break;
                     case __.DeviceID : _DeviceID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
@@ -414,7 +414,7 @@ namespace xLink.Entity
         Int32 ID { get; set; }
 
         /// <summary>会话</summary>
-        Int32 SessionID { get; set; }
+        String SessionID { get; set; }
 
         /// <summary>产品</summary>
         Int32 ProductID { get; set; }

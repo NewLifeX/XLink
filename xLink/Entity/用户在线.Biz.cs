@@ -53,14 +53,13 @@ namespace xLink.Entity
         #region 扩展查询
         /// <summary>根据会话查找</summary>
         /// <param name="sessionid">会话</param>
+        /// <param name="cache">是否走缓存</param>
         /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static UserOnline FindBySessionID(Int32 sessionid)
+        public static UserOnline FindBySessionID(String sessionid, Boolean cache = true)
         {
-            //if (Meta.Count >= 1000)
-            return Find(__.SessionID, sessionid);
-            //else // 实体缓存
-            //    return Meta.Cache.Entities.FirstOrDefault(e => e.SessionID == sessionid);
+            if (!cache) return Find(_.SessionID == sessionid);
+
+            return Meta.SingleCache.GetItemWithSlaveKey(sessionid) as UserOnline;
         }
         #endregion
 

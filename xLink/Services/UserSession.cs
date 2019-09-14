@@ -77,7 +77,7 @@ namespace xLink.Services
         /// <summary>创建在线</summary>
         /// <param name="sessionid"></param>
         /// <returns></returns>
-        protected override IOnline CreateOnline(Int32 sessionid)
+        protected override IOnline CreateOnline(String sessionid)
         {
             var ns = Session as NetSession;
 

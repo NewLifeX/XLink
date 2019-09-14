@@ -16,7 +16,7 @@ namespace xLink.Models
         //String Type { get; set; }
 
         /// <summary>会话</summary>
-        Int32 SessionID { get; set; }
+        String SessionID { get; set; }
 
         /// <summary>创建时间</summary>
         DateTime CreateTime { get; set; }

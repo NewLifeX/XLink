@@ -191,8 +191,9 @@ namespace xLink.Services
         public override void CheckOnline(String name, IDictionary<String, Object> ps)
         {
             var ns = Session as NetSession;
+            var sid = ns.Remote.EndPoint + "";
 
-            var olt = Online ?? CreateOnline(ns.ID);
+            var olt = Online ?? CreateOnline(sid);
             if (olt is DeviceOnline dolt) Fill(dolt, ps);
 
             Online = olt;
@@ -203,7 +204,7 @@ namespace xLink.Services
         /// <summary>创建在线</summary>
         /// <param name="sessionid"></param>
         /// <returns></returns>
-        protected override IOnline CreateOnline(Int32 sessionid)
+        protected override IOnline CreateOnline(String sessionid)
         {
             var ns = Session as NetSession;
 

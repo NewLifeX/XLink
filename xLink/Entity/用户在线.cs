@@ -26,6 +26,14 @@ namespace xLink.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
+        private String _SessionID;
+        /// <summary>会话</summary>
+        [DisplayName("会话")]
+        [Description("会话")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("SessionID", "会话", "")]
+        public String SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
+
         private Int32 _UserID;
         /// <summary>编码</summary>
         [DisplayName("编码")]
@@ -49,14 +57,6 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
-
-        private Int32 _SessionID;
-        /// <summary>会话</summary>
-        [DisplayName("会话")]
-        [Description("会话")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("SessionID", "会话", "")]
-        public Int32 SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
 
         private String _InternalUri;
         /// <summary>内网</summary>
@@ -150,10 +150,10 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
+                    case __.SessionID : return _SessionID;
                     case __.UserID : return _UserID;
                     case __.Name : return _Name;
                     case __.Version : return _Version;
-                    case __.SessionID : return _SessionID;
                     case __.InternalUri : return _InternalUri;
                     case __.ExternalUri : return _ExternalUri;
                     case __.LoginCount : return _LoginCount;
@@ -172,10 +172,10 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
+                    case __.SessionID : _SessionID = Convert.ToString(value); break;
                     case __.UserID : _UserID = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
-                    case __.SessionID : _SessionID = value.ToInt(); break;
                     case __.InternalUri : _InternalUri = Convert.ToString(value); break;
                     case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
                     case __.LoginCount : _LoginCount = value.ToInt(); break;
@@ -199,6 +199,9 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
+            /// <summary>会话</summary>
+            public static readonly Field SessionID = FindByName(__.SessionID);
+
             /// <summary>编码</summary>
             public static readonly Field UserID = FindByName(__.UserID);
 
@@ -207,9 +210,6 @@ namespace xLink.Entity
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
-
-            /// <summary>会话</summary>
-            public static readonly Field SessionID = FindByName(__.SessionID);
 
             /// <summary>内网</summary>
             public static readonly Field InternalUri = FindByName(__.InternalUri);
@@ -250,6 +250,9 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
+            /// <summary>会话</summary>
+            public const String SessionID = "SessionID";
+
             /// <summary>编码</summary>
             public const String UserID = "UserID";
 
@@ -258,9 +261,6 @@ namespace xLink.Entity
 
             /// <summary>版本</summary>
             public const String Version = "Version";
-
-            /// <summary>会话</summary>
-            public const String SessionID = "SessionID";
 
             /// <summary>内网</summary>
             public const String InternalUri = "InternalUri";
@@ -302,6 +302,9 @@ namespace xLink.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
+        /// <summary>会话</summary>
+        String SessionID { get; set; }
+
         /// <summary>编码</summary>
         Int32 UserID { get; set; }
 
@@ -310,9 +313,6 @@ namespace xLink.Entity
 
         /// <summary>版本</summary>
         String Version { get; set; }
-
-        /// <summary>会话</summary>
-        Int32 SessionID { get; set; }
 
         /// <summary>内网</summary>
         String InternalUri { get; set; }

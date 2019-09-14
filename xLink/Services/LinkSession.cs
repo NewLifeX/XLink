@@ -125,12 +125,12 @@ namespace xLink.Services
         public virtual void CheckOnline(String name, IDictionary<String, Object> ps)
         {
             var ns = Session as NetSession;
-            var u = Current;
+            var sid = ns.Remote.EndPoint + "";
 
-            var olt = Online ?? CreateOnline(ns.ID);
+            var olt = Online ?? CreateOnline(sid);
             olt.Name = name;
             //olt.Type = Type;
-            olt.SessionID = ns.ID;
+            olt.SessionID = sid;
             olt.UpdateTime = DateTime.Now;
 
             if (olt != Online)
@@ -139,6 +139,7 @@ namespace xLink.Services
                 olt.CreateIP = ns?.Remote?.Address + "";
             }
 
+            var u = Current;
             if (u != null)
             {
                 olt.UserID = u.ID;
@@ -152,7 +153,7 @@ namespace xLink.Services
         /// <summary>创建在线</summary>
         /// <param name="sessionid"></param>
         /// <returns></returns>
-        protected abstract IOnline CreateOnline(Int32 sessionid);
+        protected abstract IOnline CreateOnline(String sessionid);
 
         /// <summary>保存令牌操作历史</summary>
         /// <param name="action"></param>
