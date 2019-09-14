@@ -101,7 +101,8 @@ namespace xLink.Client
             var cfg = Setting.Current;
             var mode = cbMode.Text;
 
-            var ac = new LinkClient(uri.ToString())
+            var url = uri.ToString();
+            var ac = mode == "Device" ? new DeviceClient(url) : new LinkClient(url)
             {
                 Log = cfg.ShowLog ? XTrace.Log : Logger.Null,
                 EncoderLog = cfg.ShowEncoderLog ? XTrace.Log : Logger.Null
