@@ -12,6 +12,8 @@ namespace xLink.Device.Web.Controllers
     {
         static DeviceHistoryController()
         {
+            MenuOrder = 60;
+
             var list = ListFields;
             list.RemoveField("CreateDeviceID");
             list.AddField("Success", "Remark");

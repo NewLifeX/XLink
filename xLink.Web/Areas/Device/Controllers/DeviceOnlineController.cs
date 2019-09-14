@@ -12,6 +12,8 @@ namespace xLink.Device.Web.Controllers
     {
         static DeviceOnlineController()
         {
+            MenuOrder = 70;
+
             ListFields.RemoveField("LastError");
         }
 

@@ -10,13 +10,9 @@ namespace xLink.User.Web.Controllers
     [Description("用户信息，提供身份验证")]
     public class UserController : EntityController<UserX>
     {
-
         static UserController()
         {
-            //var list = ListFields;
-            //list.RemoveField("Code")
-            //    .RemoveField("LastLoginIP")
-            //    .RemoveField("RegisterIP");
+            MenuOrder = 90;
         }
 
         /// <summary>列表页视图。子控制器可重载，以传递更多信息给视图，比如修改要显示的列</summary>

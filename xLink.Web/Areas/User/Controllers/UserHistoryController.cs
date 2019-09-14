@@ -12,6 +12,8 @@ namespace xLink.User.Web.Controllers
     {
         static UserHistoryController()
         {
+            MenuOrder = 70;
+
             var list = ListFields;
             list.RemoveField("CreateUserID");
             list.AddField("Success", "Remark");

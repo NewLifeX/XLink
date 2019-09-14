@@ -12,6 +12,8 @@ namespace xLink.User.Web.Controllers
     {
         static UserOnlineController()
         {
+            MenuOrder = 80;
+
             ListFields.RemoveField("LastError");
         }
 
