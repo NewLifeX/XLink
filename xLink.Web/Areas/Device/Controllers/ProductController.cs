@@ -7,7 +7,6 @@ using xLink.Entity;
 
 namespace xLink.Device.Web.Controllers
 {
-    [Description("设备信息，所有网关设备激活后都记录在此，并提供身份验证")]
     public class ProductController : EntityController<Product>
     {
         static ProductController()

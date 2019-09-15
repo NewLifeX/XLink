@@ -75,7 +75,7 @@
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="SessionID" DataType="String" Description="会话" />
       <Column Name="ProductID" DataType="Int32" Description="产品" />
-      <Column Name="DeviceID" DataType="Int32" Description="编码" />
+      <Column Name="DeviceID" DataType="Int32" Description="设备" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
       <Column Name="InternalUri" DataType="String" Description="内网" />
       <Column Name="ExternalUri" DataType="String" Description="外网" />

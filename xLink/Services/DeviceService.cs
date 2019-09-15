@@ -196,6 +196,9 @@ namespace xLink.Services
 
             str = ps["COMs"] + "";
             if (!str.IsNullOrEmpty()) olt.COMs = str;
+
+            str = ps["LocalIP"] + "";
+            if (!str.IsNullOrEmpty()) olt.InternalUri = str;
         }
         #endregion
 
@@ -208,8 +211,26 @@ namespace xLink.Services
             var ns = Session as NetSession;
             var sid = ns.Remote.EndPoint + "";
 
-            var olt = Online ?? CreateOnline(sid);
-            if (olt is DeviceOnline dolt) Fill(dolt, ps);
+            var olt = (Online ?? CreateOnline(sid)) as DeviceOnline;
+
+            if (Current is Device dv)
+            {
+                olt.DeviceID = dv.ID;
+                olt.ProductID = dv.ProductID;
+                olt.Name = dv.Name;
+
+                olt.Version = dv.Version;
+                olt.CompileTime = dv.CompileTime;
+                olt.Memory = dv.Memory;
+                olt.MACs = dv.MACs;
+                olt.COMs = dv.COMs;
+
+                olt.CreateIP = ns.Remote.Address + "";
+            }
+
+            Fill(olt, ps);
+
+            olt.PingCount++;
 
             Online = olt;
 
@@ -226,21 +247,6 @@ namespace xLink.Services
 
             var olt = DeviceOnline.GetOrAdd(sid);
             olt.ExternalUri = ns.Remote + "";
-
-            if (Current is Device dv)
-            {
-                olt.DeviceID = dv.ID;
-                olt.ProductID = dv.ProductID;
-                olt.Name = dv.Name;
-
-                olt.Version = dv.Version;
-                olt.CompileTime = dv.CompileTime;
-                olt.Memory = dv.Memory;
-                olt.MACs = dv.MACs;
-                olt.COMs = dv.COMs;
-
-                olt.CreateIP = ns.Remote.Address + "";
-            }
 
             olt.SaveAsync();
 

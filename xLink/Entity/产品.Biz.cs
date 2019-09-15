@@ -78,6 +78,10 @@ namespace xLink.Entity
             };
             entity.Insert();
         }
+
+        /// <summary>已重载</summary>
+        /// <returns></returns>
+        public override String ToString() => Name ?? Code;
         #endregion
 
         #region 扩展属性

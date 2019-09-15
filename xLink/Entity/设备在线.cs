@@ -42,11 +42,11 @@ namespace xLink.Entity
         public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
 
         private Int32 _DeviceID;
-        /// <summary>编码</summary>
-        [DisplayName("编码")]
-        [Description("编码")]
+        /// <summary>设备</summary>
+        [DisplayName("设备")]
+        [Description("设备")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("DeviceID", "编码", "")]
+        [BindColumn("DeviceID", "设备", "")]
         public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
 
         private String _Name;
@@ -274,7 +274,7 @@ namespace xLink.Entity
             /// <summary>产品</summary>
             public static readonly Field ProductID = FindByName(__.ProductID);
 
-            /// <summary>编码</summary>
+            /// <summary>设备</summary>
             public static readonly Field DeviceID = FindByName(__.DeviceID);
 
             /// <summary>名称</summary>
@@ -346,7 +346,7 @@ namespace xLink.Entity
             /// <summary>产品</summary>
             public const String ProductID = "ProductID";
 
-            /// <summary>编码</summary>
+            /// <summary>设备</summary>
             public const String DeviceID = "DeviceID";
 
             /// <summary>名称</summary>
@@ -419,7 +419,7 @@ namespace xLink.Entity
         /// <summary>产品</summary>
         Int32 ProductID { get; set; }
 
-        /// <summary>编码</summary>
+        /// <summary>设备</summary>
         Int32 DeviceID { get; set; }
 
         /// <summary>名称</summary>

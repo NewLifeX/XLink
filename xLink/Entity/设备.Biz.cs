@@ -56,6 +56,10 @@ namespace xLink.Entity
             // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
             base.Valid(isNew);
         }
+
+        /// <summary>已重载</summary>
+        /// <returns></returns>
+        public override String ToString() => Name ?? Code;
         #endregion
 
         #region 扩展属性
@@ -146,9 +150,6 @@ namespace xLink.Entity
         #endregion
 
         #region 辅助
-        /// <summary>显示友好名称</summary>
-        /// <returns></returns>
-        public override String ToString() => Name ?? Code;
         #endregion
     }
 }
