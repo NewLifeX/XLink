@@ -100,6 +100,10 @@ namespace xLink.Entity
         #endregion
 
         #region 扩展操作
+        /// <summary>获取 或 添加</summary>
+        /// <param name="sessionId"></param>
+        /// <returns></returns>
+        public static DeviceOnline GetOrAdd(String sessionId) => GetOrAdd(sessionId, FindBySessionID, k => new DeviceOnline { SessionID = k });
         #endregion
 
         #region 业务
