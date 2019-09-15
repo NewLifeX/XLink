@@ -32,9 +32,9 @@ namespace xLink.Entity
             Meta.Modules.Add<IPModule>();
 
             var sc = Meta.SingleCache;
-            sc.FindSlaveKeyMethod = e => Find(__.Name, e);
-            sc.GetSlaveKeyMethod = e => e.Name;
-            sc.SlaveKeyIgnoreCase = false;
+            sc.FindSlaveKeyMethod = e => Find(__.Code, e);
+            sc.GetSlaveKeyMethod = e => e.Code;
+            //sc.SlaveKeyIgnoreCase = false;
         }
 
         /// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -84,6 +84,8 @@ namespace xLink.Entity
         /// <returns></returns>
         public static Device FindByID(Int32 id)
         {
+            if (id == 0) return null;
+
             if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.ID == id);
 
             // 单对象缓存
@@ -95,6 +97,8 @@ namespace xLink.Entity
         /// <returns></returns>
         public static Device FindByName(String name)
         {
+            if (name.IsNullOrEmpty()) return null;
+
             if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Name == name);
 
             return Find(__.Name, name);
@@ -105,9 +109,9 @@ namespace xLink.Entity
         /// <returns></returns>
         public static Device FindByCode(String code)
         {
-            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
+            if (code.IsNullOrEmpty()) return null;
 
-            //return Find(__.Code, code);
+            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
 
             return Meta.SingleCache.GetItemWithSlaveKey(code) as Device;
         }

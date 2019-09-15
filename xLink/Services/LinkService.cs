@@ -83,7 +83,7 @@ namespace xLink.Services
         [Api(nameof(Login))]
         public virtual Object Login(String user, String pass)
         {
-            if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
+            //if (user.IsNullOrEmpty()) throw Error(3, "用户名不能为空");
 
             var ps = Parameters;
 

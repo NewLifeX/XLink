@@ -43,13 +43,29 @@ namespace xLink.Services
         /// <returns></returns>
         protected override IManageUser CheckUser(String user, String pass, IDictionary<String, Object> ps)
         {
-            var u = Device.FindByCode(user);
-            if (u == null)
+            var dv = Device.FindByCode(user);
+            if (dv == null)
             {
+                if (!user.IsNullOrEmpty()) throw Error(10, "找不到设备");
+
+                // 找到产品，尝试自动注册
+                var pkey = ps["ProductKey"] + "";
+                var psecret = ps["ProductSecret"] + "";
+                var prd = Product.FindByCode(pkey);
+                if (prd == null) throw Error(11, "找不到设备和产品");
+                if (prd.Secret.MD5() != psecret) throw Error(12, "产品鉴权失败");
+                if (!prd.Enable || !prd.AutoRegister) throw Error(13, $"产品[{prd}]未启用动态注册");
+
                 var ns = Session as INetSession;
-                u = new Device
+                var name = user;
+                if (name.IsNullOrEmpty()) name = ps["MachineName"] + "";
+                if (name.IsNullOrEmpty()) name = ps["UserName"] + "";
+
+                dv = new Device
                 {
-                    Name = user,
+                    ProductID = prd.ID,
+
+                    Name = name,
                     Code = Rand.NextString(8),
                     Secret = Rand.NextString(16),
                     Enable = true,
@@ -57,19 +73,18 @@ namespace xLink.Services
                     CreateIP = ns?.Remote.Address + "",
                     CreateTime = DateTime.Now,
                 };
-                //u.SaveRegister(Session as INetSession);
 
-                u.Insert();
+                dv.Insert();
 
-                return u;
+                return dv;
             }
 
             // 验证密码
             //u.CheckMD5(pass);
             //u.CheckEqual(pass);
-            if (u.Secret.MD5() != pass) throw new XException("密码错误！");
+            if (dv.Secret.MD5() != pass) throw Error(9, "密码错误！");
 
-            return u;
+            return dv;
         }
 
         /// <summary>登录或注册完成后，保存登录信息</summary>
