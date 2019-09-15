@@ -52,12 +52,14 @@ namespace xLink.Entity
             // 如果没有脏数据，则不需要进行任何处理
             if (!HasDirty) return;
 
-            if (isNew)
-            {
-                // 自动生成产品证书密钥
-                if (Code.IsNullOrEmpty()) Code = Rand.NextString(8);
-                if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(16);
-            }
+            // 自动生成产品证书密钥
+            if (Code.IsNullOrEmpty()) Code = Rand.NextString(8);
+            if (Secret.IsNullOrEmpty()) Secret = Rand.NextString(16);
+
+            if (Kind.IsNullOrEmpty()) Kind = "设备";
+            if (Category.IsNullOrEmpty()) Category = "边缘网关";
+            if (DataFormat.IsNullOrEmpty()) DataFormat = "Json";
+            if (NetworkProtocol.IsNullOrEmpty()) NetworkProtocol = "以太网";
         }
 
         /// <summary>初始化</summary>
@@ -69,6 +71,10 @@ namespace xLink.Entity
             {
                 Name = "默认",
                 Enable = true,
+
+                Code = "Apollo03",
+                Secret = "Apollo03Apollo03",
+                AutoRegister = true,
             };
             entity.Insert();
         }

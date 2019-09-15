@@ -83,13 +83,14 @@ namespace xLink
             var user = UserName;
             var pass = Password;
             //if (user.IsNullOrEmpty()) return null;
-            if (user.IsNullOrEmpty()) throw new ArgumentNullException(nameof(user), "用户名不能为空！");
+            //if (user.IsNullOrEmpty()) throw new ArgumentNullException(nameof(user), "用户名不能为空！");
             //if (pass.IsNullOrEmpty()) throw new ArgumentNullException(nameof(pass), "密码不能为空！");
+            if (!pass.IsNullOrEmpty()) pass = pass.MD5();
 
             var arg = new
             {
                 user,
-                pass = pass.MD5(),
+                pass,
             };
 
             // 克隆一份，避免修改原始数据

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using xLink.Client.Services;
 
 namespace xLink.Client
 {
@@ -224,12 +225,12 @@ namespace xLink.Client
             var user = cfg.UserName;
             var pass = cfg.Password;
 
-            // 如果没有编码或者密码，则使用MAC注册
-            if (user.IsNullOrEmpty() || pass.IsNullOrEmpty())
-            {
-                user = Environment.UserName;
-                pass = Environment.UserName;
-            }
+            //// 如果没有编码或者密码，则使用MAC注册
+            //if (user.IsNullOrEmpty() || pass.IsNullOrEmpty())
+            //{
+            //    user = Environment.UserName;
+            //    pass = Environment.UserName;
+            //}
 
             var ct = _Client;
             ct.UserName = user;

@@ -24,6 +24,14 @@ namespace xLink.Client
         [Description("模式")]
         public String Mode { get; set; } = "User";
 
+        /// <summary>产品证书</summary>
+        [Description("产品证书")]
+        public String ProductKey { get; set; } = "Apollo03";
+
+        /// <summary>产品密钥</summary>
+        [Description("产品密钥")]
+        public String ProductSecret { get; set; } = "Apollo03Apollo03";
+
         /// <summary>地址</summary>
         [Description("地址")]
         public String Address { get; set; } = "tcp://127.0.0.1:2233,tcp://feifan.link:2233";

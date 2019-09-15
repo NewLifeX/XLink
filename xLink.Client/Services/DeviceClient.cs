@@ -1,16 +1,9 @@
-﻿using System;
+﻿using NewLife.Net;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using NewLife;
-using NewLife.Net;
-using NewLife.Reflection;
-using NewLife.Remoting;
-using xLink.Models;
 
-namespace xLink.Client
+namespace xLink.Client.Services
 {
     /// <summary>设备客户端</summary>
     public class DeviceClient : LinkClient
@@ -34,8 +27,21 @@ namespace xLink.Client
 
             var ps = SerialTransport.GetPortNames();
 
+            // 如果设备编码不存在，则需要提交产品证书
+            var pkey = "";
+            var psecret = "";
+            if (UserName.IsNullOrEmpty())
+            {
+                var set = Setting.Current;
+                pkey = set.ProductKey;
+                psecret = set.ProductSecret.MD5();
+            }
+
             var ext = new
             {
+                ProductKey = pkey,
+                ProductSecret = psecret,
+
                 _hardInfo.OSName,
                 _hardInfo.OSVersion,
 

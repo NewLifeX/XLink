@@ -4,14 +4,14 @@
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="Name" DataType="String" Master="True" Description="名称" />
-      <Column Name="Code" DataType="String" Description="编码" />
-      <Column Name="Secret" DataType="String" Description="密钥" />
-      <Column Name="Kind" DataType="String" Description="节点类型" />
-      <Column Name="Category" DataType="String" Description="分类" />
-      <Column Name="DataFormat" DataType="String" Description="数据格式" />
+      <Column Name="Code" DataType="String" Description="编码。ProductKey" />
+      <Column Name="Secret" DataType="String" Description="密钥。ProductSecret" />
+      <Column Name="Kind" DataType="String" Description="节点类型。设备/网关" />
+      <Column Name="Category" DataType="String" Description="分类。边缘网关/大气监测设备" />
+      <Column Name="DataFormat" DataType="String" Description="数据格式。Json" />
       <Column Name="NetworkProtocol" DataType="String" Description="网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它" />
-      <Column Name="Status" DataType="Int32" Description="状态。0测试1发布" />
-      <Column Name="Enable" DataType="Boolean" Description="启用" />
+      <Column Name="Enable" DataType="Boolean" Description="启用。开发中/已发布" />
+      <Column Name="AutoRegister" DataType="Boolean" Description="动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />

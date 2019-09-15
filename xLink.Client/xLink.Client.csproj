@@ -58,7 +58,7 @@
       <Link>Common\MachineHelper.cs</Link>
     </Compile>
     <Compile Include="..\xLink\LinkClient.cs">
-      <Link>Clients\LinkClient.cs</Link>
+      <Link>Services\LinkClient.cs</Link>
     </Compile>
     <Compile Include="..\xLink\Models\DataModel.cs">
       <Link>Models\DataModel.cs</Link>
