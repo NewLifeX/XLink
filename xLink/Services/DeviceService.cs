@@ -112,8 +112,8 @@ namespace xLink.Services
                 return new
                 {
                     Name = user + "",
-                    dv.Code,
-                    dv.Secret,
+                    DeviceKey = dv.Code,
+                    DeviceSecret = dv.Secret,
                 };
             }
 

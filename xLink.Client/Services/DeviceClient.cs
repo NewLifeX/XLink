@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace xLink.Client.Services
 {
@@ -18,6 +19,27 @@ namespace xLink.Client.Services
         #endregion
 
         #region 登录
+        protected override async Task<Object> OnLoginAsync(ISocketClient client, Boolean force)
+        {
+            var rs = await base.OnLoginAsync(client, force);
+
+            if (rs is IDictionary<String, Object> dic)
+            {
+                // 有可能下发设备证书
+                var dkey = dic["DeviceKey"] + "";
+                var dsecret = dic["DeviceSecret"] + "";
+                if (!dkey.IsNullOrEmpty())
+                {
+                    WriteLog("下发设备证书：{0}/{1}", dkey, dsecret);
+
+                    UserName = dkey;
+                    Password = dsecret;
+                }
+            }
+
+            return rs;
+        }
+
         private MachineInfo _hardInfo;
         protected override Object GetLoginInfo()
         {
@@ -35,6 +57,8 @@ namespace xLink.Client.Services
                 var set = Setting.Current;
                 pkey = set.ProductKey;
                 psecret = set.ProductSecret.MD5();
+
+                WriteLog("动态注册产品：{0}", pkey);
             }
 
             var ext = new
