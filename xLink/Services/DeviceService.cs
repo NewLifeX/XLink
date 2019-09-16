@@ -68,11 +68,6 @@ namespace xLink.Services
 
                 if (dv == null) dv = new Device
                 {
-                    ProductID = prd.ID,
-
-                    Name = name,
-                    Code = Rand.NextString(8),
-                    Secret = Rand.NextString(16),
                     Enable = true,
 
                     CreateIP = ns?.Remote.Address + "",
@@ -81,10 +76,14 @@ namespace xLink.Services
 
                 dv.ProductID = prd.ID;
                 dv.Name = name;
+                dv.Code = Rand.NextString(8);
+                dv.Secret = Rand.NextString(16);
                 dv.UpdateIP = ns?.Remote.Address + "";
                 dv.UpdateTime = DateTime.Now;
 
                 dv.Save();
+
+                Session["AutoRegister"] = true;
 
                 return dv;
             }
@@ -116,8 +115,9 @@ namespace xLink.Services
 
             dv.Save();
 
-            // 一分钟之类注册，返回编码
-            if (dv.CreateTime.AddSeconds(60) > DateTime.Now)
+            //// 一分钟之类注册，返回编码
+            //if (dv.CreateTime.AddSeconds(60) > DateTime.Now)
+            if (Session["AutoRegister"].ToBoolean())
             {
                 return new
                 {
