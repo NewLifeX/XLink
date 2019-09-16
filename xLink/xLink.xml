@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Tables Version="9.14.7183.41843" Output="Entity" NameSpace="xLink.Entity" ConnName="xLink" BaseClass="Entity">
+<Tables Version="9.14.7173.39578" Output="Entity" NameSpace="xLink.Entity" ConnName="xLink" BaseClass="Entity">
   <Table Name="Product" Description="产品" DbType="SqlServer">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
@@ -112,7 +112,7 @@
       <Column Name="CreateDeviceID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
-      <Column Name="Remark" ColumnName="Content" DataType="String" Length="500" Description="内容" />
+      <Column Name="Remark" ColumnName="Content" DataType="String" Length="2000" Description="内容" />
     </Columns>
     <Indexes>
       <Index Columns="DeviceID,Action" />
