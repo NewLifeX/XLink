@@ -119,6 +119,8 @@ namespace xLink
         {
             var asm = AssemblyX.Entry;
 
+            var mcs = MachineHelper.GetMacs().Join(",", e => e.ToHex("-"));
+            var ip = NetHelper.MyIP();
             var ext = new
             {
                 asm.Version,
@@ -132,11 +134,11 @@ namespace xLink
 
                 CPU = Environment.ProcessorCount,
 
-                Macs = MachineHelper.GetMacs().Join(",", e => e.ToHex("-")),
+                Macs = mcs,
 
                 InstallPath = ".".GetFullPath(),
                 Runtime = Environment.Version + "",
-                LocalIP = NetHelper.MyIP() + "",
+                LocalIP = ip + "",
 
                 Time = DateTime.Now,
             };
@@ -188,9 +190,10 @@ namespace xLink
                 pcs.Add(item);
             }
 
+            var mcs = MachineHelper.GetMacs().Join(",", e => e.ToHex("-"));
             var ext = new
             {
-                Macs = MachineHelper.GetMacs().Join(",", e => e.ToHex("-")),
+                Macs = mcs,
 
                 Processes = pcs.Join(",", e => e.ProcessName),
 
