@@ -119,6 +119,28 @@ namespace xLink.Entity
 
             return Meta.SingleCache.GetItemWithSlaveKey(code) as Device;
         }
+
+        /// <summary>根据唯一标识找设备</summary>
+        /// <param name="Id"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public static Device FindByUuid(String Id, Int32 productId)
+        {
+            if (Id.IsNullOrEmpty()) return null;
+
+            return Find(_.Uuid == Id & _.ProductID == productId);
+        }
+
+        /// <summary>根据唯一标识找设备</summary>
+        /// <param name="Id"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public static Device FindByMachineGuid(String Id, Int32 productId)
+        {
+            if (Id.IsNullOrEmpty()) return null;
+
+            return Find(_.MachineGuid == Id & _.ProductID == productId);
+        }
         #endregion
 
         #region 高级查询

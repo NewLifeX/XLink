@@ -56,12 +56,17 @@ namespace xLink.Services
                 if (prd.Secret.MD5() != psecret) throw Error(12, "产品鉴权失败");
                 if (!prd.Enable || !prd.AutoRegister) throw Error(13, $"产品[{prd}]未启用动态注册");
 
+                // 根据唯一编码找设备
+                var uuid = ps["UUID"] + "";
+                var guid = ps["MachineGuid"] + "";
+                dv = Device.FindByUuid(uuid, prd.ID) ?? Device.FindByMachineGuid(guid, prd.ID);
+
                 var ns = Session as INetSession;
                 var name = user;
                 if (name.IsNullOrEmpty()) name = ps["MachineName"] + "";
                 if (name.IsNullOrEmpty()) name = ps["UserName"] + "";
 
-                dv = new Device
+                if (dv == null) dv = new Device
                 {
                     ProductID = prd.ID,
 
@@ -74,7 +79,12 @@ namespace xLink.Services
                     CreateTime = DateTime.Now,
                 };
 
-                dv.Insert();
+                dv.ProductID = prd.ID;
+                dv.Name = name;
+                dv.UpdateIP = ns?.Remote.Address + "";
+                dv.UpdateTime = DateTime.Now;
+
+                dv.Save();
 
                 return dv;
             }
