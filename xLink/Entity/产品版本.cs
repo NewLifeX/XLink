@@ -7,14 +7,13 @@ using XCode.DataAccessLayer;
 
 namespace xLink.Entity
 {
-    /// <summary>产品</summary>
+    /// <summary>产品版本。产品固件更新管理</summary>
     [Serializable]
     [DataObject]
-    [Description("产品")]
-    [BindIndex("IU_Product_Code", true, "Code")]
-    [BindIndex("IX_Product_Kind", false, "Kind")]
-    [BindTable("Product", Description = "产品", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
-    public partial class Product : IProduct
+    [Description("产品版本。产品固件更新管理")]
+    [BindIndex("IU_ProductVersion_ProductID_Version", true, "ProductID,Version")]
+    [BindTable("ProductVersion", Description = "产品版本。产品固件更新管理", ConnName = "xLink", DbType = DatabaseType.None)]
+    public partial class ProductVersion : IProductVersion
     {
         #region 属性
         private Int32 _ID;
@@ -25,77 +24,61 @@ namespace xLink.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
-        private String _Name;
-        /// <summary>名称</summary>
-        [DisplayName("名称")]
-        [Description("名称")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Name", "名称", "", Master = true)]
-        public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
+        private Int32 _ProductID;
+        /// <summary>产品</summary>
+        [DisplayName("产品")]
+        [Description("产品")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("ProductID", "产品", "")]
+        public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
 
-        private String _Code;
-        /// <summary>编码。ProductKey</summary>
-        [DisplayName("编码")]
-        [Description("编码。ProductKey")]
+        private String _Version;
+        /// <summary>版本号</summary>
+        [DisplayName("版本号")]
+        [Description("版本号")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Code", "编码。ProductKey", "")]
-        public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
-
-        private String _Secret;
-        /// <summary>密钥。ProductSecret</summary>
-        [DisplayName("密钥")]
-        [Description("密钥。ProductSecret")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Secret", "密钥。ProductSecret", "")]
-        public String Secret { get { return _Secret; } set { if (OnPropertyChanging(__.Secret, value)) { _Secret = value; OnPropertyChanged(__.Secret); } } }
-
-        private String _Kind;
-        /// <summary>节点类型。设备/网关</summary>
-        [DisplayName("节点类型")]
-        [Description("节点类型。设备/网关")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Kind", "节点类型。设备/网关", "")]
-        public String Kind { get { return _Kind; } set { if (OnPropertyChanging(__.Kind, value)) { _Kind = value; OnPropertyChanged(__.Kind); } } }
-
-        private String _Category;
-        /// <summary>分类。边缘网关/大气监测设备</summary>
-        [DisplayName("分类")]
-        [Description("分类。边缘网关/大气监测设备")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("Category", "分类。边缘网关/大气监测设备", "")]
-        public String Category { get { return _Category; } set { if (OnPropertyChanging(__.Category, value)) { _Category = value; OnPropertyChanged(__.Category); } } }
-
-        private String _DataFormat;
-        /// <summary>数据格式。Json</summary>
-        [DisplayName("数据格式")]
-        [Description("数据格式。Json")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("DataFormat", "数据格式。Json", "")]
-        public String DataFormat { get { return _DataFormat; } set { if (OnPropertyChanging(__.DataFormat, value)) { _DataFormat = value; OnPropertyChanged(__.DataFormat); } } }
-
-        private String _NetworkProtocol;
-        /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
-        [DisplayName("网络协议")]
-        [Description("网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("NetworkProtocol", "网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它", "")]
-        public String NetworkProtocol { get { return _NetworkProtocol; } set { if (OnPropertyChanging(__.NetworkProtocol, value)) { _NetworkProtocol = value; OnPropertyChanged(__.NetworkProtocol); } } }
+        [BindColumn("Version", "版本号", "")]
+        public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
         private Boolean _Enable;
-        /// <summary>启用。开发中/已发布</summary>
+        /// <summary>启用。启用/停用</summary>
         [DisplayName("启用")]
-        [Description("启用。开发中/已发布")]
+        [Description("启用。启用/停用")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Enable", "启用。开发中/已发布", "")]
+        [BindColumn("Enable", "启用。启用/停用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
-        private Boolean _AutoRegister;
-        /// <summary>动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书</summary>
-        [DisplayName("动态注册")]
-        [Description("动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书")]
+        private Boolean _Force;
+        /// <summary>强制。强制升级</summary>
+        [DisplayName("强制")]
+        [Description("强制。强制升级")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("AutoRegister", "动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书", "")]
-        public Boolean AutoRegister { get { return _AutoRegister; } set { if (OnPropertyChanging(__.AutoRegister, value)) { _AutoRegister = value; OnPropertyChanged(__.AutoRegister); } } }
+        [BindColumn("Force", "强制。强制升级", "")]
+        public Boolean Force { get { return _Force; } set { if (OnPropertyChanging(__.Force, value)) { _Force = value; OnPropertyChanged(__.Force); } } }
+
+        private Boolean _Trial;
+        /// <summary>试用版</summary>
+        [DisplayName("试用版")]
+        [Description("试用版")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("Trial", "试用版", "")]
+        public Boolean Trial { get { return _Trial; } set { if (OnPropertyChanging(__.Trial, value)) { _Trial = value; OnPropertyChanged(__.Trial); } } }
+
+        private String _Strategy;
+        /// <summary>策略。升级策略</summary>
+        [DisplayName("策略")]
+        [Description("策略。升级策略")]
+        [DataObjectField(false, false, true, 500)]
+        [BindColumn("Strategy", "策略。升级策略", "")]
+        public String Strategy { get { return _Strategy; } set { if (OnPropertyChanging(__.Strategy, value)) { _Strategy = value; OnPropertyChanged(__.Strategy); } } }
+
+        private String _Source;
+        /// <summary>升级源</summary>
+        [DisplayName("升级源")]
+        [Description("升级源")]
+        [DataObjectField(false, false, true, 200)]
+        [BindColumn("Source", "升级源", "")]
+        public String Source { get { return _Source; } set { if (OnPropertyChanging(__.Source, value)) { _Source = value; OnPropertyChanged(__.Source); } } }
 
         private String _CreateUser;
         /// <summary>创建人</summary>
@@ -181,15 +164,13 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
-                    case __.Name : return _Name;
-                    case __.Code : return _Code;
-                    case __.Secret : return _Secret;
-                    case __.Kind : return _Kind;
-                    case __.Category : return _Category;
-                    case __.DataFormat : return _DataFormat;
-                    case __.NetworkProtocol : return _NetworkProtocol;
+                    case __.ProductID : return _ProductID;
+                    case __.Version : return _Version;
                     case __.Enable : return _Enable;
-                    case __.AutoRegister : return _AutoRegister;
+                    case __.Force : return _Force;
+                    case __.Trial : return _Trial;
+                    case __.Strategy : return _Strategy;
+                    case __.Source : return _Source;
                     case __.CreateUser : return _CreateUser;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
@@ -207,15 +188,13 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
-                    case __.Name : _Name = Convert.ToString(value); break;
-                    case __.Code : _Code = Convert.ToString(value); break;
-                    case __.Secret : _Secret = Convert.ToString(value); break;
-                    case __.Kind : _Kind = Convert.ToString(value); break;
-                    case __.Category : _Category = Convert.ToString(value); break;
-                    case __.DataFormat : _DataFormat = Convert.ToString(value); break;
-                    case __.NetworkProtocol : _NetworkProtocol = Convert.ToString(value); break;
+                    case __.ProductID : _ProductID = value.ToInt(); break;
+                    case __.Version : _Version = Convert.ToString(value); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
-                    case __.AutoRegister : _AutoRegister = value.ToBoolean(); break;
+                    case __.Force : _Force = value.ToBoolean(); break;
+                    case __.Trial : _Trial = value.ToBoolean(); break;
+                    case __.Strategy : _Strategy = Convert.ToString(value); break;
+                    case __.Source : _Source = Convert.ToString(value); break;
                     case __.CreateUser : _CreateUser = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
@@ -232,38 +211,32 @@ namespace xLink.Entity
         #endregion
 
         #region 字段名
-        /// <summary>取得产品字段信息的快捷方式</summary>
+        /// <summary>取得产品版本字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
-            /// <summary>名称</summary>
-            public static readonly Field Name = FindByName(__.Name);
+            /// <summary>产品</summary>
+            public static readonly Field ProductID = FindByName(__.ProductID);
 
-            /// <summary>编码。ProductKey</summary>
-            public static readonly Field Code = FindByName(__.Code);
+            /// <summary>版本号</summary>
+            public static readonly Field Version = FindByName(__.Version);
 
-            /// <summary>密钥。ProductSecret</summary>
-            public static readonly Field Secret = FindByName(__.Secret);
-
-            /// <summary>节点类型。设备/网关</summary>
-            public static readonly Field Kind = FindByName(__.Kind);
-
-            /// <summary>分类。边缘网关/大气监测设备</summary>
-            public static readonly Field Category = FindByName(__.Category);
-
-            /// <summary>数据格式。Json</summary>
-            public static readonly Field DataFormat = FindByName(__.DataFormat);
-
-            /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
-            public static readonly Field NetworkProtocol = FindByName(__.NetworkProtocol);
-
-            /// <summary>启用。开发中/已发布</summary>
+            /// <summary>启用。启用/停用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
-            /// <summary>动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书</summary>
-            public static readonly Field AutoRegister = FindByName(__.AutoRegister);
+            /// <summary>强制。强制升级</summary>
+            public static readonly Field Force = FindByName(__.Force);
+
+            /// <summary>试用版</summary>
+            public static readonly Field Trial = FindByName(__.Trial);
+
+            /// <summary>策略。升级策略</summary>
+            public static readonly Field Strategy = FindByName(__.Strategy);
+
+            /// <summary>升级源</summary>
+            public static readonly Field Source = FindByName(__.Source);
 
             /// <summary>创建人</summary>
             public static readonly Field CreateUser = FindByName(__.CreateUser);
@@ -295,38 +268,32 @@ namespace xLink.Entity
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
 
-        /// <summary>取得产品字段名称的快捷方式</summary>
+        /// <summary>取得产品版本字段名称的快捷方式</summary>
         public partial class __
         {
             /// <summary>编号</summary>
             public const String ID = "ID";
 
-            /// <summary>名称</summary>
-            public const String Name = "Name";
+            /// <summary>产品</summary>
+            public const String ProductID = "ProductID";
 
-            /// <summary>编码。ProductKey</summary>
-            public const String Code = "Code";
+            /// <summary>版本号</summary>
+            public const String Version = "Version";
 
-            /// <summary>密钥。ProductSecret</summary>
-            public const String Secret = "Secret";
-
-            /// <summary>节点类型。设备/网关</summary>
-            public const String Kind = "Kind";
-
-            /// <summary>分类。边缘网关/大气监测设备</summary>
-            public const String Category = "Category";
-
-            /// <summary>数据格式。Json</summary>
-            public const String DataFormat = "DataFormat";
-
-            /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
-            public const String NetworkProtocol = "NetworkProtocol";
-
-            /// <summary>启用。开发中/已发布</summary>
+            /// <summary>启用。启用/停用</summary>
             public const String Enable = "Enable";
 
-            /// <summary>动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书</summary>
-            public const String AutoRegister = "AutoRegister";
+            /// <summary>强制。强制升级</summary>
+            public const String Force = "Force";
+
+            /// <summary>试用版</summary>
+            public const String Trial = "Trial";
+
+            /// <summary>策略。升级策略</summary>
+            public const String Strategy = "Strategy";
+
+            /// <summary>升级源</summary>
+            public const String Source = "Source";
 
             /// <summary>创建人</summary>
             public const String CreateUser = "CreateUser";
@@ -358,39 +325,33 @@ namespace xLink.Entity
         #endregion
     }
 
-    /// <summary>产品接口</summary>
-    public partial interface IProduct
+    /// <summary>产品版本。产品固件更新管理接口</summary>
+    public partial interface IProductVersion
     {
         #region 属性
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
-        /// <summary>名称</summary>
-        String Name { get; set; }
+        /// <summary>产品</summary>
+        Int32 ProductID { get; set; }
 
-        /// <summary>编码。ProductKey</summary>
-        String Code { get; set; }
+        /// <summary>版本号</summary>
+        String Version { get; set; }
 
-        /// <summary>密钥。ProductSecret</summary>
-        String Secret { get; set; }
-
-        /// <summary>节点类型。设备/网关</summary>
-        String Kind { get; set; }
-
-        /// <summary>分类。边缘网关/大气监测设备</summary>
-        String Category { get; set; }
-
-        /// <summary>数据格式。Json</summary>
-        String DataFormat { get; set; }
-
-        /// <summary>网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它</summary>
-        String NetworkProtocol { get; set; }
-
-        /// <summary>启用。开发中/已发布</summary>
+        /// <summary>启用。启用/停用</summary>
         Boolean Enable { get; set; }
 
-        /// <summary>动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书</summary>
-        Boolean AutoRegister { get; set; }
+        /// <summary>强制。强制升级</summary>
+        Boolean Force { get; set; }
+
+        /// <summary>试用版</summary>
+        Boolean Trial { get; set; }
+
+        /// <summary>策略。升级策略</summary>
+        String Strategy { get; set; }
+
+        /// <summary>升级源</summary>
+        String Source { get; set; }
 
         /// <summary>创建人</summary>
         String CreateUser { get; set; }

@@ -12,9 +12,11 @@
       <Column Name="NetworkProtocol" DataType="String" Description="网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它" />
       <Column Name="Enable" DataType="Boolean" Description="启用。开发中/已发布" />
       <Column Name="AutoRegister" DataType="Boolean" Description="动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" />
       <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
       <Column Name="UpdateIP" DataType="String" Description="更新地址" />
@@ -23,6 +25,30 @@
     <Indexes>
       <Index Columns="Code" Unique="True" />
       <Index Columns="Kind" />
+    </Indexes>
+  </Table>
+  <Table Name="ProductVersion" Description="产品版本。产品固件更新管理">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="ProductID" DataType="Int32" Description="产品" />
+      <Column Name="Version" DataType="String" Description="版本号" />
+      <Column Name="Enable" DataType="Boolean" Description="启用。启用/停用" />
+      <Column Name="Force" DataType="Boolean" Description="强制。强制升级" />
+      <Column Name="Trial" DataType="Boolean" Description="试用版" />
+      <Column Name="Strategy" DataType="String" Length="500" Description="策略。升级策略" />
+      <Column Name="Source" DataType="String" Length="200" Description="升级源" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" />
+      <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" />
+      <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
+      <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
+      <Column Name="UpdateIP" DataType="String" Description="更新地址" />
+      <Column Name="Description" DataType="String" Length="500" Description="描述" />
+    </Columns>
+    <Indexes>
+      <Index Columns="ProductID,Version" Unique="True" />
     </Indexes>
   </Table>
   <Table Name="Device" Description="设备" DbType="SqlServer">
@@ -57,9 +83,11 @@
       <Column Name="Logins" DataType="Int32" Description="登录" />
       <Column Name="LastLogin" DataType="DateTime" Description="最后登录" />
       <Column Name="LastLoginIP" DataType="String" Description="最后登录IP" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" />
       <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
       <Column Name="UpdateIP" DataType="String" Description="更新地址" />
@@ -129,9 +157,11 @@
       <Column Name="EndTime" DataType="DateTime" Description="结束时间" />
       <Column Name="Status" DataType="Int32" Description="状态" Type="CommandStatus" />
       <Column Name="Message" DataType="String" Length="200" Description="内容" />
+      <Column Name="CreateUser" DataType="String" Description="创建人" />
       <Column Name="CreateUserID" DataType="Int32" Description="创建者" />
       <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
       <Column Name="CreateIP" DataType="String" Description="创建地址" />
+      <Column Name="UpdateUser" DataType="String" Description="更新人" />
       <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
       <Column Name="UpdateIP" DataType="String" Description="更新地址" />

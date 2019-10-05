@@ -80,6 +80,14 @@ namespace xLink.Entity
         [BindColumn("Message", "内容", "")]
         public String Message { get { return _Message; } set { if (OnPropertyChanging(__.Message, value)) { _Message = value; OnPropertyChanged(__.Message); } } }
 
+        private String _CreateUser;
+        /// <summary>创建人</summary>
+        [DisplayName("创建人")]
+        [Description("创建人")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("CreateUser", "创建人", "")]
+        public String CreateUser { get { return _CreateUser; } set { if (OnPropertyChanging(__.CreateUser, value)) { _CreateUser = value; OnPropertyChanged(__.CreateUser); } } }
+
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
         [DisplayName("创建者")]
@@ -103,6 +111,14 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("CreateIP", "创建地址", "")]
         public String CreateIP { get { return _CreateIP; } set { if (OnPropertyChanging(__.CreateIP, value)) { _CreateIP = value; OnPropertyChanged(__.CreateIP); } } }
+
+        private String _UpdateUser;
+        /// <summary>更新人</summary>
+        [DisplayName("更新人")]
+        [Description("更新人")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("UpdateUser", "更新人", "")]
+        public String UpdateUser { get { return _UpdateUser; } set { if (OnPropertyChanging(__.UpdateUser, value)) { _UpdateUser = value; OnPropertyChanged(__.UpdateUser); } } }
 
         private Int32 _UpdateUserID;
         /// <summary>更新者</summary>
@@ -147,9 +163,11 @@ namespace xLink.Entity
                     case __.EndTime : return _EndTime;
                     case __.Status : return _Status;
                     case __.Message : return _Message;
+                    case __.CreateUser : return _CreateUser;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
+                    case __.UpdateUser : return _UpdateUser;
                     case __.UpdateUserID : return _UpdateUserID;
                     case __.UpdateTime : return _UpdateTime;
                     case __.UpdateIP : return _UpdateIP;
@@ -168,9 +186,11 @@ namespace xLink.Entity
                     case __.EndTime : _EndTime = value.ToDateTime(); break;
                     case __.Status : _Status = (CommandStatus)value.ToInt(); break;
                     case __.Message : _Message = Convert.ToString(value); break;
+                    case __.CreateUser : _CreateUser = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
+                    case __.UpdateUser : _UpdateUser = Convert.ToString(value); break;
                     case __.UpdateUserID : _UpdateUserID = value.ToInt(); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
                     case __.UpdateIP : _UpdateIP = Convert.ToString(value); break;
@@ -208,6 +228,9 @@ namespace xLink.Entity
             /// <summary>内容</summary>
             public static readonly Field Message = FindByName(__.Message);
 
+            /// <summary>创建人</summary>
+            public static readonly Field CreateUser = FindByName(__.CreateUser);
+
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
 
@@ -216,6 +239,9 @@ namespace xLink.Entity
 
             /// <summary>创建地址</summary>
             public static readonly Field CreateIP = FindByName(__.CreateIP);
+
+            /// <summary>更新人</summary>
+            public static readonly Field UpdateUser = FindByName(__.UpdateUser);
 
             /// <summary>更新者</summary>
             public static readonly Field UpdateUserID = FindByName(__.UpdateUserID);
@@ -256,6 +282,9 @@ namespace xLink.Entity
             /// <summary>内容</summary>
             public const String Message = "Message";
 
+            /// <summary>创建人</summary>
+            public const String CreateUser = "CreateUser";
+
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
 
@@ -264,6 +293,9 @@ namespace xLink.Entity
 
             /// <summary>创建地址</summary>
             public const String CreateIP = "CreateIP";
+
+            /// <summary>更新人</summary>
+            public const String UpdateUser = "UpdateUser";
 
             /// <summary>更新者</summary>
             public const String UpdateUserID = "UpdateUserID";
@@ -305,6 +337,9 @@ namespace xLink.Entity
         /// <summary>内容</summary>
         String Message { get; set; }
 
+        /// <summary>创建人</summary>
+        String CreateUser { get; set; }
+
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }
 
@@ -313,6 +348,9 @@ namespace xLink.Entity
 
         /// <summary>创建地址</summary>
         String CreateIP { get; set; }
+
+        /// <summary>更新人</summary>
+        String UpdateUser { get; set; }
 
         /// <summary>更新者</summary>
         Int32 UpdateUserID { get; set; }
