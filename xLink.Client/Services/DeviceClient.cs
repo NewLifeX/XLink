@@ -1,4 +1,5 @@
 ﻿using NewLife.Net;
+using NewLife.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,15 @@ namespace xLink.Client.Services
         /// <summary>实例化</summary>
         /// <param name="uri"></param>
         public DeviceClient(String uri) : base(uri) { }
+        #endregion
+
+        #region 打开
+        public override Boolean Open()
+        {
+            Task.Run(() => _hardInfo = new MachineInfo());
+
+            return base.Open();
+        }
         #endregion
 
         #region 登录

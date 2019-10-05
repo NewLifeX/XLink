@@ -101,7 +101,7 @@ namespace xLink.Entity
         /// <summary>内容</summary>
         [DisplayName("内容")]
         [Description("内容")]
-        [DataObjectField(false, false, true, 500)]
+        [DataObjectField(false, false, true, 2000)]
         [BindColumn("Content", "内容", "")]
         public String Remark { get { return _Remark; } set { if (OnPropertyChanging(__.Remark, value)) { _Remark = value; OnPropertyChanged(__.Remark); } } }
         #endregion

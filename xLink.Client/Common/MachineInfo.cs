@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
+using System.Threading.Tasks;
 
 namespace xLink.Client
 {
@@ -37,9 +38,9 @@ namespace xLink.Client
         /// <summary>可用内存</summary>
         public UInt64 AvailableMemory => new ComputerInfo().AvailablePhysicalMemory;
 
-        private readonly PerformanceCounter _cpuCounter;
+        private PerformanceCounter _cpuCounter;
         /// <summary>CPU占用率</summary>
-        public Single CpuRate => _cpuCounter.NextValue() / 100;
+        public Single CpuRate => _cpuCounter == null ? 0 : (_cpuCounter.NextValue() / 100);
         #endregion
 
         #region 构造
@@ -62,11 +63,15 @@ namespace xLink.Client
                 MachineGuid = reg.GetValue("MachineGuid") + "";
             }
 
-            _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total")
+            // 性能计数器的初始化非常耗时
+            Task.Run(() =>
             {
-                MachineName = "."
-            };
-            _cpuCounter.NextValue();
+                _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total")
+                {
+                    MachineName = "."
+                };
+                _cpuCounter.NextValue();
+            });
         }
         #endregion
 

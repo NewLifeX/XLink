@@ -56,25 +56,34 @@ namespace xLink.Services
                 if (prd.Secret.MD5() != psecret) throw Error(12, "产品鉴权失败");
                 if (!prd.Enable || !prd.AutoRegister) throw Error(13, $"产品[{prd}]未启用动态注册");
 
+                // 根据唯一编码找设备
+                var uuid = ps["UUID"] + "";
+                var guid = ps["MachineGuid"] + "";
+                dv = Device.FindByUuid(uuid, prd.ID) ?? Device.FindByMachineGuid(guid, prd.ID);
+
                 var ns = Session as INetSession;
                 var name = user;
                 if (name.IsNullOrEmpty()) name = ps["MachineName"] + "";
                 if (name.IsNullOrEmpty()) name = ps["UserName"] + "";
 
-                dv = new Device
+                if (dv == null) dv = new Device
                 {
-                    ProductID = prd.ID,
-
-                    Name = name,
-                    Code = Rand.NextString(8),
-                    Secret = Rand.NextString(16),
                     Enable = true,
 
                     CreateIP = ns?.Remote.Address + "",
                     CreateTime = DateTime.Now,
                 };
 
-                dv.Insert();
+                dv.ProductID = prd.ID;
+                dv.Name = name;
+                dv.Code = Rand.NextString(8);
+                dv.Secret = Rand.NextString(16);
+                dv.UpdateIP = ns?.Remote.Address + "";
+                dv.UpdateTime = DateTime.Now;
+
+                dv.Save();
+
+                Session["AutoRegister"] = true;
 
                 return dv;
             }
@@ -106,8 +115,9 @@ namespace xLink.Services
 
             dv.Save();
 
-            // 一分钟之类注册，返回编码
-            if (dv.CreateTime.AddSeconds(60) > DateTime.Now)
+            //// 一分钟之类注册，返回编码
+            //if (dv.CreateTime.AddSeconds(60) > DateTime.Now)
+            if (Session["AutoRegister"].ToBoolean())
             {
                 return new
                 {

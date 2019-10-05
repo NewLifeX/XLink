@@ -11,11 +11,14 @@ namespace xLink.Common
     public class MachineHelper
     {
         private static String[] _Excludes = new[] { "Loopback", "VMware", "VBox", "Virtual", "Teredo", "Microsoft", "VPN", "VNIC", "IEEE" };
+        private static NetworkInterface[] _ifs;
         /// <summary>获取所有网卡MAC地址</summary>
         /// <returns></returns>
         public static IEnumerable<Byte[]> GetMacs()
         {
-            foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
+            if (_ifs == null) _ifs = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (var item in _ifs)
             {
                 if (_Excludes.Any(e => item.Description.Contains(e))) continue;
                 if (item.Speed < 1_000_000) continue;
@@ -36,7 +39,9 @@ namespace xLink.Common
         /// <returns></returns>
         public static Byte[] GetMac()
         {
-            foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
+            if (_ifs == null) _ifs = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (var item in _ifs)
             {
                 if (_Excludes.Any(e => item.Description.Contains(e))) continue;
                 if (item.Speed < 1_000_000) continue;

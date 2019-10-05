@@ -8,8 +8,8 @@
     <Description>物联网云平台，负责在硬件设备以及用户端之间交互数据指令</Description>
     <Company>新生命开发团队</Company>
     <Copyright>版权所有(C) 新生命开发团队 2002~2019</Copyright>
-    <Version>3.0.2019.0713</Version>
-    <FileVersion>3.0.2019.0713</FileVersion>
+    <Version>3.0.2019.0916</Version>
+    <FileVersion>3.0.2019.0916</FileVersion>
     <AssemblyVersion>3.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>link.ico</ApplicationIcon>
