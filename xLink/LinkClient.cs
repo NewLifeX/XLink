@@ -57,16 +57,14 @@ namespace xLink
 
         #region 执行
         /// <summary>异步调用</summary>
-        /// <param name="resultType"></param>
         /// <param name="action"></param>
         /// <param name="args"></param>
-        /// <param name="flag"></param>
         /// <returns></returns>
-        public override Task<Object> InvokeAsync(Type resultType, String action, Object args = null, Byte flag = 0)
+        public override Task<TResult> InvokeAsync<TResult>(String action, Object args = null)
         {
             if (!ActionPrefix.IsNullOrEmpty() && !action.Contains("/")) action = ActionPrefix + "/" + action;
 
-            return base.InvokeAsync(resultType, action, args, flag);
+            return base.InvokeAsync<TResult>(action, args);
         }
         #endregion
 

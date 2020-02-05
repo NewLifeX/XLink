@@ -38,8 +38,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Core" Version="8.3.2019.822" />
-    <PackageReference Include="NewLife.XCode" Version="9.14.2019.822" />
+    <PackageReference Include="NewLife.Agent" Version="8.6.2020.204" />
+    <PackageReference Include="NewLife.Core" Version="8.6.2020.204" />
+    <PackageReference Include="NewLife.XCode" Version="9.15.2020.204" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">

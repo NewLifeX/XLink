@@ -127,7 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>8.3.2019.822</Version>
+      <Version>8.6.2020.204</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
