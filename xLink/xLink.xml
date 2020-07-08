@@ -60,7 +60,8 @@
       <Column Name="Code" DataType="String" Description="编码。DeviceKey" />
       <Column Name="Secret" DataType="String" Description="密钥。DeviceSecret" />
       <Column Name="Enable" DataType="Boolean" Description="启用" />
-      <Column Name="AreaId" DataType="Int32" Description="地区" />
+      <Column Name="ProvinceId" DataType="Int32" Description="省份" />
+      <Column Name="CityId" DataType="Int32" Description="城市" />
       <Column Name="Version" DataType="String" Description="版本" />
       <Column Name="CompileTime" DataType="DateTime" Description="编译时间" />
       <Column Name="OS" DataType="String" Description="操作系统" />
@@ -80,8 +81,6 @@
       <Column Name="COMs" DataType="String" Length="200" Description="串口" />
       <Column Name="InstallPath" DataType="String" Length="200" Description="安装路径" />
       <Column Name="Runtime" DataType="String" Description="运行时。.Net版本" />
-      <Column Name="ProvinceID" DataType="Int32" Description="省份" />
-      <Column Name="CityID" DataType="Int32" Description="城市" />
       <Column Name="Longitude" DataType="Double" Description="经度" />
       <Column Name="Latitude" DataType="Double" Description="纬度" />
       <Column Name="Address" DataType="String" Length="200" Description="地址" />
@@ -97,7 +96,7 @@
       <Column Name="UpdateUserID" DataType="Int32" Description="更新者" />
       <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" />
       <Column Name="UpdateIP" DataType="String" Description="更新地址" />
-      <Column Name="Description" DataType="String" Length="500" Description="描述" />
+      <Column Name="Remark" DataType="String" Length="500" Description="备注" />
     </Columns>
     <Indexes>
       <Index Columns="Code" Unique="True" />
@@ -156,7 +155,7 @@
       <Index Columns="CreateTime,AreaId,DeviceId" />
     </Indexes>
   </Table>
-  <Table Name="DeviceCommand" Description="设备指令">
+  <Table Name="DeviceCommand" Description="设备命令">
     <Columns>
       <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
       <Column Name="DeviceId" DataType="Int32" Description="设备" />

@@ -167,7 +167,7 @@ namespace xLink.Entity
         /// <summary>令牌</summary>
         [DisplayName("令牌")]
         [Description("令牌")]
-        [DataObjectField(false, false, true, 200)]
+        [DataObjectField(false, false, true, 500)]
         [BindColumn("Token", "令牌", "")]
         public String Token { get { return _Token; } set { if (OnPropertyChanging(__.Token, value)) { _Token = value; OnPropertyChanged(__.Token); } } }
 

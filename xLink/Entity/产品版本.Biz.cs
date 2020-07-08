@@ -1,24 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Serialization;
-using NewLife;
 using NewLife.Data;
-using NewLife.Log;
-using NewLife.Model;
-using NewLife.Reflection;
-using NewLife.Threading;
-using NewLife.Web;
 using XCode;
-using XCode.Cache;
-using XCode.Configuration;
-using XCode.DataAccessLayer;
 using XCode.Membership;
 
 namespace xLink.Entity
@@ -62,82 +50,46 @@ namespace xLink.Entity
             // 如果没有脏数据，则不需要进行任何处理
             if (!HasDirty) return;
 
-            // 在新插入数据或者修改了指定字段时进行修正
-            // 处理当前已登录用户信息，可以由UserModule过滤器代劳
-            /*var user = ManageProvider.User;
-            if (user != null)
+            // 重新聚合规则
+            if (!Dirtys[__.Strategy] && Rules != null)
             {
-                if (isNew && !Dirtys[nameof(CreateUserID)]) CreateUserID = user.ID;
-                if (!Dirtys[nameof(UpdateUserID)]) UpdateUserID = user.ID;
-            }*/
-            //if (isNew && !Dirtys[nameof(CreateTime)]) CreateTime = DateTime.Now;
-            //if (!Dirtys[nameof(UpdateTime)]) UpdateTime = DateTime.Now;
-            //if (isNew && !Dirtys[nameof(CreateIP)]) CreateIP = ManageProvider.UserHost;
-            //if (!Dirtys[nameof(UpdateIP)]) UpdateIP = ManageProvider.UserHost;
+                var sb = new StringBuilder();
+                foreach (var item in Rules)
+                {
+                    if (sb.Length > 0) sb.Append(";");
+                    sb.AppendFormat("{0}={1}", item.Key, item.Value.Join(","));
+                }
+                Strategy = sb.ToString();
+            }
 
-            // 检查唯一索引
-            // CheckExist(isNew, __.ProductId, __.Version);
+            // 默认通道
+            if (Channel < ProductChannels.Release || Channel > ProductChannels.Develop) Channel = ProductChannels.Release;
         }
 
-        ///// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //protected override void InitData()
-        //{
-        //    // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
-        //    if (Meta.Session.Count > 0) return;
+        /// <summary>加载后，释放规则</summary>
+        protected override void OnLoad()
+        {
+            base.OnLoad();
 
-        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化ProductVersion[产品版本]数据……");
-
-        //    var entity = new ProductVersion();
-        //    entity.ID = 0;
-        //    entity.ProductId = 0;
-        //    entity.Version = "abc";
-        //    entity.Enable = true;
-        //    entity.Force = true;
-        //    entity.Trial = true;
-        //    entity.Strategy = "abc";
-        //    entity.Source = "abc";
-        //    entity.CreateUser = "abc";
-        //    entity.CreateUserID = 0;
-        //    entity.CreateTime = DateTime.Now;
-        //    entity.CreateIP = "abc";
-        //    entity.UpdateUser = "abc";
-        //    entity.UpdateUserID = 0;
-        //    entity.UpdateTime = DateTime.Now;
-        //    entity.UpdateIP = "abc";
-        //    entity.Description = "abc";
-        //    entity.Insert();
-
-        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化ProductVersion[产品版本]数据！");
-        //}
-
-        ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
-        ///// <returns></returns>
-        //public override Int32 Insert()
-        //{
-        //    return base.Insert();
-        //}
-
-        ///// <summary>已重载。在事务保护范围内处理业务，位于Valid之后</summary>
-        ///// <returns></returns>
-        //protected override Int32 OnDelete()
-        //{
-        //    return base.OnDelete();
-        //}
+            var dic = Strategy.SplitAsDictionary("=", ";");
+            Rules = dic.ToDictionary(e => e.Key, e => e.Value.Split(","));
+        }
         #endregion
 
         #region 扩展属性
         /// <summary>产品</summary>
-        [XmlIgnore]
-        //[ScriptIgnore]
-        public Product Product { get { return Extends.Get(nameof(Product), k => Product.FindByID(ProductId)); } }
+        [XmlIgnore, IgnoreDataMember]
+        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductId));
 
         /// <summary>产品</summary>
-        [XmlIgnore]
-        //[ScriptIgnore]
+        [XmlIgnore, IgnoreDataMember]
         [DisplayName("产品")]
         [Map(__.ProductId, typeof(Product), "ID")]
-        public String ProductName { get { return Product?.Name; } }
+        public String ProductName => Product?.Name;
+
+        /// <summary>规则集合</summary>
+        [XmlIgnore, IgnoreDataMember]
+        public IDictionary<String, String[]> Rules { get; set; }
         #endregion
 
         #region 扩展查询
@@ -155,6 +107,17 @@ namespace xLink.Entity
             return Meta.SingleCache[id];
 
             //return Find(_.ID == id);
+        }
+
+        /// <summary>根据产品查找版本</summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public static IList<ProductVersion> FindAllByProductId(Int32 productId)
+        {
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.FindAll(e => e.ProductId == productId);
+
+            return FindAll(_.ProductId == productId);
         }
 
         /// <summary>根据产品、版本号查找</summary>
@@ -193,6 +156,55 @@ namespace xLink.Entity
         #endregion
 
         #region 业务操作
+        /// <summary>获取有效</summary>
+        /// <param name="productId"></param>
+        /// <param name="channel"></param>
+        /// <returns></returns>
+        public static IList<ProductVersion> GetValids(Int32 productId, ProductChannels channel)
+        {
+            var list = Meta.Cache.FindAll(e => e.ProductId == productId && e.Enable);
+            if (list.Count == 0) return list;
+
+            if (channel >= ProductChannels.Release) list = list.Where(e => e.Channel == channel).ToList();
+
+            // 按照编号降序，最大100个
+            list = list.OrderByDescending(e => e.ID).Take(100).ToList();
+
+            return list;
+        }
+
+        /// <summary>应用策略是否匹配指定设备</summary>
+        /// <param name="dv"></param>
+        /// <returns></returns>
+        public Boolean Match(Device dv)
+        {
+            // 没有使用该规则，直接过
+            if (Rules.TryGetValue("province", out var vs))
+            {
+                var prov = dv.Province?.Name;
+                if (prov.IsNullOrEmpty() || !vs.Contains(prov)) return false;
+            }
+
+            if (Rules.TryGetValue("city", out vs))
+            {
+                var city = dv.City?.Name;
+                if (city.IsNullOrEmpty() || !vs.Contains(city)) return false;
+            }
+
+            if (Rules.TryGetValue("version", out vs))
+            {
+                var ver = dv.Version;
+                if (ver.IsNullOrEmpty() || !vs.Contains(ver)) return false;
+            }
+
+            if (Rules.TryGetValue("device", out vs))
+            {
+                var code = dv.Code;
+                if (code.IsNullOrEmpty() || !vs.Contains(code)) return false;
+            }
+
+            return true;
+        }
         #endregion
     }
 }

@@ -65,13 +65,21 @@ namespace xLink.Entity
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
-        private Int32 _AreaId;
-        /// <summary>地区</summary>
-        [DisplayName("地区")]
-        [Description("地区")]
+        private Int32 _ProvinceId;
+        /// <summary>省份</summary>
+        [DisplayName("省份")]
+        [Description("省份")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("AreaId", "地区", "")]
-        public Int32 AreaId { get { return _AreaId; } set { if (OnPropertyChanging(__.AreaId, value)) { _AreaId = value; OnPropertyChanged(__.AreaId); } } }
+        [BindColumn("ProvinceId", "省份", "")]
+        public Int32 ProvinceId { get { return _ProvinceId; } set { if (OnPropertyChanging(__.ProvinceId, value)) { _ProvinceId = value; OnPropertyChanged(__.ProvinceId); } } }
+
+        private Int32 _CityId;
+        /// <summary>城市</summary>
+        [DisplayName("城市")]
+        [Description("城市")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("CityId", "城市", "")]
+        public Int32 CityId { get { return _CityId; } set { if (OnPropertyChanging(__.CityId, value)) { _CityId = value; OnPropertyChanged(__.CityId); } } }
 
         private String _Version;
         /// <summary>版本</summary>
@@ -225,22 +233,6 @@ namespace xLink.Entity
         [BindColumn("Runtime", "运行时。.Net版本", "")]
         public String Runtime { get { return _Runtime; } set { if (OnPropertyChanging(__.Runtime, value)) { _Runtime = value; OnPropertyChanged(__.Runtime); } } }
 
-        private Int32 _ProvinceID;
-        /// <summary>省份</summary>
-        [DisplayName("省份")]
-        [Description("省份")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("ProvinceID", "省份", "")]
-        public Int32 ProvinceID { get { return _ProvinceID; } set { if (OnPropertyChanging(__.ProvinceID, value)) { _ProvinceID = value; OnPropertyChanged(__.ProvinceID); } } }
-
-        private Int32 _CityID;
-        /// <summary>城市</summary>
-        [DisplayName("城市")]
-        [Description("城市")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("CityID", "城市", "")]
-        public Int32 CityID { get { return _CityID; } set { if (OnPropertyChanging(__.CityID, value)) { _CityID = value; OnPropertyChanged(__.CityID); } } }
-
         private Double _Longitude;
         /// <summary>经度</summary>
         [DisplayName("经度")]
@@ -361,13 +353,13 @@ namespace xLink.Entity
         [BindColumn("UpdateIP", "更新地址", "")]
         public String UpdateIP { get { return _UpdateIP; } set { if (OnPropertyChanging(__.UpdateIP, value)) { _UpdateIP = value; OnPropertyChanged(__.UpdateIP); } } }
 
-        private String _Description;
-        /// <summary>描述</summary>
-        [DisplayName("描述")]
-        [Description("描述")]
+        private String _Remark;
+        /// <summary>备注</summary>
+        [DisplayName("备注")]
+        [Description("备注")]
         [DataObjectField(false, false, true, 500)]
-        [BindColumn("Description", "描述", "")]
-        public String Description { get { return _Description; } set { if (OnPropertyChanging(__.Description, value)) { _Description = value; OnPropertyChanged(__.Description); } } }
+        [BindColumn("Remark", "备注", "")]
+        public String Remark { get { return _Remark; } set { if (OnPropertyChanging(__.Remark, value)) { _Remark = value; OnPropertyChanged(__.Remark); } } }
         #endregion
 
         #region 获取/设置 字段值
@@ -386,7 +378,8 @@ namespace xLink.Entity
                     case __.Code : return _Code;
                     case __.Secret : return _Secret;
                     case __.Enable : return _Enable;
-                    case __.AreaId : return _AreaId;
+                    case __.ProvinceId : return _ProvinceId;
+                    case __.CityId : return _CityId;
                     case __.Version : return _Version;
                     case __.CompileTime : return _CompileTime;
                     case __.OS : return _OS;
@@ -406,8 +399,6 @@ namespace xLink.Entity
                     case __.COMs : return _COMs;
                     case __.InstallPath : return _InstallPath;
                     case __.Runtime : return _Runtime;
-                    case __.ProvinceID : return _ProvinceID;
-                    case __.CityID : return _CityID;
                     case __.Longitude : return _Longitude;
                     case __.Latitude : return _Latitude;
                     case __.Address : return _Address;
@@ -423,7 +414,7 @@ namespace xLink.Entity
                     case __.UpdateUserID : return _UpdateUserID;
                     case __.UpdateTime : return _UpdateTime;
                     case __.UpdateIP : return _UpdateIP;
-                    case __.Description : return _Description;
+                    case __.Remark : return _Remark;
                     default: return base[name];
                 }
             }
@@ -437,7 +428,8 @@ namespace xLink.Entity
                     case __.Code : _Code = Convert.ToString(value); break;
                     case __.Secret : _Secret = Convert.ToString(value); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
-                    case __.AreaId : _AreaId = value.ToInt(); break;
+                    case __.ProvinceId : _ProvinceId = value.ToInt(); break;
+                    case __.CityId : _CityId = value.ToInt(); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.CompileTime : _CompileTime = value.ToDateTime(); break;
                     case __.OS : _OS = Convert.ToString(value); break;
@@ -457,8 +449,6 @@ namespace xLink.Entity
                     case __.COMs : _COMs = Convert.ToString(value); break;
                     case __.InstallPath : _InstallPath = Convert.ToString(value); break;
                     case __.Runtime : _Runtime = Convert.ToString(value); break;
-                    case __.ProvinceID : _ProvinceID = value.ToInt(); break;
-                    case __.CityID : _CityID = value.ToInt(); break;
                     case __.Longitude : _Longitude = value.ToDouble(); break;
                     case __.Latitude : _Latitude = value.ToDouble(); break;
                     case __.Address : _Address = Convert.ToString(value); break;
@@ -474,7 +464,7 @@ namespace xLink.Entity
                     case __.UpdateUserID : _UpdateUserID = value.ToInt(); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
                     case __.UpdateIP : _UpdateIP = Convert.ToString(value); break;
-                    case __.Description : _Description = Convert.ToString(value); break;
+                    case __.Remark : _Remark = Convert.ToString(value); break;
                     default: base[name] = value; break;
                 }
             }
@@ -503,8 +493,11 @@ namespace xLink.Entity
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
-            /// <summary>地区</summary>
-            public static readonly Field AreaId = FindByName(__.AreaId);
+            /// <summary>省份</summary>
+            public static readonly Field ProvinceId = FindByName(__.ProvinceId);
+
+            /// <summary>城市</summary>
+            public static readonly Field CityId = FindByName(__.CityId);
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
@@ -563,12 +556,6 @@ namespace xLink.Entity
             /// <summary>运行时。.Net版本</summary>
             public static readonly Field Runtime = FindByName(__.Runtime);
 
-            /// <summary>省份</summary>
-            public static readonly Field ProvinceID = FindByName(__.ProvinceID);
-
-            /// <summary>城市</summary>
-            public static readonly Field CityID = FindByName(__.CityID);
-
             /// <summary>经度</summary>
             public static readonly Field Longitude = FindByName(__.Longitude);
 
@@ -614,8 +601,8 @@ namespace xLink.Entity
             /// <summary>更新地址</summary>
             public static readonly Field UpdateIP = FindByName(__.UpdateIP);
 
-            /// <summary>描述</summary>
-            public static readonly Field Description = FindByName(__.Description);
+            /// <summary>备注</summary>
+            public static readonly Field Remark = FindByName(__.Remark);
 
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
@@ -641,8 +628,11 @@ namespace xLink.Entity
             /// <summary>启用</summary>
             public const String Enable = "Enable";
 
-            /// <summary>地区</summary>
-            public const String AreaId = "AreaId";
+            /// <summary>省份</summary>
+            public const String ProvinceId = "ProvinceId";
+
+            /// <summary>城市</summary>
+            public const String CityId = "CityId";
 
             /// <summary>版本</summary>
             public const String Version = "Version";
@@ -701,12 +691,6 @@ namespace xLink.Entity
             /// <summary>运行时。.Net版本</summary>
             public const String Runtime = "Runtime";
 
-            /// <summary>省份</summary>
-            public const String ProvinceID = "ProvinceID";
-
-            /// <summary>城市</summary>
-            public const String CityID = "CityID";
-
             /// <summary>经度</summary>
             public const String Longitude = "Longitude";
 
@@ -752,8 +736,8 @@ namespace xLink.Entity
             /// <summary>更新地址</summary>
             public const String UpdateIP = "UpdateIP";
 
-            /// <summary>描述</summary>
-            public const String Description = "Description";
+            /// <summary>备注</summary>
+            public const String Remark = "Remark";
         }
         #endregion
     }
@@ -780,8 +764,11 @@ namespace xLink.Entity
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
 
-        /// <summary>地区</summary>
-        Int32 AreaId { get; set; }
+        /// <summary>省份</summary>
+        Int32 ProvinceId { get; set; }
+
+        /// <summary>城市</summary>
+        Int32 CityId { get; set; }
 
         /// <summary>版本</summary>
         String Version { get; set; }
@@ -840,12 +827,6 @@ namespace xLink.Entity
         /// <summary>运行时。.Net版本</summary>
         String Runtime { get; set; }
 
-        /// <summary>省份</summary>
-        Int32 ProvinceID { get; set; }
-
-        /// <summary>城市</summary>
-        Int32 CityID { get; set; }
-
         /// <summary>经度</summary>
         Double Longitude { get; set; }
 
@@ -891,8 +872,8 @@ namespace xLink.Entity
         /// <summary>更新地址</summary>
         String UpdateIP { get; set; }
 
-        /// <summary>描述</summary>
-        String Description { get; set; }
+        /// <summary>备注</summary>
+        String Remark { get; set; }
         #endregion
 
         #region 获取/设置 字段值

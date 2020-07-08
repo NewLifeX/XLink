@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using NewLife.Common;
 using NewLife.Data;
 using NewLife.Model;
@@ -18,7 +20,7 @@ using XCode.Membership;
 namespace xLink.Entity
 {
     /// <summary>设备</summary>
-    public partial class Device : Entity<Device>, IManageUser/*, IAuthUser*/
+    public partial class Device : Entity<Device>
     {
         #region 对象操作
         static Device()
@@ -45,16 +47,17 @@ namespace xLink.Entity
             if (!HasDirty) return;
 
             if (Name.IsNullOrEmpty()) throw new ArgumentNullException(__.Name, _.Name.DisplayName + "不能为空！");
-            //if (Password.IsNullOrEmpty()) throw new ArgumentNullException(__.Password, _.Password.DisplayName + "不能为空！");
-            //if (Password.Length != 16 && Password.Length != 32) throw new ArgumentOutOfRangeException(__.Password, _.Password.DisplayName + "非法！");
-            //if (Name.Length < 8) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最短8个字符！" + Name);
-            //if (Name.Length > 16) throw new ArgumentOutOfRangeException(__.Name, _.Name.DisplayName + "最长16个字符！" + Name);
 
-            //// 修正显示名
-            //if (!NickName.IsNullOrEmpty() && NickName.Length > 16) NickName = NickName.Substring(0, 16);
+            var len = _.MACs.Length;
+            if (MACs != null && len > 0 && MACs.Length > len) MACs = MACs.Substring(0, len);
+            len = _.COMs.Length;
+            if (COMs != null && len > 0 && COMs.Length > len) COMs = COMs.Substring(0, len);
 
-            // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
-            base.Valid(isNew);
+            len = _.Uuid.Length;
+            if (Uuid != null && len > 0 && Uuid.Length > len) Uuid = Uuid.Substring(0, len);
+
+            len = _.MachineGuid.Length;
+            if (MachineGuid != null && len > 0 && MachineGuid.Length > len) MachineGuid = MachineGuid.Substring(0, len);
         }
 
         /// <summary>已重载</summary>
@@ -64,22 +67,32 @@ namespace xLink.Entity
 
         #region 扩展属性
         /// <summary>产品</summary>
+        [XmlIgnore, IgnoreDataMember]
         public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductId));
 
         /// <summary>产品名</summary>
         [Map(__.ProductId, typeof(Product), "ID")]
         public String ProductName => Product + "";
 
-        /// <summary>登录地址。IP=>Address</summary>
-        [DisplayName("登录地址")]
-        public String LastLoginAddress { get { return LastLoginIP.IPToAddress(); } }
+        /// <summary>省份</summary>
+        [XmlIgnore, IgnoreDataMember]
+        public Area Province => Extends.Get(nameof(Province), k => Area.FindByID(ProvinceId));
 
-        String IManageUser.Name { get => Code; set => Code = value; }
-        String IManageUser.NickName { get => Name; set => Name = value; }
-        //String IAuthUser.Password { get => Secret; set => Secret = value; }
-        //Boolean IAuthUser.Online { get; set; }
-        //String IAuthUser.RegisterIP { get => CreateIP; set => CreateIP = value; }
-        //DateTime IAuthUser.RegisterTime { get => CreateTime; set => CreateTime = value; }
+        /// <summary>省份名</summary>
+        [Map(__.ProvinceId)]
+        public String ProvinceName => Province + "";
+
+        /// <summary>城市</summary>
+        [XmlIgnore, IgnoreDataMember]
+        public Area City => Extends.Get(nameof(City), k => Area.FindByID(CityId));
+
+        /// <summary>城市名</summary>
+        [Map(__.CityId)]
+        public String CityName => City + "";
+
+        /// <summary>最后地址。IP=>Address</summary>
+        [DisplayName("最后地址")]
+        public String LastLoginAddress => LastLoginIP.IPToAddress();
         #endregion
 
         #region 扩展查询
@@ -108,15 +121,20 @@ namespace xLink.Entity
             return Find(__.Name, name);
         }
 
-        /// <summary>根据唯一编码查找</summary>
-        /// <param name="code">唯一编码</param>
-        /// <returns></returns>
-        public static Device FindByCode(String code)
+        /// <summary>根据名称查找</summary>
+        /// <param name="code">名称</param>
+        /// <param name="cache">是否走缓存</param>
+        /// <returns>实体对象</returns>
+        public static Device FindByCode(String code, Boolean cache = true)
         {
             if (code.IsNullOrEmpty()) return null;
 
-            if (Meta.Count < 1000) return Meta.Cache.Entities.FirstOrDefault(e => e.Code == code);
+            if (!cache) return Find(_.Code == code);
 
+            // 实体缓存
+            if (Meta.Session.Count < 1000) return Meta.Cache.Find(e => e.Code == code);
+
+            // 单对象缓存
             return Meta.SingleCache.GetItemWithSlaveKey(code) as Device;
         }
 
@@ -144,6 +162,23 @@ namespace xLink.Entity
         #endregion
 
         #region 高级查询
+        /// <summary>根据唯一标识搜索，任意一个匹配即可</summary>
+        /// <param name="uuid"></param>
+        /// <param name="guid"></param>
+        /// <param name="macs"></param>
+        /// <returns></returns>
+        public static IList<Device> Search(String uuid, String guid, String macs)
+        {
+            var exp = new WhereExpression();
+            if (!uuid.IsNullOrEmpty()) exp &= _.Uuid == uuid;
+            if (!guid.IsNullOrEmpty()) exp &= _.MachineGuid == guid;
+            if (!macs.IsNullOrEmpty()) exp &= _.MACs == macs;
+
+            if (exp.IsEmpty) return new List<Device>();
+
+            return FindAll(exp);
+        }
+
         /// <summary>高级查询</summary>
         /// <param name="productId"></param>
         /// <param name="enable"></param>
@@ -163,15 +198,91 @@ namespace xLink.Entity
 
             return FindAll(exp, param);
         }
+
+        /// <summary>高级查询</summary>
+        /// <param name="productId">产品</param>
+        /// <param name="provinceId">省份</param>
+        /// <param name="cityId">城市</param>
+        /// <param name="version">版本</param>
+        /// <param name="enable"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="key"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public static IList<Device> Search(Int32 productId, Int32 provinceId, Int32 cityId, String version, Boolean? enable, DateTime start, DateTime end, String key, PageParameter page)
+        {
+            var exp = new WhereExpression();
+
+            if (provinceId >= 0) exp &= _.ProvinceId == provinceId;
+            if (cityId >= 0) exp &= _.CityId == cityId;
+            if (!version.IsNullOrEmpty()) exp &= _.Version == version;
+            if (enable != null) exp &= _.Enable == enable.Value;
+
+            //exp &= _.CreateTime.Between(start, end);
+            exp &= _.LastLogin.Between(start, end);
+
+            if (!key.IsNullOrEmpty())
+            {
+                exp &= _.Name == key | _.Code == key | _.Version == key |
+                    _.OS.StartsWith(key) | _.OSVersion.StartsWith(key) |
+                    _.MachineName == key | _.UserName == key |
+                    _.Uuid == key | _.MachineGuid == key | _.MACs.Contains(key) | _.DiskID.Contains(key) |
+                    _.Remark.Contains(key);
+            }
+
+            return FindAll(exp, page);
+        }
+
+        internal static IList<Device> SearchByCreateDate(DateTime date)
+        {
+            // 先用带有索引的UpdateTime过滤一次
+            return FindAll(_.UpdateTime >= date & _.CreateTime.Between(date, date));
+        }
+
+        internal static IDictionary<Int32, Int32> SearchGroupByCreateTime(DateTime start, DateTime end)
+        {
+            var exp = new WhereExpression();
+            exp &= _.CreateTime.Between(start, end);
+            var list = FindAll(exp.GroupBy(_.ProductId), null, _.ID.Count() & _.ProductId, 0, 0);
+            return list.ToDictionary(e => e.ProductId, e => e.ID);
+        }
+
+        internal static IDictionary<Int32, Int32> SearchGroupByLastLogin(DateTime start, DateTime end)
+        {
+            var exp = new WhereExpression();
+            exp &= _.LastLogin.Between(start, end);
+            var list = FindAll(exp.GroupBy(_.ProductId), null, _.ID.Count() & _.ProductId, 0, 0);
+            return list.ToDictionary(e => e.ProductId, e => e.ID);
+        }
+
+        internal static IDictionary<Int32, Int32> SearchCountByCreateDate(DateTime date)
+        {
+            var exp = new WhereExpression();
+            exp &= _.CreateTime < date.AddDays(1);
+            var list = FindAll(exp.GroupBy(_.ProductId), null, _.ID.Count() & _.ProductId, 0, 0);
+            return list.ToDictionary(e => e.ProductId, e => e.ID);
+        }
         #endregion
 
         #region 扩展操作
+        /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
+        static Lazy<FieldCache<Device>> VersionCache = new Lazy<FieldCache<Device>>(() => new FieldCache<Device>(__.Version)
+        {
+            Where = _.UpdateTime > DateTime.Today.AddDays(-30) & Expression.Empty,
+            MaxRows = 50
+        });
+
+        /// <summary>获取所有类别名称</summary>
+        /// <returns></returns>
+        public static IDictionary<String, String> FindAllVersion() => VersionCache.Value.FindAllName().OrderByDescending(e => e.Key).ToDictionary(e => e.Key, e => e.Value);
         #endregion
 
         #region 业务
-        #endregion
-
-        #region 辅助
+        /// <summary>根据编码查询或添加</summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static Device GetOrAdd(String code) => GetOrAdd(code, FindByCode, k => new Device { Code = k, Enable = true });
         #endregion
     }
 }

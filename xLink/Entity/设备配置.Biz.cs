@@ -1,25 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Serialization;
-using NewLife;
 using NewLife.Data;
-using NewLife.Log;
-using NewLife.Model;
-using NewLife.Reflection;
-using NewLife.Threading;
-using NewLife.Web;
 using XCode;
 using XCode.Cache;
-using XCode.Configuration;
-using XCode.DataAccessLayer;
 using XCode.Membership;
 
 namespace xLink.Entity
@@ -63,60 +49,24 @@ namespace xLink.Entity
             // 检查唯一索引
             // CheckExist(isNew, __.DeviceId, __.Name);
         }
-
-        ///// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //protected internal override void InitData()
-        //{
-        //    // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
-        //    if (Meta.Session.Count > 0) return;
-
-        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化DeviceConfig[设备配置]数据……");
-
-        //    var entity = new DeviceConfig();
-        //    entity.ID = 0;
-        //    entity.DeviceId = 0;
-        //    entity.AreaId = 0;
-        //    entity.Name = "abc";
-        //    entity.Content = "abc";
-        //    entity.CreateUserID = 0;
-        //    entity.CreateTime = DateTime.Now;
-        //    entity.CreateIP = "abc";
-        //    entity.UpdateUserID = 0;
-        //    entity.UpdateTime = DateTime.Now;
-        //    entity.UpdateIP = "abc";
-        //    entity.Insert();
-
-        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化DeviceConfig[设备配置]数据！");
-        //}
-
-        ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
-        ///// <returns></returns>
-        //public override Int32 Insert()
-        //{
-        //    return base.Insert();
-        //}
-
-        ///// <summary>已重载。在事务保护范围内处理业务，位于Valid之后</summary>
-        ///// <returns></returns>
-        //protected override Int32 OnDelete()
-        //{
-        //    return base.OnDelete();
-        //}
         #endregion
 
         #region 扩展属性
         /// <summary>设备</summary>
         [XmlIgnore, IgnoreDataMember]
         //[ScriptIgnore]
-        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceId)); } }
+        public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceId));
 
         /// <summary>设备</summary>
-        [XmlIgnore, IgnoreDataMember]
-        //[ScriptIgnore]
-        [DisplayName("设备")]
         [Map(__.DeviceId, typeof(Device), "ID")]
-        public String DeviceName { get { return Device?.Name; } }
+        public String DeviceName => Device?.Name;
+
+        /// <summary>城市</summary>
+        public Area City => Extends.Get(nameof(City), k => Area.FindByID(AreaId));
+
+        /// <summary>城市名</summary>
+        [Map(__.AreaId)]
+        public String CityName => City + "";
         #endregion
 
         #region 扩展查询
@@ -150,9 +100,36 @@ namespace xLink.Entity
         #endregion
 
         #region 高级查询
+        /// <summary>查询满足条件的记录集，分页、排序</summary>
+        /// <param name="areaId">地区</param>
+        /// <param name="deviceId">设备</param>
+        /// <param name="name">名称</param>
+        /// <param name="start">开始时间</param>
+        /// <param name="end">结束时间</param>
+        /// <param name="key">关键字</param>
+        /// <param name="page">分页排序参数，同时返回满足条件的总记录数</param>
+        /// <returns>实体集</returns>
+        public static IList<DeviceConfig> Search(Int32 areaId, Int32 deviceId, String name, DateTime start, DateTime end, String key, PageParameter page)
+        {
+            var exp = new WhereExpression();
+
+            if (areaId > 0) exp &= _.AreaId == areaId;
+            if (deviceId > 0) exp &= _.DeviceId == deviceId;
+            if (!name.IsNullOrEmpty()) exp &= _.Name == name;
+
+            exp &= _.UpdateTime.Between(start, end);
+
+            if (!key.IsNullOrEmpty()) exp &= _.Name == key;
+
+            return FindAll(exp, page);
+        }
         #endregion
 
         #region 业务操作
+        static Lazy<FieldCache<DeviceConfig>> NameCache = new Lazy<FieldCache<DeviceConfig>>(() => new FieldCache<DeviceConfig>(__.Name));
+        /// <summary>获取所有分类名称</summary>
+        /// <returns></returns>
+        public static IDictionary<String, String> FindAllName() => NameCache.Value.FindAllName();
         #endregion
     }
 }

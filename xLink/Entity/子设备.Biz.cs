@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -63,76 +63,25 @@ namespace xLink.Entity
             // 检查唯一索引
             // CheckExist(isNew, __.Code);
         }
-
-        ///// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //protected internal override void InitData()
-        //{
-        //    // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
-        //    if (Meta.Session.Count > 0) return;
-
-        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化SubDevice[子设备]数据……");
-
-        //    var entity = new SubDevice();
-        //    entity.ID = 0;
-        //    entity.ProductId = 0;
-        //    entity.DeviceId = 0;
-        //    entity.Code = "abc";
-        //    entity.Name = "abc";
-        //    entity.Version = "abc";
-        //    entity.Vendor = "abc";
-        //    entity.Model = "abc";
-        //    entity.Enable = true;
-        //    entity.Remark = "abc";
-        //    entity.CreateUserID = 0;
-        //    entity.CreateTime = DateTime.Now;
-        //    entity.CreateIP = "abc";
-        //    entity.UpdateUserID = 0;
-        //    entity.UpdateTime = DateTime.Now;
-        //    entity.UpdateIP = "abc";
-        //    entity.Insert();
-
-        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化SubDevice[子设备]数据！");
-        //}
-
-        ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
-        ///// <returns></returns>
-        //public override Int32 Insert()
-        //{
-        //    return base.Insert();
-        //}
-
-        ///// <summary>已重载。在事务保护范围内处理业务，位于Valid之后</summary>
-        ///// <returns></returns>
-        //protected override Int32 OnDelete()
-        //{
-        //    return base.OnDelete();
-        //}
         #endregion
 
         #region 扩展属性
         /// <summary>产品</summary>
         [XmlIgnore, IgnoreDataMember]
         //[ScriptIgnore]
-        public Product Product { get { return Extends.Get(nameof(Product), k => Product.FindByID(ProductId)); } }
+        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductId));
 
         /// <summary>产品</summary>
-        [XmlIgnore, IgnoreDataMember]
-        //[ScriptIgnore]
-        [DisplayName("产品")]
         [Map(__.ProductId, typeof(Product), "ID")]
-        public String ProductName { get { return Product?.Name; } }
+        public String ProductName => Product?.Name;
         /// <summary>设备</summary>
         [XmlIgnore, IgnoreDataMember]
         //[ScriptIgnore]
-        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceId)); } }
+        public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceId));
 
         /// <summary>设备</summary>
-        [XmlIgnore, IgnoreDataMember]
-        //[ScriptIgnore]
-        [DisplayName("设备")]
         [Map(__.DeviceId, typeof(Device), "ID")]
-        public String DeviceName { get { return Device?.Name; } }
+        public String DeviceName => Device?.Name;
         #endregion
 
         #region 扩展查询
@@ -188,6 +137,28 @@ namespace xLink.Entity
         #endregion
 
         #region 高级查询
+        /// <summary>查询子设备</summary>
+        /// <param name="deviceId"></param>
+        /// <param name="productId"></param>
+        /// <param name="enable"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="key"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public static IList<SubDevice> Search(Int32 deviceId, Int32 productId, Boolean? enable, DateTime start, DateTime end, String key, PageParameter page)
+        {
+            var exp = new WhereExpression();
+
+            if (deviceId >= 0) exp &= _.DeviceId == deviceId;
+            if (productId >= 0) exp &= _.ProductId == productId;
+            if (enable != null) exp &= _.Enable == enable;
+            exp &= _.UpdateTime.Between(start, end);
+
+            if (!key.IsNullOrEmpty()) exp &= _.Code == key | _.Name == key;
+
+            return FindAll(exp, page);
+        }
         #endregion
 
         #region 业务操作
