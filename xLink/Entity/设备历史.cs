@@ -11,9 +11,9 @@ namespace xLink.Entity
     [Serializable]
     [DataObject]
     [Description("设备历史")]
-    [BindIndex("IX_DeviceHistory_DeviceID_Action", false, "DeviceID,Action")]
-    [BindIndex("IX_DeviceHistory_CreateTime", false, "CreateTime")]
-    [BindTable("DeviceHistory", Description = "设备历史", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindIndex("IX_DeviceHistory_DeviceId_Action", false, "DeviceId,Action")]
+    [BindIndex("IX_DeviceHistory_CreateTime_AreaId_DeviceId", false, "CreateTime,AreaId,DeviceId")]
+    [BindTable("DeviceHistory", Description = "设备历史", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class DeviceHistory : IDeviceHistory
     {
         #region 属性
@@ -25,13 +25,13 @@ namespace xLink.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
-        private Int32 _DeviceID;
-        /// <summary>编码</summary>
-        [DisplayName("编码")]
-        [Description("编码")]
+        private Int32 _DeviceId;
+        /// <summary>设备</summary>
+        [DisplayName("设备")]
+        [Description("设备")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("DeviceID", "编码", "")]
-        public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
+        [BindColumn("DeviceId", "设备", "")]
+        public Int32 DeviceId { get { return _DeviceId; } set { if (OnPropertyChanging(__.DeviceId, value)) { _DeviceId = value; OnPropertyChanged(__.DeviceId); } } }
 
         private String _Name;
         /// <summary>名称</summary>
@@ -40,6 +40,14 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
+
+        private Int32 _AreaId;
+        /// <summary>地区</summary>
+        [DisplayName("地区")]
+        [Description("地区")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("AreaId", "地区", "")]
+        public Int32 AreaId { get { return _AreaId; } set { if (OnPropertyChanging(__.AreaId, value)) { _AreaId = value; OnPropertyChanged(__.AreaId); } } }
 
         private String _Action;
         /// <summary>操作</summary>
@@ -65,21 +73,13 @@ namespace xLink.Entity
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
-        private DateTime _CompileTime;
-        /// <summary>编译时间</summary>
-        [DisplayName("编译时间")]
-        [Description("编译时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("CompileTime", "编译时间", "")]
-        public DateTime CompileTime { get { return _CompileTime; } set { if (OnPropertyChanging(__.CompileTime, value)) { _CompileTime = value; OnPropertyChanged(__.CompileTime); } } }
-
-        private Int32 _CreateDeviceID;
-        /// <summary>创建者</summary>
+        private String _Creator;
+        /// <summary>创建者。服务端节点</summary>
         [DisplayName("创建者")]
-        [Description("创建者")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("CreateDeviceID", "创建者", "")]
-        public Int32 CreateDeviceID { get { return _CreateDeviceID; } set { if (OnPropertyChanging(__.CreateDeviceID, value)) { _CreateDeviceID = value; OnPropertyChanged(__.CreateDeviceID); } } }
+        [Description("创建者。服务端节点")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Creator", "创建者。服务端节点", "")]
+        public String Creator { get { return _Creator; } set { if (OnPropertyChanging(__.Creator, value)) { _Creator = value; OnPropertyChanged(__.Creator); } } }
 
         private DateTime _CreateTime;
         /// <summary>创建时间</summary>
@@ -117,13 +117,13 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
-                    case __.DeviceID : return _DeviceID;
+                    case __.DeviceId : return _DeviceId;
                     case __.Name : return _Name;
+                    case __.AreaId : return _AreaId;
                     case __.Action : return _Action;
                     case __.Success : return _Success;
                     case __.Version : return _Version;
-                    case __.CompileTime : return _CompileTime;
-                    case __.CreateDeviceID : return _CreateDeviceID;
+                    case __.Creator : return _Creator;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
                     case __.Remark : return _Remark;
@@ -135,13 +135,13 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
-                    case __.DeviceID : _DeviceID = value.ToInt(); break;
+                    case __.DeviceId : _DeviceId = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
+                    case __.AreaId : _AreaId = value.ToInt(); break;
                     case __.Action : _Action = Convert.ToString(value); break;
                     case __.Success : _Success = value.ToBoolean(); break;
                     case __.Version : _Version = Convert.ToString(value); break;
-                    case __.CompileTime : _CompileTime = value.ToDateTime(); break;
-                    case __.CreateDeviceID : _CreateDeviceID = value.ToInt(); break;
+                    case __.Creator : _Creator = Convert.ToString(value); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.Remark : _Remark = Convert.ToString(value); break;
@@ -158,11 +158,14 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public static readonly Field ID = FindByName(__.ID);
 
-            /// <summary>编码</summary>
-            public static readonly Field DeviceID = FindByName(__.DeviceID);
+            /// <summary>设备</summary>
+            public static readonly Field DeviceId = FindByName(__.DeviceId);
 
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
+
+            /// <summary>地区</summary>
+            public static readonly Field AreaId = FindByName(__.AreaId);
 
             /// <summary>操作</summary>
             public static readonly Field Action = FindByName(__.Action);
@@ -173,11 +176,8 @@ namespace xLink.Entity
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
 
-            /// <summary>编译时间</summary>
-            public static readonly Field CompileTime = FindByName(__.CompileTime);
-
-            /// <summary>创建者</summary>
-            public static readonly Field CreateDeviceID = FindByName(__.CreateDeviceID);
+            /// <summary>创建者。服务端节点</summary>
+            public static readonly Field Creator = FindByName(__.Creator);
 
             /// <summary>创建时间</summary>
             public static readonly Field CreateTime = FindByName(__.CreateTime);
@@ -197,11 +197,14 @@ namespace xLink.Entity
             /// <summary>编号</summary>
             public const String ID = "ID";
 
-            /// <summary>编码</summary>
-            public const String DeviceID = "DeviceID";
+            /// <summary>设备</summary>
+            public const String DeviceId = "DeviceId";
 
             /// <summary>名称</summary>
             public const String Name = "Name";
+
+            /// <summary>地区</summary>
+            public const String AreaId = "AreaId";
 
             /// <summary>操作</summary>
             public const String Action = "Action";
@@ -212,11 +215,8 @@ namespace xLink.Entity
             /// <summary>版本</summary>
             public const String Version = "Version";
 
-            /// <summary>编译时间</summary>
-            public const String CompileTime = "CompileTime";
-
-            /// <summary>创建者</summary>
-            public const String CreateDeviceID = "CreateDeviceID";
+            /// <summary>创建者。服务端节点</summary>
+            public const String Creator = "Creator";
 
             /// <summary>创建时间</summary>
             public const String CreateTime = "CreateTime";
@@ -237,11 +237,14 @@ namespace xLink.Entity
         /// <summary>编号</summary>
         Int32 ID { get; set; }
 
-        /// <summary>编码</summary>
-        Int32 DeviceID { get; set; }
+        /// <summary>设备</summary>
+        Int32 DeviceId { get; set; }
 
         /// <summary>名称</summary>
         String Name { get; set; }
+
+        /// <summary>地区</summary>
+        Int32 AreaId { get; set; }
 
         /// <summary>操作</summary>
         String Action { get; set; }
@@ -252,11 +255,8 @@ namespace xLink.Entity
         /// <summary>版本</summary>
         String Version { get; set; }
 
-        /// <summary>编译时间</summary>
-        DateTime CompileTime { get; set; }
-
-        /// <summary>创建者</summary>
-        Int32 CreateDeviceID { get; set; }
+        /// <summary>创建者。服务端节点</summary>
+        String Creator { get; set; }
 
         /// <summary>创建时间</summary>
         DateTime CreateTime { get; set; }

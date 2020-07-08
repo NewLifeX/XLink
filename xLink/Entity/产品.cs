@@ -13,7 +13,7 @@ namespace xLink.Entity
     [Description("产品")]
     [BindIndex("IU_Product_Code", true, "Code")]
     [BindIndex("IX_Product_Kind", false, "Kind")]
-    [BindTable("Product", Description = "产品", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindTable("Product", Description = "产品", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class Product : IProduct
     {
         #region 属性

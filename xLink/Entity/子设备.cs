@@ -7,13 +7,16 @@ using XCode.DataAccessLayer;
 
 namespace xLink.Entity
 {
-    /// <summary>产品版本。产品固件更新管理</summary>
+    /// <summary>子设备</summary>
     [Serializable]
     [DataObject]
-    [Description("产品版本。产品固件更新管理")]
-    [BindIndex("IU_ProductVersion_ProductId_Version", true, "ProductId,Version")]
-    [BindTable("ProductVersion", Description = "产品版本。产品固件更新管理", ConnName = "xLink", DbType = DatabaseType.None)]
-    public partial class ProductVersion : IProductVersion
+    [Description("子设备")]
+    [BindIndex("IU_SubDevice_Code", true, "Code")]
+    [BindIndex("IX_SubDevice_DeviceId", false, "DeviceId")]
+    [BindIndex("IX_SubDevice_Vendor_Model", false, "Vendor,Model")]
+    [BindIndex("IX_SubDevice_UpdateTime", false, "UpdateTime")]
+    [BindTable("SubDevice", Description = "子设备", ConnName = "xLink", DbType = DatabaseType.None)]
+    public partial class SubDevice : ISubDevice
     {
         #region 属性
         private Int32 _ID;
@@ -32,13 +35,53 @@ namespace xLink.Entity
         [BindColumn("ProductId", "产品", "")]
         public Int32 ProductId { get { return _ProductId; } set { if (OnPropertyChanging(__.ProductId, value)) { _ProductId = value; OnPropertyChanged(__.ProductId); } } }
 
-        private String _Version;
-        /// <summary>版本号</summary>
-        [DisplayName("版本号")]
-        [Description("版本号")]
+        private Int32 _DeviceId;
+        /// <summary>设备</summary>
+        [DisplayName("设备")]
+        [Description("设备")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("DeviceId", "设备", "")]
+        public Int32 DeviceId { get { return _DeviceId; } set { if (OnPropertyChanging(__.DeviceId, value)) { _DeviceId = value; OnPropertyChanged(__.DeviceId); } } }
+
+        private String _Code;
+        /// <summary>编码</summary>
+        [DisplayName("编码")]
+        [Description("编码")]
+        [DataObjectField(false, false, true, 500)]
+        [BindColumn("Code", "编码", "")]
+        public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
+
+        private String _Name;
+        /// <summary>名称</summary>
+        [DisplayName("名称")]
+        [Description("名称")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Version", "版本号", "")]
+        [BindColumn("Name", "名称", "", Master = true)]
+        public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
+
+        private String _Version;
+        /// <summary>版本</summary>
+        [DisplayName("版本")]
+        [Description("版本")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
+
+        private String _Vendor;
+        /// <summary>经销商</summary>
+        [DisplayName("经销商")]
+        [Description("经销商")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Vendor", "经销商", "")]
+        public String Vendor { get { return _Vendor; } set { if (OnPropertyChanging(__.Vendor, value)) { _Vendor = value; OnPropertyChanged(__.Vendor); } } }
+
+        private String _Model;
+        /// <summary>产品型号</summary>
+        [DisplayName("产品型号")]
+        [Description("产品型号")]
+        [DataObjectField(false, false, true, 200)]
+        [BindColumn("Model", "产品型号", "")]
+        public String Model { get { return _Model; } set { if (OnPropertyChanging(__.Model, value)) { _Model = value; OnPropertyChanged(__.Model); } } }
 
         private Boolean _Enable;
         /// <summary>启用。启用/停用</summary>
@@ -48,53 +91,13 @@ namespace xLink.Entity
         [BindColumn("Enable", "启用。启用/停用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
 
-        private Boolean _Force;
-        /// <summary>强制。强制升级</summary>
-        [DisplayName("强制")]
-        [Description("强制。强制升级")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Force", "强制。强制升级", "")]
-        public Boolean Force { get { return _Force; } set { if (OnPropertyChanging(__.Force, value)) { _Force = value; OnPropertyChanged(__.Force); } } }
-
-        private ProductChannels _Channel;
-        /// <summary>升级通道</summary>
-        [DisplayName("升级通道")]
-        [Description("升级通道")]
-        [DataObjectField(false, false, false, 0)]
-        [BindColumn("Channel", "升级通道", "")]
-        public ProductChannels Channel { get { return _Channel; } set { if (OnPropertyChanging(__.Channel, value)) { _Channel = value; OnPropertyChanged(__.Channel); } } }
-
-        private String _Strategy;
-        /// <summary>策略。升级策略</summary>
-        [DisplayName("策略")]
-        [Description("策略。升级策略")]
+        private String _Remark;
+        /// <summary>备注</summary>
+        [DisplayName("备注")]
+        [Description("备注")]
         [DataObjectField(false, false, true, 500)]
-        [BindColumn("Strategy", "策略。升级策略", "")]
-        public String Strategy { get { return _Strategy; } set { if (OnPropertyChanging(__.Strategy, value)) { _Strategy = value; OnPropertyChanged(__.Strategy); } } }
-
-        private String _Source;
-        /// <summary>升级源</summary>
-        [DisplayName("升级源")]
-        [Description("升级源")]
-        [DataObjectField(false, false, true, 200)]
-        [BindColumn("Source", "升级源", "")]
-        public String Source { get { return _Source; } set { if (OnPropertyChanging(__.Source, value)) { _Source = value; OnPropertyChanged(__.Source); } } }
-
-        private String _Executor;
-        /// <summary>执行命令。空格前后为文件名和参数</summary>
-        [DisplayName("执行命令")]
-        [Description("执行命令。空格前后为文件名和参数")]
-        [DataObjectField(false, false, true, 200)]
-        [BindColumn("Executor", "执行命令。空格前后为文件名和参数", "")]
-        public String Executor { get { return _Executor; } set { if (OnPropertyChanging(__.Executor, value)) { _Executor = value; OnPropertyChanged(__.Executor); } } }
-
-        private String _CreateUser;
-        /// <summary>创建人</summary>
-        [DisplayName("创建人")]
-        [Description("创建人")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("CreateUser", "创建人", "")]
-        public String CreateUser { get { return _CreateUser; } set { if (OnPropertyChanging(__.CreateUser, value)) { _CreateUser = value; OnPropertyChanged(__.CreateUser); } } }
+        [BindColumn("Remark", "备注", "")]
+        public String Remark { get { return _Remark; } set { if (OnPropertyChanging(__.Remark, value)) { _Remark = value; OnPropertyChanged(__.Remark); } } }
 
         private Int32 _CreateUserID;
         /// <summary>创建者</summary>
@@ -120,14 +123,6 @@ namespace xLink.Entity
         [BindColumn("CreateIP", "创建地址", "")]
         public String CreateIP { get { return _CreateIP; } set { if (OnPropertyChanging(__.CreateIP, value)) { _CreateIP = value; OnPropertyChanged(__.CreateIP); } } }
 
-        private String _UpdateUser;
-        /// <summary>更新人</summary>
-        [DisplayName("更新人")]
-        [Description("更新人")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("UpdateUser", "更新人", "")]
-        public String UpdateUser { get { return _UpdateUser; } set { if (OnPropertyChanging(__.UpdateUser, value)) { _UpdateUser = value; OnPropertyChanged(__.UpdateUser); } } }
-
         private Int32 _UpdateUserID;
         /// <summary>更新者</summary>
         [DisplayName("更新者")]
@@ -151,14 +146,6 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 50)]
         [BindColumn("UpdateIP", "更新地址", "")]
         public String UpdateIP { get { return _UpdateIP; } set { if (OnPropertyChanging(__.UpdateIP, value)) { _UpdateIP = value; OnPropertyChanged(__.UpdateIP); } } }
-
-        private String _Description;
-        /// <summary>描述</summary>
-        [DisplayName("描述")]
-        [Description("描述")]
-        [DataObjectField(false, false, true, 500)]
-        [BindColumn("Description", "描述", "")]
-        public String Description { get { return _Description; } set { if (OnPropertyChanging(__.Description, value)) { _Description = value; OnPropertyChanged(__.Description); } } }
         #endregion
 
         #region 获取/设置 字段值
@@ -173,22 +160,20 @@ namespace xLink.Entity
                 {
                     case __.ID : return _ID;
                     case __.ProductId : return _ProductId;
+                    case __.DeviceId : return _DeviceId;
+                    case __.Code : return _Code;
+                    case __.Name : return _Name;
                     case __.Version : return _Version;
+                    case __.Vendor : return _Vendor;
+                    case __.Model : return _Model;
                     case __.Enable : return _Enable;
-                    case __.Force : return _Force;
-                    case __.Channel : return _Channel;
-                    case __.Strategy : return _Strategy;
-                    case __.Source : return _Source;
-                    case __.Executor : return _Executor;
-                    case __.CreateUser : return _CreateUser;
+                    case __.Remark : return _Remark;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
-                    case __.UpdateUser : return _UpdateUser;
                     case __.UpdateUserID : return _UpdateUserID;
                     case __.UpdateTime : return _UpdateTime;
                     case __.UpdateIP : return _UpdateIP;
-                    case __.Description : return _Description;
                     default: return base[name];
                 }
             }
@@ -198,22 +183,20 @@ namespace xLink.Entity
                 {
                     case __.ID : _ID = value.ToInt(); break;
                     case __.ProductId : _ProductId = value.ToInt(); break;
+                    case __.DeviceId : _DeviceId = value.ToInt(); break;
+                    case __.Code : _Code = Convert.ToString(value); break;
+                    case __.Name : _Name = Convert.ToString(value); break;
                     case __.Version : _Version = Convert.ToString(value); break;
+                    case __.Vendor : _Vendor = Convert.ToString(value); break;
+                    case __.Model : _Model = Convert.ToString(value); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
-                    case __.Force : _Force = value.ToBoolean(); break;
-                    case __.Channel : _Channel = (ProductChannels)value.ToInt(); break;
-                    case __.Strategy : _Strategy = Convert.ToString(value); break;
-                    case __.Source : _Source = Convert.ToString(value); break;
-                    case __.Executor : _Executor = Convert.ToString(value); break;
-                    case __.CreateUser : _CreateUser = Convert.ToString(value); break;
+                    case __.Remark : _Remark = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
-                    case __.UpdateUser : _UpdateUser = Convert.ToString(value); break;
                     case __.UpdateUserID : _UpdateUserID = value.ToInt(); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
                     case __.UpdateIP : _UpdateIP = Convert.ToString(value); break;
-                    case __.Description : _Description = Convert.ToString(value); break;
                     default: base[name] = value; break;
                 }
             }
@@ -221,7 +204,7 @@ namespace xLink.Entity
         #endregion
 
         #region 字段名
-        /// <summary>取得产品版本字段信息的快捷方式</summary>
+        /// <summary>取得子设备字段信息的快捷方式</summary>
         public partial class _
         {
             /// <summary>编号</summary>
@@ -230,29 +213,29 @@ namespace xLink.Entity
             /// <summary>产品</summary>
             public static readonly Field ProductId = FindByName(__.ProductId);
 
-            /// <summary>版本号</summary>
+            /// <summary>设备</summary>
+            public static readonly Field DeviceId = FindByName(__.DeviceId);
+
+            /// <summary>编码</summary>
+            public static readonly Field Code = FindByName(__.Code);
+
+            /// <summary>名称</summary>
+            public static readonly Field Name = FindByName(__.Name);
+
+            /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
+
+            /// <summary>经销商</summary>
+            public static readonly Field Vendor = FindByName(__.Vendor);
+
+            /// <summary>产品型号</summary>
+            public static readonly Field Model = FindByName(__.Model);
 
             /// <summary>启用。启用/停用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
 
-            /// <summary>强制。强制升级</summary>
-            public static readonly Field Force = FindByName(__.Force);
-
-            /// <summary>升级通道</summary>
-            public static readonly Field Channel = FindByName(__.Channel);
-
-            /// <summary>策略。升级策略</summary>
-            public static readonly Field Strategy = FindByName(__.Strategy);
-
-            /// <summary>升级源</summary>
-            public static readonly Field Source = FindByName(__.Source);
-
-            /// <summary>执行命令。空格前后为文件名和参数</summary>
-            public static readonly Field Executor = FindByName(__.Executor);
-
-            /// <summary>创建人</summary>
-            public static readonly Field CreateUser = FindByName(__.CreateUser);
+            /// <summary>备注</summary>
+            public static readonly Field Remark = FindByName(__.Remark);
 
             /// <summary>创建者</summary>
             public static readonly Field CreateUserID = FindByName(__.CreateUserID);
@@ -263,9 +246,6 @@ namespace xLink.Entity
             /// <summary>创建地址</summary>
             public static readonly Field CreateIP = FindByName(__.CreateIP);
 
-            /// <summary>更新人</summary>
-            public static readonly Field UpdateUser = FindByName(__.UpdateUser);
-
             /// <summary>更新者</summary>
             public static readonly Field UpdateUserID = FindByName(__.UpdateUserID);
 
@@ -275,13 +255,10 @@ namespace xLink.Entity
             /// <summary>更新地址</summary>
             public static readonly Field UpdateIP = FindByName(__.UpdateIP);
 
-            /// <summary>描述</summary>
-            public static readonly Field Description = FindByName(__.Description);
-
             static Field FindByName(String name) { return Meta.Table.FindByName(name); }
         }
 
-        /// <summary>取得产品版本字段名称的快捷方式</summary>
+        /// <summary>取得子设备字段名称的快捷方式</summary>
         public partial class __
         {
             /// <summary>编号</summary>
@@ -290,29 +267,29 @@ namespace xLink.Entity
             /// <summary>产品</summary>
             public const String ProductId = "ProductId";
 
-            /// <summary>版本号</summary>
+            /// <summary>设备</summary>
+            public const String DeviceId = "DeviceId";
+
+            /// <summary>编码</summary>
+            public const String Code = "Code";
+
+            /// <summary>名称</summary>
+            public const String Name = "Name";
+
+            /// <summary>版本</summary>
             public const String Version = "Version";
+
+            /// <summary>经销商</summary>
+            public const String Vendor = "Vendor";
+
+            /// <summary>产品型号</summary>
+            public const String Model = "Model";
 
             /// <summary>启用。启用/停用</summary>
             public const String Enable = "Enable";
 
-            /// <summary>强制。强制升级</summary>
-            public const String Force = "Force";
-
-            /// <summary>升级通道</summary>
-            public const String Channel = "Channel";
-
-            /// <summary>策略。升级策略</summary>
-            public const String Strategy = "Strategy";
-
-            /// <summary>升级源</summary>
-            public const String Source = "Source";
-
-            /// <summary>执行命令。空格前后为文件名和参数</summary>
-            public const String Executor = "Executor";
-
-            /// <summary>创建人</summary>
-            public const String CreateUser = "CreateUser";
+            /// <summary>备注</summary>
+            public const String Remark = "Remark";
 
             /// <summary>创建者</summary>
             public const String CreateUserID = "CreateUserID";
@@ -323,9 +300,6 @@ namespace xLink.Entity
             /// <summary>创建地址</summary>
             public const String CreateIP = "CreateIP";
 
-            /// <summary>更新人</summary>
-            public const String UpdateUser = "UpdateUser";
-
             /// <summary>更新者</summary>
             public const String UpdateUserID = "UpdateUserID";
 
@@ -334,15 +308,12 @@ namespace xLink.Entity
 
             /// <summary>更新地址</summary>
             public const String UpdateIP = "UpdateIP";
-
-            /// <summary>描述</summary>
-            public const String Description = "Description";
         }
         #endregion
     }
 
-    /// <summary>产品版本。产品固件更新管理接口</summary>
-    public partial interface IProductVersion
+    /// <summary>子设备接口</summary>
+    public partial interface ISubDevice
     {
         #region 属性
         /// <summary>编号</summary>
@@ -351,29 +322,29 @@ namespace xLink.Entity
         /// <summary>产品</summary>
         Int32 ProductId { get; set; }
 
-        /// <summary>版本号</summary>
+        /// <summary>设备</summary>
+        Int32 DeviceId { get; set; }
+
+        /// <summary>编码</summary>
+        String Code { get; set; }
+
+        /// <summary>名称</summary>
+        String Name { get; set; }
+
+        /// <summary>版本</summary>
         String Version { get; set; }
+
+        /// <summary>经销商</summary>
+        String Vendor { get; set; }
+
+        /// <summary>产品型号</summary>
+        String Model { get; set; }
 
         /// <summary>启用。启用/停用</summary>
         Boolean Enable { get; set; }
 
-        /// <summary>强制。强制升级</summary>
-        Boolean Force { get; set; }
-
-        /// <summary>升级通道</summary>
-        ProductChannels Channel { get; set; }
-
-        /// <summary>策略。升级策略</summary>
-        String Strategy { get; set; }
-
-        /// <summary>升级源</summary>
-        String Source { get; set; }
-
-        /// <summary>执行命令。空格前后为文件名和参数</summary>
-        String Executor { get; set; }
-
-        /// <summary>创建人</summary>
-        String CreateUser { get; set; }
+        /// <summary>备注</summary>
+        String Remark { get; set; }
 
         /// <summary>创建者</summary>
         Int32 CreateUserID { get; set; }
@@ -384,9 +355,6 @@ namespace xLink.Entity
         /// <summary>创建地址</summary>
         String CreateIP { get; set; }
 
-        /// <summary>更新人</summary>
-        String UpdateUser { get; set; }
-
         /// <summary>更新者</summary>
         Int32 UpdateUserID { get; set; }
 
@@ -395,9 +363,6 @@ namespace xLink.Entity
 
         /// <summary>更新地址</summary>
         String UpdateIP { get; set; }
-
-        /// <summary>描述</summary>
-        String Description { get; set; }
         #endregion
 
         #region 获取/设置 字段值

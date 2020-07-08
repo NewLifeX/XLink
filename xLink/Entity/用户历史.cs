@@ -13,7 +13,7 @@ namespace xLink.Entity
     [Description("用户历史")]
     [BindIndex("IX_UserHistory_UserID", false, "UserID")]
     [BindIndex("IX_UserHistory_Name", false, "Name")]
-    [BindTable("UserHistory", Description = "用户历史", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindTable("UserHistory", Description = "用户历史", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class UserHistory : IUserHistory
     {
         #region 属性

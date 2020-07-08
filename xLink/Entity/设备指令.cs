@@ -11,8 +11,9 @@ namespace xLink.Entity
     [Serializable]
     [DataObject]
     [Description("设备指令")]
-    [BindIndex("IX_DeviceCommand_Command", false, "Command")]
-    [BindTable("DeviceCommand", Description = "设备指令", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindIndex("IX_DeviceCommand_DeviceId_Command", false, "DeviceId,Command")]
+    [BindIndex("IX_DeviceCommand_UpdateTime_AreaId", false, "UpdateTime,AreaId")]
+    [BindTable("DeviceCommand", Description = "设备指令", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class DeviceCommand : IDeviceCommand
     {
         #region 属性
@@ -24,13 +25,21 @@ namespace xLink.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
-        private Int32 _DeviceID;
+        private Int32 _DeviceId;
         /// <summary>设备</summary>
         [DisplayName("设备")]
         [Description("设备")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("DeviceID", "设备", "")]
-        public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
+        [BindColumn("DeviceId", "设备", "")]
+        public Int32 DeviceId { get { return _DeviceId; } set { if (OnPropertyChanging(__.DeviceId, value)) { _DeviceId = value; OnPropertyChanged(__.DeviceId); } } }
+
+        private Int32 _AreaId;
+        /// <summary>地区</summary>
+        [DisplayName("地区")]
+        [Description("地区")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("AreaId", "地区", "")]
+        public Int32 AreaId { get { return _AreaId; } set { if (OnPropertyChanging(__.AreaId, value)) { _AreaId = value; OnPropertyChanged(__.AreaId); } } }
 
         private String _Command;
         /// <summary>命令</summary>
@@ -44,41 +53,25 @@ namespace xLink.Entity
         /// <summary>参数</summary>
         [DisplayName("参数")]
         [Description("参数")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 500)]
         [BindColumn("Argument", "参数", "")]
         public String Argument { get { return _Argument; } set { if (OnPropertyChanging(__.Argument, value)) { _Argument = value; OnPropertyChanged(__.Argument); } } }
 
-        private DateTime _StartTime;
-        /// <summary>开始时间</summary>
-        [DisplayName("开始时间")]
-        [Description("开始时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("StartTime", "开始时间", "")]
-        public DateTime StartTime { get { return _StartTime; } set { if (OnPropertyChanging(__.StartTime, value)) { _StartTime = value; OnPropertyChanged(__.StartTime); } } }
-
-        private DateTime _EndTime;
-        /// <summary>结束时间</summary>
-        [DisplayName("结束时间")]
-        [Description("结束时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("EndTime", "结束时间", "")]
-        public DateTime EndTime { get { return _EndTime; } set { if (OnPropertyChanging(__.EndTime, value)) { _EndTime = value; OnPropertyChanged(__.EndTime); } } }
-
-        private CommandStatus _Status;
-        /// <summary>状态</summary>
-        [DisplayName("状态")]
-        [Description("状态")]
+        private Boolean _Finished;
+        /// <summary>完成。客户端是否已执行</summary>
+        [DisplayName("完成")]
+        [Description("完成。客户端是否已执行")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Status", "状态", "")]
-        public CommandStatus Status { get { return _Status; } set { if (OnPropertyChanging(__.Status, value)) { _Status = value; OnPropertyChanged(__.Status); } } }
+        [BindColumn("Finished", "完成。客户端是否已执行", "")]
+        public Boolean Finished { get { return _Finished; } set { if (OnPropertyChanging(__.Finished, value)) { _Finished = value; OnPropertyChanged(__.Finished); } } }
 
-        private String _Message;
-        /// <summary>内容</summary>
-        [DisplayName("内容")]
-        [Description("内容")]
-        [DataObjectField(false, false, true, 200)]
-        [BindColumn("Message", "内容", "")]
-        public String Message { get { return _Message; } set { if (OnPropertyChanging(__.Message, value)) { _Message = value; OnPropertyChanged(__.Message); } } }
+        private String _Result;
+        /// <summary>结果</summary>
+        [DisplayName("结果")]
+        [Description("结果")]
+        [DataObjectField(false, false, true, 500)]
+        [BindColumn("Result", "结果", "")]
+        public String Result { get { return _Result; } set { if (OnPropertyChanging(__.Result, value)) { _Result = value; OnPropertyChanged(__.Result); } } }
 
         private String _CreateUser;
         /// <summary>创建人</summary>
@@ -156,13 +149,12 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
-                    case __.DeviceID : return _DeviceID;
+                    case __.DeviceId : return _DeviceId;
+                    case __.AreaId : return _AreaId;
                     case __.Command : return _Command;
                     case __.Argument : return _Argument;
-                    case __.StartTime : return _StartTime;
-                    case __.EndTime : return _EndTime;
-                    case __.Status : return _Status;
-                    case __.Message : return _Message;
+                    case __.Finished : return _Finished;
+                    case __.Result : return _Result;
                     case __.CreateUser : return _CreateUser;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
@@ -179,13 +171,12 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
-                    case __.DeviceID : _DeviceID = value.ToInt(); break;
+                    case __.DeviceId : _DeviceId = value.ToInt(); break;
+                    case __.AreaId : _AreaId = value.ToInt(); break;
                     case __.Command : _Command = Convert.ToString(value); break;
                     case __.Argument : _Argument = Convert.ToString(value); break;
-                    case __.StartTime : _StartTime = value.ToDateTime(); break;
-                    case __.EndTime : _EndTime = value.ToDateTime(); break;
-                    case __.Status : _Status = (CommandStatus)value.ToInt(); break;
-                    case __.Message : _Message = Convert.ToString(value); break;
+                    case __.Finished : _Finished = value.ToBoolean(); break;
+                    case __.Result : _Result = Convert.ToString(value); break;
                     case __.CreateUser : _CreateUser = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
@@ -208,7 +199,10 @@ namespace xLink.Entity
             public static readonly Field ID = FindByName(__.ID);
 
             /// <summary>设备</summary>
-            public static readonly Field DeviceID = FindByName(__.DeviceID);
+            public static readonly Field DeviceId = FindByName(__.DeviceId);
+
+            /// <summary>地区</summary>
+            public static readonly Field AreaId = FindByName(__.AreaId);
 
             /// <summary>命令</summary>
             public static readonly Field Command = FindByName(__.Command);
@@ -216,17 +210,11 @@ namespace xLink.Entity
             /// <summary>参数</summary>
             public static readonly Field Argument = FindByName(__.Argument);
 
-            /// <summary>开始时间</summary>
-            public static readonly Field StartTime = FindByName(__.StartTime);
+            /// <summary>完成。客户端是否已执行</summary>
+            public static readonly Field Finished = FindByName(__.Finished);
 
-            /// <summary>结束时间</summary>
-            public static readonly Field EndTime = FindByName(__.EndTime);
-
-            /// <summary>状态</summary>
-            public static readonly Field Status = FindByName(__.Status);
-
-            /// <summary>内容</summary>
-            public static readonly Field Message = FindByName(__.Message);
+            /// <summary>结果</summary>
+            public static readonly Field Result = FindByName(__.Result);
 
             /// <summary>创建人</summary>
             public static readonly Field CreateUser = FindByName(__.CreateUser);
@@ -262,7 +250,10 @@ namespace xLink.Entity
             public const String ID = "ID";
 
             /// <summary>设备</summary>
-            public const String DeviceID = "DeviceID";
+            public const String DeviceId = "DeviceId";
+
+            /// <summary>地区</summary>
+            public const String AreaId = "AreaId";
 
             /// <summary>命令</summary>
             public const String Command = "Command";
@@ -270,17 +261,11 @@ namespace xLink.Entity
             /// <summary>参数</summary>
             public const String Argument = "Argument";
 
-            /// <summary>开始时间</summary>
-            public const String StartTime = "StartTime";
+            /// <summary>完成。客户端是否已执行</summary>
+            public const String Finished = "Finished";
 
-            /// <summary>结束时间</summary>
-            public const String EndTime = "EndTime";
-
-            /// <summary>状态</summary>
-            public const String Status = "Status";
-
-            /// <summary>内容</summary>
-            public const String Message = "Message";
+            /// <summary>结果</summary>
+            public const String Result = "Result";
 
             /// <summary>创建人</summary>
             public const String CreateUser = "CreateUser";
@@ -317,7 +302,10 @@ namespace xLink.Entity
         Int32 ID { get; set; }
 
         /// <summary>设备</summary>
-        Int32 DeviceID { get; set; }
+        Int32 DeviceId { get; set; }
+
+        /// <summary>地区</summary>
+        Int32 AreaId { get; set; }
 
         /// <summary>命令</summary>
         String Command { get; set; }
@@ -325,17 +313,11 @@ namespace xLink.Entity
         /// <summary>参数</summary>
         String Argument { get; set; }
 
-        /// <summary>开始时间</summary>
-        DateTime StartTime { get; set; }
+        /// <summary>完成。客户端是否已执行</summary>
+        Boolean Finished { get; set; }
 
-        /// <summary>结束时间</summary>
-        DateTime EndTime { get; set; }
-
-        /// <summary>状态</summary>
-        CommandStatus Status { get; set; }
-
-        /// <summary>内容</summary>
-        String Message { get; set; }
+        /// <summary>结果</summary>
+        String Result { get; set; }
 
         /// <summary>创建人</summary>
         String CreateUser { get; set; }

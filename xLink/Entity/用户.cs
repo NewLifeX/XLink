@@ -13,7 +13,7 @@ namespace xLink.Entity
     [Description("用户")]
     [BindIndex("IU_User_Name", true, "Name")]
     [BindIndex("IX_User_Type", false, "Type")]
-    [BindTable("User", Description = "用户", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindTable("User", Description = "用户", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class User : IUser
     {
         #region 属性

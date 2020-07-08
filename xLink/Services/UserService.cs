@@ -100,8 +100,8 @@ namespace xLink.Services
 
             if (Current is User user)
             {
-                //olt.DeviceID = user.ID;
-                //olt.ProductID = user.ProductID;
+                //olt.DeviceId = user.ID;
+                //olt.ProductId = user.ProductId;
                 olt.Name = user.Name;
 
                 olt.Version = user.Version;

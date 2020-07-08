@@ -74,7 +74,7 @@ namespace xLink.Services
                     CreateTime = DateTime.Now,
                 };
 
-                dv.ProductID = prd.ID;
+                dv.ProductId = prd.ID;
                 dv.Name = name;
                 dv.Code = Rand.NextString(8);
                 dv.Secret = Rand.NextString(16);
@@ -105,7 +105,7 @@ namespace xLink.Services
 
             Fill(dv, ps);
 
-            if (Online is DeviceOnline olt) olt.ProductID = dv.ProductID;
+            if (Online is DeviceOnline olt) olt.ProductId = dv.ProductId;
 
             var ns = Session as INetSession;
 
@@ -225,8 +225,8 @@ namespace xLink.Services
 
             if (Current is Device dv)
             {
-                olt.DeviceID = dv.ID;
-                olt.ProductID = dv.ProductID;
+                olt.DeviceId = dv.ID;
+                olt.ProductId = dv.ProductId;
                 olt.Name = dv.Name;
 
                 olt.Version = dv.Version;
@@ -273,7 +273,7 @@ namespace xLink.Services
 
             if (Current is Device dv)
             {
-                if (hi.DeviceID == 0) hi.DeviceID = dv.ID;
+                if (hi.DeviceId == 0) hi.DeviceId = dv.ID;
                 if (hi.Name.IsNullOrEmpty()) hi.Name = dv + "";
 
                 hi.Version = dv.Version;
@@ -281,7 +281,7 @@ namespace xLink.Services
             }
             else if (Online is DeviceOnline olt)
             {
-                if (hi.DeviceID == 0) hi.DeviceID = olt.DeviceID;
+                if (hi.DeviceId == 0) hi.DeviceId = olt.DeviceId;
                 if (hi.Name.IsNullOrEmpty()) hi.Name = olt.Name;
             }
 

@@ -38,17 +38,17 @@ namespace xLink.Entity
 
         #region 扩展属性
         /// <summary>设备</summary>
-        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceID)); } }
+        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceId)); } }
 
         /// <summary>设备名</summary>
-        [Map(__.DeviceID, typeof(Device), "ID")]
+        [Map(__.DeviceId, typeof(Device), "ID")]
         public String DeviceName { get { return Device + ""; } }
 
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("创建地址")]
         public String CreateAddress { get { return CreateIP.IPToAddress(); } }
 
-        Int32 IHistory.UserID { get => DeviceID; set => DeviceID = value; }
+        Int32 IHistory.UserID { get => DeviceId; set => DeviceId = value; }
         #endregion
 
         #region 扩展查询
@@ -68,7 +68,7 @@ namespace xLink.Entity
         {
             var exp = new WhereExpression();
 
-            if (deviceId >= 0) exp &= _.DeviceID == deviceId;
+            if (deviceId >= 0) exp &= _.DeviceId == deviceId;
             //if (!type.IsNullOrEmpty()) exp &= _.Type == type;
             if (!action.IsNullOrEmpty()) exp &= _.Action == action;
             if (result == 0)

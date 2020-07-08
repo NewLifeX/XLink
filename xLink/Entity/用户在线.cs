@@ -14,7 +14,7 @@ namespace xLink.Entity
     [BindIndex("IX_UserOnline_SessionID", false, "SessionID")]
     [BindIndex("IX_UserOnline_UserID", false, "UserID")]
     [BindIndex("IX_UserOnline_Name", false, "Name")]
-    [BindTable("UserOnline", Description = "用户在线", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindTable("UserOnline", Description = "用户在线", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class UserOnline : IUserOnline
     {
         #region 属性

@@ -12,8 +12,10 @@ namespace xLink.Entity
     [DataObject]
     [Description("设备在线")]
     [BindIndex("IU_DeviceOnline_SessionID", true, "SessionID")]
-    [BindIndex("IX_DeviceOnline_DeviceID", false, "DeviceID")]
-    [BindTable("DeviceOnline", Description = "设备在线", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindIndex("IX_DeviceOnline_UpdateTime", false, "UpdateTime")]
+    [BindIndex("IX_DeviceOnline_DeviceId", false, "DeviceId")]
+    [BindIndex("IX_DeviceOnline_AreaId", false, "AreaId")]
+    [BindTable("DeviceOnline", Description = "设备在线", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class DeviceOnline : IDeviceOnline
     {
         #region 属性
@@ -33,21 +35,21 @@ namespace xLink.Entity
         [BindColumn("SessionID", "会话", "")]
         public String SessionID { get { return _SessionID; } set { if (OnPropertyChanging(__.SessionID, value)) { _SessionID = value; OnPropertyChanged(__.SessionID); } } }
 
-        private Int32 _ProductID;
+        private Int32 _ProductId;
         /// <summary>产品</summary>
         [DisplayName("产品")]
         [Description("产品")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("ProductID", "产品", "")]
-        public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
+        [BindColumn("ProductId", "产品", "")]
+        public Int32 ProductId { get { return _ProductId; } set { if (OnPropertyChanging(__.ProductId, value)) { _ProductId = value; OnPropertyChanged(__.ProductId); } } }
 
-        private Int32 _DeviceID;
+        private Int32 _DeviceId;
         /// <summary>设备</summary>
         [DisplayName("设备")]
         [Description("设备")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("DeviceID", "设备", "")]
-        public Int32 DeviceID { get { return _DeviceID; } set { if (OnPropertyChanging(__.DeviceID, value)) { _DeviceID = value; OnPropertyChanged(__.DeviceID); } } }
+        [BindColumn("DeviceId", "设备", "")]
+        public Int32 DeviceId { get { return _DeviceId; } set { if (OnPropertyChanging(__.DeviceId, value)) { _DeviceId = value; OnPropertyChanged(__.DeviceId); } } }
 
         private String _Name;
         /// <summary>名称</summary>
@@ -57,29 +59,13 @@ namespace xLink.Entity
         [BindColumn("Name", "名称", "", Master = true)]
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
-        private String _InternalUri;
-        /// <summary>内网</summary>
-        [DisplayName("内网")]
-        [Description("内网")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("InternalUri", "内网", "")]
-        public String InternalUri { get { return _InternalUri; } set { if (OnPropertyChanging(__.InternalUri, value)) { _InternalUri = value; OnPropertyChanged(__.InternalUri); } } }
-
-        private String _ExternalUri;
-        /// <summary>外网</summary>
-        [DisplayName("外网")]
-        [Description("外网")]
-        [DataObjectField(false, false, true, 50)]
-        [BindColumn("ExternalUri", "外网", "")]
-        public String ExternalUri { get { return _ExternalUri; } set { if (OnPropertyChanging(__.ExternalUri, value)) { _ExternalUri = value; OnPropertyChanged(__.ExternalUri); } } }
-
-        private Int32 _PingCount;
-        /// <summary>心跳</summary>
-        [DisplayName("心跳")]
-        [Description("心跳")]
+        private Int32 _AreaId;
+        /// <summary>地区</summary>
+        [DisplayName("地区")]
+        [Description("地区")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("PingCount", "心跳", "")]
-        public Int32 PingCount { get { return _PingCount; } set { if (OnPropertyChanging(__.PingCount, value)) { _PingCount = value; OnPropertyChanged(__.PingCount); } } }
+        [BindColumn("AreaId", "地区", "")]
+        public Int32 AreaId { get { return _AreaId; } set { if (OnPropertyChanging(__.AreaId, value)) { _AreaId = value; OnPropertyChanged(__.AreaId); } } }
 
         private String _Version;
         /// <summary>版本</summary>
@@ -89,21 +75,21 @@ namespace xLink.Entity
         [BindColumn("Version", "版本", "")]
         public String Version { get { return _Version; } set { if (OnPropertyChanging(__.Version, value)) { _Version = value; OnPropertyChanged(__.Version); } } }
 
-        private DateTime _CompileTime;
-        /// <summary>编译时间</summary>
-        [DisplayName("编译时间")]
-        [Description("编译时间")]
-        [DataObjectField(false, false, true, 0)]
-        [BindColumn("CompileTime", "编译时间", "")]
-        public DateTime CompileTime { get { return _CompileTime; } set { if (OnPropertyChanging(__.CompileTime, value)) { _CompileTime = value; OnPropertyChanged(__.CompileTime); } } }
+        private String _Action;
+        /// <summary>操作。客户端正在指定的功能动作</summary>
+        [DisplayName("操作")]
+        [Description("操作。客户端正在指定的功能动作")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Action", "操作。客户端正在指定的功能动作", "")]
+        public String Action { get { return _Action; } set { if (OnPropertyChanging(__.Action, value)) { _Action = value; OnPropertyChanged(__.Action); } } }
 
-        private Int32 _Memory;
-        /// <summary>内存。单位M</summary>
-        [DisplayName("内存")]
-        [Description("内存。单位M")]
+        private Int32 _PingCount;
+        /// <summary>心跳</summary>
+        [DisplayName("心跳")]
+        [Description("心跳")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Memory", "内存。单位M", "")]
-        public Int32 Memory { get { return _Memory; } set { if (OnPropertyChanging(__.Memory, value)) { _Memory = value; OnPropertyChanged(__.Memory); } } }
+        [BindColumn("PingCount", "心跳", "")]
+        public Int32 PingCount { get { return _PingCount; } set { if (OnPropertyChanging(__.PingCount, value)) { _PingCount = value; OnPropertyChanged(__.PingCount); } } }
 
         private Int32 _AvailableMemory;
         /// <summary>可用内存。单位M</summary>
@@ -113,12 +99,20 @@ namespace xLink.Entity
         [BindColumn("AvailableMemory", "可用内存。单位M", "")]
         public Int32 AvailableMemory { get { return _AvailableMemory; } set { if (OnPropertyChanging(__.AvailableMemory, value)) { _AvailableMemory = value; OnPropertyChanged(__.AvailableMemory); } } }
 
-        private Double _CpuRate;
-        /// <summary>CPU率</summary>
-        [DisplayName("CPU率")]
-        [Description("CPU率")]
+        private Int32 _AvailableSpace;
+        /// <summary>可用磁盘。单位M</summary>
+        [DisplayName("可用磁盘")]
+        [Description("可用磁盘。单位M")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("CpuRate", "CPU率", "")]
+        [BindColumn("AvailableSpace", "可用磁盘。单位M", "")]
+        public Int32 AvailableSpace { get { return _AvailableSpace; } set { if (OnPropertyChanging(__.AvailableSpace, value)) { _AvailableSpace = value; OnPropertyChanged(__.AvailableSpace); } } }
+
+        private Double _CpuRate;
+        /// <summary>CPU率。占用率</summary>
+        [DisplayName("CPU率")]
+        [Description("CPU率。占用率")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("CpuRate", "CPU率。占用率", "")]
         public Double CpuRate { get { return _CpuRate; } set { if (OnPropertyChanging(__.CpuRate, value)) { _CpuRate = value; OnPropertyChanged(__.CpuRate); } } }
 
         private Int32 _Delay;
@@ -149,7 +143,7 @@ namespace xLink.Entity
         /// <summary>网卡</summary>
         [DisplayName("网卡")]
         [Description("网卡")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 200)]
         [BindColumn("MACs", "网卡", "")]
         public String MACs { get { return _MACs; } set { if (OnPropertyChanging(__.MACs, value)) { _MACs = value; OnPropertyChanged(__.MACs); } } }
 
@@ -157,7 +151,7 @@ namespace xLink.Entity
         /// <summary>串口</summary>
         [DisplayName("串口")]
         [Description("串口")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 200)]
         [BindColumn("COMs", "串口", "")]
         public String COMs { get { return _COMs; } set { if (OnPropertyChanging(__.COMs, value)) { _COMs = value; OnPropertyChanged(__.COMs); } } }
 
@@ -168,6 +162,22 @@ namespace xLink.Entity
         [DataObjectField(false, false, true, 2000)]
         [BindColumn("Processes", "进程列表", "")]
         public String Processes { get { return _Processes; } set { if (OnPropertyChanging(__.Processes, value)) { _Processes = value; OnPropertyChanged(__.Processes); } } }
+
+        private String _Token;
+        /// <summary>令牌</summary>
+        [DisplayName("令牌")]
+        [Description("令牌")]
+        [DataObjectField(false, false, true, 200)]
+        [BindColumn("Token", "令牌", "")]
+        public String Token { get { return _Token; } set { if (OnPropertyChanging(__.Token, value)) { _Token = value; OnPropertyChanged(__.Token); } } }
+
+        private String _Creator;
+        /// <summary>创建者。服务端节点</summary>
+        [DisplayName("创建者")]
+        [Description("创建者。服务端节点")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Creator", "创建者。服务端节点", "")]
+        public String Creator { get { return _Creator; } set { if (OnPropertyChanging(__.Creator, value)) { _Creator = value; OnPropertyChanged(__.Creator); } } }
 
         private DateTime _CreateTime;
         /// <summary>创建时间</summary>
@@ -206,16 +216,15 @@ namespace xLink.Entity
                 {
                     case __.ID : return _ID;
                     case __.SessionID : return _SessionID;
-                    case __.ProductID : return _ProductID;
-                    case __.DeviceID : return _DeviceID;
+                    case __.ProductId : return _ProductId;
+                    case __.DeviceId : return _DeviceId;
                     case __.Name : return _Name;
-                    case __.InternalUri : return _InternalUri;
-                    case __.ExternalUri : return _ExternalUri;
-                    case __.PingCount : return _PingCount;
+                    case __.AreaId : return _AreaId;
                     case __.Version : return _Version;
-                    case __.CompileTime : return _CompileTime;
-                    case __.Memory : return _Memory;
+                    case __.Action : return _Action;
+                    case __.PingCount : return _PingCount;
                     case __.AvailableMemory : return _AvailableMemory;
+                    case __.AvailableSpace : return _AvailableSpace;
                     case __.CpuRate : return _CpuRate;
                     case __.Delay : return _Delay;
                     case __.Offset : return _Offset;
@@ -223,6 +232,8 @@ namespace xLink.Entity
                     case __.MACs : return _MACs;
                     case __.COMs : return _COMs;
                     case __.Processes : return _Processes;
+                    case __.Token : return _Token;
+                    case __.Creator : return _Creator;
                     case __.CreateTime : return _CreateTime;
                     case __.CreateIP : return _CreateIP;
                     case __.UpdateTime : return _UpdateTime;
@@ -235,16 +246,15 @@ namespace xLink.Entity
                 {
                     case __.ID : _ID = value.ToInt(); break;
                     case __.SessionID : _SessionID = Convert.ToString(value); break;
-                    case __.ProductID : _ProductID = value.ToInt(); break;
-                    case __.DeviceID : _DeviceID = value.ToInt(); break;
+                    case __.ProductId : _ProductId = value.ToInt(); break;
+                    case __.DeviceId : _DeviceId = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
-                    case __.InternalUri : _InternalUri = Convert.ToString(value); break;
-                    case __.ExternalUri : _ExternalUri = Convert.ToString(value); break;
-                    case __.PingCount : _PingCount = value.ToInt(); break;
+                    case __.AreaId : _AreaId = value.ToInt(); break;
                     case __.Version : _Version = Convert.ToString(value); break;
-                    case __.CompileTime : _CompileTime = value.ToDateTime(); break;
-                    case __.Memory : _Memory = value.ToInt(); break;
+                    case __.Action : _Action = Convert.ToString(value); break;
+                    case __.PingCount : _PingCount = value.ToInt(); break;
                     case __.AvailableMemory : _AvailableMemory = value.ToInt(); break;
+                    case __.AvailableSpace : _AvailableSpace = value.ToInt(); break;
                     case __.CpuRate : _CpuRate = value.ToDouble(); break;
                     case __.Delay : _Delay = value.ToInt(); break;
                     case __.Offset : _Offset = value.ToInt(); break;
@@ -252,6 +262,8 @@ namespace xLink.Entity
                     case __.MACs : _MACs = Convert.ToString(value); break;
                     case __.COMs : _COMs = Convert.ToString(value); break;
                     case __.Processes : _Processes = Convert.ToString(value); break;
+                    case __.Token : _Token = Convert.ToString(value); break;
+                    case __.Creator : _Creator = Convert.ToString(value); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
                     case __.CreateIP : _CreateIP = Convert.ToString(value); break;
                     case __.UpdateTime : _UpdateTime = value.ToDateTime(); break;
@@ -272,36 +284,33 @@ namespace xLink.Entity
             public static readonly Field SessionID = FindByName(__.SessionID);
 
             /// <summary>产品</summary>
-            public static readonly Field ProductID = FindByName(__.ProductID);
+            public static readonly Field ProductId = FindByName(__.ProductId);
 
             /// <summary>设备</summary>
-            public static readonly Field DeviceID = FindByName(__.DeviceID);
+            public static readonly Field DeviceId = FindByName(__.DeviceId);
 
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
 
-            /// <summary>内网</summary>
-            public static readonly Field InternalUri = FindByName(__.InternalUri);
-
-            /// <summary>外网</summary>
-            public static readonly Field ExternalUri = FindByName(__.ExternalUri);
-
-            /// <summary>心跳</summary>
-            public static readonly Field PingCount = FindByName(__.PingCount);
+            /// <summary>地区</summary>
+            public static readonly Field AreaId = FindByName(__.AreaId);
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
 
-            /// <summary>编译时间</summary>
-            public static readonly Field CompileTime = FindByName(__.CompileTime);
+            /// <summary>操作。客户端正在指定的功能动作</summary>
+            public static readonly Field Action = FindByName(__.Action);
 
-            /// <summary>内存。单位M</summary>
-            public static readonly Field Memory = FindByName(__.Memory);
+            /// <summary>心跳</summary>
+            public static readonly Field PingCount = FindByName(__.PingCount);
 
             /// <summary>可用内存。单位M</summary>
             public static readonly Field AvailableMemory = FindByName(__.AvailableMemory);
 
-            /// <summary>CPU率</summary>
+            /// <summary>可用磁盘。单位M</summary>
+            public static readonly Field AvailableSpace = FindByName(__.AvailableSpace);
+
+            /// <summary>CPU率。占用率</summary>
             public static readonly Field CpuRate = FindByName(__.CpuRate);
 
             /// <summary>延迟。网络延迟，单位ms</summary>
@@ -321,6 +330,12 @@ namespace xLink.Entity
 
             /// <summary>进程列表</summary>
             public static readonly Field Processes = FindByName(__.Processes);
+
+            /// <summary>令牌</summary>
+            public static readonly Field Token = FindByName(__.Token);
+
+            /// <summary>创建者。服务端节点</summary>
+            public static readonly Field Creator = FindByName(__.Creator);
 
             /// <summary>创建时间</summary>
             public static readonly Field CreateTime = FindByName(__.CreateTime);
@@ -344,36 +359,33 @@ namespace xLink.Entity
             public const String SessionID = "SessionID";
 
             /// <summary>产品</summary>
-            public const String ProductID = "ProductID";
+            public const String ProductId = "ProductId";
 
             /// <summary>设备</summary>
-            public const String DeviceID = "DeviceID";
+            public const String DeviceId = "DeviceId";
 
             /// <summary>名称</summary>
             public const String Name = "Name";
 
-            /// <summary>内网</summary>
-            public const String InternalUri = "InternalUri";
-
-            /// <summary>外网</summary>
-            public const String ExternalUri = "ExternalUri";
-
-            /// <summary>心跳</summary>
-            public const String PingCount = "PingCount";
+            /// <summary>地区</summary>
+            public const String AreaId = "AreaId";
 
             /// <summary>版本</summary>
             public const String Version = "Version";
 
-            /// <summary>编译时间</summary>
-            public const String CompileTime = "CompileTime";
+            /// <summary>操作。客户端正在指定的功能动作</summary>
+            public const String Action = "Action";
 
-            /// <summary>内存。单位M</summary>
-            public const String Memory = "Memory";
+            /// <summary>心跳</summary>
+            public const String PingCount = "PingCount";
 
             /// <summary>可用内存。单位M</summary>
             public const String AvailableMemory = "AvailableMemory";
 
-            /// <summary>CPU率</summary>
+            /// <summary>可用磁盘。单位M</summary>
+            public const String AvailableSpace = "AvailableSpace";
+
+            /// <summary>CPU率。占用率</summary>
             public const String CpuRate = "CpuRate";
 
             /// <summary>延迟。网络延迟，单位ms</summary>
@@ -393,6 +405,12 @@ namespace xLink.Entity
 
             /// <summary>进程列表</summary>
             public const String Processes = "Processes";
+
+            /// <summary>令牌</summary>
+            public const String Token = "Token";
+
+            /// <summary>创建者。服务端节点</summary>
+            public const String Creator = "Creator";
 
             /// <summary>创建时间</summary>
             public const String CreateTime = "CreateTime";
@@ -417,36 +435,33 @@ namespace xLink.Entity
         String SessionID { get; set; }
 
         /// <summary>产品</summary>
-        Int32 ProductID { get; set; }
+        Int32 ProductId { get; set; }
 
         /// <summary>设备</summary>
-        Int32 DeviceID { get; set; }
+        Int32 DeviceId { get; set; }
 
         /// <summary>名称</summary>
         String Name { get; set; }
 
-        /// <summary>内网</summary>
-        String InternalUri { get; set; }
-
-        /// <summary>外网</summary>
-        String ExternalUri { get; set; }
-
-        /// <summary>心跳</summary>
-        Int32 PingCount { get; set; }
+        /// <summary>地区</summary>
+        Int32 AreaId { get; set; }
 
         /// <summary>版本</summary>
         String Version { get; set; }
 
-        /// <summary>编译时间</summary>
-        DateTime CompileTime { get; set; }
+        /// <summary>操作。客户端正在指定的功能动作</summary>
+        String Action { get; set; }
 
-        /// <summary>内存。单位M</summary>
-        Int32 Memory { get; set; }
+        /// <summary>心跳</summary>
+        Int32 PingCount { get; set; }
 
         /// <summary>可用内存。单位M</summary>
         Int32 AvailableMemory { get; set; }
 
-        /// <summary>CPU率</summary>
+        /// <summary>可用磁盘。单位M</summary>
+        Int32 AvailableSpace { get; set; }
+
+        /// <summary>CPU率。占用率</summary>
         Double CpuRate { get; set; }
 
         /// <summary>延迟。网络延迟，单位ms</summary>
@@ -466,6 +481,12 @@ namespace xLink.Entity
 
         /// <summary>进程列表</summary>
         String Processes { get; set; }
+
+        /// <summary>令牌</summary>
+        String Token { get; set; }
+
+        /// <summary>创建者。服务端节点</summary>
+        String Creator { get; set; }
 
         /// <summary>创建时间</summary>
         DateTime CreateTime { get; set; }

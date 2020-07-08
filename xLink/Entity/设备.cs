@@ -12,8 +12,8 @@ namespace xLink.Entity
     [DataObject]
     [Description("设备")]
     [BindIndex("IU_Device_Code", true, "Code")]
-    [BindIndex("IX_Device_ProductID", false, "ProductID")]
-    [BindTable("Device", Description = "设备", ConnName = "xLink", DbType = DatabaseType.SqlServer)]
+    [BindIndex("IX_Device_ProductId", false, "ProductId")]
+    [BindTable("Device", Description = "设备", ConnName = "xLink", DbType = DatabaseType.None)]
     public partial class Device : IDevice
     {
         #region 属性
@@ -25,13 +25,13 @@ namespace xLink.Entity
         [BindColumn("ID", "编号", "")]
         public Int32 ID { get { return _ID; } set { if (OnPropertyChanging(__.ID, value)) { _ID = value; OnPropertyChanged(__.ID); } } }
 
-        private Int32 _ProductID;
+        private Int32 _ProductId;
         /// <summary>产品</summary>
         [DisplayName("产品")]
         [Description("产品")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("ProductID", "产品", "")]
-        public Int32 ProductID { get { return _ProductID; } set { if (OnPropertyChanging(__.ProductID, value)) { _ProductID = value; OnPropertyChanged(__.ProductID); } } }
+        [BindColumn("ProductId", "产品", "")]
+        public Int32 ProductId { get { return _ProductId; } set { if (OnPropertyChanging(__.ProductId, value)) { _ProductId = value; OnPropertyChanged(__.ProductId); } } }
 
         private String _Name;
         /// <summary>名称</summary>
@@ -42,19 +42,19 @@ namespace xLink.Entity
         public String Name { get { return _Name; } set { if (OnPropertyChanging(__.Name, value)) { _Name = value; OnPropertyChanged(__.Name); } } }
 
         private String _Code;
-        /// <summary>编码</summary>
+        /// <summary>编码。DeviceKey</summary>
         [DisplayName("编码")]
-        [Description("编码")]
+        [Description("编码。DeviceKey")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Code", "编码", "")]
+        [BindColumn("Code", "编码。DeviceKey", "")]
         public String Code { get { return _Code; } set { if (OnPropertyChanging(__.Code, value)) { _Code = value; OnPropertyChanged(__.Code); } } }
 
         private String _Secret;
-        /// <summary>密钥</summary>
+        /// <summary>密钥。DeviceSecret</summary>
         [DisplayName("密钥")]
-        [Description("密钥")]
+        [Description("密钥。DeviceSecret")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("Secret", "密钥", "")]
+        [BindColumn("Secret", "密钥。DeviceSecret", "")]
         public String Secret { get { return _Secret; } set { if (OnPropertyChanging(__.Secret, value)) { _Secret = value; OnPropertyChanged(__.Secret); } } }
 
         private Boolean _Enable;
@@ -64,6 +64,14 @@ namespace xLink.Entity
         [DataObjectField(false, false, false, 0)]
         [BindColumn("Enable", "启用", "")]
         public Boolean Enable { get { return _Enable; } set { if (OnPropertyChanging(__.Enable, value)) { _Enable = value; OnPropertyChanged(__.Enable); } } }
+
+        private Int32 _AreaId;
+        /// <summary>地区</summary>
+        [DisplayName("地区")]
+        [Description("地区")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("AreaId", "地区", "")]
+        public Int32 AreaId { get { return _AreaId; } set { if (OnPropertyChanging(__.AreaId, value)) { _AreaId = value; OnPropertyChanged(__.AreaId); } } }
 
         private String _Version;
         /// <summary>版本</summary>
@@ -145,11 +153,27 @@ namespace xLink.Entity
         [BindColumn("CpuID", "CPU标识", "")]
         public String CpuID { get { return _CpuID; } set { if (OnPropertyChanging(__.CpuID, value)) { _CpuID = value; OnPropertyChanged(__.CpuID); } } }
 
+        private String _Dpi;
+        /// <summary>每英寸点数,96*96</summary>
+        [DisplayName("每英寸点数")]
+        [Description("每英寸点数,96*96")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Dpi", "每英寸点数,96*96", "")]
+        public String Dpi { get { return _Dpi; } set { if (OnPropertyChanging(__.Dpi, value)) { _Dpi = value; OnPropertyChanged(__.Dpi); } } }
+
+        private String _Resolution;
+        /// <summary>分辨率</summary>
+        [DisplayName("分辨率")]
+        [Description("分辨率")]
+        [DataObjectField(false, false, true, 50)]
+        [BindColumn("Resolution", "分辨率", "")]
+        public String Resolution { get { return _Resolution; } set { if (OnPropertyChanging(__.Resolution, value)) { _Resolution = value; OnPropertyChanged(__.Resolution); } } }
+
         private String _Uuid;
         /// <summary>唯一标识</summary>
         [DisplayName("唯一标识")]
         [Description("唯一标识")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 200)]
         [BindColumn("Uuid", "唯一标识", "")]
         public String Uuid { get { return _Uuid; } set { if (OnPropertyChanging(__.Uuid, value)) { _Uuid = value; OnPropertyChanged(__.Uuid); } } }
 
@@ -157,15 +181,23 @@ namespace xLink.Entity
         /// <summary>机器标识</summary>
         [DisplayName("机器标识")]
         [Description("机器标识")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 200)]
         [BindColumn("MachineGuid", "机器标识", "")]
         public String MachineGuid { get { return _MachineGuid; } set { if (OnPropertyChanging(__.MachineGuid, value)) { _MachineGuid = value; OnPropertyChanged(__.MachineGuid); } } }
+
+        private String _DiskID;
+        /// <summary>磁盘序列号</summary>
+        [DisplayName("磁盘序列号")]
+        [Description("磁盘序列号")]
+        [DataObjectField(false, false, true, 500)]
+        [BindColumn("DiskID", "磁盘序列号", "")]
+        public String DiskID { get { return _DiskID; } set { if (OnPropertyChanging(__.DiskID, value)) { _DiskID = value; OnPropertyChanged(__.DiskID); } } }
 
         private String _MACs;
         /// <summary>网卡</summary>
         [DisplayName("网卡")]
         [Description("网卡")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 200)]
         [BindColumn("MACs", "网卡", "")]
         public String MACs { get { return _MACs; } set { if (OnPropertyChanging(__.MACs, value)) { _MACs = value; OnPropertyChanged(__.MACs); } } }
 
@@ -173,7 +205,7 @@ namespace xLink.Entity
         /// <summary>串口</summary>
         [DisplayName("串口")]
         [Description("串口")]
-        [DataObjectField(false, false, true, 50)]
+        [DataObjectField(false, false, true, 200)]
         [BindColumn("COMs", "串口", "")]
         public String COMs { get { return _COMs; } set { if (OnPropertyChanging(__.COMs, value)) { _COMs = value; OnPropertyChanged(__.COMs); } } }
 
@@ -234,11 +266,11 @@ namespace xLink.Entity
         public String Address { get { return _Address; } set { if (OnPropertyChanging(__.Address, value)) { _Address = value; OnPropertyChanged(__.Address); } } }
 
         private Int32 _Logins;
-        /// <summary>登录</summary>
-        [DisplayName("登录")]
-        [Description("登录")]
+        /// <summary>登录次数</summary>
+        [DisplayName("登录次数")]
+        [Description("登录次数")]
         [DataObjectField(false, false, false, 0)]
-        [BindColumn("Logins", "登录", "")]
+        [BindColumn("Logins", "登录次数", "")]
         public Int32 Logins { get { return _Logins; } set { if (OnPropertyChanging(__.Logins, value)) { _Logins = value; OnPropertyChanged(__.Logins); } } }
 
         private DateTime _LastLogin;
@@ -250,12 +282,20 @@ namespace xLink.Entity
         public DateTime LastLogin { get { return _LastLogin; } set { if (OnPropertyChanging(__.LastLogin, value)) { _LastLogin = value; OnPropertyChanged(__.LastLogin); } } }
 
         private String _LastLoginIP;
-        /// <summary>最后登录IP</summary>
-        [DisplayName("最后登录IP")]
-        [Description("最后登录IP")]
+        /// <summary>最后IP。最后的公网IP地址</summary>
+        [DisplayName("最后IP")]
+        [Description("最后IP。最后的公网IP地址")]
         [DataObjectField(false, false, true, 50)]
-        [BindColumn("LastLoginIP", "最后登录IP", "")]
+        [BindColumn("LastLoginIP", "最后IP。最后的公网IP地址", "")]
         public String LastLoginIP { get { return _LastLoginIP; } set { if (OnPropertyChanging(__.LastLoginIP, value)) { _LastLoginIP = value; OnPropertyChanged(__.LastLoginIP); } } }
+
+        private Int32 _OnlineTime;
+        /// <summary>在线时长。单位，秒</summary>
+        [DisplayName("在线时长")]
+        [Description("在线时长。单位，秒")]
+        [DataObjectField(false, false, false, 0)]
+        [BindColumn("OnlineTime", "在线时长。单位，秒", "")]
+        public Int32 OnlineTime { get { return _OnlineTime; } set { if (OnPropertyChanging(__.OnlineTime, value)) { _OnlineTime = value; OnPropertyChanged(__.OnlineTime); } } }
 
         private String _CreateUser;
         /// <summary>创建人</summary>
@@ -341,11 +381,12 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : return _ID;
-                    case __.ProductID : return _ProductID;
+                    case __.ProductId : return _ProductId;
                     case __.Name : return _Name;
                     case __.Code : return _Code;
                     case __.Secret : return _Secret;
                     case __.Enable : return _Enable;
+                    case __.AreaId : return _AreaId;
                     case __.Version : return _Version;
                     case __.CompileTime : return _CompileTime;
                     case __.OS : return _OS;
@@ -356,8 +397,11 @@ namespace xLink.Entity
                     case __.Memory : return _Memory;
                     case __.Processor : return _Processor;
                     case __.CpuID : return _CpuID;
+                    case __.Dpi : return _Dpi;
+                    case __.Resolution : return _Resolution;
                     case __.Uuid : return _Uuid;
                     case __.MachineGuid : return _MachineGuid;
+                    case __.DiskID : return _DiskID;
                     case __.MACs : return _MACs;
                     case __.COMs : return _COMs;
                     case __.InstallPath : return _InstallPath;
@@ -370,6 +414,7 @@ namespace xLink.Entity
                     case __.Logins : return _Logins;
                     case __.LastLogin : return _LastLogin;
                     case __.LastLoginIP : return _LastLoginIP;
+                    case __.OnlineTime : return _OnlineTime;
                     case __.CreateUser : return _CreateUser;
                     case __.CreateUserID : return _CreateUserID;
                     case __.CreateTime : return _CreateTime;
@@ -387,11 +432,12 @@ namespace xLink.Entity
                 switch (name)
                 {
                     case __.ID : _ID = value.ToInt(); break;
-                    case __.ProductID : _ProductID = value.ToInt(); break;
+                    case __.ProductId : _ProductId = value.ToInt(); break;
                     case __.Name : _Name = Convert.ToString(value); break;
                     case __.Code : _Code = Convert.ToString(value); break;
                     case __.Secret : _Secret = Convert.ToString(value); break;
                     case __.Enable : _Enable = value.ToBoolean(); break;
+                    case __.AreaId : _AreaId = value.ToInt(); break;
                     case __.Version : _Version = Convert.ToString(value); break;
                     case __.CompileTime : _CompileTime = value.ToDateTime(); break;
                     case __.OS : _OS = Convert.ToString(value); break;
@@ -402,8 +448,11 @@ namespace xLink.Entity
                     case __.Memory : _Memory = value.ToInt(); break;
                     case __.Processor : _Processor = Convert.ToString(value); break;
                     case __.CpuID : _CpuID = Convert.ToString(value); break;
+                    case __.Dpi : _Dpi = Convert.ToString(value); break;
+                    case __.Resolution : _Resolution = Convert.ToString(value); break;
                     case __.Uuid : _Uuid = Convert.ToString(value); break;
                     case __.MachineGuid : _MachineGuid = Convert.ToString(value); break;
+                    case __.DiskID : _DiskID = Convert.ToString(value); break;
                     case __.MACs : _MACs = Convert.ToString(value); break;
                     case __.COMs : _COMs = Convert.ToString(value); break;
                     case __.InstallPath : _InstallPath = Convert.ToString(value); break;
@@ -416,6 +465,7 @@ namespace xLink.Entity
                     case __.Logins : _Logins = value.ToInt(); break;
                     case __.LastLogin : _LastLogin = value.ToDateTime(); break;
                     case __.LastLoginIP : _LastLoginIP = Convert.ToString(value); break;
+                    case __.OnlineTime : _OnlineTime = value.ToInt(); break;
                     case __.CreateUser : _CreateUser = Convert.ToString(value); break;
                     case __.CreateUserID : _CreateUserID = value.ToInt(); break;
                     case __.CreateTime : _CreateTime = value.ToDateTime(); break;
@@ -439,19 +489,22 @@ namespace xLink.Entity
             public static readonly Field ID = FindByName(__.ID);
 
             /// <summary>产品</summary>
-            public static readonly Field ProductID = FindByName(__.ProductID);
+            public static readonly Field ProductId = FindByName(__.ProductId);
 
             /// <summary>名称</summary>
             public static readonly Field Name = FindByName(__.Name);
 
-            /// <summary>编码</summary>
+            /// <summary>编码。DeviceKey</summary>
             public static readonly Field Code = FindByName(__.Code);
 
-            /// <summary>密钥</summary>
+            /// <summary>密钥。DeviceSecret</summary>
             public static readonly Field Secret = FindByName(__.Secret);
 
             /// <summary>启用</summary>
             public static readonly Field Enable = FindByName(__.Enable);
+
+            /// <summary>地区</summary>
+            public static readonly Field AreaId = FindByName(__.AreaId);
 
             /// <summary>版本</summary>
             public static readonly Field Version = FindByName(__.Version);
@@ -483,11 +536,20 @@ namespace xLink.Entity
             /// <summary>CPU标识</summary>
             public static readonly Field CpuID = FindByName(__.CpuID);
 
+            /// <summary>每英寸点数,96*96</summary>
+            public static readonly Field Dpi = FindByName(__.Dpi);
+
+            /// <summary>分辨率</summary>
+            public static readonly Field Resolution = FindByName(__.Resolution);
+
             /// <summary>唯一标识</summary>
             public static readonly Field Uuid = FindByName(__.Uuid);
 
             /// <summary>机器标识</summary>
             public static readonly Field MachineGuid = FindByName(__.MachineGuid);
+
+            /// <summary>磁盘序列号</summary>
+            public static readonly Field DiskID = FindByName(__.DiskID);
 
             /// <summary>网卡</summary>
             public static readonly Field MACs = FindByName(__.MACs);
@@ -516,14 +578,17 @@ namespace xLink.Entity
             /// <summary>地址</summary>
             public static readonly Field Address = FindByName(__.Address);
 
-            /// <summary>登录</summary>
+            /// <summary>登录次数</summary>
             public static readonly Field Logins = FindByName(__.Logins);
 
             /// <summary>最后登录</summary>
             public static readonly Field LastLogin = FindByName(__.LastLogin);
 
-            /// <summary>最后登录IP</summary>
+            /// <summary>最后IP。最后的公网IP地址</summary>
             public static readonly Field LastLoginIP = FindByName(__.LastLoginIP);
+
+            /// <summary>在线时长。单位，秒</summary>
+            public static readonly Field OnlineTime = FindByName(__.OnlineTime);
 
             /// <summary>创建人</summary>
             public static readonly Field CreateUser = FindByName(__.CreateUser);
@@ -562,19 +627,22 @@ namespace xLink.Entity
             public const String ID = "ID";
 
             /// <summary>产品</summary>
-            public const String ProductID = "ProductID";
+            public const String ProductId = "ProductId";
 
             /// <summary>名称</summary>
             public const String Name = "Name";
 
-            /// <summary>编码</summary>
+            /// <summary>编码。DeviceKey</summary>
             public const String Code = "Code";
 
-            /// <summary>密钥</summary>
+            /// <summary>密钥。DeviceSecret</summary>
             public const String Secret = "Secret";
 
             /// <summary>启用</summary>
             public const String Enable = "Enable";
+
+            /// <summary>地区</summary>
+            public const String AreaId = "AreaId";
 
             /// <summary>版本</summary>
             public const String Version = "Version";
@@ -606,11 +674,20 @@ namespace xLink.Entity
             /// <summary>CPU标识</summary>
             public const String CpuID = "CpuID";
 
+            /// <summary>每英寸点数,96*96</summary>
+            public const String Dpi = "Dpi";
+
+            /// <summary>分辨率</summary>
+            public const String Resolution = "Resolution";
+
             /// <summary>唯一标识</summary>
             public const String Uuid = "Uuid";
 
             /// <summary>机器标识</summary>
             public const String MachineGuid = "MachineGuid";
+
+            /// <summary>磁盘序列号</summary>
+            public const String DiskID = "DiskID";
 
             /// <summary>网卡</summary>
             public const String MACs = "MACs";
@@ -639,14 +716,17 @@ namespace xLink.Entity
             /// <summary>地址</summary>
             public const String Address = "Address";
 
-            /// <summary>登录</summary>
+            /// <summary>登录次数</summary>
             public const String Logins = "Logins";
 
             /// <summary>最后登录</summary>
             public const String LastLogin = "LastLogin";
 
-            /// <summary>最后登录IP</summary>
+            /// <summary>最后IP。最后的公网IP地址</summary>
             public const String LastLoginIP = "LastLoginIP";
+
+            /// <summary>在线时长。单位，秒</summary>
+            public const String OnlineTime = "OnlineTime";
 
             /// <summary>创建人</summary>
             public const String CreateUser = "CreateUser";
@@ -686,19 +766,22 @@ namespace xLink.Entity
         Int32 ID { get; set; }
 
         /// <summary>产品</summary>
-        Int32 ProductID { get; set; }
+        Int32 ProductId { get; set; }
 
         /// <summary>名称</summary>
         String Name { get; set; }
 
-        /// <summary>编码</summary>
+        /// <summary>编码。DeviceKey</summary>
         String Code { get; set; }
 
-        /// <summary>密钥</summary>
+        /// <summary>密钥。DeviceSecret</summary>
         String Secret { get; set; }
 
         /// <summary>启用</summary>
         Boolean Enable { get; set; }
+
+        /// <summary>地区</summary>
+        Int32 AreaId { get; set; }
 
         /// <summary>版本</summary>
         String Version { get; set; }
@@ -730,11 +813,20 @@ namespace xLink.Entity
         /// <summary>CPU标识</summary>
         String CpuID { get; set; }
 
+        /// <summary>每英寸点数,96*96</summary>
+        String Dpi { get; set; }
+
+        /// <summary>分辨率</summary>
+        String Resolution { get; set; }
+
         /// <summary>唯一标识</summary>
         String Uuid { get; set; }
 
         /// <summary>机器标识</summary>
         String MachineGuid { get; set; }
+
+        /// <summary>磁盘序列号</summary>
+        String DiskID { get; set; }
 
         /// <summary>网卡</summary>
         String MACs { get; set; }
@@ -763,14 +855,17 @@ namespace xLink.Entity
         /// <summary>地址</summary>
         String Address { get; set; }
 
-        /// <summary>登录</summary>
+        /// <summary>登录次数</summary>
         Int32 Logins { get; set; }
 
         /// <summary>最后登录</summary>
         DateTime LastLogin { get; set; }
 
-        /// <summary>最后登录IP</summary>
+        /// <summary>最后IP。最后的公网IP地址</summary>
         String LastLoginIP { get; set; }
+
+        /// <summary>在线时长。单位，秒</summary>
+        Int32 OnlineTime { get; set; }
 
         /// <summary>创建人</summary>
         String CreateUser { get; set; }

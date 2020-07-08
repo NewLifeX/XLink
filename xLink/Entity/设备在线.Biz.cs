@@ -35,24 +35,24 @@ namespace xLink.Entity
 
         #region 扩展属性
         /// <summary>产品</summary>
-        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductID));
+        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductId));
 
         /// <summary>产品名</summary>
-        [Map(__.ProductID)]
+        [Map(__.ProductId)]
         public String ProductName => Product + "";
 
         /// <summary>设备</summary>
-        public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceID));
+        public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceId));
 
         /// <summary>设备名</summary>
-        [Map(__.DeviceID)]
+        [Map(__.DeviceId)]
         public String DeviceName => Device + "";
 
         /// <summary>地址。IP=>Address</summary>
         [DisplayName("地址")]
         public String ExternalAddress => ExternalUri.IPToAddress();
 
-        Int32 IOnline.UserID { get => DeviceID; set => DeviceID = value; }
+        Int32 IOnline.UserID { get => DeviceId; set => DeviceId = value; }
         #endregion
 
         #region 扩展查询
@@ -61,7 +61,7 @@ namespace xLink.Entity
         /// <returns></returns>
         public static DeviceOnline FindByDeviceID(Int32 deviceid)
         {
-            return Find(__.DeviceID, deviceid);
+            return Find(__.DeviceId, deviceid);
         }
 
         /// <summary>根据会话查找</summary>
@@ -88,7 +88,7 @@ namespace xLink.Entity
         {
             var exp = new WhereExpression();
 
-            if (productId >= 0) exp &= _.ProductID == productId;
+            if (productId >= 0) exp &= _.ProductId == productId;
 
             exp &= _.CreateTime.Between(start, end);
 

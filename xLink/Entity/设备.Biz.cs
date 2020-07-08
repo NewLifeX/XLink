@@ -64,10 +64,10 @@ namespace xLink.Entity
 
         #region 扩展属性
         /// <summary>产品</summary>
-        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductID));
+        public Product Product => Extends.Get(nameof(Product), k => Product.FindByID(ProductId));
 
         /// <summary>产品名</summary>
-        [Map(__.ProductID, typeof(Product), "ID")]
+        [Map(__.ProductId, typeof(Product), "ID")]
         public String ProductName => Product + "";
 
         /// <summary>登录地址。IP=>Address</summary>
@@ -128,7 +128,7 @@ namespace xLink.Entity
         {
             if (Id.IsNullOrEmpty()) return null;
 
-            return Find(_.Uuid == Id & _.ProductID == productId);
+            return Find(_.Uuid == Id & _.ProductId == productId);
         }
 
         /// <summary>根据唯一标识找设备</summary>
@@ -139,7 +139,7 @@ namespace xLink.Entity
         {
             if (Id.IsNullOrEmpty()) return null;
 
-            return Find(_.MachineGuid == Id & _.ProductID == productId);
+            return Find(_.MachineGuid == Id & _.ProductId == productId);
         }
         #endregion
 
@@ -156,7 +156,7 @@ namespace xLink.Entity
         {
             var exp = SearchWhereByKeys(key, null, null);
 
-            if (productId >= 0) exp &= _.ProductID == productId;
+            if (productId >= 0) exp &= _.ProductId == productId;
             if (enable != null) exp &= _.Enable == enable.Value;
 
             exp &= _.UpdateTime.Between(start, end);

@@ -86,7 +86,7 @@ namespace xLink.Entity
 
         //    var entity = new DeviceCommand();
         //    entity.ID = 0;
-        //    entity.DeviceID = 0;
+        //    entity.DeviceId = 0;
         //    entity.Command = "abc";
         //    entity.Argument = "abc";
         //    entity.StartTime = DateTime.Now;
@@ -123,13 +123,13 @@ namespace xLink.Entity
         /// <summary>设备</summary>
         [XmlIgnore]
         //[ScriptIgnore]
-        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceID)); } }
+        public Device Device { get { return Extends.Get(nameof(Device), k => Device.FindByID(DeviceId)); } }
 
         /// <summary>设备</summary>
         [XmlIgnore]
         //[ScriptIgnore]
         [DisplayName("设备")]
-        [Map(__.DeviceID, typeof(Device), "ID")]
+        [Map(__.DeviceId, typeof(Device), "ID")]
         public String DeviceName { get { return Device?.Name; } }
         #endregion
 
@@ -176,7 +176,7 @@ namespace xLink.Entity
         {
             var exp = SearchWhereByKeys(key, null, null);
 
-            if (deviceid > 0) exp &= _.DeviceID == deviceid;
+            if (deviceid > 0) exp &= _.DeviceId == deviceid;
             if (!cmd.IsNullOrEmpty()) exp &= _.Command == cmd;
             if (finished != null) exp &= _.Status == (finished.Value ? CommandStatus.完成 : CommandStatus.就绪);
 
@@ -194,7 +194,7 @@ namespace xLink.Entity
         /// <returns></returns>
         public static IList<DeviceCommand> GetCommands(Int32 deviceid, Int32 start, Int32 max)
         {
-            return FindAll(_.DeviceID == deviceid & _.Status == CommandStatus.就绪, _.ID.Asc(), null, start, max);
+            return FindAll(_.DeviceId == deviceid & _.Status == CommandStatus.就绪, _.ID.Asc(), null, start, max);
         }
         #endregion
     }
