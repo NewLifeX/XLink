@@ -7,11 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using NewLife.Data;
 using XCode;
 using XCode.Cache;
 using XCode.Membership;
-using xLink.Models;
 
 namespace xLink.Entity
 {
@@ -39,13 +40,15 @@ namespace xLink.Entity
 
         #region 扩展属性
         /// <summary>设备</summary>
+        [XmlIgnore, IgnoreDataMember]
         public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceId));
 
         /// <summary>设备名</summary>
-        [Map(__.DeviceId, typeof(Device), "ID")]
+        [Map(__.DeviceId)]
         public String DeviceName => Device + "";
 
         /// <summary>城市</summary>
+        [XmlIgnore, IgnoreDataMember]
         public Area City => Extends.Get(nameof(City), k => Area.FindByID(AreaId));
 
         /// <summary>城市名</summary>

@@ -1,0 +1,111 @@
+﻿@model IList<Product>
+@using xLink.Entity
+@using NewLife;
+@using NewLife.Web;
+@using XCode;
+@using XCode.Configuration;
+@using XCode.Membership;
+@using NewLife.Cube;
+@{
+    var fact = ViewBag.Factory as IEntityFactory;
+    var page = ViewBag.Page as Pager;
+    var fields = ViewBag.Fields as IList<FieldItem>;
+    var set = ViewBag.PageSetting as PageSetting;
+    var provider = ManageProvider.Provider;
+}
+<table class="table table-bordered table-hover table-striped table-condensed">
+    <thead>
+        <tr>
+            @if (set.EnableSelect)
+            {
+                <th class="text-center" style="width:10px;"><input type="checkbox" id="chkAll" title="全选" /></th>
+            }
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("ID"))">编号</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("Name"))">名称</a></th>
+            <th class="text-center" title="编码。ProductKey"><a href="@Html.Raw(page.GetSortUrl("Code"))">编码</a></th>
+            <th class="text-center" title="节点类型。设备/网关"><a href="@Html.Raw(page.GetSortUrl("Kind"))">节点类型</a></th>
+            <th class="text-center" title="分类。边缘网关/大气监测设备"><a href="@Html.Raw(page.GetSortUrl("Category"))">分类</a></th>
+            <th class="text-center" title="数据格式。Json"><a href="@Html.Raw(page.GetSortUrl("DataFormat"))">数据格式</a></th>
+            <th class="text-center" title="网络协议。WiFi/蜂窝（2G/3G/4G/5G）/以太网/LoRaWAN/其它"><a href="@Html.Raw(page.GetSortUrl("NetworkProtocol"))">网络协议</a></th>
+            <th class="text-center" title="启用。开发中/已发布"><a href="@Html.Raw(page.GetSortUrl("Enable"))">启用</a></th>
+            <th class="text-center" title="动态注册。每台设备烧录相同的产品证书，即ProductKey和ProductSecret，云端鉴权通过后下发设备证书"><a href="@Html.Raw(page.GetSortUrl("AutoRegister"))">动态注册</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("CreateUserID"))">创建者</a></th>
+            <th class="text-center" style="min-width:134px;"><a href="@Html.Raw(page.GetSortUrl("CreateTime"))">创建时间</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("CreateIP"))">创建地址</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("UpdateUserID"))">更新者</a></th>
+            <th class="text-center" style="min-width:134px;"><a href="@Html.Raw(page.GetSortUrl("UpdateTime"))">更新时间</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("UpdateIP"))">更新地址</a></th>
+            @if (this.Has(PermissionFlags.Detail, PermissionFlags.Update, PermissionFlags.Delete))
+            {
+                <th class="text-center">操作</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entity in Model)
+        {
+            <tr>
+                @if (set.EnableSelect)
+                {
+                    <td class="text-center"><input type="checkbox" name="keys" value="@entity.ID" /></td>
+                }
+                <td class="text-center">@entity.ID</td>
+                <td>@entity.Name</td>
+                <td>@entity.Code</td>
+                <td>@entity.Kind</td>
+                <td>@entity.Category</td>
+                <td>@entity.DataFormat</td>
+                <td>@entity.NetworkProtocol</td>
+                <td class="text-center">
+                    <i class="glyphicon glyphicon-@(entity.Enable ? "ok" : "remove")" style="color: @(entity.Enable ? "green" : "red");"></i>
+                </td>
+                <td class="text-center">
+                    <i class="glyphicon glyphicon-@(entity.AutoRegister ? "ok" : "remove")" style="color: @(entity.AutoRegister ? "green" : "red");"></i>
+                </td>
+                <td class="text-center">@provider.FindByID(entity.CreateUserID)</td>
+                <td class="text-center">@entity.CreateTime.ToFullString("")</td>
+                <td class="text-center" title="@entity.CreateIP.IPToAddress()">@entity.CreateIP</td>
+                <td class="text-center">@provider.FindByID(entity.UpdateUserID)</td>
+                <td class="text-center">@entity.UpdateTime.ToFullString("")</td>
+                <td class="text-center" title="@entity.UpdateIP.IPToAddress()">@entity.UpdateIP</td>
+                @if (this.Has(PermissionFlags.Detail, PermissionFlags.Update, PermissionFlags.Delete))
+                {
+                    <td class="text-center">
+                        @await Html.PartialAsync("_List_Data_Action", (Object)entity)
+                    </td>
+                }
+            </tr>
+        }
+        @if (page.State != null)
+        {
+            var entity = page.State as Product;
+            <tr>
+                @if (set.EnableSelect)
+                {
+                    <td></td>
+                }
+                <td class="text-center">总计</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                @if (this.Has(PermissionFlags.Detail, PermissionFlags.Update, PermissionFlags.Delete))
+                {
+                    <td></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

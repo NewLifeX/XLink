@@ -1,0 +1,23 @@
+﻿@using NewLife.Common;
+@using System.Collections.Generic;
+@{
+    var user = ViewBag.User as IUser ?? User.Identity as IUser;
+    var fact = ViewBag.Factory as IEntityFactory;
+    var set = ViewBag.PageSetting as PageSetting;
+
+    var sdic = new Dictionary<String, String>();
+    sdic["strFormat"] = "yyyy-MM-dd HH:mm:ss";
+    sdic["dname"] = "sday";
+    sdic["title"] = "开始";
+
+    var edic = new Dictionary<String, String>();
+    edic["strFormat"] = "yyyy-MM-dd HH:mm:ss";
+    edic["dname"] = "eday";
+    edic["title"] = "结束";
+}
+@if (set.EnableSelect)
+{
+    <button type="button" class="btn btn-success btn-sm" data-action="action" data-url="@Url.Action("Trace")" data-fields="keys" disabled>
+        批量跟踪
+    </button>
+}

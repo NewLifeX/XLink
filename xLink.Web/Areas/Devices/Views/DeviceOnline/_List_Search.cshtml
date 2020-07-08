@@ -1,0 +1,13 @@
+﻿@using xLink.Entity
+@using NewLife;
+@using NewLife.Web;
+@using XCode;
+@{
+    var fact = ViewBag.Factory as IEntityFactory;
+    var page = ViewBag.Page as Pager;
+}
+@await Html.PartialAsync("_Area2", "")
+<div class="form-group">
+    <label for="productId" class="control-label">产品：</label>
+    @Html.ForDropDownList("productId", Product.FindAllWithCache(), page["productId"], "全部", true)
+</div>

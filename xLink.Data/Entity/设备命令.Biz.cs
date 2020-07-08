@@ -29,12 +29,19 @@ namespace xLink.Entity
         #region 扩展属性
         /// <summary>设备</summary>
         [XmlIgnore, IgnoreDataMember]
-        //[ScriptIgnore]
         public Device Device => Extends.Get(nameof(Device), k => Device.FindByID(DeviceId));
 
-        /// <summary>设备</summary>
+        /// <summary>设备名</summary>
         [Map(__.DeviceId)]
-        public String DeviceName => Device?.Name;
+        public String DeviceName => Device + "";
+
+        /// <summary>城市</summary>
+        [XmlIgnore, IgnoreDataMember]
+        public Area City => Extends.Get(nameof(City), k => Area.FindByID(AreaId));
+
+        /// <summary>城市名</summary>
+        [Map(__.AreaId)]
+        public String CityName => City + "";
         #endregion
 
         #region 扩展查询
