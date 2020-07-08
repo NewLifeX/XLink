@@ -63,11 +63,7 @@
 
   <ItemGroup>
     <Compile Remove="DeviceSession.cs" />
-    <Compile Remove="Entity\MyModel.cs" />
     <Compile Remove="LinkSession.cs" />
-    <Compile Remove="Services\DeviceSession.cs" />
-    <Compile Remove="Services\LinkSession.cs" />
-    <Compile Remove="Services\UserSession.cs" />
     <Compile Remove="UserSession.cs" />
   </ItemGroup>
 
