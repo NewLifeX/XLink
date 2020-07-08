@@ -43,12 +43,6 @@
     <PackageReference Include="NewLife.XCode" Version="9.18.2020.701" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="NewLife.Agent">
-      <Version>8.3.2019.822</Version>
-    </PackageReference>
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)'=='net45' or '$(TargetFramework)'=='net40'">
     <Reference Include="System.ServiceProcess" />
   </ItemGroup>
