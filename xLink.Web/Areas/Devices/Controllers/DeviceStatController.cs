@@ -18,12 +18,9 @@ namespace xLink.Web.Areas.Devices.Controllers
     [DevicesArea]
     public class DeviceStatController : ReadOnlyEntityController<DeviceStat>
     {
-        //private static ZTO.Scan.Server.Setting _setting;
         static DeviceStatController()
         {
             MenuOrder = 30;
-
-            //_setting = ZTO.Scan.Server.Setting.GetSetting("../Server/Config/ScanServer.config");
 
             // 计算统计
             _timer = new TimerX(DoDeviceStat, null, DateTime.Today, 3600_000) { Async = true };
