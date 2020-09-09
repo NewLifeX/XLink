@@ -4,6 +4,7 @@
  * 时间：2017-03-31 22:14:32
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
+using NewLife;
 using NewLife.Data;
 using System;
 using System.Collections.Generic;

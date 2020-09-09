@@ -1,7 +1,9 @@
-﻿using NewLife.Net;
+﻿using NewLife;
+using NewLife.Net;
 using NewLife.Threading;
 using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,7 +59,7 @@ namespace xLink.Client.Services
 
             if (_hardInfo == null) _hardInfo = new MachineInfo();
 
-            var ps = SerialTransport.GetPortNames();
+            var ps = SerialPort.GetPortNames();
 
             // 如果设备编码不存在，则需要提交产品证书
             var pkey = "";
@@ -101,7 +103,7 @@ namespace xLink.Client.Services
 
             if (_hardInfo == null) _hardInfo = new MachineInfo();
 
-            var ps = SerialTransport.GetPortNames();
+            var ps = SerialPort.GetPortNames();
 
             var ext = new
             {

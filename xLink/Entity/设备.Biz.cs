@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using NewLife;
 using NewLife.Common;
 using NewLife.Data;
 using NewLife.Model;

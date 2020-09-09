@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using NewLife;
 using NewLife.Net;
 using NewLife.Xml;
 

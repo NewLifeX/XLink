@@ -4,6 +4,7 @@
  * 时间：2017-03-31 21:55:42
  * 版权：版权所有 (C) 新生命开发团队 2002~2017
 */
+using NewLife;
 using NewLife.Data;
 using System;
 using System.Collections.Generic;
@@ -84,7 +85,7 @@ namespace xLink.Entity
 
         #region 扩展操作
         /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<UserHistory> ActionCache = new FieldCache<UserHistory>(_.Action);
+        static FieldCache<UserHistory> ActionCache = new FieldCache<UserHistory>(__.Action);
 
         /// <summary>获取所有类别名称</summary>
         /// <returns></returns>

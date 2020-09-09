@@ -9,10 +9,10 @@ namespace xLink
 {
     class Program
     {
-        static void Main(String[] args) => new MyService().Main();
+        static void Main(String[] args) => new MyService().Main(args);
     }
 
-    class MyService : AgentServiceBase<MyService>
+    class MyService : ServiceBase
     {
         /// <summary>构造函数</summary>
         public MyService()
@@ -27,11 +27,8 @@ namespace xLink
                 {
                     set.Debug = false;
                     set.ShowSQL = false;
-                    set.SQLiteDbPath = "../Data";
-#if DEBUG
-                    set.SQLiteDbPath = "../../Data";
-#endif
-                    set.SaveAsync();
+                    //set.SQLiteDbPath = "../Data";
+                    set.Save();
                 }
             });
         }

@@ -1,4 +1,5 @@
-﻿using NewLife.Log;
+﻿using NewLife;
+using NewLife.Log;
 using NewLife.Model;
 using NewLife.Net;
 using NewLife.Remoting;
@@ -50,7 +51,7 @@ namespace xLink.Services
             if (Session["Current"] is IManageUser user)
                 Current = user;
             else
-                throw new ApiException(401, "{0}未登录！不能执行{1}".F(ns.Remote, act));
+                throw new ApiException(401, $"{ns.Remote}未登录！不能执行{act}");
 
             Online = Session["Online"] as IOnline;
         }
@@ -91,7 +92,7 @@ namespace xLink.Services
             CheckOnline(user, ps);
 
             // 登录
-            var msg = "登录 {0}/{1}".F(user, pass);
+            var msg = $"登录 {user}/{pass}";
 
             var flag = true;
             try

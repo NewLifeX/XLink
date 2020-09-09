@@ -52,11 +52,11 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="NewLife.Core, Version=8.6.7339.40781, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Core.8.6.2020.204\lib\net45\NewLife.Core.dll</HintPath>
+    <Reference Include="NewLife.Core, Version=8.10.7549.41750, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Core.8.10.2020.901\lib\net45\NewLife.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NewLife.Cube, Version=3.2.7340.28416, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Cube.3.2.7340.28416\lib\net45\NewLife.Cube.dll</HintPath>
+    <Reference Include="NewLife.Cube, Version=3.7.7550.795, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Cube.3.7.7550.795\lib\net45\NewLife.Cube.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -96,8 +96,8 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XCode, Version=9.15.7339.40841, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XCode.9.15.2020.204\lib\net45\XCode.dll</HintPath>
+    <Reference Include="XCode, Version=9.20.7549.41754, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XCode.9.20.2020.901\lib\net45\XCode.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +132,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_List_Toolbar.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Build.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Build.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Build_netcore.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Build_netcore.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,6 +149,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Entity\Build.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Build.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entity\Build_netcore.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Build_netcore.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entity\Model.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">

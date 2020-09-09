@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using NewLife;
 using NewLife.Data;
 using NewLife.Model;
 using XCode;
@@ -97,7 +98,7 @@ namespace xLink.Entity
         public static IList<User> FindAllByType(String type)
         {
             if (Meta.Count >= 1000)
-                return FindAll(__.Type, type);
+                return FindAll(_.Type == type);
             else // 实体缓存
                 return Meta.Cache.Entities.Where(e => e.Type == type).ToList();
         }

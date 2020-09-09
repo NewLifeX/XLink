@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net45;netcoreapp2.1;net40</TargetFrameworks>
+    <TargetFrameworks>net45;netcoreapp3.1;net40</TargetFrameworks>
     <AssemblyName>xLinkServer</AssemblyName>
     <AssemblyTitle>物联网服务端</AssemblyTitle>
     <Description>物联网云平台，负责在硬件设备以及用户端之间交互数据指令</Description>
@@ -38,9 +38,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Agent" Version="8.6.2020.204" />
-    <PackageReference Include="NewLife.Core" Version="8.6.2020.204" />
-    <PackageReference Include="NewLife.XCode" Version="9.15.2020.204" />
+    <PackageReference Include="NewLife.Agent" Version="8.7.2020.802" />
+    <PackageReference Include="NewLife.Core" Version="8.10.2020.901" />
+    <PackageReference Include="NewLife.XCode" Version="9.20.2020.901" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">

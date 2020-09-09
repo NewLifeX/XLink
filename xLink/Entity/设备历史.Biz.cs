@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using NewLife;
 using NewLife.Data;
 using NewLife.Model;
 using XCode;
@@ -87,7 +88,7 @@ namespace xLink.Entity
 
         #region 扩展操作
         /// <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        static FieldCache<DeviceHistory> ActionCache = new FieldCache<DeviceHistory>(_.Action);
+        static FieldCache<DeviceHistory> ActionCache = new FieldCache<DeviceHistory>(__.Action);
 
         /// <summary>获取所有类别名称</summary>
         /// <returns></returns>
