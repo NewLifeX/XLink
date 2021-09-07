@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
+using NewLife;
 using NewLife.Data;
 using NewLife.Reflection;
 using NewLife.Serialization;

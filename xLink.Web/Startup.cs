@@ -30,7 +30,7 @@ namespace xLink.Web
 
             app.UseStaticFiles(new StaticFileOptions { ServeUnknownFileTypes = true });
 
-            app.UseCube();
+            app.UseCube(env);
         }
     }
 }

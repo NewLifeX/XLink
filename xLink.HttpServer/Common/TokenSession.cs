@@ -1,4 +1,5 @@
-﻿using NewLife.Caching;
+﻿using NewLife;
+using NewLife.Caching;
 using NewLife.Collections;
 using System;
 using System.Collections.Generic;

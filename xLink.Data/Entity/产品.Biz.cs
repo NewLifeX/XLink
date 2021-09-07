@@ -1,3 +1,4 @@
+﻿using NewLife;
 using NewLife.Data;
 using NewLife.Security;
 using System;

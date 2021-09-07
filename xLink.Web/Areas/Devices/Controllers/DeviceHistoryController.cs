@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using NewLife;
 using NewLife.Cube;
 using NewLife.Web;
 using xLink.Entity;

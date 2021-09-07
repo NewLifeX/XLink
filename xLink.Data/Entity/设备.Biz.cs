@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using NewLife;
 using NewLife.Common;
 using NewLife.Data;
 using NewLife.Model;

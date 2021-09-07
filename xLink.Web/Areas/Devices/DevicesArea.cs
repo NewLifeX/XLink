@@ -1,4 +1,5 @@
-﻿using NewLife.Cube;
+﻿using NewLife;
+using NewLife.Cube;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

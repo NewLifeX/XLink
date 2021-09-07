@@ -1,4 +1,5 @@
-﻿using NewLife.Log;
+﻿using NewLife;
+using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
 using NewLife.Remoting;
