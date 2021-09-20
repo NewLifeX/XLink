@@ -60,9 +60,6 @@
     <Compile Include="..\xLink\Common\MachineHelper.cs">
       <Link>Common\MachineHelper.cs</Link>
     </Compile>
-    <Compile Include="..\xLink\LinkClient.cs">
-      <Link>Services\LinkClient.cs</Link>
-    </Compile>
     <Compile Include="..\xLink\Models\DataModel.cs">
       <Link>Models\DataModel.cs</Link>
     </Compile>
@@ -86,6 +83,7 @@
     </Compile>
     <Compile Include="Services\DeviceClient.cs" />
     <Compile Include="Common\MachineInfo.cs" />
+    <Compile Include="Services\LinkClient.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
