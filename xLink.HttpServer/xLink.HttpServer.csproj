@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>xLinkServer</AssemblyName>
+    <RootNamespace>xLinkServer</RootNamespace>
+    <AssemblyTitle>物联网服务端</AssemblyTitle>
+    <Description>物联网平台</Description>
+    <Company>新生命开发团队</Company>
+    <Copyright>版权所有(C) 新生命开发团队 2002~2020</Copyright>
+    <Version>3.1.2020.0708</Version>
+    <FileVersion>3.1.2020.0708</FileVersion>
+    <AssemblyVersion>3.1.*</AssemblyVersion>
+    <Deterministic>false</Deterministic>
+    <OutputPath>..\Bin\HttpServer</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewLife.Core" Version="8.11.2021.904" />
+    <PackageReference Include="NewLife.XCode" Version="10.2.2021.904" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\xLink.Data\xLink.Data.csproj" />
+    <ProjectReference Include="..\xLink\xLink.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="del &quot;$(TargetDir)*.xml&quot; /q" />
+  </Target>
+
+</Project>

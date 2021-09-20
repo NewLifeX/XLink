@@ -1,0 +1,72 @@
+﻿@model IList<DeviceCommand>
+@using xLink.Entity
+@using NewLife;
+@using NewLife.Web;
+@using XCode;
+@using XCode.Configuration;
+@using XCode.Membership;
+@using NewLife.Cube;
+@{
+    var fact = ViewBag.Factory as IEntityFactory;
+    var page = ViewBag.Page as Pager;
+    var fields = ViewBag.Fields as IList<FieldItem>;
+    var set = ViewBag.PageSetting as PageSetting;
+    var provider = ManageProvider.Provider;
+}
+<table class="table table-bordered table-hover table-striped table-condensed">
+    <thead>
+        <tr>
+            @if (set.EnableSelect)
+            {
+                <th class="text-center" style="width:10px;"><input type="checkbox" id="chkAll" title="全选" /></th>
+            }
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("ID"))">编号</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("DeviceID"))">设备</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("AreaID"))">地区</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("Command"))">命令</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("Argument"))">参数</a></th>
+            <th class="text-center" title="完成。客户端是否已执行"><a href="@Html.Raw(page.GetSortUrl("Finished"))">完成</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("Result"))">结果</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("CreateUser"))">创建节点</a></th>
+            <th class="text-center"><a href="@Html.Raw(page.GetSortUrl("CreateUserID"))">创建者</a></th>
+            <th class="text-center" style="min-width:134px;"><a href="@Html.Raw(page.GetSortUrl("CreateTime"))">创建时间</a></th>
+            <th class="text-center" style="min-width:134px;"><a href="@Html.Raw(page.GetSortUrl("UpdateTime"))">更新时间</a></th>
+            @if (this.Has(PermissionFlags.Detail, PermissionFlags.Update, PermissionFlags.Delete))
+            {
+                <th class="text-center">操作</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entity in Model)
+        {
+            var baseUrl = Parameter.GetOrAdd(0, "Node", "BaseUrl-" + entity.CreateUser, "http://localhost:5000");
+            var url = $"{baseUrl.GetValue()}/device/getresult?id={entity.ID}&deviceId={entity.DeviceId}";
+            <tr>
+                @if (set.EnableSelect)
+                {
+                    <td class="text-center"><input type="checkbox" name="keys" value="@entity.ID" /></td>
+                }
+                <td class="text-center">@entity.ID</td>
+                <td><a href="Device?ID=@entity.DeviceId">@entity.DeviceName</a></td>
+                <td class="text-right">@entity.CityName</td>
+                <td>@entity.Command</td>
+                <td>@entity.Argument</td>
+                <td class="text-center">
+                    <i class="glyphicon glyphicon-@(entity.Finished ? "ok" : "remove")" style="color: @(entity.Finished ? "green" : "red");"></i>
+                </td>
+                <td><a href="@url">@entity.Result</a></td>
+                <td>@entity.CreateUser</td>
+                <td class="text-center">@provider.FindByID(entity.CreateUserID)</td>
+                <td class="text-center">@entity.CreateTime.ToFullString("")</td>
+                <td class="text-center">@entity.UpdateTime.ToFullString("")</td>
+                @if (this.Has(PermissionFlags.Detail, PermissionFlags.Update, PermissionFlags.Delete))
+                {
+                    <td class="text-center">
+                        @await Html.PartialAsync("_List_Data_Action", (Object)entity)
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

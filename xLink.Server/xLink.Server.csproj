@@ -2,18 +2,18 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net45;netcoreapp3.1;net40</TargetFrameworks>
+    <TargetFrameworks>net45;netcoreapp2.1;net40</TargetFrameworks>
     <AssemblyName>xLinkServer</AssemblyName>
     <AssemblyTitle>物联网服务端</AssemblyTitle>
-    <Description>物联网云平台，负责在硬件设备以及用户端之间交互数据指令</Description>
+    <Description>物联网平台，负责在硬件设备以及用户端之间交互数据指令</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>版权所有(C) 新生命开发团队 2002~2019</Copyright>
-    <Version>3.0.2019.0916</Version>
-    <FileVersion>3.0.2019.0916</FileVersion>
-    <AssemblyVersion>3.0.*</AssemblyVersion>
+    <Copyright>版权所有(C) 新生命开发团队 2002~2020</Copyright>
+    <Version>3.1.2020.0708</Version>
+    <FileVersion>3.1.2020.0708</FileVersion>
+    <AssemblyVersion>3.1.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>link.ico</ApplicationIcon>
-    <OutputPath>..\BinServer</OutputPath>
+    <OutputPath>..\Bin\RpcServer</OutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
@@ -38,15 +38,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Agent" Version="8.7.2020.802" />
-    <PackageReference Include="NewLife.Core" Version="8.10.2020.901" />
-    <PackageReference Include="NewLife.XCode" Version="9.20.2020.901" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="NewLife.Agent">
-      <Version>8.3.2019.822</Version>
-    </PackageReference>
+    <PackageReference Include="NewLife.Agent" Version="8.7.2021.708" />
+    <PackageReference Include="NewLife.Core" Version="8.11.2021.904" />
+    <PackageReference Include="NewLife.XCode" Version="10.2.2021.904" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net45' or '$(TargetFramework)'=='net40'">
@@ -54,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\xLink.Data\xLink.Data.csproj" />
     <ProjectReference Include="..\xLink\xLink.csproj" />
   </ItemGroup>
 

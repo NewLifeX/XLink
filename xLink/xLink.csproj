@@ -6,10 +6,10 @@
     <AssemblyTitle>菲凡物联</AssemblyTitle>
     <Description>物联网通信协议</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>版权所有(C) 新生命开发团队 2002~2019</Copyright>
-    <Version>3.0.2019.0713</Version>
-    <FileVersion>3.0.2019.0713</FileVersion>
-    <AssemblyVersion>3.0.*</AssemblyVersion>
+    <Copyright>版权所有(C) 新生命开发团队 2002~2020</Copyright>
+    <Version>3.1.2020.0708</Version>
+    <FileVersion>3.1.2020.0708</FileVersion>
+    <AssemblyVersion>3.1.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <OutputPath>..\Bin</OutputPath>
     <DocumentationFile>$(OutputPath)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
@@ -63,17 +63,13 @@
 
   <ItemGroup>
     <Compile Remove="DeviceSession.cs" />
-    <Compile Remove="Entity\MyModel.cs" />
     <Compile Remove="LinkSession.cs" />
-    <Compile Remove="Services\DeviceSession.cs" />
-    <Compile Remove="Services\LinkSession.cs" />
-    <Compile Remove="Services\UserSession.cs" />
     <Compile Remove="UserSession.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NewLife.Core" Version="8.10.2020.901" />
-    <PackageReference Include="NewLife.XCode" Version="9.20.2020.901" />
+    <PackageReference Include="NewLife.Core" Version="8.11.2021.904" />
+    <PackageReference Include="NewLife.XCode" Version="10.2.2021.904" />
   </ItemGroup>
 
   <ItemGroup>
